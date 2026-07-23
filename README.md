@@ -70,3 +70,12 @@ dune exec ./example.exe
 
 This should show a bouncing ball and draw some pixels in a straight
 line. It also demonstrates using debug text and event loop.
+
+# Documentation
+
+TODO... but the original
+[SDL3 doc](https://wiki.libsdl.org/SDL3/APIByCategory) is the main
+source and should be sufficient in most cases.
+
+In order to find the ocaml name corresponding to an SDL function, see
+[the list of bound functions](https://github.com/sanette/ocaml-sdl3/blob/main/lib/bound_functions.csv).
