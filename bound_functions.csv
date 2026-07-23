@@ -1,6 +1,4 @@
 SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature
-#
-# (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 3.2.0, SDL_AcquireCameraFrame, Camera, Surface, acquire_camera_frame, camera @-> ptr uint64 @-> returning (some_to_ok surface_opt)
 3.2.0, SDL_AcquireGPUCommandBuffer, Gpu, GPUCommandBuffer, acquire, gpu_device @-> returning (some_to_ok gpu_command_buffer_opt)
 3.2.0, SDL_AcquireGPUSwapchainTexture, Gpu, GPUCommandBuffer, acquire_gpu_swapchain_texture, gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning true_to_ok
