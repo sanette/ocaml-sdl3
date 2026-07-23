@@ -31,10 +31,15 @@ improved.
 
 # Install
 
-Currently we are based on SDL 3.4.12. However, you can do with another
-version: unless in debug mode, your code should work as long as you
-only use functions that are covered by 3.4.12 and by your installed
-version.
+The `sdl3` opam package is available through:
+```
+opam pin https://github.com/sanette/ocaml-sdl3.git
+```
+
+Obviously, you also need SDL3. Currently, we are based on
+SDL 3.4.12. However, you can do with another version: unless in debug
+mode, your code should work as long as you only use functions that are
+covered by 3.4.12 and by your installed version.
 
 To install 3.4.12, For instance, do
 ```
