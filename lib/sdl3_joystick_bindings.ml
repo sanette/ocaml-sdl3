@@ -10,9 +10,6 @@ module Global = struct
 let lock_joysticks = ff "SDL_LockJoysticks"
   (void @-> returning void)
 
-let try_lock_joysticks = ff "SDL_TryLockJoysticks"
-  (void @-> returning true_to_ok)
-
 let unlock_joysticks = ff "SDL_UnlockJoysticks"
   (void @-> returning void)
 

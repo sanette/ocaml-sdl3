@@ -419,24 +419,6 @@ module GPURenderState = struct
 let create = ff "SDL_CreateGPURenderState"
   (renderer @-> ptr gpu_render_state_create_info @-> returning (some_to_ok gpu_render_state_opt))
 
-let set_sampler_bindings = ff "SDL_SetGPURenderStateSamplerBindings"
-  (gpu_render_state @-> int @-> ptr gpu_texture_sampler_binding @-> returning true_to_ok)
-let set_sampler_bindings state sampler_bindings =
-  let sampler_bindings, num_sampler_bindings = carray_of_list gpu_texture_sampler_binding sampler_bindings in
-  set_sampler_bindings state num_sampler_bindings sampler_bindings
-
-let set_storage_textures = ff "SDL_SetGPURenderStateStorageTextures"
-  (gpu_render_state @-> int @-> ptr gpu_texture @-> returning true_to_ok)
-let set_storage_textures state storage_textures =
-  let storage_textures, num_storage_textures = carray_of_list gpu_texture storage_textures in
-  set_storage_textures state num_storage_textures storage_textures
-
-let set_storage_buffers = ff "SDL_SetGPURenderStateStorageBuffers"
-  (gpu_render_state @-> int @-> ptr gpu_buffer @-> returning true_to_ok)
-let set_storage_buffers state storage_buffers =
-  let storage_buffers, num_storage_buffers = carray_of_list gpu_buffer storage_buffers in
-  set_storage_buffers state num_storage_buffers storage_buffers
-
 let set_fragment_uniforms = ff "SDL_SetGPURenderStateFragmentUniforms"
   (gpu_render_state @-> uint32 @-> ptr void @-> uint32 @-> returning true_to_ok)
 let set_fragment_uniforms state slot_index data length =

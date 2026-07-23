@@ -375,9 +375,6 @@ Returns: the newly created menu.
 SDL_CreateTraySubmenu
 Returns: the newly created menu. 
 
-SDL_CreateTrayWithProperties
-Returns: The newly created system tray icon. 
-
 SDL_CreateWindow
 Returns: the window that was created or NULL on failure; call SDL_GetError() for more information. 
 
@@ -2526,15 +2523,6 @@ Returns: true on success or false on failure; call SDL_GetError() for more infor
 SDL_SetGPURenderStateFragmentUniforms
 Returns: true on success or false on failure; call SDL_GetError() for more information. 
 
-SDL_SetGPURenderStateSamplerBindings
-Returns: true on success or false on failure; call SDL_GetError() for more information. 
-
-SDL_SetGPURenderStateStorageBuffers
-Returns: true on success or false on failure; call SDL_GetError() for more information. 
-
-SDL_SetGPURenderStateStorageTextures
-Returns: true on success or false on failure; call SDL_GetError() for more information. 
-
 SDL_SetGPUScissor
 Returns: None
 
@@ -2943,9 +2931,6 @@ Returns: true on success or false on failure; call SDL_GetError() for more infor
 SDL_TimeToWindows
 Returns: None
 
-SDL_TryLockJoysticks
-Returns: true if the joysticks were successfully locked, false otherwise. 
-
 SDL_TryLockMutex
 Returns: true on success, false if the mutex would block. 
 
@@ -3178,7 +3163,7 @@ SDL_atan
 Returns: arc tangent of of `x` in radians, or 0 if `x = 0`. 
 
 SDL_atan2
-Returns: arc tangent of `y / x` in radians, or, if `x = 0`, either `-Pi/2`, `0`, or `Pi/2`, depending on the value of `y`. 
+Returns: arc tangent of of `y / x` in radians, or, if `x = 0`, either `-Pi/2`, `0`, or `Pi/2`, depending on the value of `y`. 
 
 SDL_atan2f
 Returns: arc tangent of of `y / x` in radians, or, if `x = 0`, either `-Pi/2`, `0`, or `Pi/2`, depending on the value of `y`. 

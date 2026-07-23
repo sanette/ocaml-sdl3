@@ -5566,4 +5566,3 @@ let tray_entry_opt : tray_entry option typ = ptr_opt void
 
 let tray_entry_flags = uint (* prim *)
 let tray_callback = funptr (ptr void @-> tray_entry @-> returning void)
-let tray_click_callback = funptr (ptr void @-> tray @-> returning bool)

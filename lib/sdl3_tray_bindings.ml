@@ -10,11 +10,6 @@ module Tray = struct
 let create = ff "SDL_CreateTray"
   (surface_opt @-> string @-> returning (some_to_ok tray_opt))
 
-let create_with_properties = ff "SDL_CreateTrayWithProperties"
-  (properties_id @-> returning (some_to_ok tray_opt))
-let create_with_properties props =
-  create_with_properties (Unsigned.UInt.of_int props)
-
 let set_icon = ff "SDL_SetTrayIcon"
   (tray @-> surface_opt @-> returning void)
 

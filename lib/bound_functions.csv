@@ -1,7 +1,4 @@
-# (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
-
 SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature
-#
 3.2.0, SDL_AcquireCameraFrame, Camera, Surface, acquire_camera_frame, camera @-> ptr uint64 @-> returning (some_to_ok surface_opt)
 3.2.0, SDL_AcquireGPUCommandBuffer, Gpu, GPUCommandBuffer, acquire, gpu_device @-> returning (some_to_ok gpu_command_buffer_opt)
 3.2.0, SDL_AcquireGPUSwapchainTexture, Gpu, GPUCommandBuffer, acquire_gpu_swapchain_texture, gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning true_to_ok
@@ -1211,8 +1208,3 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature
 3.4.0, SDL_SetWindowProgressValue, Video, Window, set_progress_value, window @-> float @-> returning true_to_ok
 3.4.0, SDL_StretchSurface, Surface, Surface, stretch, surface @-> rect_opt @-> surface @-> rect_opt @-> scale_mode @-> returning true_to_ok
 3.4.0, SDL_hid_get_properties, Hidapi, hid_device, hid_get_properties, hid_device @-> returning properties_id
-3.6.0, SDL_CreateTrayWithProperties, Tray, Tray, create_with_properties, properties_id @-> returning (some_to_ok tray_opt)
-3.6.0, SDL_SetGPURenderStateSamplerBindings, Render, GPURenderState, set_sampler_bindings, gpu_render_state @-> int @-> ptr gpu_texture_sampler_binding @-> returning true_to_ok
-3.6.0, SDL_SetGPURenderStateStorageBuffers, Render, GPURenderState, set_storage_buffers, gpu_render_state @-> int @-> ptr gpu_buffer @-> returning true_to_ok
-3.6.0, SDL_SetGPURenderStateStorageTextures, Render, GPURenderState, set_storage_textures, gpu_render_state @-> int @-> ptr gpu_texture @-> returning true_to_ok
-3.6.0, SDL_TryLockJoysticks, Joystick, , try_lock_joysticks, void @-> returning true_to_ok
