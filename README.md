@@ -73,7 +73,9 @@ line. It also demonstrates using debug text and event loop.
 
 # Documentation
 
-TODO... but the original
+TODO...I still need to generate the `sdl3.mli` file!!!
+
+But the original
 [SDL3 doc](https://wiki.libsdl.org/SDL3/APIByCategory) is the main
 source and should be sufficient in most cases.
 
