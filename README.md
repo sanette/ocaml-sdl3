@@ -51,11 +51,11 @@ dune exec ./camera.exe
 
 This should open your webcam and show the content in a window
 
-## Loading PNG, animating sprite, and pixel drawing example
+## Loading PNG, animating sprite, typing debug text, and pixel drawing example
 
 ```bash
 dune exec ./example.exe
 ```
 
 This should show a bouncing ball and draw some pixels in a straight
-line.
+line. It also demonstrates using debug text and event loop.
