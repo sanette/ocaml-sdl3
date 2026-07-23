@@ -1,0 +1,4 @@
+(library
+ (name sdl3)
+ (public_name sdl3)
+ (libraries ctypes ctypes.foreign))

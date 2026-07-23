@@ -1,0 +1,44 @@
+# (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
+
+# Below is a list of functions that were detected in the SDL source,
+# but not automatically implemented in OCaml code.
+
+SDL_HasExactlyOneBitSet32 # internal
+SDL_IOprintf # variadic argument
+SDL_IOvprintf # uses unsupported type va_list
+SDL_Log # variadic argument
+SDL_LogCritical # variadic argument
+SDL_LogDebug # variadic argument
+SDL_LogError # variadic argument
+SDL_LogInfo # variadic argument
+SDL_LogMessage # variadic argument
+SDL_LogMessageV # uses unsupported type va_list
+SDL_LogTrace # variadic argument
+SDL_LogVerbose # variadic argument
+SDL_LogWarn # variadic argument
+SDL_MostSignificantBitIndex32 # internal
+SDL_PointInRect # internal
+SDL_PointInRectFloat # internal
+SDL_RectEmpty # internal
+SDL_RectEmptyFloat # internal
+SDL_RectToFRect # internal
+SDL_RectsEqual # internal
+SDL_RectsEqualEpsilon # internal
+SDL_RectsEqualFloat # internal
+SDL_RenderDebugTextFormat # variadic argument
+SDL_SetError # variadic argument
+SDL_SetErrorV # uses unsupported type va_list
+SDL_SetX11EventHook # uses unsupported type SDL_X11EventHook
+SDL_SwapFloat # internal
+SDL_asprintf # variadic argument
+SDL_size_add_check_overflow # internal
+SDL_size_add_check_overflow_builtin # internal
+SDL_size_mul_check_overflow # internal
+SDL_size_mul_check_overflow_builtin # internal
+SDL_snprintf # variadic argument
+SDL_sscanf # variadic argument
+SDL_swprintf # variadic argument
+SDL_vasprintf # uses unsupported type va_list
+SDL_vsnprintf # uses unsupported type va_list
+SDL_vsscanf # uses unsupported type va_list
+SDL_vswprintf # uses unsupported type va_list

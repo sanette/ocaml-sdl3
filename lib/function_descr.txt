@@ -1,0 +1,3668 @@
+(* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
+
+SDL_AcquireCameraFrame
+Returns: a new frame of video on success, NULL if none is currently available. 
+
+SDL_AcquireGPUCommandBuffer
+Returns: a command buffer, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_AcquireGPUSwapchainTexture
+Returns: true on success, false on error; call SDL_GetError() for more information. 
+
+SDL_AddAtomicInt
+Returns: the previous value of the atomic variable. 
+
+SDL_AddAtomicU32
+Returns: the previous value of the atomic variable. 
+
+SDL_AddEventWatch
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_AddGamepadMapping
+Returns: 1 if a new mapping is added, 0 if an existing mapping is updated, -1 on failure; call SDL_GetError() for more information. 
+
+SDL_AddGamepadMappingsFromFile
+Returns: the number of mappings added or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_AddGamepadMappingsFromIO
+Returns: the number of mappings added or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_AddHintCallback
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_AddSurfaceAlternateImage
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_AddTimer
+Returns: a timer ID or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_AddTimerNS
+Returns: a timer ID or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_AddVulkanRenderSemaphores
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_AsyncIOFromFile
+Returns: a pointer to the SDL_AsyncIO structure that is created or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_AttachVirtualJoystick
+Returns: the joystick instance ID, or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_AudioDevicePaused
+Returns: true if device is valid and paused, false otherwise. 
+
+SDL_AudioStreamDevicePaused
+Returns: true if device is valid and paused, false otherwise. 
+
+SDL_BeginGPUComputePass
+Returns: a compute pass handle. 
+
+SDL_BeginGPUCopyPass
+Returns: a copy pass handle. 
+
+SDL_BeginGPURenderPass
+Returns: a render pass handle. 
+
+SDL_BindAudioStream
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_BindAudioStreams
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_BindGPUComputePipeline
+Returns: None
+
+SDL_BindGPUComputeSamplers
+Returns: None
+
+SDL_BindGPUComputeStorageBuffers
+Returns: None
+
+SDL_BindGPUComputeStorageTextures
+Returns: None
+
+SDL_BindGPUFragmentSamplers
+Returns: None
+
+SDL_BindGPUFragmentStorageBuffers
+Returns: None
+
+SDL_BindGPUFragmentStorageTextures
+Returns: None
+
+SDL_BindGPUGraphicsPipeline
+Returns: None
+
+SDL_BindGPUIndexBuffer
+Returns: None
+
+SDL_BindGPUVertexBuffers
+Returns: None
+
+SDL_BindGPUVertexSamplers
+Returns: None
+
+SDL_BindGPUVertexStorageBuffers
+Returns: None
+
+SDL_BindGPUVertexStorageTextures
+Returns: None
+
+SDL_BlitGPUTexture
+Returns: None
+
+SDL_BlitSurface
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_BlitSurface9Grid
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_BlitSurfaceScaled
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_BlitSurfaceTiled
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_BlitSurfaceTiledWithScale
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_BlitSurfaceUnchecked
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_BlitSurfaceUncheckedScaled
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_BroadcastCondition
+Returns: None
+
+SDL_CalculateGPUTextureFormatSize
+Returns: the size of a texture with this format and dimensions. 
+
+SDL_CancelGPUCommandBuffer
+Returns: true on success, false on error; call SDL_GetError() for more information. 
+
+SDL_CaptureMouse
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ClaimWindowForGPUDevice
+Returns: true on success, or false on failure; call SDL_GetError() for more information. 
+
+SDL_CleanupTLS
+Returns: None
+
+SDL_ClearAudioStream
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ClearClipboardData
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ClearComposition
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ClearError
+Returns: true. 
+
+SDL_ClearProperty
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ClearSurface
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ClickTrayEntry
+Returns: None
+
+SDL_CloseAsyncIO
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_CloseAudioDevice
+Returns: None
+
+SDL_CloseCamera
+Returns: None
+
+SDL_CloseGamepad
+Returns: None
+
+SDL_CloseHaptic
+Returns: None
+
+SDL_CloseIO
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_CloseJoystick
+Returns: None
+
+SDL_CloseSensor
+Returns: None
+
+SDL_CloseStorage
+Returns: true if the container was freed with no errors, false otherwise; call SDL_GetError() for more information. Even if the function returns an error, the container data will be freed; the error is only for informational purposes. 
+
+SDL_CompareAndSwapAtomicInt
+Returns: true if the atomic variable was set, false otherwise. 
+
+SDL_CompareAndSwapAtomicPointer
+Returns: true if the pointer was set, false otherwise. 
+
+SDL_CompareAndSwapAtomicU32
+Returns: true if the atomic variable was set, false otherwise. 
+
+SDL_ComposeCustomBlendMode
+Returns: an SDL_BlendMode that represents the chosen factors and operations. 
+
+SDL_ConvertAudioSamples
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ConvertEventToRenderCoordinates
+Returns: true if the event is converted or doesn't need conversion, or false on failure; call SDL_GetError() for more information. 
+
+SDL_ConvertPixels
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ConvertPixelsAndColorspace
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ConvertSurface
+Returns: the new SDL_Surface structure that is created or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_ConvertSurfaceAndColorspace
+Returns: the new SDL_Surface structure that is created or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CopyFile
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_CopyGPUBufferToBuffer
+Returns: None
+
+SDL_CopyGPUTextureToTexture
+Returns: None
+
+SDL_CopyProperties
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_CopyStorageFile
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_CreateAnimatedCursor
+Returns: the new cursor on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateAsyncIOQueue
+Returns: a new task queue object or NULL if there was an error; call SDL_GetError() for more information. 
+
+SDL_CreateAudioStream
+Returns: a new audio stream on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateColorCursor
+Returns: the new cursor on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateCondition
+Returns: a new condition variable or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateCursor
+Returns: a new cursor with the specified parameters on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateDirectory
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_CreateEnvironment
+Returns: a pointer to the new environment or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPUBuffer
+Returns: a buffer object on success, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPUComputePipeline
+Returns: a compute pipeline object on success, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPUDevice
+Returns: a GPU context on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPUDeviceWithProperties
+Returns: a GPU context on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPUGraphicsPipeline
+Returns: a graphics pipeline object on success, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPURenderState
+Returns: a custom GPU render state or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPURenderer
+Returns: a valid rendering context or NULL if there was an error; call SDL_GetError() for more information. 
+
+SDL_CreateGPUSampler
+Returns: a sampler object on success, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPUShader
+Returns: a shader object on success, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPUTexture
+Returns: a texture object on success, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateGPUTransferBuffer
+Returns: a transfer buffer on success, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateHapticEffect
+Returns: the ID of the effect on success or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_CreateMutex
+Returns: the initialized and unlocked mutex or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreatePalette
+Returns: a new SDL_Palette structure on success or NULL on failure (e.g. if there wasn't enough memory); call SDL_GetError() for more information. 
+
+SDL_CreatePopupWindow
+Returns: the window that was created or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateProcess
+Returns: the newly created and running process, or NULL if the process couldn't be created. 
+
+SDL_CreateProcessWithProperties
+Returns: the newly created and running process, or NULL if the process couldn't be created. 
+
+SDL_CreateProperties
+Returns: an ID for a new group of properties, or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_CreateRWLock
+Returns: the initialized and unlocked read/write lock or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateRenderer
+Returns: a valid rendering context or NULL if there was an error; call SDL_GetError() for more information. 
+
+SDL_CreateRendererWithProperties
+Returns: a valid rendering context or NULL if there was an error; call SDL_GetError() for more information. 
+
+SDL_CreateSemaphore
+Returns: a new semaphore or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateSoftwareRenderer
+Returns: a valid rendering context or NULL if there was an error; call SDL_GetError() for more information. 
+
+SDL_CreateStorageDirectory
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_CreateSurface
+Returns: the new SDL_Surface structure that is created or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateSurfaceFrom
+Returns: the new SDL_Surface structure that is created or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateSurfacePalette
+Returns: a new SDL_Palette structure on success or NULL on failure (e.g. if the surface didn't have an index format); call SDL_GetError() for more information. 
+
+SDL_CreateSystemCursor
+Returns: a cursor on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateTexture
+Returns: the created texture or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateTextureFromSurface
+Returns: the created texture or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateTextureWithProperties
+Returns: the created texture or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateThreadRuntime
+Returns: an opaque pointer to the new thread object on success, NULL if the new thread could not be created; call SDL_GetError() for more information. 
+
+SDL_CreateThreadWithPropertiesRuntime
+Returns: an opaque pointer to the new thread object on success, NULL if the new thread could not be created; call SDL_GetError() for more information. 
+
+SDL_CreateTray
+Returns: The newly created system tray icon. 
+
+SDL_CreateTrayMenu
+Returns: the newly created menu. 
+
+SDL_CreateTraySubmenu
+Returns: the newly created menu. 
+
+SDL_CreateTrayWithProperties
+Returns: The newly created system tray icon. 
+
+SDL_CreateWindow
+Returns: the window that was created or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CreateWindowAndRenderer
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_CreateWindowWithProperties
+Returns: the window that was created or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_CursorVisible
+Returns: `true` if the cursor is being shown, or `false` if the cursor is hidden. 
+
+SDL_DateTimeToTime
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_Delay
+Returns: None
+
+SDL_DelayNS
+Returns: None
+
+SDL_DelayPrecise
+Returns: None
+
+SDL_DestroyAsyncIOQueue
+Returns: None
+
+SDL_DestroyAudioStream
+Returns: None
+
+SDL_DestroyCondition
+Returns: None
+
+SDL_DestroyCursor
+Returns: None
+
+SDL_DestroyEnvironment
+Returns: None
+
+SDL_DestroyGPUDevice
+Returns: None
+
+SDL_DestroyGPURenderState
+Returns: None
+
+SDL_DestroyHapticEffect
+Returns: None
+
+SDL_DestroyMutex
+Returns: None
+
+SDL_DestroyPalette
+Returns: None
+
+SDL_DestroyProcess
+Returns: None
+
+SDL_DestroyProperties
+Returns: None
+
+SDL_DestroyRWLock
+Returns: None
+
+SDL_DestroyRenderer
+Returns: None
+
+SDL_DestroySemaphore
+Returns: None
+
+SDL_DestroySurface
+Returns: None
+
+SDL_DestroyTexture
+Returns: None
+
+SDL_DestroyTray
+Returns: None
+
+SDL_DestroyWindow
+Returns: None
+
+SDL_DestroyWindowSurface
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_DetachThread
+Returns: None
+
+SDL_DetachVirtualJoystick
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_DisableScreenSaver
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_DispatchGPUCompute
+Returns: None
+
+SDL_DispatchGPUComputeIndirect
+Returns: None
+
+SDL_DownloadFromGPUBuffer
+Returns: None
+
+SDL_DownloadFromGPUTexture
+Returns: None
+
+SDL_DrawGPUIndexedPrimitives
+Returns: None
+
+SDL_DrawGPUIndexedPrimitivesIndirect
+Returns: None
+
+SDL_DrawGPUPrimitives
+Returns: None
+
+SDL_DrawGPUPrimitivesIndirect
+Returns: None
+
+SDL_DuplicateSurface
+Returns: a copy of the surface or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_EGL_GetCurrentConfig
+Returns: the currently active EGL config or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_EGL_GetCurrentDisplay
+Returns: the currently active EGL display or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_EGL_GetProcAddress
+Returns: a pointer to the named EGL function. The returned pointer should be cast to the appropriate function signature. 
+
+SDL_EGL_GetWindowSurface
+Returns: the EGLSurface pointer associated with the window, or NULL on failure. 
+
+SDL_EGL_SetAttributeCallbacks
+Returns: None
+
+SDL_EnableScreenSaver
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_EndGPUComputePass
+Returns: None
+
+SDL_EndGPUCopyPass
+Returns: None
+
+SDL_EndGPURenderPass
+Returns: None
+
+SDL_EnumerateDirectory
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_EnumerateProperties
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_EnumerateStorageDirectory
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_EventEnabled
+Returns: true if the event is being processed, false otherwise. 
+
+SDL_FillSurfaceRect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_FillSurfaceRects
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_FilterEvents
+Returns: None
+
+SDL_FlashWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_FlipSurface
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_FlushAudioStream
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_FlushEvent
+Returns: None
+
+SDL_FlushEvents
+Returns: None
+
+SDL_FlushIO
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_FlushRenderer
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GL_CreateContext
+Returns: the OpenGL context associated with `window` or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GL_DestroyContext
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GL_ExtensionSupported
+Returns: true if the extension is supported, false otherwise. 
+
+SDL_GL_GetAttribute
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GL_GetCurrentContext
+Returns: the currently active OpenGL context or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GL_GetCurrentWindow
+Returns: the currently active OpenGL window on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GL_GetProcAddress
+Returns: a pointer to the named OpenGL function. The returned pointer should be cast to the appropriate function signature. 
+
+SDL_GL_GetSwapInterval
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GL_LoadLibrary
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GL_MakeCurrent
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GL_ResetAttributes
+Returns: None
+
+SDL_GL_SetAttribute
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GL_SetSwapInterval
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GL_SwapWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GL_UnloadLibrary
+Returns: None
+
+SDL_GPUSupportsProperties
+Returns: true if supported, false otherwise. 
+
+SDL_GPUSupportsShaderFormats
+Returns: true if supported, false otherwise. 
+
+SDL_GPUTextureFormatTexelBlockSize
+Returns: the texel block size of the texture format. 
+
+SDL_GPUTextureSupportsFormat
+Returns: whether the texture format is supported for this type and usage. 
+
+SDL_GPUTextureSupportsSampleCount
+Returns: whether the sample count is supported for this texture format. 
+
+SDL_GUIDToString
+Returns: None
+
+SDL_GamepadConnected
+Returns: true if the gamepad has been opened and is currently connected, or false if not. 
+
+SDL_GamepadEventsEnabled
+Returns: true if gamepad events are being processed, false otherwise. 
+
+SDL_GamepadHasAxis
+Returns: true if the gamepad has this axis, false otherwise. 
+
+SDL_GamepadHasButton
+Returns: true if the gamepad has this button, false otherwise. 
+
+SDL_GamepadHasSensor
+Returns: true if the sensor exists, false otherwise. 
+
+SDL_GamepadSensorEnabled
+Returns: true if the sensor is enabled, false otherwise. 
+
+SDL_GenerateMipmapsForGPUTexture
+Returns: None
+
+SDL_GetAppMetadataProperty
+Returns: the current value of the metadata property, or the default if it is not set, NULL for properties with no default. 
+
+SDL_GetAssertionHandler
+Returns: the SDL_AssertionHandler that is called when an assert triggers. 
+
+SDL_GetAssertionReport
+Returns: a list of all failed assertions or NULL if the list is empty. This memory should not be modified or freed by the application. This pointer remains valid until the next call to SDL_Quit() or SDL_ResetAssertionReport(). 
+
+SDL_GetAsyncIOResult
+Returns: true if a task has completed, false otherwise. 
+
+SDL_GetAsyncIOSize
+Returns: the size of the data stream in the SDL_IOStream on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_GetAtomicInt
+Returns: the current value of an atomic variable. 
+
+SDL_GetAtomicPointer
+Returns: the current value of a pointer. 
+
+SDL_GetAtomicU32
+Returns: the current value of an atomic variable. 
+
+SDL_GetAudioDeviceChannelMap
+Returns: an array of the current channel mapping, with as many elements as the current output spec's channels, or NULL if default. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetAudioDeviceFormat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetAudioDeviceGain
+Returns: the gain of the device or -1.0f on failure; call SDL_GetError() for more information. 
+
+SDL_GetAudioDeviceName
+Returns: the name of the audio device, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetAudioDriver
+Returns: the name of the audio driver at the requested index, or NULL if an invalid index was specified. 
+
+SDL_GetAudioFormatName
+Returns: the human readable name of the specified audio format or "SDL_AUDIO_UNKNOWN" if the format isn't recognized. 
+
+SDL_GetAudioPlaybackDevices
+Returns: a 0 terminated array of device instance IDs or NULL on error; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetAudioRecordingDevices
+Returns: a 0 terminated array of device instance IDs, or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetAudioStreamAvailable
+Returns: the number of converted/resampled bytes available or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetAudioStreamData
+Returns: the number of bytes read from the stream or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetAudioStreamDevice
+Returns: the bound audio device, or 0 if not bound or invalid. 
+
+SDL_GetAudioStreamFormat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetAudioStreamFrequencyRatio
+Returns: the frequency ratio of the stream or 0.0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetAudioStreamGain
+Returns: the gain of the stream or -1.0f on failure; call SDL_GetError() for more information. 
+
+SDL_GetAudioStreamInputChannelMap
+Returns: an array of the current channel mapping, with as many elements as the current output spec's channels, or NULL if default. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetAudioStreamOutputChannelMap
+Returns: an array of the current channel mapping, with as many elements as the current output spec's channels, or NULL if default. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetAudioStreamProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetAudioStreamQueued
+Returns: the number of bytes queued or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetBasePath
+Returns: an absolute path in UTF-8 encoding to the application data directory. NULL will be returned on error or when the platform doesn't implement this functionality, call SDL_GetError() for more information. 
+
+SDL_GetBooleanProperty
+Returns: the value of the property, or `default_value` if it is not set or not a boolean property. 
+
+SDL_GetCPUCacheLineSize
+Returns: the L1 cache line size of the CPU, in bytes. 
+
+SDL_GetCameraDriver
+Returns: the name of the camera driver at the requested index, or NULL if an invalid index was specified. 
+
+SDL_GetCameraFormat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetCameraID
+Returns: the instance ID of the specified camera on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetCameraName
+Returns: a human-readable device name or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetCameraPermissionState
+Returns: an SDL_CameraPermissionState value indicating if access is granted, or `SDL_CAMERA_PERMISSION_STATE_PENDING` if the decision is still pending. 
+
+SDL_GetCameraPosition
+Returns: the position of the camera on the system hardware. 
+
+SDL_GetCameraProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetCameraSupportedFormats
+Returns: a NULL terminated array of pointers to SDL_CameraSpec or NULL on failure; call SDL_GetError() for more information. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetCameras
+Returns: a 0 terminated array of camera instance IDs or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetClipboardData
+Returns: the retrieved data buffer or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetClipboardMimeTypes
+Returns: a null-terminated array of strings with mime types, or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetClipboardText
+Returns: the clipboard text on success or an empty string on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetClosestFullscreenDisplayMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetCurrentAudioDriver
+Returns: the name of the current audio driver or NULL if no driver has been initialized. 
+
+SDL_GetCurrentCameraDriver
+Returns: the name of the current camera driver or NULL if no driver has been initialized. 
+
+SDL_GetCurrentDirectory
+Returns: a UTF-8 string of the current working directory in platform-dependent notation. NULL if there's a problem. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetCurrentDisplayMode
+Returns: a pointer to the desktop display mode or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetCurrentDisplayOrientation
+Returns: the SDL_DisplayOrientation enum value of the display, or `SDL_ORIENTATION_UNKNOWN` if it isn't available. 
+
+SDL_GetCurrentRenderOutputSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetCurrentThreadID
+Returns: the ID of the current thread. 
+
+SDL_GetCurrentTime
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetCurrentVideoDriver
+Returns: the name of the current video driver or NULL if no driver has been initialized. 
+
+SDL_GetCursor
+Returns: the active cursor or NULL if there is no mouse. 
+
+SDL_GetDateTimeLocalePreferences
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetDayOfWeek
+Returns: a value between 0 and 6 (0 being Sunday) if the date is valid or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetDayOfYear
+Returns: the day of year [0-365] if the date is valid or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetDaysInMonth
+Returns: the number of days in the requested month or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetDefaultAssertionHandler
+Returns: the default SDL_AssertionHandler that is called when an assert triggers. 
+
+SDL_GetDefaultCursor
+Returns: the default cursor on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetDefaultLogOutputFunction
+Returns: the default log output callback. It should be called with NULL for the userdata argument. 
+
+SDL_GetDefaultTextureScaleMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetDesktopDisplayMode
+Returns: a pointer to the desktop display mode or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetDisplayBounds
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetDisplayContentScale
+Returns: the content scale of the display, or 0.0f on failure; call SDL_GetError() for more information. 
+
+SDL_GetDisplayForPoint
+Returns: the instance ID of the display containing the point or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetDisplayForRect
+Returns: the instance ID of the display entirely containing the rect or closest to the center of the rect on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetDisplayForWindow
+Returns: the instance ID of the display containing the center of the window on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetDisplayName
+Returns: the name of a display or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetDisplayProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetDisplayUsableBounds
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetDisplays
+Returns: a 0 terminated array of display instance IDs or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetEnvironment
+Returns: a pointer to the environment for the process or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetEnvironmentVariable
+Returns: a pointer to the value of the variable or NULL if it can't be found. 
+
+SDL_GetEnvironmentVariables
+Returns: a NULL terminated array of pointers to environment variables in the form "variable=value" or NULL on failure; call SDL_GetError() for more information. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetError
+Returns: a message with information about the specific error that occurred, or an empty string if there hasn't been an error message set since the last call to SDL_ClearError(). 
+
+SDL_GetEventDescription
+Returns: number of bytes needed for the full string, not counting the null-terminator byte. 
+
+SDL_GetEventFilter
+Returns: true on success or false if there is no event filter set. 
+
+SDL_GetFloatProperty
+Returns: the value of the property, or `default_value` if it is not set or not a float property. 
+
+SDL_GetFullscreenDisplayModes
+Returns: a NULL terminated array of display mode pointers or NULL on failure; call SDL_GetError() for more information. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetGPUDeviceDriver
+Returns: the name of the device's driver, or NULL on error. 
+
+SDL_GetGPUDeviceProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetGPUDriver
+Returns: the name of the GPU driver with the given **index**. 
+
+SDL_GetGPURendererDevice
+Returns: the GPU device used by the renderer, or NULL if the renderer is not a GPU renderer; call SDL_GetError() for more information. 
+
+SDL_GetGPUShaderFormats
+Returns: a bitflag indicating which shader formats the driver is able to consume. 
+
+SDL_GetGPUSwapchainTextureFormat
+Returns: the texture format of the swapchain. 
+
+SDL_GetGPUTextureFormatFromPixelFormat
+Returns: the corresponding GPU texture format, or SDL_GPU_TEXTUREFORMAT_INVALID if there is no corresponding GPU texture format. 
+
+SDL_GetGamepadAppleSFSymbolsNameForAxis
+Returns: the sfSymbolsName or NULL if the name can't be found. 
+
+SDL_GetGamepadAppleSFSymbolsNameForButton
+Returns: the sfSymbolsName or NULL if the name can't be found. 
+
+SDL_GetGamepadAxis
+Returns: axis state. 
+
+SDL_GetGamepadAxisFromString
+Returns: the SDL_GamepadAxis enum corresponding to the input string, or `SDL_GAMEPAD_AXIS_INVALID` if no match was found. 
+
+SDL_GetGamepadBindings
+Returns: a NULL terminated array of pointers to bindings or NULL on failure; call SDL_GetError() for more information. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetGamepadButton
+Returns: true if the button is pressed, false otherwise. 
+
+SDL_GetGamepadButtonFromString
+Returns: the SDL_GamepadButton enum corresponding to the input string, or `SDL_GAMEPAD_BUTTON_INVALID` if no match was found. 
+
+SDL_GetGamepadButtonLabel
+Returns: the SDL_GamepadButtonLabel enum corresponding to the button label. 
+
+SDL_GetGamepadButtonLabelForType
+Returns: the SDL_GamepadButtonLabel enum corresponding to the button label. 
+
+SDL_GetGamepadConnectionState
+Returns: the connection state on success or `SDL_JOYSTICK_CONNECTION_INVALID` on failure; call SDL_GetError() for more information. 
+
+SDL_GetGamepadFirmwareVersion
+Returns: the gamepad firmware version, or zero if unavailable. 
+
+SDL_GetGamepadFromID
+Returns: an SDL_Gamepad on success or NULL on failure or if it hasn't been opened yet; call SDL_GetError() for more information. 
+
+SDL_GetGamepadFromPlayerIndex
+Returns: the SDL_Gamepad associated with a player index. 
+
+SDL_GetGamepadGUIDForID
+Returns: the GUID of the selected gamepad. If called on an invalid index, this function returns a zero GUID. 
+
+SDL_GetGamepadID
+Returns: the instance ID of the specified gamepad on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetGamepadJoystick
+Returns: an SDL_Joystick object, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetGamepadMapping
+Returns: a string that has the gamepad's mapping or NULL if no mapping is available; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetGamepadMappingForGUID
+Returns: a mapping string or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetGamepadMappingForID
+Returns: the mapping string. Returns NULL if no mapping is available. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetGamepadMappings
+Returns: an array of the mapping strings, NULL-terminated, or NULL on failure; call SDL_GetError() for more information. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetGamepadName
+Returns: the implementation dependent name for the gamepad, or NULL if there is no name or the identifier passed is invalid. 
+
+SDL_GetGamepadNameForID
+Returns: the name of the selected gamepad. If no name can be found, this function returns NULL; call SDL_GetError() for more information. 
+
+SDL_GetGamepadPath
+Returns: the implementation dependent path for the gamepad, or NULL if there is no path or the identifier passed is invalid. 
+
+SDL_GetGamepadPathForID
+Returns: the path of the selected gamepad. If no path can be found, this function returns NULL; call SDL_GetError() for more information. 
+
+SDL_GetGamepadPlayerIndex
+Returns: the player index for gamepad, or -1 if it's not available. 
+
+SDL_GetGamepadPlayerIndexForID
+Returns: the player index of a gamepad, or -1 if it's not available. 
+
+SDL_GetGamepadPowerInfo
+Returns: the current battery state. 
+
+SDL_GetGamepadProduct
+Returns: the USB product ID, or zero if unavailable. 
+
+SDL_GetGamepadProductForID
+Returns: the USB product ID of the selected gamepad. If called on an invalid index, this function returns zero. 
+
+SDL_GetGamepadProductVersion
+Returns: the USB product version, or zero if unavailable. 
+
+SDL_GetGamepadProductVersionForID
+Returns: the product version of the selected gamepad. If called on an invalid index, this function returns zero. 
+
+SDL_GetGamepadProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetGamepadSensorData
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetGamepadSensorDataRate
+Returns: the data rate, or 0.0f if the data rate is not available. 
+
+SDL_GetGamepadSerial
+Returns: the serial number, or NULL if unavailable. 
+
+SDL_GetGamepadSteamHandle
+Returns: the gamepad handle, or 0 if unavailable. 
+
+SDL_GetGamepadStringForAxis
+Returns: a string for the given axis, or NULL if an invalid axis is specified. The string returned is of the format used by SDL_Gamepad mapping strings. 
+
+SDL_GetGamepadStringForButton
+Returns: a string for the given button, or NULL if an invalid button is specified. The string returned is of the format used by SDL_Gamepad mapping strings. 
+
+SDL_GetGamepadStringForType
+Returns: a string for the given type, or NULL if an invalid type is specified. The string returned is of the format used by SDL_Gamepad mapping strings. 
+
+SDL_GetGamepadTouchpadFinger
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetGamepadType
+Returns: the gamepad type, or SDL_GAMEPAD_TYPE_UNKNOWN if it's not available. 
+
+SDL_GetGamepadTypeForID
+Returns: the gamepad type. 
+
+SDL_GetGamepadTypeFromString
+Returns: the SDL_GamepadType enum corresponding to the input string, or `SDL_GAMEPAD_TYPE_UNKNOWN` if no match was found. 
+
+SDL_GetGamepadVendor
+Returns: the USB vendor ID, or zero if unavailable. 
+
+SDL_GetGamepadVendorForID
+Returns: the USB vendor ID of the selected gamepad. If called on an invalid index, this function returns zero. 
+
+SDL_GetGamepads
+Returns: a 0 terminated array of joystick instance IDs or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetGlobalMouseState
+Returns: a 32-bit bitmask of the button state that can be bitwise-compared against the SDL_BUTTON_MASK(X) macro. 
+
+SDL_GetGlobalProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetGrabbedWindow
+Returns: the window if input is grabbed or NULL otherwise. 
+
+SDL_GetHapticEffectStatus
+Returns: true if it is playing, false if it isn't playing or haptic status isn't supported. 
+
+SDL_GetHapticFeatures
+Returns: a list of supported haptic features in bitwise manner (OR'd), or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetHapticFromID
+Returns: an SDL_Haptic on success or NULL on failure or if it hasn't been opened yet; call SDL_GetError() for more information. 
+
+SDL_GetHapticID
+Returns: the instance ID of the specified haptic device on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetHapticName
+Returns: the name of the selected haptic device. If no name can be found, this function returns NULL; call SDL_GetError() for more information. 
+
+SDL_GetHapticNameForID
+Returns: the name of the selected haptic device. If no name can be found, this function returns NULL; call SDL_GetError() for more information. 
+
+SDL_GetHaptics
+Returns: a 0 terminated array of haptic device instance IDs or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetHint
+Returns: the string value of a hint or NULL if the hint isn't set. 
+
+SDL_GetHintBoolean
+Returns: the boolean value of a hint or the provided default value if the hint does not exist. 
+
+SDL_GetIOProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetIOSize
+Returns: the size of the data stream in the SDL_IOStream on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_GetIOStatus
+Returns: an SDL_IOStatus enum with the current state. 
+
+SDL_GetJoystickAxis
+Returns: a 16-bit signed integer representing the current position of the axis or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetJoystickAxisInitialState
+Returns: true if this axis has any initial value, or false if not. 
+
+SDL_GetJoystickBall
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetJoystickButton
+Returns: true if the button is pressed, false otherwise. 
+
+SDL_GetJoystickConnectionState
+Returns: the connection state on success or `SDL_JOYSTICK_CONNECTION_INVALID` on failure; call SDL_GetError() for more information. 
+
+SDL_GetJoystickFirmwareVersion
+Returns: the firmware version of the selected joystick, or 0 if unavailable. 
+
+SDL_GetJoystickFromID
+Returns: an SDL_Joystick on success or NULL on failure or if it hasn't been opened yet; call SDL_GetError() for more information. 
+
+SDL_GetJoystickFromPlayerIndex
+Returns: an SDL_Joystick on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetJoystickGUID
+Returns: the GUID of the given joystick. If called on an invalid index, this function returns a zero GUID; call SDL_GetError() for more information. 
+
+SDL_GetJoystickGUIDForID
+Returns: the GUID of the selected joystick. If called with an invalid instance_id, this function returns a zero GUID. 
+
+SDL_GetJoystickGUIDInfo
+Returns: None
+
+SDL_GetJoystickHat
+Returns: the current hat position. 
+
+SDL_GetJoystickID
+Returns: the instance ID of the specified joystick on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetJoystickName
+Returns: the name of the selected joystick. If no name can be found, this function returns NULL; call SDL_GetError() for more information. 
+
+SDL_GetJoystickNameForID
+Returns: the name of the selected joystick. If no name can be found, this function returns NULL; call SDL_GetError() for more information. 
+
+SDL_GetJoystickPath
+Returns: the path of the selected joystick. If no path can be found, this function returns NULL; call SDL_GetError() for more information. 
+
+SDL_GetJoystickPathForID
+Returns: the path of the selected joystick. If no path can be found, this function returns NULL; call SDL_GetError() for more information. 
+
+SDL_GetJoystickPlayerIndex
+Returns: the player index, or -1 if it's not available. 
+
+SDL_GetJoystickPlayerIndexForID
+Returns: the player index of a joystick, or -1 if it's not available. 
+
+SDL_GetJoystickPowerInfo
+Returns: the current battery state or `SDL_POWERSTATE_ERROR` on failure; call SDL_GetError() for more information. 
+
+SDL_GetJoystickProduct
+Returns: the USB product ID of the selected joystick, or 0 if unavailable. 
+
+SDL_GetJoystickProductForID
+Returns: the USB product ID of the selected joystick. If called with an invalid instance_id, this function returns 0. 
+
+SDL_GetJoystickProductVersion
+Returns: the product version of the selected joystick, or 0 if unavailable. 
+
+SDL_GetJoystickProductVersionForID
+Returns: the product version of the selected joystick. If called with an invalid instance_id, this function returns 0. 
+
+SDL_GetJoystickProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetJoystickSerial
+Returns: the serial number of the selected joystick, or NULL if unavailable. 
+
+SDL_GetJoystickType
+Returns: the SDL_JoystickType of the selected joystick. 
+
+SDL_GetJoystickTypeForID
+Returns: the SDL_JoystickType of the selected joystick. If called with an invalid instance_id, this function returns `SDL_JOYSTICK_TYPE_UNKNOWN`. 
+
+SDL_GetJoystickVendor
+Returns: the USB vendor ID of the selected joystick, or 0 if unavailable. 
+
+SDL_GetJoystickVendorForID
+Returns: the USB vendor ID of the selected joystick. If called with an invalid instance_id, this function returns 0. 
+
+SDL_GetJoysticks
+Returns: a 0 terminated array of joystick instance IDs or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetKeyFromName
+Returns: key code, or `SDLK_UNKNOWN` if the name wasn't recognized; call SDL_GetError() for more information. 
+
+SDL_GetKeyFromScancode
+Returns: the SDL_Keycode that corresponds to the given SDL_Scancode. 
+
+SDL_GetKeyName
+Returns: a UTF-8 encoded string of the key name. 
+
+SDL_GetKeyboardFocus
+Returns: the window with keyboard focus. 
+
+SDL_GetKeyboardNameForID
+Returns: the name of the selected keyboard or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetKeyboardState
+Returns: a pointer to an array of key states. 
+
+SDL_GetKeyboards
+Returns: a 0 terminated array of keyboards instance IDs or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetLogOutputFunction
+Returns: None
+
+SDL_GetLogPriority
+Returns: the SDL_LogPriority for the requested category. 
+
+SDL_GetMasksForPixelFormat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetMaxHapticEffects
+Returns: the number of effects the haptic device can store or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_GetMaxHapticEffectsPlaying
+Returns: the number of effects the haptic device can play at the same time or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetMemoryFunctions
+Returns: None
+
+SDL_GetMice
+Returns: a 0 terminated array of mouse instance IDs or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetModState
+Returns: an OR'd combination of the modifier keys for the keyboard. 
+
+SDL_GetMouseFocus
+Returns: the window with mouse focus. 
+
+SDL_GetMouseNameForID
+Returns: the name of the selected mouse, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetMouseState
+Returns: a 32-bit bitmask of the button state that can be bitwise-compared against the SDL_BUTTON_MASK(X) macro. 
+
+SDL_GetNaturalDisplayOrientation
+Returns: the SDL_DisplayOrientation enum value of the display, or `SDL_ORIENTATION_UNKNOWN` if it isn't available. 
+
+SDL_GetNumAllocations
+Returns: the number of allocations or -1 if allocation counting is disabled. 
+
+SDL_GetNumAudioDrivers
+Returns: the number of built-in audio drivers. 
+
+SDL_GetNumCameraDrivers
+Returns: the number of built-in camera drivers. 
+
+SDL_GetNumGPUDrivers
+Returns: the number of built in GPU drivers. 
+
+SDL_GetNumGamepadTouchpadFingers
+Returns: number of supported simultaneous fingers. 
+
+SDL_GetNumGamepadTouchpads
+Returns: number of touchpads. 
+
+SDL_GetNumHapticAxes
+Returns: the number of axes on success or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetNumJoystickAxes
+Returns: the number of axis controls/number of axes on success or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetNumJoystickBalls
+Returns: the number of trackballs on success or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetNumJoystickButtons
+Returns: the number of buttons on success or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetNumJoystickHats
+Returns: the number of POV hats on success or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_GetNumLogicalCPUCores
+Returns: the total number of logical CPU cores. On CPUs that include technologies such as hyperthreading, the number of logical cores may be more than the number of physical cores. 
+
+SDL_GetNumRenderDrivers
+Returns: the number of built in render drivers. 
+
+SDL_GetNumVideoDrivers
+Returns: the number of built in video drivers. 
+
+SDL_GetNumberProperty
+Returns: the value of the property, or `default_value` if it is not set or not a number property. 
+
+SDL_GetOriginalMemoryFunctions
+Returns: None
+
+SDL_GetPathInfo
+Returns: true on success or false if the file doesn't exist, or another failure; call SDL_GetError() for more information. 
+
+SDL_GetPenDeviceType
+Returns: the device type of the given pen, or SDL_PEN_DEVICE_TYPE_INVALID on failure; call SDL_GetError() for more information. 
+
+SDL_GetPerformanceCounter
+Returns: the current counter value. 
+
+SDL_GetPerformanceFrequency
+Returns: a platform-specific count per second. 
+
+SDL_GetPixelFormatDetails
+Returns: a pointer to a SDL_PixelFormatDetails structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetPixelFormatForMasks
+Returns: the SDL_PixelFormat value corresponding to the format masks, or SDL_PIXELFORMAT_UNKNOWN if there isn't a match. 
+
+SDL_GetPixelFormatFromGPUTextureFormat
+Returns: the corresponding pixel format, or SDL_PIXELFORMAT_UNKNOWN if there is no corresponding pixel format. 
+
+SDL_GetPixelFormatName
+Returns: the human readable name of the specified pixel format or "SDL_PIXELFORMAT_UNKNOWN" if the format isn't recognized. 
+
+SDL_GetPlatform
+Returns: the name of the platform. If the correct platform name is not available, returns a string beginning with the text "Unknown". 
+
+SDL_GetPointerProperty
+Returns: the value of the property, or `default_value` if it is not set or not a pointer property. 
+
+SDL_GetPowerInfo
+Returns: the current battery state or `SDL_POWERSTATE_ERROR` on failure; call SDL_GetError() for more information. 
+
+SDL_GetPrefPath
+Returns: a UTF-8 string of the user directory in platform-dependent notation. NULL if there's a problem (creating directory failed, etc.). This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetPreferredLocales
+Returns: a NULL terminated array of locale pointers, or NULL on failure; call SDL_GetError() for more information. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetPrimaryDisplay
+Returns: the instance ID of the primary display on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetPrimarySelectionText
+Returns: the primary selection text on success or an empty string on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetProcessInput
+Returns: the input stream or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetProcessOutput
+Returns: the output stream or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetProcessProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetPropertyType
+Returns: the type of the property, or SDL_PROPERTY_TYPE_INVALID if it is not set. 
+
+SDL_GetRGB
+Returns: None
+
+SDL_GetRGBA
+Returns: None
+
+SDL_GetRealGamepadType
+Returns: the gamepad type, or SDL_GAMEPAD_TYPE_UNKNOWN if it's not available. 
+
+SDL_GetRealGamepadTypeForID
+Returns: the gamepad type. 
+
+SDL_GetRectAndLineIntersection
+Returns: true if there is an intersection, false otherwise. 
+
+SDL_GetRectAndLineIntersectionFloat
+Returns: true if there is an intersection, false otherwise. 
+
+SDL_GetRectEnclosingPoints
+Returns: true if any points were enclosed or false if all the points were outside of the clipping rectangle. 
+
+SDL_GetRectEnclosingPointsFloat
+Returns: true if any points were enclosed or false if all the points were outside of the clipping rectangle. 
+
+SDL_GetRectIntersection
+Returns: true if there is an intersection, false otherwise. 
+
+SDL_GetRectIntersectionFloat
+Returns: true if there is an intersection, false otherwise. 
+
+SDL_GetRectUnion
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRectUnionFloat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRelativeMouseState
+Returns: a 32-bit bitmask of the button state that can be bitwise-compared against the SDL_BUTTON_MASK(X) macro. 
+
+SDL_GetRenderClipRect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderColorScale
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderDrawBlendMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderDrawColor
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderDrawColorFloat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderDriver
+Returns: the name of the rendering driver at the requested index, or NULL if an invalid index was specified. 
+
+SDL_GetRenderLogicalPresentation
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderLogicalPresentationRect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderMetalCommandEncoder
+Returns: an `id<MTLRenderCommandEncoder>` on success, or NULL if the renderer isn't a Metal renderer or there was an error. 
+
+SDL_GetRenderMetalLayer
+Returns: a `CAMetalLayer *` on success, or NULL if the renderer isn't a Metal renderer. 
+
+SDL_GetRenderOutputSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderSafeArea
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderScale
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderTarget
+Returns: the current render target or NULL for the default render target. 
+
+SDL_GetRenderTextureAddressMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderVSync
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderViewport
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderWindow
+Returns: the window on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetRenderer
+Returns: the rendering context on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetRendererFromTexture
+Returns: a pointer to the SDL_Renderer that created the texture, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetRendererName
+Returns: the name of the selected renderer, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetRendererProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetRevision
+Returns: an arbitrary string, uniquely identifying the exact revision of the SDL library in use. 
+
+SDL_GetSIMDAlignment
+Returns: the alignment in bytes needed for available, known SIMD instructions. 
+
+SDL_GetSandbox
+Returns: the application sandbox environment or SDL_SANDBOX_NONE if the application is not running in a sandbox environment. 
+
+SDL_GetScancodeFromKey
+Returns: the SDL_Scancode that corresponds to the given SDL_Keycode. 
+
+SDL_GetScancodeFromName
+Returns: the SDL_Scancode, or `SDL_SCANCODE_UNKNOWN` if the name wasn't recognized; call SDL_GetError() for more information. 
+
+SDL_GetScancodeName
+Returns: a pointer to the name for the scancode. If the scancode doesn't have a name this function returns an empty string (""). 
+
+SDL_GetSemaphoreValue
+Returns: the current value of the semaphore. 
+
+SDL_GetSensorData
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetSensorFromID
+Returns: an SDL_Sensor object or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetSensorID
+Returns: the sensor instance ID, or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetSensorName
+Returns: the sensor name or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetSensorNameForID
+Returns: the sensor name, or NULL if `instance_id` is not valid. 
+
+SDL_GetSensorNonPortableType
+Returns: the sensor platform dependent type, or -1 if `sensor` is NULL. 
+
+SDL_GetSensorNonPortableTypeForID
+Returns: the sensor platform dependent type, or -1 if `instance_id` is not valid. 
+
+SDL_GetSensorProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetSensorType
+Returns: the SDL_SensorType type, or `SDL_SENSOR_INVALID` if `sensor` is NULL. 
+
+SDL_GetSensorTypeForID
+Returns: the SDL_SensorType, or `SDL_SENSOR_INVALID` if `instance_id` is not valid. 
+
+SDL_GetSensors
+Returns: a 0 terminated array of sensor instance IDs or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetSilenceValueForFormat
+Returns: a byte value that can be passed to memset. 
+
+SDL_GetStorageFileSize
+Returns: true if the file could be queried or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetStoragePathInfo
+Returns: true on success or false if the file doesn't exist, or another failure; call SDL_GetError() for more information. 
+
+SDL_GetStorageSpaceRemaining
+Returns: the amount of remaining space, in bytes. 
+
+SDL_GetStringProperty
+Returns: the value of the property, or `default_value` if it is not set or not a string property. 
+
+SDL_GetSurfaceAlphaMod
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetSurfaceBlendMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetSurfaceClipRect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetSurfaceColorKey
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetSurfaceColorMod
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetSurfaceColorspace
+Returns: the colorspace used by the surface, or SDL_COLORSPACE_UNKNOWN if the surface is NULL. 
+
+SDL_GetSurfaceImages
+Returns: a NULL terminated array of SDL_Surface pointers or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetSurfacePalette
+Returns: a pointer to the palette used by the surface, or NULL if there is no palette used. 
+
+SDL_GetSurfaceProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetSystemPageSize
+Returns: the size of a single page of memory, in bytes, or 0 if SDL can't determine this information. 
+
+SDL_GetSystemRAM
+Returns: the amount of RAM configured in the system in MiB. 
+
+SDL_GetSystemTheme
+Returns: the current system theme, light, dark, or unknown. 
+
+SDL_GetTLS
+Returns: the value associated with the ID for the current thread or NULL if no value has been set; call SDL_GetError() for more information. 
+
+SDL_GetTextInputArea
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetTextureAlphaMod
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetTextureAlphaModFloat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetTextureBlendMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetTextureColorMod
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetTextureColorModFloat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetTexturePalette
+Returns: a pointer to the palette used by the texture, or NULL if there is no palette used. 
+
+SDL_GetTextureProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetTextureScaleMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetTextureSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetThreadID
+Returns: the ID of the specified thread, or the ID of the current thread if `thread` is NULL. 
+
+SDL_GetThreadName
+Returns: a pointer to a UTF-8 string that names the specified thread, or NULL if it doesn't have a name. 
+
+SDL_GetThreadState
+Returns: the current state of a thread, or SDL_THREAD_UNKNOWN if the thread isn't valid. 
+
+SDL_GetTicks
+Returns: an unsigned 64‑bit integer that represents the number of milliseconds that have elapsed since the SDL library was initialized (typically via a call to SDL_Init). 
+
+SDL_GetTicksNS
+Returns: an unsigned 64-bit value representing the number of nanoseconds since the SDL library initialized. 
+
+SDL_GetTouchDeviceName
+Returns: touch device name, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetTouchDeviceType
+Returns: touch device type. 
+
+SDL_GetTouchDevices
+Returns: a 0 terminated array of touch device IDs or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetTouchFingers
+Returns: a NULL terminated array of SDL_Finger pointers or NULL on failure; call SDL_GetError() for more information. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetTrayEntries
+Returns: a NULL-terminated list of entries within the given menu. The pointer becomes invalid when any function that inserts or deletes entries in the menu is called. 
+
+SDL_GetTrayEntryChecked
+Returns: true if the entry is checked; false otherwise. 
+
+SDL_GetTrayEntryEnabled
+Returns: true if the entry is enabled; false otherwise. 
+
+SDL_GetTrayEntryLabel
+Returns: the label of the entry in UTF-8 encoding. 
+
+SDL_GetTrayEntryParent
+Returns: the parent menu. 
+
+SDL_GetTrayMenu
+Returns: the newly created menu. 
+
+SDL_GetTrayMenuParentEntry
+Returns: the parent entry, or NULL if this menu is not a submenu. 
+
+SDL_GetTrayMenuParentTray
+Returns: the parent tray, or NULL if this menu is a submenu. 
+
+SDL_GetTraySubmenu
+Returns: the newly created menu. 
+
+SDL_GetUserFolder
+Returns: either a null-terminated C string containing the full path to the folder, or NULL if an error happened. 
+
+SDL_GetVersion
+Returns: the version of the linked library. 
+
+SDL_GetVideoDriver
+Returns: the name of the video driver with the given **index**, or NULL if index is out of bounds. 
+
+SDL_GetWindowAspectRatio
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowBordersSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowDisplayScale
+Returns: the display scale, or 0.0f on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowFlags
+Returns: a mask of the SDL_WindowFlags associated with `window`. 
+
+SDL_GetWindowFromEvent
+Returns: the associated window on success or NULL if there is none. 
+
+SDL_GetWindowFromID
+Returns: the window associated with `id` or NULL if it doesn't exist; call SDL_GetError() for more information. 
+
+SDL_GetWindowFullscreenMode
+Returns: a pointer to the exclusive fullscreen mode to use or NULL for borderless fullscreen desktop mode. 
+
+SDL_GetWindowICCProfile
+Returns: the raw ICC profile data on success or NULL on failure; call SDL_GetError() for more information. This should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GetWindowID
+Returns: the ID of the window on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowKeyboardGrab
+Returns: true if keyboard is grabbed, and false otherwise. 
+
+SDL_GetWindowMaximumSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowMinimumSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowMouseGrab
+Returns: true if mouse is grabbed, and false otherwise. 
+
+SDL_GetWindowMouseRect
+Returns: a pointer to the mouse confinement rectangle of a window, or NULL if there isn't one. 
+
+SDL_GetWindowOpacity
+Returns: the opacity, (0.0f - transparent, 1.0f - opaque), or -1.0f on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowParent
+Returns: the parent of the window on success or NULL if the window has no parent. 
+
+SDL_GetWindowPixelDensity
+Returns: the pixel density or 0.0f on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowPixelFormat
+Returns: the pixel format of the window on success or SDL_PIXELFORMAT_UNKNOWN on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowPosition
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowProgressState
+Returns: the progress state, or `SDL_PROGRESS_STATE_INVALID` on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowProgressValue
+Returns: the progress value in the range of [0.0f - 1.0f], or -1.0f on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowProperties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowRelativeMouseMode
+Returns: true if relative mode is enabled for a window or false otherwise. 
+
+SDL_GetWindowSafeArea
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowSizeInPixels
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowSurface
+Returns: the surface associated with the window, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowSurfaceVSync
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_GetWindowTitle
+Returns: the title of the window in UTF-8 format or "" if there is no title. 
+
+SDL_GetWindows
+Returns: a NULL terminated array of SDL_Window pointers or NULL on failure; call SDL_GetError() for more information. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GlobDirectory
+Returns: an array of strings on success or NULL on failure; call SDL_GetError() for more information. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_GlobStorageDirectory
+Returns: an array of strings on success or NULL on failure; call SDL_GetError() for more information. The caller should pass the returned pointer to SDL_free when done with it. This is a single allocation that should be freed with SDL_free() when it is no longer needed. 
+
+SDL_HapticEffectSupported
+Returns: true if the effect is supported or false if it isn't. 
+
+SDL_HapticRumbleSupported
+Returns: true if the effect is supported or false if it isn't. 
+
+SDL_HasARMSIMD
+Returns: true if the CPU has ARM SIMD features or false if not. 
+
+SDL_HasAVX
+Returns: true if the CPU has AVX features or false if not. 
+
+SDL_HasAVX2
+Returns: true if the CPU has AVX2 features or false if not. 
+
+SDL_HasAVX512F
+Returns: true if the CPU has AVX-512F features or false if not. 
+
+SDL_HasAltiVec
+Returns: true if the CPU has AltiVec features or false if not. 
+
+SDL_HasClipboardData
+Returns: true if data exists in the clipboard for the provided mime type, false if it does not. 
+
+SDL_HasClipboardText
+Returns: true if the clipboard has text, or false if it does not. 
+
+SDL_HasEvent
+Returns: true if events matching `type` are present, or false if events matching `type` are not present. 
+
+SDL_HasEvents
+Returns: true if events with type >= `minType` and <= `maxType` are present, or false if not. 
+
+SDL_HasGamepad
+Returns: true if a gamepad is connected, false otherwise. 
+
+SDL_HasJoystick
+Returns: true if a joystick is connected, false otherwise. 
+
+SDL_HasKeyboard
+Returns: true if a keyboard is connected, false otherwise. 
+
+SDL_HasLASX
+Returns: true if the CPU has LOONGARCH LASX features or false if not. 
+
+SDL_HasLSX
+Returns: true if the CPU has LOONGARCH LSX features or false if not. 
+
+SDL_HasMMX
+Returns: true if the CPU has MMX features or false if not. 
+
+SDL_HasMouse
+Returns: true if a mouse is connected, false otherwise. 
+
+SDL_HasNEON
+Returns: true if the CPU has ARM NEON features or false if not. 
+
+SDL_HasPrimarySelectionText
+Returns: true if the primary selection has text, or false if it does not. 
+
+SDL_HasProperty
+Returns: true if the property exists, or false if it doesn't. 
+
+SDL_HasRectIntersection
+Returns: true if there is an intersection, false otherwise. 
+
+SDL_HasRectIntersectionFloat
+Returns: true if there is an intersection, false otherwise. 
+
+SDL_HasSSE
+Returns: true if the CPU has SSE features or false if not. 
+
+SDL_HasSSE2
+Returns: true if the CPU has SSE2 features or false if not. 
+
+SDL_HasSSE3
+Returns: true if the CPU has SSE3 features or false if not. 
+
+SDL_HasSSE41
+Returns: true if the CPU has SSE4.1 features or false if not. 
+
+SDL_HasSSE42
+Returns: true if the CPU has SSE4.2 features or false if not. 
+
+SDL_HasScreenKeyboardSupport
+Returns: true if the platform has some screen keyboard support or false if not. 
+
+SDL_HideCursor
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_HideWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_IOFromConstMem
+Returns: a pointer to a new SDL_IOStream structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_IOFromDynamicMem
+Returns: a pointer to a new SDL_IOStream structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_IOFromFile
+Returns: a pointer to the SDL_IOStream structure that is created or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_IOFromMem
+Returns: a pointer to a new SDL_IOStream structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_IOvprintf
+Returns: the number of bytes written or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_Init
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_InitHapticRumble
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_InitSubSystem
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_InsertGPUDebugLabel
+Returns: None
+
+SDL_InsertTrayEntryAt
+Returns: the newly created entry, or NULL if pos is out of bounds. 
+
+SDL_IsAudioDevicePhysical
+Returns: true if devid is a physical device, false if it is logical. 
+
+SDL_IsAudioDevicePlayback
+Returns: true if devid is a playback device, false if it is recording. 
+
+SDL_IsGamepad
+Returns: true if the given joystick is supported by the gamepad interface, false if it isn't or it's an invalid index. 
+
+SDL_IsJoystickHaptic
+Returns: true if the joystick is haptic or false if it isn't. 
+
+SDL_IsJoystickVirtual
+Returns: true if the joystick is virtual, false otherwise. 
+
+SDL_IsMainThread
+Returns: true if this thread is the main thread, or false otherwise. 
+
+SDL_IsMouseHaptic
+Returns: true if the mouse is haptic or false if it isn't. 
+
+SDL_IsTV
+Returns: true if the device is a TV, false otherwise. 
+
+SDL_IsTablet
+Returns: true if the device is a tablet, false otherwise. 
+
+SDL_JoystickConnected
+Returns: true if the joystick has been opened, false if it has not; call SDL_GetError() for more information. 
+
+SDL_JoystickEventsEnabled
+Returns: true if joystick events are being processed, false otherwise. 
+
+SDL_KillProcess
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_LoadBMP
+Returns: a pointer to a new SDL_Surface structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadBMP_IO
+Returns: a pointer to a new SDL_Surface structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadFile
+Returns: the data or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadFileAsync
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_LoadFile_IO
+Returns: the data or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadFunction
+Returns: a pointer to the function or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadObject
+Returns: an opaque pointer to the object handle or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadPNG
+Returns: a pointer to a new SDL_Surface structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadPNG_IO
+Returns: a pointer to a new SDL_Surface structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadSurface
+Returns: a pointer to a new SDL_Surface structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadSurface_IO
+Returns: a pointer to a new SDL_Surface structure or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_LoadWAV
+Returns: true on success. `audio_buf` will be filled with a pointer to an allocated buffer containing the audio data, and `audio_len` is filled with the length of that audio buffer in bytes. This function returns false if the .WAV file cannot be opened, uses an unknown data format, or is corrupt; call SDL_GetError() for more information. When the application is done with the data returned in `audio_buf`, it should call SDL_free() to dispose of it. 
+
+SDL_LoadWAV_IO
+Returns: true on success. `audio_buf` will be filled with a pointer to an allocated buffer containing the audio data, and `audio_len` is filled with the length of that audio buffer in bytes. This function returns false if the .WAV file cannot be opened, uses an unknown data format, or is corrupt; call SDL_GetError() for more information. When the application is done with the data returned in `audio_buf`, it should call SDL_free() to dispose of it. 
+
+SDL_LockAudioStream
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_LockJoysticks
+Returns: None
+
+SDL_LockMutex
+Returns: None
+
+SDL_LockProperties
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_LockRWLockForReading
+Returns: None
+
+SDL_LockRWLockForWriting
+Returns: None
+
+SDL_LockSpinlock
+Returns: None
+
+SDL_LockSurface
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_LockTexture
+Returns: true on success or false if the texture is not valid or was not created with `SDL_TEXTUREACCESS_STREAMING`; call SDL_GetError() for more information. 
+
+SDL_LockTextureToSurface
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_LogMessageV
+Returns: None
+
+SDL_MapGPUTransferBuffer
+Returns: the address of the mapped transfer buffer memory, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_MapRGB
+Returns: a pixel value. 
+
+SDL_MapRGBA
+Returns: a pixel value. 
+
+SDL_MapSurfaceRGB
+Returns: a pixel value. 
+
+SDL_MapSurfaceRGBA
+Returns: a pixel value. 
+
+SDL_MaximizeWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_MemoryBarrierAcquireFunction
+Returns: None
+
+SDL_MemoryBarrierReleaseFunction
+Returns: None
+
+SDL_Metal_CreateView
+Returns: handle NSView or UIView. 
+
+SDL_Metal_DestroyView
+Returns: None
+
+SDL_Metal_GetLayer
+Returns: a pointer. 
+
+SDL_MinimizeWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_MixAudio
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_OnApplicationDidEnterBackground
+Returns: None
+
+SDL_OnApplicationDidEnterForeground
+Returns: None
+
+SDL_OnApplicationDidReceiveMemoryWarning
+Returns: None
+
+SDL_OnApplicationWillEnterBackground
+Returns: None
+
+SDL_OnApplicationWillEnterForeground
+Returns: None
+
+SDL_OnApplicationWillTerminate
+Returns: None
+
+SDL_OpenAudioDevice
+Returns: the device ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_OpenAudioDeviceStream
+Returns: an audio stream on success, ready to use, or NULL on failure; call SDL_GetError() for more information. When done with this stream, call SDL_DestroyAudioStream to free resources and close the device. 
+
+SDL_OpenCamera
+Returns: an SDL_Camera object or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenFileStorage
+Returns: a filesystem storage container on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenGamepad
+Returns: a gamepad identifier or NULL if an error occurred; call SDL_GetError() for more information. 
+
+SDL_OpenHaptic
+Returns: the device identifier or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenHapticFromJoystick
+Returns: a valid haptic device identifier on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenHapticFromMouse
+Returns: the haptic device identifier or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenIO
+Returns: a pointer to the allocated memory on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenJoystick
+Returns: a joystick identifier or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenSensor
+Returns: an SDL_Sensor object or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenStorage
+Returns: a storage container on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenTitleStorage
+Returns: a title storage container on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OpenURL
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_OpenUserStorage
+Returns: a user storage container on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_OutOfMemory
+Returns: false. 
+
+SDL_PauseAudioDevice
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_PauseAudioStreamDevice
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_PauseHaptic
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_PeepEvents
+Returns: the number of events actually stored or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_PlayHapticRumble
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_PollEvent
+Returns: true if this got an event or false if there are none available. 
+
+SDL_PopGPUDebugGroup
+Returns: None
+
+SDL_PremultiplyAlpha
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_PremultiplySurfaceAlpha
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_PumpEvents
+Returns: None
+
+SDL_PushEvent
+Returns: true on success, false if the event was filtered or on failure; call SDL_GetError() for more information. A common reason for error is the event queue being full. 
+
+SDL_PushGPUComputeUniformData
+Returns: None
+
+SDL_PushGPUDebugGroup
+Returns: None
+
+SDL_PushGPUFragmentUniformData
+Returns: None
+
+SDL_PushGPUVertexUniformData
+Returns: None
+
+SDL_PutAudioStreamData
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_PutAudioStreamDataNoCopy
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_PutAudioStreamPlanarData
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_QueryGPUFence
+Returns: true if the fence is signaled, false if it is not. 
+
+SDL_Quit
+Returns: None
+
+SDL_QuitSubSystem
+Returns: None
+
+SDL_RaiseWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadAsyncIO
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadIO
+Returns: the number of bytes read, or 0 on end of file or other failure; call SDL_GetError() for more information. 
+
+SDL_ReadProcess
+Returns: the data or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_ReadS16BE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadS16LE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadS32BE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadS32LE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadS64BE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadS64LE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadS8
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadStorageFile
+Returns: true if the file was read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadSurfacePixel
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadSurfacePixelFloat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadU16BE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadU16LE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadU32BE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadU32LE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadU64BE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadU64LE
+Returns: true on successful read or false on failure; call SDL_GetError() for more information. 
+
+SDL_ReadU8
+Returns: true on success or false on failure or EOF; call SDL_GetError() for more information. 
+
+SDL_RegisterEvents
+Returns: the beginning event number, or 0 if numevents is invalid or if there are not enough user-defined events left. 
+
+SDL_ReleaseCameraFrame
+Returns: None
+
+SDL_ReleaseGPUBuffer
+Returns: None
+
+SDL_ReleaseGPUComputePipeline
+Returns: None
+
+SDL_ReleaseGPUFence
+Returns: None
+
+SDL_ReleaseGPUGraphicsPipeline
+Returns: None
+
+SDL_ReleaseGPUSampler
+Returns: None
+
+SDL_ReleaseGPUShader
+Returns: None
+
+SDL_ReleaseGPUTexture
+Returns: None
+
+SDL_ReleaseGPUTransferBuffer
+Returns: None
+
+SDL_ReleaseWindowFromGPUDevice
+Returns: None
+
+SDL_ReloadGamepadMappings
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RemoveEventWatch
+Returns: None
+
+SDL_RemoveHintCallback
+Returns: None
+
+SDL_RemovePath
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RemoveStoragePath
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RemoveSurfaceAlternateImages
+Returns: None
+
+SDL_RemoveTimer
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RemoveTrayEntry
+Returns: None
+
+SDL_RenamePath
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenameStoragePath
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderClear
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderClipEnabled
+Returns: true if clipping is enabled or false if not; call SDL_GetError() for more information. 
+
+SDL_RenderCoordinatesFromWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderCoordinatesToWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderDebugText
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderFillRect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderFillRects
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderGeometry
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderGeometryRaw
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderLine
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderLines
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderPoint
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderPoints
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderPresent
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderReadPixels
+Returns: a new SDL_Surface on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_RenderRect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderRects
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderTexture
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderTexture9Grid
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderTexture9GridTiled
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderTextureAffine
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderTextureRotated
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderTextureTiled
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RenderViewportSet
+Returns: true if the viewport was set to a specific rectangle, or false if it was set to NULL (the entire target). 
+
+SDL_ReportAssertion
+Returns: assert state. 
+
+SDL_ResetAssertionReport
+Returns: None
+
+SDL_ResetHint
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ResetHints
+Returns: None
+
+SDL_ResetKeyboard
+Returns: None
+
+SDL_ResetLogPriorities
+Returns: None
+
+SDL_RestoreWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ResumeAudioDevice
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ResumeAudioStreamDevice
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ResumeHaptic
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RotateSurface
+Returns: a rotated copy of the surface or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_RumbleGamepad
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RumbleGamepadTriggers
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RumbleJoystick
+Returns: true, or false if rumble isn't supported on this joystick. 
+
+SDL_RumbleJoystickTriggers
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RunHapticEffect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_RunOnMainThread
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SaveBMP
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SaveBMP_IO
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SaveFile
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SaveFile_IO
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SavePNG
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SavePNG_IO
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ScaleSurface
+Returns: a copy of the surface or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_ScreenKeyboardShown
+Returns: true if screen keyboard is shown or false if not. 
+
+SDL_ScreenSaverEnabled
+Returns: true if the screensaver is enabled, false if it is disabled. 
+
+SDL_SeekIO
+Returns: the final offset in the data stream after the seek or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_SendGamepadEffect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SendJoystickEffect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SendJoystickVirtualSensorData
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAppMetadata
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAppMetadataProperty
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAssertionHandler
+Returns: None
+
+SDL_SetAtomicInt
+Returns: the previous value of the atomic variable. 
+
+SDL_SetAtomicPointer
+Returns: the previous value of the pointer. 
+
+SDL_SetAtomicU32
+Returns: the previous value of the atomic variable. 
+
+SDL_SetAudioDeviceGain
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAudioPostmixCallback
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAudioStreamFormat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAudioStreamFrequencyRatio
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAudioStreamGain
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAudioStreamGetCallback
+Returns: true on success or false on failure; call SDL_GetError() for more information. This only fails if `stream` is NULL. 
+
+SDL_SetAudioStreamInputChannelMap
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAudioStreamOutputChannelMap
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetAudioStreamPutCallback
+Returns: true on success or false on failure; call SDL_GetError() for more information. This only fails if `stream` is NULL. 
+
+SDL_SetBooleanProperty
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetClipboardData
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetClipboardText
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetCurrentThreadPriority
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetCursor
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetDefaultTextureScaleMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetEnvironmentVariable
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetErrorV
+Returns: false. 
+
+SDL_SetEventEnabled
+Returns: None
+
+SDL_SetEventFilter
+Returns: None
+
+SDL_SetFloatProperty
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetGPUAllowedFramesInFlight
+Returns: true if successful, false on error; call SDL_GetError() for more information. 
+
+SDL_SetGPUBlendConstants
+Returns: None
+
+SDL_SetGPUBufferName
+Returns: None
+
+SDL_SetGPURenderState
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetGPURenderStateFragmentUniforms
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetGPURenderStateSamplerBindings
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetGPURenderStateStorageBuffers
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetGPURenderStateStorageTextures
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetGPUScissor
+Returns: None
+
+SDL_SetGPUStencilReference
+Returns: None
+
+SDL_SetGPUSwapchainParameters
+Returns: true if successful, false on error; call SDL_GetError() for more information. 
+
+SDL_SetGPUTextureName
+Returns: None
+
+SDL_SetGPUViewport
+Returns: None
+
+SDL_SetGamepadEventsEnabled
+Returns: None
+
+SDL_SetGamepadLED
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetGamepadMapping
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetGamepadPlayerIndex
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetGamepadSensorEnabled
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetHapticAutocenter
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetHapticGain
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetHint
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetHintWithPriority
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetInitialized
+Returns: None
+
+SDL_SetJoystickEventsEnabled
+Returns: None
+
+SDL_SetJoystickLED
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetJoystickPlayerIndex
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetJoystickVirtualAxis
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetJoystickVirtualBall
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetJoystickVirtualButton
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetJoystickVirtualHat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetJoystickVirtualTouchpad
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetLinuxThreadPriority
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetLinuxThreadPriorityAndPolicy
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetLogOutputFunction
+Returns: None
+
+SDL_SetLogPriorities
+Returns: None
+
+SDL_SetLogPriority
+Returns: None
+
+SDL_SetLogPriorityPrefix
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetMemoryFunctions
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetModState
+Returns: None
+
+SDL_SetNumberProperty
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetPaletteColors
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetPointerProperty
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetPointerPropertyWithCleanup
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetPrimarySelectionText
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRelativeMouseTransform
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderClipRect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderColorScale
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderDrawBlendMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderDrawColor
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderDrawColorFloat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderLogicalPresentation
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderScale
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderTarget
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderTextureAddressMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderVSync
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetRenderViewport
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetScancodeName
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetStringProperty
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetSurfaceAlphaMod
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetSurfaceBlendMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetSurfaceClipRect
+Returns: true if the rectangle intersects the surface, otherwise false and blits will be completely clipped. 
+
+SDL_SetSurfaceColorKey
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetSurfaceColorMod
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetSurfaceColorspace
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetSurfacePalette
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetSurfaceRLE
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTLS
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTextInputArea
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTextureAlphaMod
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTextureAlphaModFloat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTextureBlendMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTextureColorMod
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTextureColorModFloat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTexturePalette
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTextureScaleMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetTrayEntryCallback
+Returns: None
+
+SDL_SetTrayEntryChecked
+Returns: None
+
+SDL_SetTrayEntryEnabled
+Returns: None
+
+SDL_SetTrayEntryLabel
+Returns: None
+
+SDL_SetTrayIcon
+Returns: None
+
+SDL_SetTrayTooltip
+Returns: None
+
+SDL_SetWindowAlwaysOnTop
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowAspectRatio
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowBordered
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowFillDocument
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowFocusable
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowFullscreen
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowFullscreenMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowHitTest
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowIcon
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowKeyboardGrab
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowMaximumSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowMinimumSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowModal
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowMouseGrab
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowMouseRect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowOpacity
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowParent
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowPosition
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowProgressState
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowProgressValue
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowRelativeMouseMode
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowResizable
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowShape
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowSize
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowSurfaceVSync
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetWindowTitle
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SetX11EventHook
+Returns: None
+
+SDL_ShouldInit
+Returns: true if initialization needs to be done, false otherwise. 
+
+SDL_ShouldQuit
+Returns: true if cleanup needs to be done, false otherwise. 
+
+SDL_ShowCursor
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ShowFileDialogWithProperties
+Returns: None
+
+SDL_ShowMessageBox
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ShowOpenFileDialog
+Returns: None
+
+SDL_ShowOpenFolderDialog
+Returns: None
+
+SDL_ShowSaveFileDialog
+Returns: None
+
+SDL_ShowSimpleMessageBox
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ShowWindow
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_ShowWindowSystemMenu
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_SignalAsyncIOQueue
+Returns: None
+
+SDL_SignalCondition
+Returns: None
+
+SDL_SignalSemaphore
+Returns: None
+
+SDL_StartTextInput
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_StartTextInputWithProperties
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_StepBackUTF8
+Returns: the previous Unicode codepoint in the string. 
+
+SDL_StepUTF8
+Returns: the first Unicode codepoint in the string. 
+
+SDL_StopHapticEffect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_StopHapticEffects
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_StopHapticRumble
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_StopTextInput
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_StorageReady
+Returns: true if the container is ready, false otherwise. 
+
+SDL_StretchSurface
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_StringToGUID
+Returns: a SDL_GUID structure. 
+
+SDL_SubmitGPUCommandBuffer
+Returns: true on success, false on failure; call SDL_GetError() for more information. 
+
+SDL_SubmitGPUCommandBufferAndAcquireFence
+Returns: a fence associated with the command buffer, or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_SurfaceHasAlternateImages
+Returns: true if alternate versions are available or false otherwise. 
+
+SDL_SurfaceHasColorKey
+Returns: true if the surface has a color key, false otherwise. 
+
+SDL_SurfaceHasRLE
+Returns: true if the surface is RLE enabled, false otherwise. 
+
+SDL_SyncWindow
+Returns: true on success or false if the operation timed out before the window was in the requested state. 
+
+SDL_TellIO
+Returns: the current offset in the stream, or -1 if the information can not be determined. 
+
+SDL_TextInputActive
+Returns: true if text input events are enabled else false. 
+
+SDL_TimeFromWindows
+Returns: the converted SDL time. 
+
+SDL_TimeToDateTime
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_TimeToWindows
+Returns: None
+
+SDL_TryLockJoysticks
+Returns: true if the joysticks were successfully locked, false otherwise. 
+
+SDL_TryLockMutex
+Returns: true on success, false if the mutex would block. 
+
+SDL_TryLockRWLockForReading
+Returns: true on success, false if the lock would block. 
+
+SDL_TryLockRWLockForWriting
+Returns: true on success, false if the lock would block. 
+
+SDL_TryLockSpinlock
+Returns: true if the lock succeeded, false if the lock is already held. 
+
+SDL_TryWaitSemaphore
+Returns: true if the wait succeeds, false if the wait would block. 
+
+SDL_UCS4ToUTF8
+Returns: the first byte past the newly-written UTF-8 sequence. 
+
+SDL_UnbindAudioStream
+Returns: None
+
+SDL_UnbindAudioStreams
+Returns: None
+
+SDL_UnloadObject
+Returns: None
+
+SDL_UnlockAudioStream
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_UnlockJoysticks
+Returns: None
+
+SDL_UnlockMutex
+Returns: None
+
+SDL_UnlockProperties
+Returns: None
+
+SDL_UnlockRWLock
+Returns: None
+
+SDL_UnlockSpinlock
+Returns: None
+
+SDL_UnlockSurface
+Returns: None
+
+SDL_UnlockTexture
+Returns: None
+
+SDL_UnmapGPUTransferBuffer
+Returns: None
+
+SDL_UnsetEnvironmentVariable
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_UpdateGamepads
+Returns: None
+
+SDL_UpdateHapticEffect
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_UpdateJoysticks
+Returns: None
+
+SDL_UpdateNVTexture
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_UpdateSensors
+Returns: None
+
+SDL_UpdateTexture
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_UpdateTrays
+Returns: None
+
+SDL_UpdateWindowSurface
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_UpdateWindowSurfaceRects
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_UpdateYUVTexture
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_UploadToGPUBuffer
+Returns: None
+
+SDL_UploadToGPUTexture
+Returns: None
+
+SDL_WaitAndAcquireGPUSwapchainTexture
+Returns: true on success, false on error; call SDL_GetError() for more information. 
+
+SDL_WaitAsyncIOResult
+Returns: true if task has completed, false otherwise. 
+
+SDL_WaitCondition
+Returns: None
+
+SDL_WaitConditionTimeout
+Returns: true if the condition variable is signaled, false if the condition is not signaled in the allotted time. 
+
+SDL_WaitEvent
+Returns: true on success or false if there was an error while waiting for events; call SDL_GetError() for more information. 
+
+SDL_WaitEventTimeout
+Returns: true if this got an event or false if the timeout elapsed without any events available. 
+
+SDL_WaitForGPUFences
+Returns: true on success, false on failure; call SDL_GetError() for more information. 
+
+SDL_WaitForGPUIdle
+Returns: true on success, false on failure; call SDL_GetError() for more information. 
+
+SDL_WaitForGPUSwapchain
+Returns: true on success, false on failure; call SDL_GetError() for more information. 
+
+SDL_WaitProcess
+Returns: true if the process exited, false otherwise. 
+
+SDL_WaitSemaphore
+Returns: None
+
+SDL_WaitSemaphoreTimeout
+Returns: true if the wait succeeds or false if the wait times out. 
+
+SDL_WaitThread
+Returns: None
+
+SDL_WarpMouseGlobal
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_WarpMouseInWindow
+Returns: None
+
+SDL_WasInit
+Returns: a mask of all initialized subsystems if `flags` is 0, otherwise it returns the initialization status of the specified subsystems. 
+
+SDL_WindowHasSurface
+Returns: true if there is a surface associated with the window, or false otherwise. 
+
+SDL_WindowSupportsGPUPresentMode
+Returns: true if supported, false if unsupported. 
+
+SDL_WindowSupportsGPUSwapchainComposition
+Returns: true if supported, false if unsupported. 
+
+SDL_WriteAsyncIO
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteIO
+Returns: the number of bytes written, which will be less than `size` on failure; call SDL_GetError() for more information. 
+
+SDL_WriteS16BE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteS16LE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteS32BE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteS32LE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteS64BE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteS64LE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteS8
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteStorageFile
+Returns: true if the file was written or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteSurfacePixel
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteSurfacePixelFloat
+Returns: true on success or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteU16BE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteU16LE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteU32BE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteU32LE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteU64BE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteU64LE
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_WriteU8
+Returns: true on successful write or false on failure; call SDL_GetError() for more information. 
+
+SDL_abs
+Returns: the absolute value of x. 
+
+SDL_acos
+Returns: arc cosine of `x`, in radians. 
+
+SDL_acosf
+Returns: arc cosine of `x`, in radians. 
+
+SDL_aligned_alloc
+Returns: a pointer to the aligned memory, or NULL if allocation failed. 
+
+SDL_aligned_free
+Returns: None
+
+SDL_asin
+Returns: arc sine of `x`, in radians. 
+
+SDL_asinf
+Returns: arc sine of `x`, in radians. 
+
+SDL_atan
+Returns: arc tangent of of `x` in radians, or 0 if `x = 0`. 
+
+SDL_atan2
+Returns: arc tangent of `y / x` in radians, or, if `x = 0`, either `-Pi/2`, `0`, or `Pi/2`, depending on the value of `y`. 
+
+SDL_atan2f
+Returns: arc tangent of of `y / x` in radians, or, if `x = 0`, either `-Pi/2`, `0`, or `Pi/2`, depending on the value of `y`. 
+
+SDL_atanf
+Returns: arc tangent of of `x` in radians, or 0 if `x = 0`. 
+
+SDL_atof
+Returns: the parsed `double`. 
+
+SDL_atoi
+Returns: the parsed `int`. 
+
+SDL_bsearch
+Returns: a pointer to the matching element in the array, or NULL if not found. 
+
+SDL_bsearch_r
+Returns: a pointer to the matching element in the array, or NULL if not found. 
+
+SDL_calloc
+Returns: a pointer to the allocated array, or NULL if allocation failed. 
+
+SDL_ceil
+Returns: the ceiling of `x`. 
+
+SDL_ceilf
+Returns: the ceiling of `x`. 
+
+SDL_copysign
+Returns: the floating point value with the sign of y and the magnitude of x. 
+
+SDL_copysignf
+Returns: the floating point value with the sign of y and the magnitude of x. 
+
+SDL_cos
+Returns: cosine of `x`. 
+
+SDL_cosf
+Returns: cosine of `x`. 
+
+SDL_crc16
+Returns: a CRC-16 checksum value of all blocks in the data set. 
+
+SDL_crc32
+Returns: a CRC-32 checksum value of all blocks in the data set. 
+
+SDL_exp
+Returns: value of `e^x`. 
+
+SDL_expf
+Returns: value of `e^x`. 
+
+SDL_fabs
+Returns: the absolute value of `x`. 
+
+SDL_fabsf
+Returns: the absolute value of `x`. 
+
+SDL_floor
+Returns: the floor of `x`. 
+
+SDL_floorf
+Returns: the floor of `x`. 
+
+SDL_fmod
+Returns: the remainder of `x / y`. 
+
+SDL_fmodf
+Returns: the remainder of `x / y`. 
+
+SDL_free
+Returns: None
+
+SDL_getenv
+Returns: a pointer to the value of the variable or NULL if it can't be found. 
+
+SDL_getenv_unsafe
+Returns: a pointer to the value of the variable or NULL if it can't be found. 
+
+SDL_hid_ble_scan
+Returns: None
+
+SDL_hid_close
+Returns: 0 on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_hid_device_change_count
+Returns: a change counter that is incremented with each potential device change, or 0 if device change detection isn't available. 
+
+SDL_hid_enumerate
+Returns: a pointer to a linked list of type SDL_hid_device_info, containing information about the HID devices attached to the system, or NULL in the case of failure. Free this linked list by calling SDL_hid_free_enumeration(). 
+
+SDL_hid_exit
+Returns: 0 on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_hid_free_enumeration
+Returns: None
+
+SDL_hid_get_device_info
+Returns: a pointer to the SDL_hid_device_info for this hid_device or NULL on failure; call SDL_GetError() for more information. This struct is valid until the device is closed with SDL_hid_close(). 
+
+SDL_hid_get_feature_report
+Returns: the number of bytes read plus one for the report ID (which is still in the first byte), or -1 on on failure; call SDL_GetError() for more information. 
+
+SDL_hid_get_indexed_string
+Returns: 0 on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_hid_get_input_report
+Returns: the number of bytes read plus one for the report ID (which is still in the first byte), or -1 on on failure; call SDL_GetError() for more information. 
+
+SDL_hid_get_manufacturer_string
+Returns: 0 on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_hid_get_product_string
+Returns: 0 on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_hid_get_properties
+Returns: a valid property ID on success or 0 on failure; call SDL_GetError() for more information. 
+
+SDL_hid_get_report_descriptor
+Returns: the number of bytes actually copied or -1 on failure; call SDL_GetError() for more information. 
+
+SDL_hid_get_serial_number_string
+Returns: 0 on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_hid_init
+Returns: 0 on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_hid_open
+Returns: a pointer to a SDL_hid_device object on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_hid_open_path
+Returns: a pointer to a SDL_hid_device object on success or NULL on failure; call SDL_GetError() for more information. 
+
+SDL_hid_read
+Returns: the actual number of bytes read and -1 on failure; call SDL_GetError() for more information. If no packet was available to be read and the handle is in non-blocking mode, this function returns 0. 
+
+SDL_hid_read_timeout
+Returns: the actual number of bytes read and -1 on on failure; call SDL_GetError() for more information. If no packet was available to be read within the timeout period, this function returns 0. 
+
+SDL_hid_send_feature_report
+Returns: the actual number of bytes written and -1 on failure; call SDL_GetError() for more information. 
+
+SDL_hid_set_nonblocking
+Returns: 0 on success or a negative error code on failure; call SDL_GetError() for more information. 
+
+SDL_hid_write
+Returns: the actual number of bytes written and -1 on on failure; call SDL_GetError() for more information. 
+
+SDL_iconv
+Returns: the number of conversions on success, or a negative error code. 
+
+SDL_iconv_close
+Returns: 0 on success, or -1 on failure. 
+
+SDL_iconv_open
+Returns: a handle that must be freed with SDL_iconv_close, or SDL_ICONV_ERROR on failure. 
+
+SDL_iconv_string
+Returns: a new string, converted to the new encoding, or NULL on error. 
+
+SDL_isalnum
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_isalpha
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_isblank
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_iscntrl
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_isdigit
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_isgraph
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_isinf
+Returns: non-zero if the value is infinity, 0 otherwise. 
+
+SDL_isinff
+Returns: non-zero if the value is infinity, 0 otherwise. 
+
+SDL_islower
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_isnan
+Returns: non-zero if the value is NaN, 0 otherwise. 
+
+SDL_isnanf
+Returns: non-zero if the value is NaN, 0 otherwise. 
+
+SDL_isprint
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_ispunct
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_isspace
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_isupper
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_isxdigit
+Returns: non-zero if x falls within the character class, zero otherwise. 
+
+SDL_itoa
+Returns: `str`. 
+
+SDL_lltoa
+Returns: `str`. 
+
+SDL_log
+Returns: the natural logarithm of `x`. 
+
+SDL_log10
+Returns: the logarithm of `x`. 
+
+SDL_log10f
+Returns: the logarithm of `x`. 
+
+SDL_logf
+Returns: the natural logarithm of `x`. 
+
+SDL_lround
+Returns: the nearest integer to `x`. 
+
+SDL_lroundf
+Returns: the nearest integer to `x`. 
+
+SDL_ltoa
+Returns: `str`. 
+
+SDL_malloc
+Returns: a pointer to the allocated memory, or NULL if allocation failed. 
+
+SDL_memcmp
+Returns: less than zero if s1 is "less than" s2, greater than zero if s1 is "greater than" s2, and zero if the buffers match exactly for `len` bytes. 
+
+SDL_memcpy
+Returns: `dst`. 
+
+SDL_memmove
+Returns: `dst`. 
+
+SDL_memset
+Returns: `dst`. 
+
+SDL_memset4
+Returns: `dst`. 
+
+SDL_modf
+Returns: the fractional part of `x`. 
+
+SDL_modff
+Returns: the fractional part of `x`. 
+
+SDL_murmur3_32
+Returns: a Murmur3 32-bit hash value. 
+
+SDL_pow
+Returns: `x` raised to the power `y`. 
+
+SDL_powf
+Returns: `x` raised to the power `y`. 
+
+SDL_qsort
+Returns: None
+
+SDL_qsort_r
+Returns: None
+
+SDL_rand
+Returns: a random value in the range of [0 .. n-1]. 
+
+SDL_rand_bits
+Returns: a random value in the range of [0-SDL_MAX_UINT32]. 
+
+SDL_rand_bits_r
+Returns: a random value in the range of [0-SDL_MAX_UINT32]. 
+
+SDL_rand_r
+Returns: a random value in the range of [0 .. n-1]. 
+
+SDL_randf
+Returns: a random value in the range of [0.0, 1.0). 
+
+SDL_randf_r
+Returns: a random value in the range of [0.0, 1.0). 
+
+SDL_realloc
+Returns: a pointer to the newly allocated memory, or NULL if allocation failed. 
+
+SDL_round
+Returns: the nearest integer to `x`. 
+
+SDL_roundf
+Returns: the nearest integer to `x`. 
+
+SDL_scalbn
+Returns: `x * 2^n`. 
+
+SDL_scalbnf
+Returns: `x * 2^n`. 
+
+SDL_setenv_unsafe
+Returns: 0 on success, -1 on error. 
+
+SDL_sin
+Returns: sine of `x`. 
+
+SDL_sinf
+Returns: sine of `x`. 
+
+SDL_sqrt
+Returns: square root of `x`. 
+
+SDL_sqrtf
+Returns: square root of `x`. 
+
+SDL_srand
+Returns: None
+
+SDL_strcasecmp
+Returns: less than zero if str1 is "less than" str2, greater than zero if str1 is "greater than" str2, and zero if the strings match exactly. 
+
+SDL_strcasestr
+Returns: a pointer to the first instance of `needle` in the string, or NULL if not found. 
+
+SDL_strchr
+Returns: a pointer to the first instance of `c` in the string, or NULL if not found. 
+
+SDL_strcmp
+Returns: less than zero if str1 is "less than" str2, greater than zero if str1 is "greater than" str2, and zero if the strings match exactly. 
+
+SDL_strdup
+Returns: a pointer to the newly-allocated string. 
+
+SDL_strlcat
+Returns: the length (in characters, excluding the null terminator) of the string in `dst` plus the length of `src`. 
+
+SDL_strlcpy
+Returns: the length (in characters, excluding the null terminator) of `src`. 
+
+SDL_strlen
+Returns: the length (in bytes, excluding the null terminator) of `src`. 
+
+SDL_strlwr
+Returns: the `str` pointer passed into this function. 
+
+SDL_strncasecmp
+Returns: less than zero if str1 is "less than" str2, greater than zero if str1 is "greater than" str2, and zero if the strings match exactly. 
+
+SDL_strncmp
+Returns: less than zero if str1 is "less than" str2, greater than zero if str1 is "greater than" str2, and zero if the strings match exactly. 
+
+SDL_strndup
+Returns: a pointer to the newly-allocated string. 
+
+SDL_strnlen
+Returns: the length (in bytes, excluding the null terminator) of `src` but never more than `maxlen`. 
+
+SDL_strnstr
+Returns: a pointer to the first instance of `needle` in the string, or NULL if not found. 
+
+SDL_strpbrk
+Returns: A pointer to the location, in str, of the first occurrence of a character present in the breakset, or NULL if none is found. 
+
+SDL_strrchr
+Returns: a pointer to the last instance of `c` in the string, or NULL if not found. 
+
+SDL_strrev
+Returns: `str`. 
+
+SDL_strstr
+Returns: a pointer to the first instance of `needle` in the string, or NULL if not found. 
+
+SDL_strtod
+Returns: the parsed `double`, or 0 if no number could be parsed. 
+
+SDL_strtok_r
+Returns: A pointer to the next token, or NULL if no tokens remain. 
+
+SDL_strtol
+Returns: the parsed `long`, or 0 if no number could be parsed. 
+
+SDL_strtoll
+Returns: the parsed `long long`, or 0 if no number could be parsed. 
+
+SDL_strtoul
+Returns: the parsed `unsigned long`, or 0 if no number could be parsed. 
+
+SDL_strtoull
+Returns: the parsed `unsigned long long`, or 0 if no number could be parsed. 
+
+SDL_strupr
+Returns: the `str` pointer passed into this function. 
+
+SDL_tan
+Returns: tangent of `x`. 
+
+SDL_tanf
+Returns: tangent of `x`. 
+
+SDL_tolower
+Returns: lowercase version of x, or x if no conversion available. 
+
+SDL_toupper
+Returns: capitalized version of x, or x if no conversion available. 
+
+SDL_trunc
+Returns: `x` truncated to an integer. 
+
+SDL_truncf
+Returns: `x` truncated to an integer. 
+
+SDL_uitoa
+Returns: `str`. 
+
+SDL_ulltoa
+Returns: `str`. 
+
+SDL_ultoa
+Returns: `str`. 
+
+SDL_unsetenv_unsafe
+Returns: 0 on success, -1 on error. 
+
+SDL_utf8strlcpy
+Returns: the number of bytes written, excluding the null terminator. 
+
+SDL_utf8strlen
+Returns: The length (in codepoints, excluding the null terminator) of `src`. 
+
+SDL_utf8strnlen
+Returns: The length (in codepoints, excluding the null terminator) of `src` but never more than `maxlen`. 
+
+SDL_vasprintf
+Returns: the number of bytes in the newly-allocated string, not counting the null-terminator char, or a negative value on error. 
+
+SDL_vsnprintf
+Returns: the number of bytes that should be written, not counting the null-terminator char, or a negative value on error. 
+
+SDL_vsscanf
+Returns: the number of items that matched the format string. 
+
+SDL_vswprintf
+Returns: the number of wide characters that should be written, not counting the null-terminator char, or a negative value on error. 
+
+SDL_wcscasecmp
+Returns: less than zero if str1 is "less than" str2, greater than zero if str1 is "greater than" str2, and zero if the strings match exactly. 
+
+SDL_wcscmp
+Returns: less than zero if str1 is "less than" str2, greater than zero if str1 is "greater than" str2, and zero if the strings match exactly. 
+
+SDL_wcsdup
+Returns: a pointer to the newly-allocated wide string. 
+
+SDL_wcslcat
+Returns: the length (in wide characters, excluding the null terminator) of the string in `dst` plus the length of `src`. 
+
+SDL_wcslcpy
+Returns: the length (in wide characters, excluding the null terminator) of `src`. 
+
+SDL_wcslen
+Returns: the length (in wchar_t values, excluding the null terminator) of `wstr`. 
+
+SDL_wcsncasecmp
+Returns: less than zero if str1 is "less than" str2, greater than zero if str1 is "greater than" str2, and zero if the strings match exactly. 
+
+SDL_wcsncmp
+Returns: less than zero if str1 is "less than" str2, greater than zero if str1 is "greater than" str2, and zero if the strings match exactly. 
+
+SDL_wcsnlen
+Returns: the length (in wide characters, excluding the null terminator) of `wstr` but never more than `maxlen`. 
+
+SDL_wcsnstr
+Returns: a pointer to the first instance of `needle` in the string, or NULL if not found. 
+
+SDL_wcsstr
+Returns: a pointer to the first instance of `needle` in the string, or NULL if not found. 
+
+SDL_wcstol
+Returns: the parsed `long`, or 0 if no number could be parsed. 
+

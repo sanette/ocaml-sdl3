@@ -1,0 +1,15 @@
+(executable
+ (name example)
+ (libraries sdl3))
+
+(executable
+ (name main)
+ (libraries sdl3))
+
+(executable
+ (name test)
+ (libraries sdl3))
+
+(executable
+ (name camera)
+ (libraries sdl3))
