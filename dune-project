@@ -16,7 +16,7 @@
  (description "The bindings cover the core SDL3 library")
  (depends
    ocaml
-   (ctypes (>= 0.20.0))
+   (ctypes (>= 0.23.0))
    ctypes-foreign)
 
  (tags
