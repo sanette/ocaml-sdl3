@@ -1,15 +1,19 @@
 (executable
  (name example)
+ (modules example)
  (libraries sdl3))
 
 (executable
  (name main)
+ (modules main)
  (libraries sdl3))
 
 (executable
  (name test)
+ (modules test)
  (libraries sdl3))
 
 (executable
  (name camera)
+ (modules camera)
  (libraries sdl3))
