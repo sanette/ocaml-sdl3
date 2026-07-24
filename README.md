@@ -19,10 +19,11 @@ started the project) and is not part of this repository.
 
 # Warning! early stage of developpment!
 
-_Very_ few has been tested yet. Because the game is to try to write
-everything "automatically", the overall structure is weird at many
-places, and the quality is far from a manually corrected API like
-`tsdl` (which provides bindings for SDL2).
+Don't expect all functions to work! _Very_ few has been tested
+yet. Because the game is to try to write everything "automatically",
+the overall structure is weird at many places, and the quality is far
+from a manually corrected API like `tsdl` (which provides bindings for
+SDL2).
 
 _But_, it seems to be usable for some examples (see the `bin`
 directory). However, **use at your own risk!** Core dumped

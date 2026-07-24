@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -18,12 +18,12 @@ let get_union = ff "SDL_GetRectUnion"
 
 let get_and_line_intersection = ff "SDL_GetRectAndLineIntersection"
   (rect @-> ptr int @-> ptr int @-> ptr int @-> ptr int @-> returning bool)
-let get_and_line_intersection rect =
-  let x1 = allocate int 0 in
-  let y1 = allocate int 0 in
-  let x2 = allocate int 0 in
-  let y2 = allocate int 0 in
-  if get_and_line_intersection rect x1 y1 x2 y2 then Ok (!@ x1, !@ y1, !@ x2, !@ y2) else error ()
+let get_and_line_intersection rect x1 y1 x2 y2 =
+let x1 = allocate int x1 in
+let y1 = allocate int y1 in
+let x2 = allocate int x2 in
+let y2 = allocate int y2 in
+if get_and_line_intersection rect x1 y1 x2 y2 then Ok (!@ x1, !@ y1, !@ x2, !@ y2) else error ()
 
 end
 
@@ -48,13 +48,12 @@ let get_rect_union_float = ff "SDL_GetRectUnionFloat"
 
 let get_rect_and_line_intersection_float = ff "SDL_GetRectAndLineIntersectionFloat"
   (f_rect @-> ptr float @-> ptr float @-> ptr float @-> ptr float @-> returning bool)
-let get_rect_and_line_intersection_float rect =
-  let x1 = allocate float 0. in
-  let y1 = allocate float 0. in
-  let x2 = allocate float 0. in
-  let y2 = allocate float 0. in
+let get_rect_and_line_intersection_float rect x1 y1 x2 y2 =
+  let x1 = allocate float x1 in
+  let y1 = allocate float y1 in
+  let x2 = allocate float x2 in
+  let y2 = allocate float y2 in
   if get_rect_and_line_intersection_float rect x1 y1 x2 y2 then Ok (!@ x1, !@ y1, !@ x2, !@ y2) else error ()
-
 include FRect
 
 end

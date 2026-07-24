@@ -1,7 +1,7 @@
 (* SLD3-ocaml example: *)
 (* Open camera and display frames onscreen *)
 (* Adapted from examples/camera/01-read-and-draw from the SDL3 sources (public
-   domaine) *)
+   domain) *)
 
 open Sdl3
 exception Quit
@@ -69,17 +69,19 @@ let () =
             | None ->
               let w,h = Surface.(get surf w), Surface.(get surf h) in
               Window.set_size win w h |> go;
+              Renderer.set_logical_presentation renderer w h
+                Sdl.logical_presentation_letterbox |> go;
               print "Creating texture of size (%i,%i)" w h;
               Texture.create renderer format Sdl.textureaccess_streaming w h |> go
             | Some tex -> tex
           in
           Texture.update tex None pixels pitch |> go;
           Camera.release_frame cam surf;
-          delay 32;
           Renderer.set_draw_color renderer 0x99 0x99 0x99 Sdl.alpha_opaque |> go;
           Renderer.render_clear renderer |> go;
           Renderer.render_texture renderer tex None None |> go;
           Renderer.render_present renderer |> go;
+          delay 32;
           loop (Some tex) (n-1)
       end in
 
