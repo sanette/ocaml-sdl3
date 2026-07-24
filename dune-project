@@ -17,7 +17,7 @@
  (depends
    ocaml
    (ctypes (>= 0.23.0))
-   ctypes-foreign)
+   (ctypes-foreign (>= 0.23.0)))
 
  (tags
   (sdl sdl3 graphics events devices)))
