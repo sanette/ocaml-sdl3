@@ -1,0 +1,3 @@
+(executable
+ (name clear)
+ (libraries sdl3))

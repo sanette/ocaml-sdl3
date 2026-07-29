@@ -1,0 +1,4 @@
+(executable
+ (name template)
+ (modules template)
+ (libraries sdl3))
