@@ -71,10 +71,10 @@ let get_permission_state = ff "SDL_GetCameraPermissionState"
   (camera @-> returning camera_permission_state)
 
 let get_id = ff "SDL_GetCameraID"
-  (camera @-> returning camera_id)
+  (camera @-> returning int_as_uint)
 
 let get_properties = ff "SDL_GetCameraProperties"
-  (camera @-> returning properties_id)
+  (camera @-> returning int_as_uint)
 
 let get_format = ff "SDL_GetCameraFormat"
   (camera @-> camera_spec @-> returning true_to_ok)

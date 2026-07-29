@@ -56,7 +56,7 @@ let event_enabled typ =
   event_enabled (Unsigned.UInt.of_int typ)
 
 let register_events = ff "SDL_RegisterEvents"
-  (int @-> returning uint32)
+  (int @-> returning int_as_uint)
 
 end
 include Global

@@ -31,10 +31,10 @@ let get_displays () =
         |> List.map Unsigned.UInt.to_int)
 
 let get_primary_display = ff "SDL_GetPrimaryDisplay"
-  (void @-> returning display_id)
+  (void @-> returning int_as_uint)
 
 let get_display_properties = ff "SDL_GetDisplayProperties"
-  (display_id @-> returning properties_id)
+  (display_id @-> returning int_as_uint)
 let get_display_properties display_id =
   get_display_properties (Unsigned.UInt.of_int display_id)
 
@@ -175,19 +175,19 @@ end
 
 module Point = struct
 let get_display_for = ff "SDL_GetDisplayForPoint"
-  (point @-> returning display_id)
+  (point @-> returning int_as_uint)
 
 end
 
 module Rect = struct
 let get_display_for = ff "SDL_GetDisplayForRect"
-  (rect @-> returning display_id)
+  (rect @-> returning int_as_uint)
 
 end
 
 module Window = struct
 let get_display_for = ff "SDL_GetDisplayForWindow"
-  (window @-> returning display_id)
+  (window @-> returning int_as_uint)
 
 let get_pixel_density = ff "SDL_GetWindowPixelDensity"
   (window @-> returning float)
@@ -223,7 +223,7 @@ let create_with_properties props =
   create_with_properties (Unsigned.UInt.of_int props)
 
 let get_id = ff "SDL_GetWindowID"
-  (window @-> returning window_id)
+  (window @-> returning int_as_uint)
 
 let get_from_id = ff "SDL_GetWindowFromID"
   (window_id @-> returning (some_to_ok window_opt))
@@ -234,10 +234,10 @@ let get_parent = ff "SDL_GetWindowParent"
   (window @-> returning (some_to_ok window_opt))
 
 let get_properties = ff "SDL_GetWindowProperties"
-  (window @-> returning properties_id)
+  (window @-> returning int_as_uint)
 
 let get_flags = ff "SDL_GetWindowFlags"
-  (window @-> returning window_flags)
+  (window @-> returning int64_as_ulong)
 
 let set_title = ff "SDL_SetWindowTitle"
   (window @-> string @-> returning true_to_ok)

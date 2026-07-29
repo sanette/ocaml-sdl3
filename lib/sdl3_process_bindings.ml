@@ -16,7 +16,7 @@ let create_with_properties props =
   create_with_properties (Unsigned.UInt.of_int props)
 
 let get_properties = ff "SDL_GetProcessProperties"
-  (process @-> returning properties_id)
+  (process @-> returning int_as_uint)
 
 let read = ff "SDL_ReadProcess"
   (process @-> ptr size_t @-> ptr int @-> returning (ptr void))

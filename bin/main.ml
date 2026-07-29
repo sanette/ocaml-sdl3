@@ -1,9 +1,12 @@
+(* Access SDL functions by "Categories" *)
+
+open Sdl3
 let go = Result.get_ok
-module C = Sdl3.Categories
+module C = Categories
 
 let () =
   print_endline "Hello, World!";
-  go (Sdl3.init (Sdl3.Sdl.init_events));
+  go (C.Init.init (Sdl.init_events));
   let win = C.Video.Window.create "Hello SDL3" 800 600 0L in
   ignore (win);
   let _ = C.Joystick.ff in

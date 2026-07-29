@@ -40,7 +40,7 @@ let reset_keyboard = ff "SDL_ResetKeyboard"
   (void @-> returning void)
 
 let get_mod_state = ff "SDL_GetModState"
-  (void @-> returning keymod)
+  (void @-> returning int_as_ushort)
 
 let set_mod_state = ff "SDL_SetModState"
   (keymod @-> returning void)
@@ -53,7 +53,7 @@ let get_key_name key =
   get_key_name (Unsigned.UInt.of_int key)
 
 let get_key_from_name = ff "SDL_GetKeyFromName"
-  (string @-> returning keycode)
+  (string @-> returning int_as_uint)
 
 let has_screen_keyboard_support = ff "SDL_HasScreenKeyboardSupport"
   (void @-> returning bool)
@@ -98,7 +98,7 @@ end
 
 module Scancode = struct
 let get_key_from = ff "SDL_GetKeyFromScancode"
-  (scancode @-> keymod @-> bool @-> returning keycode)
+  (scancode @-> keymod @-> bool @-> returning int_as_uint)
 let get_key_from scancode modstate key_event =
   get_key_from scancode (Unsigned.UShort.of_int modstate) key_event
 

@@ -19,7 +19,7 @@ let get_name = ff "SDL_GetThreadName"
   (thread @-> returning string)
 
 let get_id = ff "SDL_GetThreadID"
-  (thread @-> returning thread_id)
+  (thread @-> returning int64_as_ulong)
 
 let wait = ff "SDL_WaitThread"
   (thread @-> ptr int @-> returning void)
@@ -38,7 +38,7 @@ end
 
 module Global = struct
 let get_current_thread_id = ff "SDL_GetCurrentThreadID"
-  (void @-> returning thread_id)
+  (void @-> returning int64_as_ulong)
 
 let cleanup_tls = ff "SDL_CleanupTLS"
   (void @-> returning void)

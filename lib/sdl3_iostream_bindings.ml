@@ -30,7 +30,7 @@ let close_io = ff "SDL_CloseIO"
   (io_stream @-> returning true_to_ok)
 
 let get_io_properties = ff "SDL_GetIOProperties"
-  (io_stream @-> returning properties_id)
+  (io_stream @-> returning int_as_uint)
 
 let get_io_size = ff "SDL_GetIOSize"
   (io_stream @-> returning sint64)

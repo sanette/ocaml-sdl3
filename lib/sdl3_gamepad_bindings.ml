@@ -72,17 +72,17 @@ let get_gamepad_player_index_for_id instance_id =
   get_gamepad_player_index_for_id (Unsigned.UInt.of_int instance_id)
 
 let get_gamepad_vendor_for_id = ff "SDL_GetGamepadVendorForID"
-  (joystick_id @-> returning uint16)
+  (joystick_id @-> returning int_as_ushort)
 let get_gamepad_vendor_for_id instance_id =
   get_gamepad_vendor_for_id (Unsigned.UInt.of_int instance_id)
 
 let get_gamepad_product_for_id = ff "SDL_GetGamepadProductForID"
-  (joystick_id @-> returning uint16)
+  (joystick_id @-> returning int_as_ushort)
 let get_gamepad_product_for_id instance_id =
   get_gamepad_product_for_id (Unsigned.UInt.of_int instance_id)
 
 let get_gamepad_product_version_for_id = ff "SDL_GetGamepadProductVersionForID"
-  (joystick_id @-> returning uint16)
+  (joystick_id @-> returning int_as_ushort)
 let get_gamepad_product_version_for_id instance_id =
   get_gamepad_product_version_for_id (Unsigned.UInt.of_int instance_id)
 
@@ -138,10 +138,10 @@ let get_from_player_index = ff "SDL_GetGamepadFromPlayerIndex"
   (int @-> returning (some_to_ok gamepad_opt))
 
 let get_properties = ff "SDL_GetGamepadProperties"
-  (gamepad @-> returning properties_id)
+  (gamepad @-> returning int_as_uint)
 
 let get_id = ff "SDL_GetGamepadID"
-  (gamepad @-> returning joystick_id)
+  (gamepad @-> returning int_as_uint)
 
 let get_name = ff "SDL_GetGamepadName"
   (gamepad @-> returning string)
@@ -159,22 +159,22 @@ let set_player_index = ff "SDL_SetGamepadPlayerIndex"
   (gamepad @-> int @-> returning true_to_ok)
 
 let get_vendor = ff "SDL_GetGamepadVendor"
-  (gamepad @-> returning uint16)
+  (gamepad @-> returning int_as_ushort)
 
 let get_product = ff "SDL_GetGamepadProduct"
-  (gamepad @-> returning uint16)
+  (gamepad @-> returning int_as_ushort)
 
 let get_product_version = ff "SDL_GetGamepadProductVersion"
-  (gamepad @-> returning uint16)
+  (gamepad @-> returning int_as_ushort)
 
 let get_firmware_version = ff "SDL_GetGamepadFirmwareVersion"
-  (gamepad @-> returning uint16)
+  (gamepad @-> returning int_as_ushort)
 
 let get_serial = ff "SDL_GetGamepadSerial"
   (gamepad @-> returning string)
 
 let get_steam_handle = ff "SDL_GetGamepadSteamHandle"
-  (gamepad @-> returning uint64)
+  (gamepad @-> returning int64_as_ulong)
 
 let get_connection_state = ff "SDL_GetGamepadConnectionState"
   (gamepad @-> returning joystick_connection_state)

@@ -44,7 +44,7 @@ let get_from_id instance_id =
   get_from_id (Unsigned.UInt.of_int instance_id)
 
 let get_id = ff "SDL_GetHapticID"
-  (haptic @-> returning haptic_id)
+  (haptic @-> returning int_as_uint)
 
 let get_name = ff "SDL_GetHapticName"
   (haptic @-> returning string)
@@ -65,7 +65,7 @@ let get_max_effects_playing = ff "SDL_GetMaxHapticEffectsPlaying"
   (haptic @-> returning int)
 
 let get_features = ff "SDL_GetHapticFeatures"
-  (haptic @-> returning uint32)
+  (haptic @-> returning int_as_uint)
 
 let get_num_axes = ff "SDL_GetNumHapticAxes"
   (haptic @-> returning int)

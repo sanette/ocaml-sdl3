@@ -27,3 +27,9 @@ let carray_of_list typ list =
   let arr = make typ n in
   List.iteri (set arr) list;
   start arr, n
+
+let int64_as_long =
+  view ~read:Signed.Long.to_int64 ~write:Signed.Long.of_int64 long
+
+let int64_as_ulong =
+  view ~read:Unsigned.ULong.to_int64 ~write:Unsigned.ULong.of_int64 ulong

@@ -14,7 +14,7 @@ let hid_exit = ff "SDL_hid_exit"
   (void @-> returning int)
 
 let hid_device_change_count = ff "SDL_hid_device_change_count"
-  (void @-> returning uint32)
+  (void @-> returning int_as_uint)
 
 let hid_ble_scan = ff "SDL_hid_ble_scan"
   (bool @-> returning void)
@@ -46,7 +46,7 @@ let hid_open_path = ff "SDL_hid_open_path"
   (string @-> returning (some_to_ok hid_device_opt))
 
 let hid_get_properties = ff "SDL_hid_get_properties"
-  (hid_device @-> returning properties_id)
+  (hid_device @-> returning int_as_uint)
 
 let hid_write = ff "SDL_hid_write"
   (hid_device @-> ptr uchar @-> size_t @-> returning int)

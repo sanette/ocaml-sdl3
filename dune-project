@@ -1,10 +1,7 @@
 (lang dune 3.20)
-
 (name sdl3)
 (version "0.0.1--alpha")
-
 (generate_opam_files true)
-
 (license ISC)
 (maintainers "Vu Ngoc San <san.vu-ngoc@laposte.net>")
 (authors "Vu Ngoc San <san.vu-ngoc@laposte.net>")
@@ -18,8 +15,6 @@
    ocaml
    (ctypes (>= 0.23.0))
    (ctypes-foreign (>= 0.23.0)))
-
- (tags
-  (sdl sdl3 graphics events devices)))
+ (tags (sdl sdl3 graphics events devices)))
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html

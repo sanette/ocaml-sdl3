@@ -1,6 +1,5 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
-module Sdl = Sdl3_constants
 module T = Sdl3_types
 
 (* Access by SDL Categories: *)
@@ -58,263 +57,266 @@ module Video = Sdl3_video_bindings
 end
 
 (* Access by SDL types: *)
-module AssertData = Categories.Assert.AssertData
+module Sdl = struct
+  include Sdl3_constants  module AssertData = Categories.Assert.AssertData
 
-module AssertState = Categories.Assert.AssertState
+  module AssertState = Categories.Assert.AssertState
 
-module AsyncIO = Categories.Asyncio.AsyncIO
+  module AsyncIO = Categories.Asyncio.AsyncIO
 
-module AsyncIOQueue = Categories.Asyncio.AsyncIOQueue
+  module AsyncIOQueue = Categories.Asyncio.AsyncIOQueue
 
-module AtomicInt = struct
-  include Categories.Atomic.AtomicInt
-  include Categories.Thread.AtomicInt
-  include T.AtomicInt
+  module AtomicInt = struct
+    include Categories.Atomic.AtomicInt
+    include Categories.Thread.AtomicInt
+    include T.AtomicInt
 end
 
-module AtomicU32 = Categories.Atomic.AtomicU32
+  module AtomicU32 = Categories.Atomic.AtomicU32
 
-module AudioFormat = Categories.Audio.AudioFormat
+  module AudioFormat = Categories.Audio.AudioFormat
 
-module AudioSpec = Categories.Audio.AudioSpec
+  module AudioSpec = Categories.Audio.AudioSpec
 
-module AudioStream = Categories.Audio.AudioStream
+  module AudioStream = Categories.Audio.AudioStream
 
-module BlendFactor = Categories.Blendmode.BlendFactor
+  module BlendFactor = Categories.Blendmode.BlendFactor
 
-module Camera = Categories.Camera.Camera
+  module Camera = Categories.Camera.Camera
 
-module CameraPosition = Categories.Camera.CameraPosition
+  module CameraPosition = Categories.Camera.CameraPosition
 
-module Condition = Categories.Mutex.Condition
+  module Condition = Categories.Mutex.Condition
 
-module Cursor = Categories.Mouse.Cursor
+  module Cursor = Categories.Mouse.Cursor
 
-module DateFormat = Categories.Time.DateFormat
+  module DateFormat = Categories.Time.DateFormat
 
-module DateTime = Categories.Time.DateTime
+  module DateTime = Categories.Time.DateTime
 
-module DisplayMode = Categories.Video.DisplayMode
+  module DisplayMode = Categories.Video.DisplayMode
 
-module DisplayOrientation = Categories.Video.DisplayOrientation
+  module DisplayOrientation = Categories.Video.DisplayOrientation
 
-module Environment = Categories.Stdinc.Environment
+  module Environment = Categories.Stdinc.Environment
 
-module Event = Categories.Events.Event
+  module Event = Categories.Events.Event
 
-module FPoint = Categories.Rect.FPoint
+  module FPoint = Categories.Rect.FPoint
 
-module FRect = Categories.Rect.FRect
+  module FRect = Categories.Rect.FRect
 
-module FileDialogType = Categories.Dialog.FileDialogType
+  module FileDialogType = Categories.Dialog.FileDialogType
 
-module Folder = Categories.Filesystem.Folder
+  module Folder = Categories.Filesystem.Folder
 
-module GLAttr = Categories.Video.GLAttr
+  module GLAttr = Categories.Video.GLAttr
 
-module GLContextState = Categories.Video.GLContextState
+  module GLContextState = Categories.Video.GLContextState
 
-module GPUBuffer = Categories.Gpu.GPUBuffer
+  module GPUBuffer = Categories.Gpu.GPUBuffer
 
-module GPUCommandBuffer = Categories.Gpu.GPUCommandBuffer
+  module GPUCommandBuffer = Categories.Gpu.GPUCommandBuffer
 
-module GPUComputePass = Categories.Gpu.GPUComputePass
+  module GPUComputePass = Categories.Gpu.GPUComputePass
 
-module GPUComputePipeline = Categories.Gpu.GPUComputePipeline
+  module GPUComputePipeline = Categories.Gpu.GPUComputePipeline
 
-module GPUCopyPass = Categories.Gpu.GPUCopyPass
+  module GPUCopyPass = Categories.Gpu.GPUCopyPass
 
-module GPUDevice = struct
-  include Categories.Gpu.GPUDevice
-  include Categories.Render.GPUDevice
+  module GPUDevice = struct
+    include Categories.Gpu.GPUDevice
+    include Categories.Render.GPUDevice
 end
 
-module GPUFence = Categories.Gpu.GPUFence
+  module GPUFence = Categories.Gpu.GPUFence
 
-module GPUGraphicsPipeline = Categories.Gpu.GPUGraphicsPipeline
+  module GPUGraphicsPipeline = Categories.Gpu.GPUGraphicsPipeline
 
-module GPURenderPass = Categories.Gpu.GPURenderPass
+  module GPURenderPass = Categories.Gpu.GPURenderPass
 
-module GPURenderState = Categories.Render.GPURenderState
+  module GPURenderState = Categories.Render.GPURenderState
 
-module GPUSampler = Categories.Gpu.GPUSampler
+  module GPUSampler = Categories.Gpu.GPUSampler
 
-module GPUShader = Categories.Gpu.GPUShader
+  module GPUShader = Categories.Gpu.GPUShader
 
-module GPUTexture = Categories.Gpu.GPUTexture
+  module GPUTexture = Categories.Gpu.GPUTexture
 
-module GPUTextureFormat = Categories.Gpu.GPUTextureFormat
+  module GPUTextureFormat = Categories.Gpu.GPUTextureFormat
 
-module GPUTransferBuffer = Categories.Gpu.GPUTransferBuffer
+  module GPUTransferBuffer = Categories.Gpu.GPUTransferBuffer
 
-module GUID = struct
-  include Categories.Gamepad.GUID
-  include Categories.Guid.GUID
-  include Categories.Joystick.GUID
-  include T.GUID
+  module GUID = struct
+    include Categories.Gamepad.GUID
+    include Categories.Guid.GUID
+    include Categories.Joystick.GUID
+    include T.GUID
 end
 
-module Gamepad = Categories.Gamepad.Gamepad
+  module Gamepad = Categories.Gamepad.Gamepad
 
-module GamepadAxis = Categories.Gamepad.GamepadAxis
+  module GamepadAxis = Categories.Gamepad.GamepadAxis
 
-module GamepadButton = Categories.Gamepad.GamepadButton
+  module GamepadButton = Categories.Gamepad.GamepadButton
 
-module GamepadButtonLabel = Categories.Gamepad.GamepadButtonLabel
+  module GamepadButtonLabel = Categories.Gamepad.GamepadButtonLabel
 
-module GamepadType = Categories.Gamepad.GamepadType
+  module GamepadType = Categories.Gamepad.GamepadType
 
-module Haptic = Categories.Haptic.Haptic
+  module Haptic = Categories.Haptic.Haptic
 
-module Hid_device = Categories.Hidapi.Hid_device
+  module Hid_device = Categories.Hidapi.Hid_device
 
-module Hid_device_info = Categories.Hidapi.Hid_device_info
+  module Hid_device_info = Categories.Hidapi.Hid_device_info
 
-module IOStatus = Categories.Iostream.IOStatus
+  module IOStatus = Categories.Iostream.IOStatus
 
-module IOStream = struct
-  include Categories.Audio.IOStream
-  include Categories.Gamepad.IOStream
-  include Categories.Iostream.IOStream
+  module IOStream = struct
+    include Categories.Audio.IOStream
+    include Categories.Gamepad.IOStream
+    include Categories.Iostream.IOStream
 end
 
-module Iconv_data_t = Categories.Stdinc.Iconv_data_t
+  module Iconv_data_t = Categories.Stdinc.Iconv_data_t
 
-module InitState = Categories.Mutex.InitState
+  module InitState = Categories.Mutex.InitState
 
-module Joystick = struct
-  include Categories.Haptic.Joystick
-  include Categories.Joystick.Joystick
+  module Joystick = struct
+    include Categories.Haptic.Joystick
+    include Categories.Joystick.Joystick
 end
 
-module JoystickType = Categories.Joystick.JoystickType
+  module JoystickType = Categories.Joystick.JoystickType
 
-module LogPriority = Categories.Log.LogPriority
+  module LogPriority = Categories.Log.LogPriority
 
-module MessageBoxData = Categories.Messagebox.MessageBoxData
+  module MessageBoxData = Categories.Messagebox.MessageBoxData
 
-module Mutex = Categories.Mutex.Mutex
+  module Mutex = Categories.Mutex.Mutex
 
-module Palette = Categories.Pixels.Palette
+  module Palette = Categories.Pixels.Palette
 
-module PenDeviceType = Categories.Pen.PenDeviceType
+  module PenDeviceType = Categories.Pen.PenDeviceType
 
-module PixelFormat = struct
-  include Categories.Gpu.PixelFormat
-  include Categories.Pixels.PixelFormat
+  module PixelFormat = struct
+    include Categories.Gpu.PixelFormat
+    include Categories.Pixels.PixelFormat
 end
 
-module PixelFormatDetails = Categories.Pixels.PixelFormatDetails
+  module PixelFormatDetails = Categories.Pixels.PixelFormatDetails
 
-module Point = struct
-  include Categories.Rect.Point
-  include Categories.Video.Point
-  include T.Point
+  module Point = struct
+    include Categories.Rect.Point
+    include Categories.Video.Point
+    include T.Point
 end
 
-module PowerState = Categories.Power.PowerState
+  module PowerState = Categories.Power.PowerState
 
-module Process = Categories.Process.Process
+  module Process = Categories.Process.Process
 
-module PropertyType = Categories.Properties.PropertyType
+  module PropertyType = Categories.Properties.PropertyType
 
-module RWLock = Categories.Mutex.RWLock
+  module RWLock = Categories.Mutex.RWLock
 
-module Rect = struct
-  include Categories.Rect.Rect
-  include Categories.Video.Rect
-  include T.Rect
+  module Rect = struct
+    include Categories.Rect.Rect
+    include Categories.Video.Rect
+    include T.Rect
 end
 
-module Renderer = Categories.Render.Renderer
+  module Renderer = Categories.Render.Renderer
 
-module Sandbox = Categories.System.Sandbox
+  module Sandbox = Categories.System.Sandbox
 
-module Scancode = Categories.Keyboard.Scancode
+  module Scancode = Categories.Keyboard.Scancode
 
-module Semaphore = Categories.Mutex.Semaphore
+  module Semaphore = Categories.Mutex.Semaphore
 
-module Sensor = Categories.Sensor.Sensor
+  module Sensor = Categories.Sensor.Sensor
 
-module SensorType = Categories.Sensor.SensorType
+  module SensorType = Categories.Sensor.SensorType
 
-module SharedObject = Categories.Loadso.SharedObject
+  module SharedObject = Categories.Loadso.SharedObject
 
-module Storage = Categories.Storage.Storage
+  module Storage = Categories.Storage.Storage
 
-module Surface = struct
-  include Categories.Camera.Surface
-  include Categories.Surface.Surface
-  include T.Surface
+  module Surface = struct
+    include Categories.Camera.Surface
+    include Categories.Surface.Surface
+    include T.Surface
 end
 
-module SystemCursor = Categories.Mouse.SystemCursor
+  module SystemCursor = Categories.Mouse.SystemCursor
 
-module SystemTheme = Categories.Video.SystemTheme
+  module SystemTheme = Categories.Video.SystemTheme
 
-module Texture = Categories.Render.Texture
+  module Texture = Categories.Render.Texture
 
-module Thread = Categories.Thread.Thread
+  module Thread = Categories.Thread.Thread
 
-module ThreadPriority = Categories.Thread.ThreadPriority
+  module ThreadPriority = Categories.Thread.ThreadPriority
 
-module TouchDeviceType = Categories.Touch.TouchDeviceType
+  module TouchDeviceType = Categories.Touch.TouchDeviceType
 
-module Tray = Categories.Tray.Tray
+  module Tray = Categories.Tray.Tray
 
-module TrayEntry = Categories.Tray.TrayEntry
+  module TrayEntry = Categories.Tray.TrayEntry
 
-module TrayMenu = Categories.Tray.TrayMenu
+  module TrayMenu = Categories.Tray.TrayMenu
 
-module VirtualJoystickDesc = Categories.Joystick.VirtualJoystickDesc
+  module VirtualJoystickDesc = Categories.Joystick.VirtualJoystickDesc
 
-module Window = struct
-  include Categories.Events.Window
-  include Categories.Keyboard.Window
-  include Categories.Metal.Window
-  include Categories.Mouse.Window
-  include Categories.Video.Window
+  module Window = struct
+    include Categories.Events.Window
+    include Categories.Keyboard.Window
+    include Categories.Metal.Window
+    include Categories.Mouse.Window
+    include Categories.Video.Window
 end
 
 (* Access global functions: *)
-include Categories.Assert.Global
-include Categories.Asyncio.Global
-include Categories.Atomic.Global
-include Categories.Audio.Global
-include Categories.Camera.Global
-include Categories.Clipboard.Global
-include Categories.Cpuinfo.Global
-include Categories.Dialog.Global
-include Categories.Error.Global
-include Categories.Events.Global
-include Categories.Filesystem.Global
-include Categories.Gamepad.Global
-include Categories.Gpu.Global
-include Categories.Haptic.Global
-include Categories.Hidapi.Global
-include Categories.Hints.Global
-include Categories.Init.Global
-include Categories.Iostream.Global
-include Categories.Joystick.Global
-include Categories.Keyboard.Global
-include Categories.Locale.Global
-include Categories.Log.Global
-include Categories.Messagebox.Global
-include Categories.Metal.Global
-include Categories.Misc.Global
-include Categories.Mouse.Global
-include Categories.Pixels.Global
-include Categories.Platform.Global
-include Categories.Properties.Global
-include Categories.Render.Global
-include Categories.Sensor.Global
-include Categories.Stdinc.Global
-include Categories.Surface.Global
-include Categories.System.Global
-include Categories.Thread.Global
-include Categories.Time.Global
-include Categories.Timer.Global
-include Categories.Touch.Global
-include Categories.Tray.Global
-include Categories.Version.Global
-include Categories.Video.Global
+  include Categories.Assert.Global
+  include Categories.Asyncio.Global
+  include Categories.Atomic.Global
+  include Categories.Audio.Global
+  include Categories.Camera.Global
+  include Categories.Clipboard.Global
+  include Categories.Cpuinfo.Global
+  include Categories.Dialog.Global
+  include Categories.Error.Global
+  include Categories.Events.Global
+  include Categories.Filesystem.Global
+  include Categories.Gamepad.Global
+  include Categories.Gpu.Global
+  include Categories.Haptic.Global
+  include Categories.Hidapi.Global
+  include Categories.Hints.Global
+  include Categories.Init.Global
+  include Categories.Iostream.Global
+  include Categories.Joystick.Global
+  include Categories.Keyboard.Global
+  include Categories.Locale.Global
+  include Categories.Log.Global
+  include Categories.Messagebox.Global
+  include Categories.Metal.Global
+  include Categories.Misc.Global
+  include Categories.Mouse.Global
+  include Categories.Pixels.Global
+  include Categories.Platform.Global
+  include Categories.Properties.Global
+  include Categories.Render.Global
+  include Categories.Sensor.Global
+  include Categories.Stdinc.Global
+  include Categories.Surface.Global
+  include Categories.System.Global
+  include Categories.Thread.Global
+  include Categories.Time.Global
+  include Categories.Timer.Global
+  include Categories.Touch.Global
+  include Categories.Tray.Global
+  include Categories.Version.Global
+  include Categories.Video.Global
+  module App = App
+end

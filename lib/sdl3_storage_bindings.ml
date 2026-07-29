@@ -64,7 +64,7 @@ let get_path_info = ff "SDL_GetStoragePathInfo"
   (storage @-> string @-> ptr path_info @-> returning true_to_ok)
 
 let get_space_remaining = ff "SDL_GetStorageSpaceRemaining"
-  (storage @-> returning uint64)
+  (storage @-> returning int64_as_ulong)
 
 let glob_directory = ff "SDL_GlobStorageDirectory"
   (storage @-> string @-> string @-> glob_flags @-> ptr int @-> returning (ptr string))

@@ -71,7 +71,7 @@ let get_audio_device_channel_map devid =
   get_audio_device_channel_map (Unsigned.UInt.of_int devid)
 
 let open_audio_device = ff "SDL_OpenAudioDevice"
-  (audio_device_id @-> ptr audio_spec @-> returning audio_device_id)
+  (audio_device_id @-> ptr audio_spec @-> returning int_as_uint)
 let open_audio_device devid spec =
   open_audio_device (Unsigned.UInt.of_int devid) spec
 
@@ -153,13 +153,13 @@ let unbind = ff "SDL_UnbindAudioStream"
   (audio_stream_opt @-> returning void)
 
 let get_device = ff "SDL_GetAudioStreamDevice"
-  (audio_stream @-> returning audio_device_id)
+  (audio_stream @-> returning int_as_uint)
 
 let create = ff "SDL_CreateAudioStream"
   (ptr audio_spec @-> ptr audio_spec @-> returning (some_to_ok audio_stream_opt))
 
 let get_properties = ff "SDL_GetAudioStreamProperties"
-  (audio_stream @-> returning properties_id)
+  (audio_stream @-> returning int_as_uint)
 
 let get_format = ff "SDL_GetAudioStreamFormat"
   (audio_stream @-> ptr audio_spec @-> ptr audio_spec @-> returning true_to_ok)

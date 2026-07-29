@@ -70,7 +70,7 @@ let signal = ff "SDL_SignalSemaphore"
   (semaphore @-> returning void)
 
 let get_value = ff "SDL_GetSemaphoreValue"
-  (semaphore @-> returning uint32)
+  (semaphore @-> returning int_as_uint)
 
 end
 

@@ -57,7 +57,7 @@ let get_from_id instance_id =
   get_from_id (Unsigned.UInt.of_int instance_id)
 
 let get_properties = ff "SDL_GetSensorProperties"
-  (sensor @-> returning properties_id)
+  (sensor @-> returning int_as_uint)
 
 let get_name = ff "SDL_GetSensorName"
   (sensor @-> returning string)
@@ -69,7 +69,7 @@ let get_non_portable_type = ff "SDL_GetSensorNonPortableType"
   (sensor @-> returning int)
 
 let get_id = ff "SDL_GetSensorID"
-  (sensor @-> returning sensor_id)
+  (sensor @-> returning int_as_uint)
 
 let get_data = ff "SDL_GetSensorData"
   (sensor @-> ptr float @-> int @-> returning true_to_ok)

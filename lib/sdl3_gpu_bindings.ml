@@ -44,10 +44,10 @@ let get_driver = ff "SDL_GetGPUDeviceDriver"
   (gpu_device @-> returning string)
 
 let get_gpu_shader_formats = ff "SDL_GetGPUShaderFormats"
-  (gpu_device @-> returning gpu_shader_format)
+  (gpu_device @-> returning int_as_uint)
 
 let get_properties = ff "SDL_GetGPUDeviceProperties"
-  (gpu_device @-> returning properties_id)
+  (gpu_device @-> returning int_as_uint)
 
 let set_gpu_buffer_name = ff "SDL_SetGPUBufferName"
   (gpu_device @-> gpu_buffer @-> string @-> returning void)
@@ -384,10 +384,10 @@ let get_gpu_swapchain_texture_format = ff "SDL_GetGPUSwapchainTextureFormat"
   (gpu_device @-> window @-> returning gpu_texture_format)
 
 let texel_block_size = ff "SDL_GPUTextureFormatTexelBlockSize"
-  (gpu_texture_format @-> returning uint32)
+  (gpu_texture_format @-> returning int_as_uint)
 
 let calculate_size = ff "SDL_CalculateGPUTextureFormatSize"
-  (gpu_texture_format @-> uint32 @-> uint32 @-> uint32 @-> returning uint32)
+  (gpu_texture_format @-> uint32 @-> uint32 @-> uint32 @-> returning int_as_uint)
 let calculate_size format width height depth_or_layer_count =
   calculate_size format (Unsigned.UInt.of_int width) (Unsigned.UInt.of_int height) (Unsigned.UInt.of_int depth_or_layer_count)
 

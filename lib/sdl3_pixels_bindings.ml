@@ -39,12 +39,12 @@ end
 
 module PixelFormatDetails = struct
 let map_rgb = ff "SDL_MapRGB"
-  (ptr pixel_format_details @-> palette_opt @-> uint8 @-> uint8 @-> uint8 @-> returning uint32)
+  (ptr pixel_format_details @-> palette_opt @-> uint8 @-> uint8 @-> uint8 @-> returning int_as_uint)
 let map_rgb format palette r g b =
   map_rgb format palette (Unsigned.UChar.of_int r) (Unsigned.UChar.of_int g) (Unsigned.UChar.of_int b)
 
 let map_rgba = ff "SDL_MapRGBA"
-  (ptr pixel_format_details @-> palette_opt @-> uint8 @-> uint8 @-> uint8 @-> uint8 @-> returning uint32)
+  (ptr pixel_format_details @-> palette_opt @-> uint8 @-> uint8 @-> uint8 @-> uint8 @-> returning int_as_uint)
 let map_rgba format palette r g b a =
   map_rgba format palette (Unsigned.UChar.of_int r) (Unsigned.UChar.of_int g) (Unsigned.UChar.of_int b) (Unsigned.UChar.of_int a)
 

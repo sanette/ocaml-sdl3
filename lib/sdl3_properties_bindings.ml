@@ -8,10 +8,10 @@ let ff = Load.foreign
 
 module Global = struct
 let get_global_properties = ff "SDL_GetGlobalProperties"
-  (void @-> returning properties_id)
+  (void @-> returning int_as_uint)
 
 let create_properties = ff "SDL_CreateProperties"
-  (void @-> returning properties_id)
+  (void @-> returning int_as_uint)
 
 let copy_properties = ff "SDL_CopyProperties"
   (properties_id @-> properties_id @-> returning true_to_ok)

@@ -30,7 +30,7 @@ let get_mouse_name_for_id instance_id =
   get_mouse_name_for_id (Unsigned.UInt.of_int instance_id)
 
 let get_mouse_state = ff "SDL_GetMouseState"
-  (ptr float @-> ptr float @-> returning mouse_button_flags)
+  (ptr float @-> ptr float @-> returning int_as_uint)
 let get_mouse_state () =
   let x = allocate float 0. in
   let y = allocate float 0. in
@@ -38,7 +38,7 @@ let get_mouse_state () =
 (ret, !@ x, !@ y)
 
 let get_global_mouse_state = ff "SDL_GetGlobalMouseState"
-  (ptr float @-> ptr float @-> returning mouse_button_flags)
+  (ptr float @-> ptr float @-> returning int_as_uint)
 let get_global_mouse_state () =
   let x = allocate float 0. in
   let y = allocate float 0. in
@@ -46,7 +46,7 @@ let get_global_mouse_state () =
 (ret, !@ x, !@ y)
 
 let get_relative_mouse_state = ff "SDL_GetRelativeMouseState"
-  (ptr float @-> ptr float @-> returning mouse_button_flags)
+  (ptr float @-> ptr float @-> returning int_as_uint)
 let get_relative_mouse_state () =
   let x = allocate float 0. in
   let y = allocate float 0. in

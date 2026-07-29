@@ -46,17 +46,17 @@ let get_joystick_player_index_for_id instance_id =
   get_joystick_player_index_for_id (Unsigned.UInt.of_int instance_id)
 
 let get_joystick_vendor_for_id = ff "SDL_GetJoystickVendorForID"
-  (joystick_id @-> returning uint16)
+  (joystick_id @-> returning int_as_ushort)
 let get_joystick_vendor_for_id instance_id =
   get_joystick_vendor_for_id (Unsigned.UInt.of_int instance_id)
 
 let get_joystick_product_for_id = ff "SDL_GetJoystickProductForID"
-  (joystick_id @-> returning uint16)
+  (joystick_id @-> returning int_as_ushort)
 let get_joystick_product_for_id instance_id =
   get_joystick_product_for_id (Unsigned.UInt.of_int instance_id)
 
 let get_joystick_product_version_for_id = ff "SDL_GetJoystickProductVersionForID"
-  (joystick_id @-> returning uint16)
+  (joystick_id @-> returning int_as_ushort)
 let get_joystick_product_version_for_id instance_id =
   get_joystick_product_version_for_id (Unsigned.UInt.of_int instance_id)
 
@@ -145,7 +145,7 @@ let send_virtual_sensor_data joystick typ sensor_timestamp data num_values =
   send_virtual_sensor_data joystick typ (Unsigned.ULong.of_int64 sensor_timestamp) data num_values
 
 let get_properties = ff "SDL_GetJoystickProperties"
-  (joystick @-> returning properties_id)
+  (joystick @-> returning int_as_uint)
 
 let get_name = ff "SDL_GetJoystickName"
   (joystick @-> returning string)
@@ -163,16 +163,16 @@ let get_guid = ff "SDL_GetJoystickGUID"
   (joystick @-> returning guid)
 
 let get_vendor = ff "SDL_GetJoystickVendor"
-  (joystick @-> returning uint16)
+  (joystick @-> returning int_as_ushort)
 
 let get_product = ff "SDL_GetJoystickProduct"
-  (joystick @-> returning uint16)
+  (joystick @-> returning int_as_ushort)
 
 let get_product_version = ff "SDL_GetJoystickProductVersion"
-  (joystick @-> returning uint16)
+  (joystick @-> returning int_as_ushort)
 
 let get_firmware_version = ff "SDL_GetJoystickFirmwareVersion"
-  (joystick @-> returning uint16)
+  (joystick @-> returning int_as_ushort)
 
 let get_serial = ff "SDL_GetJoystickSerial"
   (joystick @-> returning string)
@@ -184,7 +184,7 @@ let connected = ff "SDL_JoystickConnected"
   (joystick @-> returning true_to_ok)
 
 let get_id = ff "SDL_GetJoystickID"
-  (joystick @-> returning joystick_id)
+  (joystick @-> returning int_as_uint)
 
 let get_num_axes = ff "SDL_GetNumJoystickAxes"
   (joystick @-> returning int)
@@ -212,7 +212,7 @@ let get_ball joystick ball =
   if get_ball joystick ball dx dy then Ok (!@ dx, !@ dy) else error ()
 
 let get_hat = ff "SDL_GetJoystickHat"
-  (joystick @-> int @-> returning uint8)
+  (joystick @-> int @-> returning int_as_uchar)
 
 let get_button = ff "SDL_GetJoystickButton"
   (joystick @-> int @-> returning true_to_ok)
@@ -252,7 +252,7 @@ end
 
 module VirtualJoystickDesc = struct
 let attach_virtual_joystick = ff "SDL_AttachVirtualJoystick"
-  (ptr virtual_joystick_desc @-> returning joystick_id)
+  (ptr virtual_joystick_desc @-> returning int_as_uint)
 
 include VirtualJoystickDesc
 

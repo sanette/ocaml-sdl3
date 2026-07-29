@@ -23,7 +23,7 @@ let quit_sub_system flags =
   quit_sub_system (Unsigned.UInt.of_int flags)
 
 let was_init = ff "SDL_WasInit"
-  (init_flags @-> returning init_flags)
+  (init_flags @-> returning int_as_uint)
 let was_init flags =
   was_init (Unsigned.UInt.of_int flags)
 

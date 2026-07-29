@@ -10,11 +10,11 @@ let go = Result.get_ok
 let print s = Printf.ksprintf print_endline s
 
 let event_loop =
-  let e = Event.create () in
+  let e = Sdl.Event.create () in
   let rec event_loop () =
-    let has_event = Event.poll (Some e) in
+    let has_event = Sdl.Event.poll (Some e) in
     if has_event then begin
-      let typ = Event.(get e typ) in
+      let typ = Sdl.Event.(get e typ) in
       if typ = Sdl.event_quit then raise Quit;
       if typ = Sdl.event_camera_device_approved
       then print "Camera use approved by user!";
@@ -25,18 +25,18 @@ let event_loop =
   event_loop
 
 let () =
-  init (Sdl.(init_video lor init_camera)) |> go;
+  Sdl.(init (init_video lor init_camera)) |> go;
 
-  let win, renderer = create_window_and_renderer "camera" 640 480 Sdl.window_resizable
+  let win, renderer = Sdl.create_window_and_renderer "camera" 640 480 Sdl.window_resizable
     |> go in
 
-  let n = get_num_camera_drivers () in
+  let n = Sdl.get_num_camera_drivers () in
   print "Number of camera drivers: %i" n;
 
-  let name = get_current_camera_driver () in
+  let name = Sdl.get_current_camera_driver () in
   print "Current camera driver: '%s'" name;
 
-  let cam_ids = get_cameras () in
+  let cam_ids = Sdl.get_cameras () in
 
   print "Found cameras : [%s]"
     (List.map string_of_int cam_ids
@@ -48,44 +48,44 @@ let () =
     exit 1
   | id :: _ ->
     print "Opening camera...";
-    let cam = Camera.open_ id None |> go in
+    let cam = Sdl.Camera.open_ id None |> go in
 
 
 
     let rec loop tex n =
       if n >= 0 then begin
         event_loop ();
-        match Surface.acquire_camera_frame cam with
+        match Sdl.Surface.acquire_camera_frame cam with
         | Error (`Msg e) ->
           print "Not available (%s)" e;
-          delay 100;
+          Sdl.delay 100;
           loop tex (n-1)
         | Ok (surf, ts) ->
           print "timestamp=%i" (Int64.to_int ts);
-          let pixels = Surface.(get surf pixels) in
-          let pitch = Surface.(get surf pitch) in
-          let format = Surface.(get surf format) in
+          let pixels = Sdl.Surface.(get surf pixels) in
+          let pitch = Sdl.Surface.(get surf pitch) in
+          let format = Sdl.Surface.(get surf format) in
           let tex = match tex with
             | None ->
-              let w,h = Surface.(get surf w), Surface.(get surf h) in
-              Window.set_size win w h |> go;
-              Renderer.set_logical_presentation renderer w h
+              let w,h = Sdl.Surface.(get surf w), Sdl.Surface.(get surf h) in
+              Sdl.Window.set_size win w h |> go;
+              Sdl.Renderer.set_logical_presentation renderer w h
                 Sdl.logical_presentation_letterbox |> go;
               print "Creating texture of size (%i,%i)" w h;
-              Texture.create renderer format Sdl.textureaccess_streaming w h |> go
+              Sdl.Texture.create renderer format Sdl.textureaccess_streaming w h |> go
             | Some tex -> tex
           in
-          Texture.update tex None pixels pitch |> go;
-          Camera.release_frame cam surf;
-          Renderer.set_draw_color renderer 0x99 0x99 0x99 Sdl.alpha_opaque |> go;
-          Renderer.render_clear renderer |> go;
-          Renderer.render_texture renderer tex None None |> go;
-          Renderer.render_present renderer |> go;
-          delay 32;
+          Sdl.Texture.update tex None pixels pitch |> go;
+          Sdl.Camera.release_frame cam surf;
+          Sdl.Renderer.set_draw_color renderer 0x99 0x99 0x99 Sdl.alpha_opaque |> go;
+          Sdl.Renderer.render_clear renderer |> go;
+          Sdl.Renderer.render_texture renderer tex None None |> go;
+          Sdl.Renderer.render_present renderer |> go;
+          Sdl.delay 32;
           loop (Some tex) (n-1)
       end in
 
     let () = try loop None 1000 with Quit -> () in
     print_endline "Closing camera...";
-    Camera.close cam;
-    quit ()
+    Sdl.Camera.close cam;
+    Sdl.quit ()

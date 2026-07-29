@@ -123,17 +123,17 @@ let tolower = ff "SDL_tolower"
   (int @-> returning int)
 
 let crc16 = ff "SDL_crc16"
-  (uint16 @-> ptr void @-> size_t @-> returning uint16)
+  (uint16 @-> ptr void @-> size_t @-> returning int_as_ushort)
 let crc16 crc data len =
   crc16 (Unsigned.UShort.of_int crc) data (Unsigned.Size_t.of_int len)
 
 let crc32 = ff "SDL_crc32"
-  (uint32 @-> ptr void @-> size_t @-> returning uint32)
+  (uint32 @-> ptr void @-> size_t @-> returning int_as_uint)
 let crc32 crc data len =
   crc32 (Unsigned.UInt.of_int crc) data (Unsigned.Size_t.of_int len)
 
 let murmur3_32 = ff "SDL_murmur3_32"
-  (ptr void @-> size_t @-> uint32 @-> returning uint32)
+  (ptr void @-> size_t @-> uint32 @-> returning int_as_uint)
 let murmur3_32 data len seed =
   murmur3_32 data (Unsigned.Size_t.of_int len) (Unsigned.UInt.of_int seed)
 
@@ -312,13 +312,13 @@ let strtol = ff "SDL_strtol"
   (string @-> ptr string @-> int @-> returning long)
 
 let strtoul = ff "SDL_strtoul"
-  (string @-> ptr string @-> int @-> returning ulong)
+  (string @-> ptr string @-> int @-> returning int64_as_ulong)
 
 let strtoll = ff "SDL_strtoll"
-  (string @-> ptr string @-> int @-> returning llong)
+  (string @-> ptr string @-> int @-> returning int64_as_llong)
 
 let strtoull = ff "SDL_strtoull"
-  (string @-> ptr string @-> int @-> returning ullong)
+  (string @-> ptr string @-> int @-> returning int64_as_ullong)
 
 let strtod = ff "SDL_strtod"
   (string @-> ptr string @-> returning double)
@@ -343,10 +343,10 @@ let strpbrk = ff "SDL_strpbrk"
   (string @-> string @-> returning string)
 
 let step_utf8 = ff "SDL_StepUTF8"
-  (ptr string @-> ptr size_t @-> returning uint32)
+  (ptr string @-> ptr size_t @-> returning int_as_uint)
 
 let step_back_utf8 = ff "SDL_StepBackUTF8"
-  (string @-> ptr string @-> returning uint32)
+  (string @-> ptr string @-> returning int_as_uint)
 
 let ucs4_to_utf8 = ff "SDL_UCS4ToUTF8"
   (uint32 @-> string @-> returning string)
@@ -365,7 +365,7 @@ let randf = ff "SDL_randf"
   (void @-> returning float)
 
 let rand_bits = ff "SDL_rand_bits"
-  (void @-> returning uint32)
+  (void @-> returning int_as_uint)
 
 let rand_r = ff "SDL_rand_r"
   (ptr uint64 @-> sint32 @-> returning sint32)
@@ -378,7 +378,7 @@ let randf_r () =
 (ret, Unsigned.ULong.to_int64 (!@ state))
 
 let rand_bits_r = ff "SDL_rand_bits_r"
-  (ptr uint64 @-> returning uint32)
+  (ptr uint64 @-> returning int_as_uint)
 let rand_bits_r () =
   let state = allocate ulong (Unsigned.ULong.of_int 0) in
   let ret = rand_bits_r state in

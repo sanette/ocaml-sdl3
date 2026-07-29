@@ -19,11 +19,12 @@ let get_union = ff "SDL_GetRectUnion"
 let get_and_line_intersection = ff "SDL_GetRectAndLineIntersection"
   (rect @-> ptr int @-> ptr int @-> ptr int @-> ptr int @-> returning bool)
 let get_and_line_intersection rect x1 y1 x2 y2 =
-let x1 = allocate int x1 in
-let y1 = allocate int y1 in
-let x2 = allocate int x2 in
-let y2 = allocate int y2 in
-if get_and_line_intersection rect x1 y1 x2 y2 then Ok (!@ x1, !@ y1, !@ x2, !@ y2) else error ()
+  let x1 = allocate int x1 in
+  let y1 = allocate int y1 in
+  let x2 = allocate int x2 in
+  let y2 = allocate int y2 in
+  if get_and_line_intersection rect x1 y1 x2 y2
+  then Ok (!@ x1, !@ y1, !@ x2, !@ y2) else error ()
 
 end
 
@@ -53,7 +54,8 @@ let get_rect_and_line_intersection_float rect x1 y1 x2 y2 =
   let y1 = allocate float y1 in
   let x2 = allocate float x2 in
   let y2 = allocate float y2 in
-  if get_rect_and_line_intersection_float rect x1 y1 x2 y2 then Ok (!@ x1, !@ y1, !@ x2, !@ y2) else error ()
+  if get_rect_and_line_intersection_float rect x1 y1 x2 y2
+  then Ok (!@ x1, !@ y1, !@ x2, !@ y2) else error ()
 include FRect
 
 end

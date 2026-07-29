@@ -48,7 +48,7 @@ let get_name = ff "SDL_GetRendererName"
   (renderer @-> returning string)
 
 let get_properties = ff "SDL_GetRendererProperties"
-  (renderer @-> returning properties_id)
+  (renderer @-> returning int_as_uint)
 
 let get_output_size = ff "SDL_GetRenderOutputSize"
   (renderer @-> ptr int @-> ptr int @-> returning bool)
@@ -74,7 +74,12 @@ let set_logical_presentation = ff "SDL_SetRenderLogicalPresentation"
   (renderer @-> int @-> int @-> renderer_logical_presentation @-> returning true_to_ok)
 
 let get_logical_presentation = ff "SDL_GetRenderLogicalPresentation"
-  (renderer @-> ptr int @-> ptr int @-> ptr renderer_logical_presentation @-> returning true_to_ok)
+  (renderer @-> ptr int @-> ptr int @-> ptr renderer_logical_presentation @-> returning bool)
+let get_logical_presentation renderer =
+  let w = allocate int 0 in
+  let h = allocate int 0 in
+  let mode = allocate renderer_logical_presentation 0 in
+  if get_logical_presentation renderer w h mode then Ok (!@ w, !@ h, !@ mode) else error ()
 
 let get_logical_presentation_rect = ff "SDL_GetRenderLogicalPresentationRect"
   (renderer @-> f_rect_opt @-> returning true_to_ok)
@@ -311,7 +316,7 @@ let create_with_properties renderer props =
   create_with_properties renderer (Unsigned.UInt.of_int props)
 
 let get_properties = ff "SDL_GetTextureProperties"
-  (texture @-> returning properties_id)
+  (texture @-> returning int_as_uint)
 
 let get_size = ff "SDL_GetTextureSize"
   (texture @-> ptr float @-> ptr float @-> returning bool)

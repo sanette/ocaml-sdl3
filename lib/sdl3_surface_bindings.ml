@@ -17,7 +17,7 @@ let destroy = ff "SDL_DestroySurface"
   (surface @-> returning void)
 
 let get_properties = ff "SDL_GetSurfaceProperties"
-  (surface @-> returning properties_id)
+  (surface @-> returning int_as_uint)
 
 let set_colorspace = ff "SDL_SetSurfaceColorspace"
   (surface @-> colorspace @-> returning true_to_ok)
@@ -209,12 +209,12 @@ let blit9_grid = ff "SDL_BlitSurface9Grid"
   (surface @-> rect_opt @-> int @-> int @-> int @-> int @-> float @-> scale_mode @-> surface @-> rect_opt @-> returning true_to_ok)
 
 let map_rgb = ff "SDL_MapSurfaceRGB"
-  (surface @-> uint8 @-> uint8 @-> uint8 @-> returning uint32)
+  (surface @-> uint8 @-> uint8 @-> uint8 @-> returning int_as_uint)
 let map_rgb surface r g b =
   map_rgb surface (Unsigned.UChar.of_int r) (Unsigned.UChar.of_int g) (Unsigned.UChar.of_int b)
 
 let map_rgba = ff "SDL_MapSurfaceRGBA"
-  (surface @-> uint8 @-> uint8 @-> uint8 @-> uint8 @-> returning uint32)
+  (surface @-> uint8 @-> uint8 @-> uint8 @-> uint8 @-> returning int_as_uint)
 let map_rgba surface r g b a =
   map_rgba surface (Unsigned.UChar.of_int r) (Unsigned.UChar.of_int g) (Unsigned.UChar.of_int b) (Unsigned.UChar.of_int a)
 

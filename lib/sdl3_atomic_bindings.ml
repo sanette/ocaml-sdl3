@@ -56,15 +56,15 @@ let compare_and_swap a oldval newval =
   compare_and_swap a (Unsigned.UInt.of_int oldval) (Unsigned.UInt.of_int newval)
 
 let set = ff "SDL_SetAtomicU32"
-  (ptr atomic_u32 @-> uint32 @-> returning uint32)
+  (ptr atomic_u32 @-> uint32 @-> returning int_as_uint)
 let set a v =
   set a (Unsigned.UInt.of_int v)
 
 let get = ff "SDL_GetAtomicU32"
-  (ptr atomic_u32 @-> returning uint32)
+  (ptr atomic_u32 @-> returning int_as_uint)
 
 let add = ff "SDL_AddAtomicU32"
-  (ptr atomic_u32 @-> int @-> returning uint32)
+  (ptr atomic_u32 @-> int @-> returning int_as_uint)
 
 include AtomicU32
 
