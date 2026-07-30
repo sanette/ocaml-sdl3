@@ -72,21 +72,21 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
   dune exec ./template.exe
   ```
 
-+ `examples/renderer/17-read-pixels`: requires SDL >= 3.4.0
++ [`examples/renderer/17-read-pixels`](https://examples.libsdl.org/SDL3/renderer/17-read-pixels/): requires SDL >= 3.4.0
 
   ```
   cd examples/renderer/17-read-pixels
   dune exec ./read_pixels.exe
   ```
 
-+ `examples/renderer/01-clear`:
++ [`examples/renderer/01-clear`](https://examples.libsdl.org/SDL3/renderer/01-clear/):
 
   ```
   cd examples/renderer/01-clear
   dune exec ./clear.exe
   ```
 
-+ `examples/camera/01-read-and-draw`:
++ [`examples/camera/01-read-and-draw`](https://examples.libsdl.org/SDL3/camera/01-read-and-draw/):
 
    ```
    cd examples/camera/01-read-and-draw
