@@ -1,4 +1,4 @@
-(* SLD3-ocaml template using callbacks *)
+(* ocaml-SLD3 template using callbacks *)
 
 (* Adapted from examples/template.c from the SDL3 sources (public domain) *)
 
