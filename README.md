@@ -59,16 +59,56 @@ export SDL3_LIBRARY=SDL/build/libSDL3.so
 ```
 (adjust `SDL3_LIBRARY` to your correct location)
 
+## Official SDL3 examples
 
-## Webcam example
+Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml-SDL3`.
+
++ `examples/template.ml` is the template (using the 'callback' style)
+  used for all of these examples. You can execute this empty template
+  with:
+
+  ```
+  cd examples/template.ml
+  dune exec ./template.exe
+  ```
+
++ `examples/renderer/17-read-pixels`: requires SDL >= 3.4.0
+
+  ```
+  cd examples/renderer/17-read-pixels
+  dune exec ./read_pixels.exe
+  ```
+
++ `examples/renderer/01-clear`:
+
+  ```
+  cd examples/renderer/01-clear
+  dune exec ./clear.exe
+  ```
+
++ `examples/camera/01-read-and-draw`:
+
+   ```
+   cd examples/camera/01-read-and-draw
+   dune exec ./read_and_draw.exe
+   ```
+
+## Other examples
+
+### Webcam example
+
+This one is the same as the official
+`examples/camera/01-read-and-draw` but programmed with the usual
+"main" style.
 
 ```bash
 dune exec ./camera.exe
 ```
-
 This should open your webcam and show the content in a window
 
-## Loading PNG, animating sprite, typing debug text, and pixel drawing example
+### Loading PNG, animating sprite, typing debug text, and pixel drawing example
+
+requires SDL >= 3.4.0
 
 ```bash
 dune exec ./example.exe
