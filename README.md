@@ -93,6 +93,12 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
    dune exec ./read_and_draw.exe
    ```
 
++ examples/audio/01-simple-playback
+
++ examples/audio/02-simple-playback-callback
+
+
+
 ## Other examples
 
 ### Webcam example
