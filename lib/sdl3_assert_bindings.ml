@@ -13,7 +13,7 @@ end
 
 module Global = struct
 let set_assertion_handler = ff "SDL_SetAssertionHandler"
-  (assertion_handler @-> ptr void @-> returning void)
+  (assertion_handler_opt @-> ptr void @-> returning void)
 
 let get_default_assertion_handler = ff "SDL_GetDefaultAssertionHandler"
   (void @-> returning assertion_handler)

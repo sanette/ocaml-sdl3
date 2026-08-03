@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -19,17 +19,17 @@ let get_performance_counter = ff "SDL_GetPerformanceCounter"
 let get_performance_frequency = ff "SDL_GetPerformanceFrequency"
   (void @-> returning int64_as_ulong)
 
-let delay = ff "SDL_Delay"
+let delay = ff ~release_runtime_lock:true "SDL_Delay"
   (uint32 @-> returning void)
 let delay ms =
   delay (Unsigned.UInt.of_int ms)
 
-let delay_ns = ff "SDL_DelayNS"
+let delay_ns = ff ~release_runtime_lock:true "SDL_DelayNS"
   (uint64 @-> returning void)
 let delay_ns ns =
   delay_ns (Unsigned.ULong.of_int64 ns)
 
-let delay_precise = ff "SDL_DelayPrecise"
+let delay_precise = ff ~release_runtime_lock:true "SDL_DelayPrecise"
   (uint64 @-> returning void)
 let delay_precise ns =
   delay_precise (Unsigned.ULong.of_int64 ns)
@@ -51,4 +51,3 @@ let remove_timer id =
 
 end
 include Global
-

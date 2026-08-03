@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -125,7 +125,7 @@ let egl_get_current_config = ff "SDL_EGL_GetCurrentConfig"
   (void @-> returning egl_config)
 
 let egl_set_attribute_callbacks = ff "SDL_EGL_SetAttributeCallbacks"
-  (egl_attrib_array_callback @-> egl_int_array_callback @-> egl_int_array_callback @-> ptr void @-> returning void)
+  (egl_attrib_array_callback_opt @-> egl_int_array_callback_opt @-> egl_int_array_callback_opt @-> ptr void @-> returning void)
 
 let gl_set_swap_interval = ff "SDL_GL_SetSwapInterval"
   (int @-> returning true_to_ok)

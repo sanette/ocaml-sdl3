@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -244,7 +244,8 @@ let write_pixel surface x y r g b a =
 let write_pixel_float = ff "SDL_WriteSurfacePixelFloat"
   (surface @-> int @-> int @-> float @-> float @-> float @-> float @-> returning true_to_ok)
 
-(* additional code: *)
+(* Additional manual code: *)
+
 (* Warning! the ba should be accessed only during the surface lifespan! *)
 let get_pixels_ba surf =
   let pixels = Surface.(get surf pixels) in

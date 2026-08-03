@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -57,7 +57,7 @@ let warp_mouse_global = ff "SDL_WarpMouseGlobal"
   (float @-> float @-> returning true_to_ok)
 
 let set_relative_mouse_transform = ff "SDL_SetRelativeMouseTransform"
-  (mouse_motion_transform_callback @-> ptr void @-> returning true_to_ok)
+  (mouse_motion_transform_callback_opt @-> ptr void @-> returning true_to_ok)
 
 let capture_mouse = ff "SDL_CaptureMouse"
   (bool @-> returning true_to_ok)

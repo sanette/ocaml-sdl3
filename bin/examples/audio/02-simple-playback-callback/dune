@@ -1,0 +1,3 @@
+(executable
+ (name simple_playback_callback)
+ (libraries sdl3))

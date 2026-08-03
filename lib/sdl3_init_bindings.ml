@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -17,7 +17,7 @@ let init_sub_system = ff "SDL_InitSubSystem"
 let init_sub_system flags =
   init_sub_system (Unsigned.UInt.of_int flags)
 
-let quit_sub_system = ff "SDL_QuitSubSystem"
+let quit_sub_system = ff ~release_runtime_lock:true "SDL_QuitSubSystem"
   (init_flags @-> returning void)
 let quit_sub_system flags =
   quit_sub_system (Unsigned.UInt.of_int flags)
@@ -27,7 +27,7 @@ let was_init = ff "SDL_WasInit"
 let was_init flags =
   was_init (Unsigned.UInt.of_int flags)
 
-let quit = ff "SDL_Quit"
+let quit = ff ~release_runtime_lock:true "SDL_Quit"
   (void @-> returning void)
 
 let is_main_thread = ff "SDL_IsMainThread"
@@ -47,4 +47,3 @@ let get_app_metadata_property = ff "SDL_GetAppMetadataProperty"
 
 end
 include Global
-

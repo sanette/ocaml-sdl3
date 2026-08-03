@@ -1,17 +1,17 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
 module Thread = struct
 let create_runtime = ff "SDL_CreateThreadRuntime"
-  (thread_function @-> string @-> ptr void @-> function_pointer @-> function_pointer @-> returning (some_to_ok thread_opt))
+  (thread_function @-> string @-> ptr void @-> function_pointer_opt @-> function_pointer_opt @-> returning (some_to_ok thread_opt))
 
 let create_with_properties_runtime = ff "SDL_CreateThreadWithPropertiesRuntime"
-  (properties_id @-> function_pointer @-> function_pointer @-> returning (some_to_ok thread_opt))
+  (properties_id @-> function_pointer_opt @-> function_pointer_opt @-> returning (some_to_ok thread_opt))
 let create_with_properties_runtime props pfn_begin_thread pfn_end_thread =
   create_with_properties_runtime (Unsigned.UInt.of_int props) pfn_begin_thread pfn_end_thread
 
@@ -57,7 +57,7 @@ let get_tls = ff "SDL_GetTLS"
   (ptr tlsid @-> returning (ptr void))
 
 let set_tls = ff "SDL_SetTLS"
-  (ptr tlsid @-> ptr void @-> tls_destructor_callback @-> returning true_to_ok)
+  (ptr tlsid @-> ptr void @-> tls_destructor_callback_opt @-> returning true_to_ok)
 
 end
 

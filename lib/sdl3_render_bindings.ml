@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -254,7 +254,7 @@ let get_texture_address_mode = ff "SDL_GetRenderTextureAddressMode"
 let render_read_pixels = ff "SDL_RenderReadPixels"
   (renderer @-> rect_opt @-> returning (some_to_ok surface_opt))
 
-let render_present = ff "SDL_RenderPresent"
+let render_present = ff ~release_runtime_lock:true "SDL_RenderPresent"
   (renderer @-> returning true_to_ok)
 
 let destroy = ff "SDL_DestroyRenderer"
@@ -433,4 +433,3 @@ let destroy = ff "SDL_DestroyGPURenderState"
   (gpu_render_state @-> returning void)
 
 end
-

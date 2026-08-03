@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -29,7 +29,7 @@ let unlock_properties props =
   unlock_properties (Unsigned.UInt.of_int props)
 
 let set_pointer_property_with_cleanup = ff "SDL_SetPointerPropertyWithCleanup"
-  (properties_id @-> string @-> ptr void @-> cleanup_property_callback @-> ptr void @-> returning true_to_ok)
+  (properties_id @-> string @-> ptr void @-> cleanup_property_callback_opt @-> ptr void @-> returning true_to_ok)
 let set_pointer_property_with_cleanup props name value cleanup userdata =
   set_pointer_property_with_cleanup (Unsigned.UInt.of_int props) name value cleanup userdata
 

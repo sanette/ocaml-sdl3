@@ -101,6 +101,7 @@ let assert_data = AssertData.t
 
 
 let assertion_handler = funptr (ptr assert_data @-> ptr void @-> returning assert_state)
+let assertion_handler_opt = funptr_opt (ptr assert_data @-> ptr void @-> returning assert_state)
 
 (* No definition (opaque struct) *)
 type async_io = unit ptr
@@ -201,6 +202,7 @@ let property_type_to_enum : property_type -> property_type_enum = function
   | PROPERTY_TYPE_BOOLEAN -> property_type_boolean
 
 let cleanup_property_callback = funptr (ptr void @-> ptr void @-> returning void)
+let cleanup_property_callback_opt = funptr_opt (ptr void @-> ptr void @-> returning void)
 let enumerate_properties_callback = funptr (ptr void @-> uint @-> string @-> returning void)
 
 (* No definition (opaque struct) *)
@@ -241,7 +243,9 @@ let thread_state_to_enum : thread_state -> thread_state_enum = function
   | THREAD_COMPLETE -> thread_complete
 
 let thread_function = funptr (ptr void @-> returning int)
+let function_pointer_opt = funptr_opt (void @-> returning void)
 let tls_destructor_callback = funptr (ptr void @-> returning void)
+let tls_destructor_callback_opt = funptr_opt (ptr void @-> returning void)
 
 (* No definition (opaque struct) *)
 type mutex = unit ptr
@@ -382,16 +386,25 @@ let audio_format_to_enum : audio_format -> audio_format_enum = function
 
 let audio_device_id = uint (* prim *)
 module AudioSpec = struct
-  type _t
-  type t = _t structure
-  let t : t typ = structure "SDL_AudioSpec"
+  type _t_raw
+  type t_raw = _t_raw structure
+  let t : t_raw typ = structure "SDL_AudioSpec"
   let format = field t "format" audio_format
   let channels = field t "channels" int
   let freq = field t "freq" int
   let () = seal t
+  let t_raw = t
+  type t = t_raw ptr
+  let t : t typ = ptr t_raw
+  let t_opt : t option typ = ptr_opt t_raw
+  let get (e : t) field = getf {structured = e} field
+  let set (e : t) field v = setf {structured = e} field v
+  let create () : t = allocate_n t_raw ~count:1
 end
 type audio_spec = AudioSpec.t
 let audio_spec = AudioSpec.t
+let audio_spec_opt = AudioSpec.t_opt
+let audio_spec_raw = AudioSpec.t_raw
 
 
 
@@ -400,9 +413,14 @@ type audio_stream = unit ptr
 let audio_stream : audio_stream typ = ptr void
 let audio_stream_opt : audio_stream option typ = ptr_opt void
 
+type audio_stream_callback = unit ptr -> audio_stream -> int -> int -> unit
+
 let audio_stream_data_complete_callback = funptr (ptr void @-> ptr void @-> int @-> returning void)
-let audio_stream_callback = funptr (ptr void @-> audio_stream @-> int @-> int @-> returning void)
-let audio_postmix_callback = funptr (ptr void @-> ptr audio_spec @-> ptr float @-> int @-> returning void)
+let audio_stream_data_complete_callback_opt = funptr_opt (ptr void @-> ptr void @-> int @-> returning void)
+let audio_stream_callback = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_stream @-> int @-> int @-> returning void)
+let audio_stream_callback_opt = funptr_opt ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_stream @-> int @-> int @-> returning void)
+let audio_postmix_callback = funptr (ptr void @-> audio_spec @-> ptr float @-> int @-> returning void)
+let audio_postmix_callback_opt = funptr_opt (ptr void @-> audio_spec @-> ptr float @-> int @-> returning void)
 let blend_mode = uint (* prim *)
 type blend_operation =
   | BLENDOPERATION_ADD
@@ -1404,6 +1422,8 @@ let hit_test_result_to_enum : hit_test_result -> hit_test_result_enum = function
   | HITTEST_RESIZE_LEFT -> hittest_resize_left
 
 let hit_test = funptr (window @-> point @-> ptr void @-> returning hit_test_result)
+let egl_attrib_array_callback_opt = funptr_opt (ptr void @-> returning (ptr long))
+let egl_int_array_callback_opt = funptr_opt (ptr void @-> ptr void @-> ptr void @-> returning (ptr int))
 module DialogFileFilter = struct
   type _t
   type t = _t structure
@@ -2482,6 +2502,7 @@ let cursor_frame_info = CursorFrameInfo.t
 
 let mouse_button_flags = uint (* prim *)
 let mouse_motion_transform_callback = funptr (ptr void @-> ulong @-> window @-> uint @-> ptr float @-> ptr float @-> returning void)
+let mouse_motion_transform_callback_opt = funptr_opt (ptr void @-> ulong @-> window @-> uint @-> ptr float @-> ptr float @-> returning void)
 let touch_id = ulong (* prim *)
 let finger_id = ulong (* prim *)
 type touch_device_type =

@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -67,13 +67,13 @@ let peeps = ff "SDL_PeepEvents"
 let peeps events numevents action min_type max_type =
   peeps events numevents action (Unsigned.UInt.of_int min_type) (Unsigned.UInt.of_int max_type)
 
-let poll = ff "SDL_PollEvent"
+let poll = ff ~release_runtime_lock:true "SDL_PollEvent"
   (event_opt @-> returning bool)
 
-let wait = ff "SDL_WaitEvent"
+let wait = ff ~release_runtime_lock:true "SDL_WaitEvent"
   (event_opt @-> returning true_to_ok)
 
-let wait_timeout = ff "SDL_WaitEventTimeout"
+let wait_timeout = ff ~release_runtime_lock:true "SDL_WaitEventTimeout"
   (event_opt @-> sint32 @-> returning true_to_ok)
 
 let push = ff "SDL_PushEvent"
@@ -91,4 +91,3 @@ let get_from_event = ff "SDL_GetWindowFromEvent"
   (event @-> returning (some_to_ok window_opt))
 
 end
-

@@ -68,7 +68,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_CompareAndSwapAtomicPointer, Atomic, , compare_and_swap_atomic_pointer, ptr (ptr void) @-> ptr void @-> ptr void @-> returning true_to_ok, ptr (ptr void) -> ptr void -> ptr void -> unit result
 3.2.0, SDL_CompareAndSwapAtomicU32, Atomic, AtomicU32, compare_and_swap, ptr atomic_u32 @-> uint32 @-> uint32 @-> returning true_to_ok, ptr atomic_u32 -> int -> int -> unit result
 3.2.0, SDL_ComposeCustomBlendMode, Blendmode, BlendFactor, compose_custom_blend_mode, blend_factor @-> blend_factor @-> blend_operation @-> blend_factor @-> blend_factor @-> blend_operation @-> returning int_as_uint, blend_factor -> blend_factor -> blend_operation -> blend_factor -> blend_factor -> blend_operation -> int
-3.2.0, SDL_ConvertAudioSamples, Audio, AudioSpec, convert_audio_samples, ptr audio_spec @-> ptr uint8 @-> int @-> ptr audio_spec @-> ptr (ptr uint8) @-> ptr int @-> returning bool, ptr audio_spec -> ptr uint8 -> int -> ptr audio_spec -> ptr (ptr uint8) -> int
+3.2.0, SDL_ConvertAudioSamples, Audio, AudioSpec, convert_audio_samples, audio_spec @-> ptr uint8 @-> int @-> audio_spec @-> ptr (ptr uint8) @-> ptr int @-> returning bool, audio_spec -> ptr uint8 -> int -> audio_spec -> ptr (ptr uint8) -> int
 3.2.0, SDL_ConvertEventToRenderCoordinates, Render, Renderer, convert_event_to_render_coordinates, renderer @-> event @-> returning true_to_ok, renderer -> event -> unit result
 3.2.0, SDL_ConvertPixels, Surface, , convert_pixels, int @-> int @-> pixel_format @-> ptr void @-> int @-> pixel_format @-> ptr void @-> int @-> returning true_to_ok, int -> int -> pixel_format -> ptr void -> int -> pixel_format -> ptr void -> int -> unit result
 3.2.0, SDL_ConvertPixelsAndColorspace, Surface, , convert_pixels_and_colorspace, int @-> int @-> pixel_format @-> colorspace @-> properties_id @-> ptr void @-> int @-> pixel_format @-> colorspace @-> properties_id @-> ptr void @-> int @-> returning true_to_ok, int -> int -> pixel_format -> colorspace -> int -> ptr void -> int -> pixel_format -> colorspace -> int -> ptr void -> int -> unit result
@@ -80,7 +80,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_CopyProperties, Properties, , copy_properties, properties_id @-> properties_id @-> returning true_to_ok, int -> int -> unit result
 3.2.0, SDL_CopyStorageFile, Storage, Storage, copy_file, storage @-> string @-> string @-> returning true_to_ok, storage -> string -> string -> unit result
 3.2.0, SDL_CreateAsyncIOQueue, Asyncio, AsyncIOQueue, create, void @-> returning (some_to_ok async_io_queue_opt), unit -> (async_io_queue option) result
-3.2.0, SDL_CreateAudioStream, Audio, AudioStream, create, ptr audio_spec @-> ptr audio_spec @-> returning (some_to_ok audio_stream_opt), ptr audio_spec -> ptr audio_spec -> (audio_stream option) result
+3.2.0, SDL_CreateAudioStream, Audio, AudioStream, create, audio_spec_opt @-> audio_spec_opt @-> returning (some_to_ok audio_stream_opt), audio_spec option -> audio_spec option -> (audio_stream option) result
 3.2.0, SDL_CreateColorCursor, Mouse, Cursor, create_color, surface @-> int @-> int @-> returning (some_to_ok cursor_opt), surface -> int -> int -> (cursor option) result
 3.2.0, SDL_CreateCondition, Mutex, Condition, create, void @-> returning (some_to_ok condition_opt), unit -> (condition option) result
 3.2.0, SDL_CreateCursor, Mouse, Cursor, create, ptr uint8 @-> ptr uint8 @-> int @-> int @-> int @-> int @-> returning (some_to_ok cursor_opt), ptr uint8 -> ptr uint8 -> int -> int -> int -> int -> (cursor option) result
@@ -115,8 +115,8 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_CreateTexture, Render, Texture, create, renderer @-> pixel_format @-> texture_access @-> int @-> int @-> returning (some_to_ok texture_opt), renderer -> pixel_format -> texture_access -> int -> int -> (texture option) result
 3.2.0, SDL_CreateTextureFromSurface, Render, Texture, create_from_surface, renderer @-> surface @-> returning (some_to_ok texture_opt), renderer -> surface -> (texture option) result
 3.2.0, SDL_CreateTextureWithProperties, Render, Texture, create_with_properties, renderer @-> properties_id @-> returning (some_to_ok texture_opt), renderer -> int -> (texture option) result
-3.2.0, SDL_CreateThreadRuntime, Thread, Thread, create_runtime, thread_function @-> string @-> ptr void @-> function_pointer @-> function_pointer @-> returning (some_to_ok thread_opt), thread_function -> string -> ptr void -> function_pointer -> function_pointer -> (thread option) result
-3.2.0, SDL_CreateThreadWithPropertiesRuntime, Thread, Thread, create_with_properties_runtime, properties_id @-> function_pointer @-> function_pointer @-> returning (some_to_ok thread_opt), int -> function_pointer -> function_pointer -> (thread option) result
+3.2.0, SDL_CreateThreadRuntime, Thread, Thread, create_runtime, thread_function @-> string @-> ptr void @-> function_pointer_opt @-> function_pointer_opt @-> returning (some_to_ok thread_opt), thread_function -> string -> ptr void -> function_pointer option -> function_pointer option -> (thread option) result
+3.2.0, SDL_CreateThreadWithPropertiesRuntime, Thread, Thread, create_with_properties_runtime, properties_id @-> function_pointer_opt @-> function_pointer_opt @-> returning (some_to_ok thread_opt), int -> function_pointer option -> function_pointer option -> (thread option) result
 3.2.0, SDL_CreateTray, Tray, Tray, create, surface_opt @-> string @-> returning (some_to_ok tray_opt), surface option -> string -> (tray option) result
 3.2.0, SDL_CreateTrayMenu, Tray, Tray, create_menu, tray @-> returning (some_to_ok tray_menu_opt), tray -> (tray_menu option) result
 3.2.0, SDL_CreateTraySubmenu, Tray, TrayMenu, create_tray_submenu, tray_entry @-> returning (some_to_ok tray_menu_opt), tray_entry -> (tray_menu option) result
@@ -163,7 +163,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_EGL_GetCurrentDisplay, Video, , egl_get_current_display, void @-> returning egl_display, unit -> egl_display
 3.2.0, SDL_EGL_GetProcAddress, Video, , egl_get_proc_address, string @-> returning function_pointer, string -> function_pointer
 3.2.0, SDL_EGL_GetWindowSurface, Video, Window, egl_get_surface, window @-> returning egl_surface, window -> egl_surface
-3.2.0, SDL_EGL_SetAttributeCallbacks, Video, , egl_set_attribute_callbacks, egl_attrib_array_callback @-> egl_int_array_callback @-> egl_int_array_callback @-> ptr void @-> returning void, egl_attrib_array_callback -> egl_int_array_callback -> egl_int_array_callback -> ptr void -> unit
+3.2.0, SDL_EGL_SetAttributeCallbacks, Video, , egl_set_attribute_callbacks, egl_attrib_array_callback_opt @-> egl_int_array_callback_opt @-> egl_int_array_callback_opt @-> ptr void @-> returning void, egl_attrib_array_callback option -> egl_int_array_callback option -> egl_int_array_callback option -> ptr void -> unit
 3.2.0, SDL_EnableScreenSaver, Video, , enable_screen_saver, void @-> returning true_to_ok, unit -> unit result
 3.2.0, SDL_EndGPUComputePass, Gpu, GPUComputePass, end_, gpu_compute_pass @-> returning void, gpu_compute_pass -> unit
 3.2.0, SDL_EndGPUCopyPass, Gpu, GPUCopyPass, end_, gpu_copy_pass @-> returning void, gpu_copy_pass -> unit
@@ -219,7 +219,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetAtomicPointer, Atomic, , get_atomic_pointer, ptr (ptr void) @-> returning (ptr void), ptr (ptr void) -> ptr void
 3.2.0, SDL_GetAtomicU32, Atomic, AtomicU32, get, ptr atomic_u32 @-> returning int_as_uint, ptr atomic_u32 -> int
 3.2.0, SDL_GetAudioDeviceChannelMap, Audio, , get_audio_device_channel_map, audio_device_id @-> ptr int @-> returning (ptr int), int -> int list
-3.2.0, SDL_GetAudioDeviceFormat, Audio, , get_audio_device_format, audio_device_id @-> ptr audio_spec @-> ptr int @-> returning bool, int -> ptr audio_spec -> int
+3.2.0, SDL_GetAudioDeviceFormat, Audio, , get_audio_device_format, audio_device_id @-> audio_spec @-> ptr int @-> returning bool, int -> audio_spec -> int
 3.2.0, SDL_GetAudioDeviceGain, Audio, , get_audio_device_gain, audio_device_id @-> returning float, int -> float
 3.2.0, SDL_GetAudioDeviceName, Audio, , get_audio_device_name, audio_device_id @-> returning string, int -> string
 3.2.0, SDL_GetAudioDriver, Audio, , get_audio_driver, int @-> returning string, int -> string
@@ -229,7 +229,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetAudioStreamAvailable, Audio, AudioStream, get_available, audio_stream @-> returning int, audio_stream -> int
 3.2.0, SDL_GetAudioStreamData, Audio, AudioStream, get_data, audio_stream @-> ptr void @-> int @-> returning int, audio_stream -> ptr void -> int -> int
 3.2.0, SDL_GetAudioStreamDevice, Audio, AudioStream, get_device, audio_stream @-> returning int_as_uint, audio_stream -> int
-3.2.0, SDL_GetAudioStreamFormat, Audio, AudioStream, get_format, audio_stream @-> ptr audio_spec @-> ptr audio_spec @-> returning true_to_ok, audio_stream -> ptr audio_spec -> ptr audio_spec -> unit result
+3.2.0, SDL_GetAudioStreamFormat, Audio, AudioStream, get_format, audio_stream @-> audio_spec_opt @-> audio_spec_opt @-> returning true_to_ok, audio_stream -> audio_spec option -> audio_spec option -> unit result
 3.2.0, SDL_GetAudioStreamFrequencyRatio, Audio, AudioStream, get_frequency_ratio, audio_stream @-> returning float, audio_stream -> float
 3.2.0, SDL_GetAudioStreamGain, Audio, AudioStream, get_gain, audio_stream @-> returning float, audio_stream -> float
 3.2.0, SDL_GetAudioStreamInputChannelMap, Audio, AudioStream, get_input_channel_map, audio_stream @-> ptr int @-> returning (ptr int), audio_stream -> int list
@@ -258,7 +258,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetCurrentDisplayMode, Video, DisplayMode, get_current, display_id @-> returning (some_to_ok display_mode_opt), int -> (display_mode option) result
 3.2.0, SDL_GetCurrentDisplayOrientation, Video, DisplayOrientation, get_current, display_id @-> returning display_orientation, int -> display_orientation
 3.2.0, SDL_GetCurrentRenderOutputSize, Render, Renderer, get_current_render_output_size, renderer @-> ptr int @-> ptr int @-> returning bool, renderer -> (int * int) result
-3.2.0, SDL_GetCurrentThreadID, Thread, , get_current_thread_id, void @-> returning int64_as_ulong, unit -> int64_as_ulong
+3.2.0, SDL_GetCurrentThreadID, Thread, , get_current_thread_id, void @-> returning int64_as_ulong, unit -> int64
 3.2.0, SDL_GetCurrentTime, Time, , get_current_time, ptr time @-> returning bool, unit -> int
 3.2.0, SDL_GetCurrentVideoDriver, Video, , get_current_video_driver, void @-> returning string, unit -> string
 3.2.0, SDL_GetCursor, Mouse, Cursor, get, void @-> returning (some_to_ok cursor_opt), unit -> (cursor option) result
@@ -300,7 +300,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetGamepadButtonLabel, Gamepad, Gamepad, get_button_label, gamepad @-> gamepad_button @-> returning gamepad_button_label, gamepad -> gamepad_button -> gamepad_button_label
 3.2.0, SDL_GetGamepadButtonLabelForType, Gamepad, GamepadButtonLabel, get_for_type, gamepad_type @-> gamepad_button @-> returning gamepad_button_label, gamepad_type -> gamepad_button -> gamepad_button_label
 3.2.0, SDL_GetGamepadConnectionState, Gamepad, Gamepad, get_connection_state, gamepad @-> returning joystick_connection_state, gamepad -> joystick_connection_state
-3.2.0, SDL_GetGamepadFirmwareVersion, Gamepad, Gamepad, get_firmware_version, gamepad @-> returning int_as_ushort, gamepad -> int_as_ushort
+3.2.0, SDL_GetGamepadFirmwareVersion, Gamepad, Gamepad, get_firmware_version, gamepad @-> returning int_as_ushort, gamepad -> int
 3.2.0, SDL_GetGamepadFromID, Gamepad, Gamepad, get_from_id, joystick_id @-> returning (some_to_ok gamepad_opt), int -> (gamepad option) result
 3.2.0, SDL_GetGamepadFromPlayerIndex, Gamepad, Gamepad, get_from_player_index, int @-> returning (some_to_ok gamepad_opt), int -> (gamepad option) result
 3.2.0, SDL_GetGamepadGUIDForID, Gamepad, GUID, get_gamepad_for_id, joystick_id @-> returning guid, int -> guid
@@ -317,15 +317,15 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetGamepadPlayerIndex, Gamepad, Gamepad, get_player_index, gamepad @-> returning int, gamepad -> int
 3.2.0, SDL_GetGamepadPlayerIndexForID, Gamepad, , get_gamepad_player_index_for_id, joystick_id @-> returning int, int -> int
 3.2.0, SDL_GetGamepadPowerInfo, Gamepad, Gamepad, get_power_info, gamepad @-> ptr int @-> returning power_state, gamepad -> int
-3.2.0, SDL_GetGamepadProduct, Gamepad, Gamepad, get_product, gamepad @-> returning int_as_ushort, gamepad -> int_as_ushort
-3.2.0, SDL_GetGamepadProductForID, Gamepad, , get_gamepad_product_for_id, joystick_id @-> returning int_as_ushort, int -> int_as_ushort
-3.2.0, SDL_GetGamepadProductVersion, Gamepad, Gamepad, get_product_version, gamepad @-> returning int_as_ushort, gamepad -> int_as_ushort
-3.2.0, SDL_GetGamepadProductVersionForID, Gamepad, , get_gamepad_product_version_for_id, joystick_id @-> returning int_as_ushort, int -> int_as_ushort
+3.2.0, SDL_GetGamepadProduct, Gamepad, Gamepad, get_product, gamepad @-> returning int_as_ushort, gamepad -> int
+3.2.0, SDL_GetGamepadProductForID, Gamepad, , get_gamepad_product_for_id, joystick_id @-> returning int_as_ushort, int -> int
+3.2.0, SDL_GetGamepadProductVersion, Gamepad, Gamepad, get_product_version, gamepad @-> returning int_as_ushort, gamepad -> int
+3.2.0, SDL_GetGamepadProductVersionForID, Gamepad, , get_gamepad_product_version_for_id, joystick_id @-> returning int_as_ushort, int -> int
 3.2.0, SDL_GetGamepadProperties, Gamepad, Gamepad, get_properties, gamepad @-> returning int_as_uint, gamepad -> int
 3.2.0, SDL_GetGamepadSensorData, Gamepad, Gamepad, get_sensor_data, gamepad @-> sensor_type @-> ptr float @-> int @-> returning true_to_ok, gamepad -> sensor_type -> ptr float -> int -> unit result
 3.2.0, SDL_GetGamepadSensorDataRate, Gamepad, Gamepad, get_sensor_data_rate, gamepad @-> sensor_type @-> returning float, gamepad -> sensor_type -> float
 3.2.0, SDL_GetGamepadSerial, Gamepad, Gamepad, get_serial, gamepad @-> returning string, gamepad -> string
-3.2.0, SDL_GetGamepadSteamHandle, Gamepad, Gamepad, get_steam_handle, gamepad @-> returning int64_as_ulong, gamepad -> int64_as_ulong
+3.2.0, SDL_GetGamepadSteamHandle, Gamepad, Gamepad, get_steam_handle, gamepad @-> returning int64_as_ulong, gamepad -> int64
 3.2.0, SDL_GetGamepadStringForAxis, Gamepad, GamepadAxis, get_gamepad_string_for_axis, gamepad_axis @-> returning string, gamepad_axis -> string
 3.2.0, SDL_GetGamepadStringForButton, Gamepad, GamepadButton, get_gamepad_string_for_button, gamepad_button @-> returning string, gamepad_button -> string
 3.2.0, SDL_GetGamepadStringForType, Gamepad, GamepadType, get_gamepad_string_for_type, gamepad_type @-> returning string, gamepad_type -> string
@@ -333,8 +333,8 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetGamepadType, Gamepad, Gamepad, get_type, gamepad @-> returning gamepad_type, gamepad -> gamepad_type
 3.2.0, SDL_GetGamepadTypeForID, Gamepad, GamepadType, get_for_id, joystick_id @-> returning gamepad_type, int -> gamepad_type
 3.2.0, SDL_GetGamepadTypeFromString, Gamepad, GamepadType, get_from_string, string @-> returning gamepad_type, string -> gamepad_type
-3.2.0, SDL_GetGamepadVendor, Gamepad, Gamepad, get_vendor, gamepad @-> returning int_as_ushort, gamepad -> int_as_ushort
-3.2.0, SDL_GetGamepadVendorForID, Gamepad, , get_gamepad_vendor_for_id, joystick_id @-> returning int_as_ushort, int -> int_as_ushort
+3.2.0, SDL_GetGamepadVendor, Gamepad, Gamepad, get_vendor, gamepad @-> returning int_as_ushort, gamepad -> int
+3.2.0, SDL_GetGamepadVendorForID, Gamepad, , get_gamepad_vendor_for_id, joystick_id @-> returning int_as_ushort, int -> int
 3.2.0, SDL_GetGamepads, Gamepad, , get_gamepads, ptr int @-> returning (ptr joystick_id), unit -> int list
 3.2.0, SDL_GetGlobalMouseState, Mouse, , get_global_mouse_state, ptr float @-> ptr float @-> returning int_as_uint, unit -> float * float
 3.2.0, SDL_GetGlobalProperties, Properties, , get_global_properties, void @-> returning int_as_uint, unit -> int
@@ -356,13 +356,13 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetJoystickBall, Joystick, Joystick, get_ball, joystick @-> int @-> ptr int @-> ptr int @-> returning bool, joystick -> int -> (int * int) result
 3.2.0, SDL_GetJoystickButton, Joystick, Joystick, get_button, joystick @-> int @-> returning true_to_ok, joystick -> int -> unit result
 3.2.0, SDL_GetJoystickConnectionState, Joystick, Joystick, get_connection_state, joystick @-> returning joystick_connection_state, joystick -> joystick_connection_state
-3.2.0, SDL_GetJoystickFirmwareVersion, Joystick, Joystick, get_firmware_version, joystick @-> returning int_as_ushort, joystick -> int_as_ushort
+3.2.0, SDL_GetJoystickFirmwareVersion, Joystick, Joystick, get_firmware_version, joystick @-> returning int_as_ushort, joystick -> int
 3.2.0, SDL_GetJoystickFromID, Joystick, Joystick, get_from_id, joystick_id @-> returning (some_to_ok joystick_opt), int -> (joystick option) result
 3.2.0, SDL_GetJoystickFromPlayerIndex, Joystick, Joystick, get_from_player_index, int @-> returning (some_to_ok joystick_opt), int -> (joystick option) result
 3.2.0, SDL_GetJoystickGUID, Joystick, Joystick, get_guid, joystick @-> returning guid, joystick -> guid
 3.2.0, SDL_GetJoystickGUIDForID, Joystick, GUID, get_joystick_for_id, joystick_id @-> returning guid, int -> guid
 3.2.0, SDL_GetJoystickGUIDInfo, Joystick, GUID, get_joystick_info, guid @-> ptr uint16 @-> ptr uint16 @-> ptr uint16 @-> ptr uint16 @-> returning void, guid -> int * int * int * int
-3.2.0, SDL_GetJoystickHat, Joystick, Joystick, get_hat, joystick @-> int @-> returning int_as_uchar, joystick -> int -> int_as_uchar
+3.2.0, SDL_GetJoystickHat, Joystick, Joystick, get_hat, joystick @-> int @-> returning int_as_uchar, joystick -> int -> int
 3.2.0, SDL_GetJoystickID, Joystick, Joystick, get_id, joystick @-> returning int_as_uint, joystick -> int
 3.2.0, SDL_GetJoystickName, Joystick, Joystick, get_name, joystick @-> returning string, joystick -> string
 3.2.0, SDL_GetJoystickNameForID, Joystick, , get_joystick_name_for_id, joystick_id @-> returning string, int -> string
@@ -371,16 +371,16 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetJoystickPlayerIndex, Joystick, Joystick, get_player_index, joystick @-> returning int, joystick -> int
 3.2.0, SDL_GetJoystickPlayerIndexForID, Joystick, , get_joystick_player_index_for_id, joystick_id @-> returning int, int -> int
 3.2.0, SDL_GetJoystickPowerInfo, Joystick, Joystick, get_power_info, joystick @-> ptr int @-> returning power_state, joystick -> int
-3.2.0, SDL_GetJoystickProduct, Joystick, Joystick, get_product, joystick @-> returning int_as_ushort, joystick -> int_as_ushort
-3.2.0, SDL_GetJoystickProductForID, Joystick, , get_joystick_product_for_id, joystick_id @-> returning int_as_ushort, int -> int_as_ushort
-3.2.0, SDL_GetJoystickProductVersion, Joystick, Joystick, get_product_version, joystick @-> returning int_as_ushort, joystick -> int_as_ushort
-3.2.0, SDL_GetJoystickProductVersionForID, Joystick, , get_joystick_product_version_for_id, joystick_id @-> returning int_as_ushort, int -> int_as_ushort
+3.2.0, SDL_GetJoystickProduct, Joystick, Joystick, get_product, joystick @-> returning int_as_ushort, joystick -> int
+3.2.0, SDL_GetJoystickProductForID, Joystick, , get_joystick_product_for_id, joystick_id @-> returning int_as_ushort, int -> int
+3.2.0, SDL_GetJoystickProductVersion, Joystick, Joystick, get_product_version, joystick @-> returning int_as_ushort, joystick -> int
+3.2.0, SDL_GetJoystickProductVersionForID, Joystick, , get_joystick_product_version_for_id, joystick_id @-> returning int_as_ushort, int -> int
 3.2.0, SDL_GetJoystickProperties, Joystick, Joystick, get_properties, joystick @-> returning int_as_uint, joystick -> int
 3.2.0, SDL_GetJoystickSerial, Joystick, Joystick, get_serial, joystick @-> returning string, joystick -> string
 3.2.0, SDL_GetJoystickType, Joystick, Joystick, get_type, joystick @-> returning joystick_type, joystick -> joystick_type
 3.2.0, SDL_GetJoystickTypeForID, Joystick, JoystickType, get_for_id, joystick_id @-> returning joystick_type, int -> joystick_type
-3.2.0, SDL_GetJoystickVendor, Joystick, Joystick, get_vendor, joystick @-> returning int_as_ushort, joystick -> int_as_ushort
-3.2.0, SDL_GetJoystickVendorForID, Joystick, , get_joystick_vendor_for_id, joystick_id @-> returning int_as_ushort, int -> int_as_ushort
+3.2.0, SDL_GetJoystickVendor, Joystick, Joystick, get_vendor, joystick @-> returning int_as_ushort, joystick -> int
+3.2.0, SDL_GetJoystickVendorForID, Joystick, , get_joystick_vendor_for_id, joystick_id @-> returning int_as_ushort, int -> int
 3.2.0, SDL_GetJoysticks, Joystick, , get_joysticks, ptr int @-> returning (ptr joystick_id), unit -> int list
 3.2.0, SDL_GetKeyFromName, Keyboard, , get_key_from_name, string @-> returning int_as_uint, string -> int
 3.2.0, SDL_GetKeyFromScancode, Keyboard, Scancode, get_key_from, scancode @-> keymod @-> bool @-> returning int_as_uint, scancode -> int -> bool -> int
@@ -396,7 +396,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetMaxHapticEffectsPlaying, Haptic, Haptic, get_max_effects_playing, haptic @-> returning int, haptic -> int
 3.2.0, SDL_GetMemoryFunctions, Stdinc, , get_memory_functions, ptr malloc_func @-> ptr calloc_func @-> ptr realloc_func @-> ptr free_func @-> returning void, ptr malloc_func -> ptr calloc_func -> ptr realloc_func -> ptr free_func -> unit
 3.2.0, SDL_GetMice, Mouse, , get_mice, ptr int @-> returning (ptr mouse_id), unit -> int list
-3.2.0, SDL_GetModState, Keyboard, , get_mod_state, void @-> returning int_as_ushort, unit -> int_as_ushort
+3.2.0, SDL_GetModState, Keyboard, , get_mod_state, void @-> returning int_as_ushort, unit -> int
 3.2.0, SDL_GetMouseFocus, Mouse, Window, get_mouse_focus, void @-> returning (some_to_ok window_opt), unit -> (window option) result
 3.2.0, SDL_GetMouseNameForID, Mouse, , get_mouse_name_for_id, mouse_id @-> returning string, int -> string
 3.2.0, SDL_GetMouseState, Mouse, , get_mouse_state, ptr float @-> ptr float @-> returning int_as_uint, unit -> float * float
@@ -418,8 +418,8 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetNumberProperty, Properties, , get_number_property, properties_id @-> string @-> sint64 @-> returning sint64, int -> string -> int -> int
 3.2.0, SDL_GetOriginalMemoryFunctions, Stdinc, , get_original_memory_functions, ptr malloc_func @-> ptr calloc_func @-> ptr realloc_func @-> ptr free_func @-> returning void, ptr malloc_func -> ptr calloc_func -> ptr realloc_func -> ptr free_func -> unit
 3.2.0, SDL_GetPathInfo, Filesystem, , get_path_info, string @-> ptr path_info @-> returning true_to_ok, string -> ptr path_info -> unit result
-3.2.0, SDL_GetPerformanceCounter, Timer, , get_performance_counter, void @-> returning int64_as_ulong, unit -> int64_as_ulong
-3.2.0, SDL_GetPerformanceFrequency, Timer, , get_performance_frequency, void @-> returning int64_as_ulong, unit -> int64_as_ulong
+3.2.0, SDL_GetPerformanceCounter, Timer, , get_performance_counter, void @-> returning int64_as_ulong, unit -> int64
+3.2.0, SDL_GetPerformanceFrequency, Timer, , get_performance_frequency, void @-> returning int64_as_ulong, unit -> int64
 3.2.0, SDL_GetPixelFormatDetails, Pixels, PixelFormat, get_details, pixel_format @-> returning (ptr pixel_format_details), pixel_format -> ptr pixel_format_details
 3.2.0, SDL_GetPixelFormatForMasks, Pixels, PixelFormat, get_for_masks, int @-> uint32 @-> uint32 @-> uint32 @-> uint32 @-> returning pixel_format, int -> int -> int -> int -> int -> pixel_format
 3.2.0, SDL_GetPixelFormatName, Pixels, PixelFormat, get_name, pixel_format @-> returning string, pixel_format -> string
@@ -489,7 +489,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetSilenceValueForFormat, Audio, AudioFormat, get_silence_value_for_format, audio_format @-> returning int, audio_format -> int
 3.2.0, SDL_GetStorageFileSize, Storage, Storage, get_file_size, storage @-> string @-> ptr uint64 @-> returning bool, storage -> string -> int64
 3.2.0, SDL_GetStoragePathInfo, Storage, Storage, get_path_info, storage @-> string @-> ptr path_info @-> returning true_to_ok, storage -> string -> ptr path_info -> unit result
-3.2.0, SDL_GetStorageSpaceRemaining, Storage, Storage, get_space_remaining, storage @-> returning int64_as_ulong, storage -> int64_as_ulong
+3.2.0, SDL_GetStorageSpaceRemaining, Storage, Storage, get_space_remaining, storage @-> returning int64_as_ulong, storage -> int64
 3.2.0, SDL_GetStringProperty, Properties, , get_string_property, properties_id @-> string @-> string @-> returning string, int -> string -> string -> string
 3.2.0, SDL_GetSurfaceAlphaMod, Surface, Surface, get_alpha_mod, surface @-> ptr uint8 @-> returning bool, surface -> int
 3.2.0, SDL_GetSurfaceBlendMode, Surface, Surface, get_blend_mode, surface @-> ptr blend_mode @-> returning true_to_ok, surface -> ptr blend_mode -> unit result
@@ -512,11 +512,11 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetTextureProperties, Render, Texture, get_properties, texture @-> returning int_as_uint, texture -> int
 3.2.0, SDL_GetTextureScaleMode, Render, Texture, get_scale_mode, texture @-> ptr scale_mode @-> returning true_to_ok, texture -> ptr scale_mode -> unit result
 3.2.0, SDL_GetTextureSize, Render, Texture, get_size, texture @-> ptr float @-> ptr float @-> returning bool, texture -> (float * float) result
-3.2.0, SDL_GetThreadID, Thread, Thread, get_id, thread @-> returning int64_as_ulong, thread -> int64_as_ulong
+3.2.0, SDL_GetThreadID, Thread, Thread, get_id, thread @-> returning int64_as_ulong, thread -> int64
 3.2.0, SDL_GetThreadName, Thread, Thread, get_name, thread @-> returning string, thread -> string
 3.2.0, SDL_GetThreadState, Thread, Thread, get_state, thread @-> returning thread_state, thread -> thread_state
-3.2.0, SDL_GetTicks, Timer, , get_ticks, void @-> returning int64_as_ulong, unit -> int64_as_ulong
-3.2.0, SDL_GetTicksNS, Timer, , get_ticks_ns, void @-> returning int64_as_ulong, unit -> int64_as_ulong
+3.2.0, SDL_GetTicks, Timer, , get_ticks, void @-> returning int64_as_ulong, unit -> int64
+3.2.0, SDL_GetTicksNS, Timer, , get_ticks_ns, void @-> returning int64_as_ulong, unit -> int64
 3.2.0, SDL_GetTouchDeviceName, Touch, , get_touch_device_name, touch_id @-> returning string, int64 -> string
 3.2.0, SDL_GetTouchDeviceType, Touch, TouchDeviceType, get, touch_id @-> returning touch_device_type, int64 -> touch_device_type
 3.2.0, SDL_GetTouchDevices, Touch, , get_touch_devices, ptr int @-> returning (ptr touch_id), unit -> int64 list
@@ -536,7 +536,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetWindowAspectRatio, Video, Window, get_aspect_ratio, window @-> ptr float @-> ptr float @-> returning bool, window -> (float * float) result
 3.2.0, SDL_GetWindowBordersSize, Video, Window, get_borders_size, window @-> ptr int @-> ptr int @-> ptr int @-> ptr int @-> returning bool, window -> (int * int * int * int) result
 3.2.0, SDL_GetWindowDisplayScale, Video, Window, get_display_scale, window @-> returning float, window -> float
-3.2.0, SDL_GetWindowFlags, Video, Window, get_flags, window @-> returning int64_as_ulong, window -> int64_as_ulong
+3.2.0, SDL_GetWindowFlags, Video, Window, get_flags, window @-> returning int64_as_ulong, window -> int64
 3.2.0, SDL_GetWindowFromEvent, Events, Window, get_from_event, event @-> returning (some_to_ok window_opt), event -> (window option) result
 3.2.0, SDL_GetWindowFromID, Video, Window, get_from_id, window_id @-> returning (some_to_ok window_opt), int -> (window option) result
 3.2.0, SDL_GetWindowFullscreenMode, Video, Window, get_fullscreen_mode, window @-> returning (some_to_ok display_mode_opt), window -> (display_mode option) result
@@ -622,8 +622,8 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_LoadFile_IO, Iostream, IOStream, load_file_io, io_stream @-> ptr size_t @-> bool @-> returning (ptr void), io_stream -> ptr size_t -> bool -> ptr void
 3.2.0, SDL_LoadFunction, Loadso, SharedObject, load_function, shared_object @-> string @-> returning function_pointer, shared_object -> string -> function_pointer
 3.2.0, SDL_LoadObject, Loadso, SharedObject, load_object, string @-> returning (some_to_ok shared_object_opt), string -> (shared_object option) result
-3.2.0, SDL_LoadWAV, Audio, , load_wav, string @-> ptr audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning true_to_ok, string -> ptr audio_spec -> ptr (ptr uint8) -> ptr uint32 -> unit result
-3.2.0, SDL_LoadWAV_IO, Audio, IOStream, load_wav_io, io_stream @-> bool @-> ptr audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning true_to_ok, io_stream -> bool -> ptr audio_spec -> ptr (ptr uint8) -> ptr uint32 -> unit result
+3.2.0, SDL_LoadWAV, Audio, , load_wav, string @-> audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning true_to_ok, string -> audio_spec -> ptr (ptr uint8) -> ptr uint32 -> unit result
+3.2.0, SDL_LoadWAV_IO, Audio, IOStream, load_wav_io, io_stream @-> bool @-> audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning true_to_ok, io_stream -> bool -> audio_spec -> ptr (ptr uint8) -> ptr uint32 -> unit result
 3.2.0, SDL_LockAudioStream, Audio, AudioStream, lock, audio_stream @-> returning true_to_ok, audio_stream -> unit result
 3.2.0, SDL_LockJoysticks, Joystick, , lock_joysticks, void @-> returning void, unit -> unit
 3.2.0, SDL_LockMutex, Mutex, Mutex, lock, mutex @-> returning void, mutex -> unit
@@ -653,8 +653,8 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_OnApplicationWillEnterBackground, System, , on_application_will_enter_background, void @-> returning void, unit -> unit
 3.2.0, SDL_OnApplicationWillEnterForeground, System, , on_application_will_enter_foreground, void @-> returning void, unit -> unit
 3.2.0, SDL_OnApplicationWillTerminate, System, , on_application_will_terminate, void @-> returning void, unit -> unit
-3.2.0, SDL_OpenAudioDevice, Audio, , open_audio_device, audio_device_id @-> ptr audio_spec @-> returning int_as_uint, int -> ptr audio_spec -> int
-3.2.0, SDL_OpenAudioDeviceStream, Audio, AudioStream, open_audio_device_stream, audio_device_id @-> ptr audio_spec @-> audio_stream_callback @-> ptr void @-> returning (some_to_ok audio_stream_opt), int -> ptr audio_spec -> audio_stream_callback -> ptr void -> (audio_stream option) result
+3.2.0, SDL_OpenAudioDevice, Audio, , open_audio_device, audio_device_id @-> audio_spec_opt @-> returning int_as_uint, int -> audio_spec option -> int
+3.2.0, SDL_OpenAudioDeviceStream, Audio, AudioStream, open_audio_device_stream, audio_device_id @-> audio_spec_opt @-> audio_stream_callback_opt @-> ptr void @-> returning (some_to_ok audio_stream_opt), int -> audio_spec option -> audio_stream_callback option -> ptr void -> (audio_stream option) result
 3.2.0, SDL_OpenCamera, Camera, Camera, open_, camera_id @-> camera_spec_opt @-> returning (some_to_ok camera_opt), int -> camera_spec option -> (camera option) result
 3.2.0, SDL_OpenFileStorage, Storage, Storage, open_file, string @-> returning (some_to_ok storage_opt), string -> (storage option) result
 3.2.0, SDL_OpenGamepad, Gamepad, Gamepad, open_, joystick_id @-> returning (some_to_ok gamepad_opt), int -> (gamepad option) result
@@ -782,13 +782,13 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_SendJoystickVirtualSensorData, Joystick, Joystick, send_virtual_sensor_data, joystick @-> sensor_type @-> uint64 @-> ptr (const float) @-> int @-> returning true_to_ok, joystick -> sensor_type -> int64 -> ptr (const float) -> int -> unit result
 3.2.0, SDL_SetAppMetadata, Init, , set_app_metadata, string @-> string @-> string @-> returning true_to_ok, string -> string -> string -> unit result
 3.2.0, SDL_SetAppMetadataProperty, Init, , set_app_metadata_property, string @-> string @-> returning true_to_ok, string -> string -> unit result
-3.2.0, SDL_SetAssertionHandler, Assert, , set_assertion_handler, assertion_handler @-> ptr void @-> returning void, assertion_handler -> ptr void -> unit
+3.2.0, SDL_SetAssertionHandler, Assert, , set_assertion_handler, assertion_handler_opt @-> ptr void @-> returning void, assertion_handler option -> ptr void -> unit
 3.2.0, SDL_SetAtomicInt, Atomic, AtomicInt, set, ptr atomic_int @-> int @-> returning int, ptr atomic_int -> int -> int
 3.2.0, SDL_SetAtomicPointer, Atomic, , set_atomic_pointer, ptr (ptr void) @-> ptr void @-> returning (ptr void), ptr (ptr void) -> ptr void -> ptr void
 3.2.0, SDL_SetAtomicU32, Atomic, AtomicU32, set, ptr atomic_u32 @-> uint32 @-> returning int_as_uint, ptr atomic_u32 -> int -> int
 3.2.0, SDL_SetAudioDeviceGain, Audio, , set_audio_device_gain, audio_device_id @-> float @-> returning true_to_ok, int -> float -> unit result
-3.2.0, SDL_SetAudioPostmixCallback, Audio, , set_audio_postmix_callback, audio_device_id @-> audio_postmix_callback @-> ptr void @-> returning true_to_ok, int -> audio_postmix_callback -> ptr void -> unit result
-3.2.0, SDL_SetAudioStreamFormat, Audio, AudioStream, set_format, audio_stream @-> ptr audio_spec @-> ptr audio_spec @-> returning true_to_ok, audio_stream -> ptr audio_spec -> ptr audio_spec -> unit result
+3.2.0, SDL_SetAudioPostmixCallback, Audio, , set_audio_postmix_callback, audio_device_id @-> audio_postmix_callback_opt @-> ptr void @-> returning true_to_ok, int -> audio_postmix_callback option -> ptr void -> unit result
+3.2.0, SDL_SetAudioStreamFormat, Audio, AudioStream, set_format, audio_stream @-> audio_spec_opt @-> audio_spec_opt @-> returning true_to_ok, audio_stream -> audio_spec option -> audio_spec option -> unit result
 3.2.0, SDL_SetAudioStreamFrequencyRatio, Audio, AudioStream, set_frequency_ratio, audio_stream @-> float @-> returning true_to_ok, audio_stream -> float -> unit result
 3.2.0, SDL_SetAudioStreamGain, Audio, AudioStream, set_gain, audio_stream @-> float @-> returning true_to_ok, audio_stream -> float -> unit result
 3.2.0, SDL_SetAudioStreamGetCallback, Audio, AudioStream, set_get_callback, audio_stream @-> audio_stream_callback @-> ptr void @-> returning true_to_ok, audio_stream -> audio_stream_callback -> ptr void -> unit result
@@ -841,7 +841,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_SetNumberProperty, Properties, , set_number_property, properties_id @-> string @-> sint64 @-> returning true_to_ok, int -> string -> int -> unit result
 3.2.0, SDL_SetPaletteColors, Pixels, Palette, set_colors, palette @-> ptr color @-> int @-> int @-> returning true_to_ok, palette -> ptr color -> int -> int -> unit result
 3.2.0, SDL_SetPointerProperty, Properties, , set_pointer_property, properties_id @-> string @-> ptr void @-> returning true_to_ok, int -> string -> ptr void -> unit result
-3.2.0, SDL_SetPointerPropertyWithCleanup, Properties, , set_pointer_property_with_cleanup, properties_id @-> string @-> ptr void @-> cleanup_property_callback @-> ptr void @-> returning true_to_ok, int -> string -> ptr void -> cleanup_property_callback -> ptr void -> unit result
+3.2.0, SDL_SetPointerPropertyWithCleanup, Properties, , set_pointer_property_with_cleanup, properties_id @-> string @-> ptr void @-> cleanup_property_callback_opt @-> ptr void @-> returning true_to_ok, int -> string -> ptr void -> cleanup_property_callback option -> ptr void -> unit result
 3.2.0, SDL_SetPrimarySelectionText, Clipboard, , set_primary_selection_text, string @-> returning true_to_ok, string -> unit result
 3.2.0, SDL_SetRenderClipRect, Render, Renderer, set_clip_rect, renderer @-> rect_opt @-> returning true_to_ok, renderer -> rect option -> unit result
 3.2.0, SDL_SetRenderColorScale, Render, Renderer, set_color_scale, renderer @-> float @-> returning true_to_ok, renderer -> float -> unit result
@@ -863,7 +863,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_SetSurfaceColorspace, Surface, Surface, set_colorspace, surface @-> colorspace @-> returning true_to_ok, surface -> colorspace -> unit result
 3.2.0, SDL_SetSurfacePalette, Surface, Surface, set_palette, surface @-> palette @-> returning true_to_ok, surface -> palette -> unit result
 3.2.0, SDL_SetSurfaceRLE, Surface, Surface, set_rle, surface @-> bool @-> returning true_to_ok, surface -> bool -> unit result
-3.2.0, SDL_SetTLS, Thread, AtomicInt, set_tls, ptr tlsid @-> ptr void @-> tls_destructor_callback @-> returning true_to_ok, ptr tlsid -> ptr void -> tls_destructor_callback -> unit result
+3.2.0, SDL_SetTLS, Thread, AtomicInt, set_tls, ptr tlsid @-> ptr void @-> tls_destructor_callback_opt @-> returning true_to_ok, ptr tlsid -> ptr void -> tls_destructor_callback option -> unit result
 3.2.0, SDL_SetTextInputArea, Keyboard, Window, set_text_input_area, window @-> rect_opt @-> int @-> returning true_to_ok, window -> rect option -> int -> unit result
 3.2.0, SDL_SetTextureAlphaMod, Render, Texture, set_alpha_mod, texture @-> uint8 @-> returning true_to_ok, texture -> int -> unit result
 3.2.0, SDL_SetTextureAlphaModFloat, Render, Texture, set_alpha_mod_float, texture @-> float @-> returning true_to_ok, texture -> float -> unit result
@@ -1026,7 +1026,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_copysignf, Stdinc, , copysignf, float @-> float @-> returning float, float -> float -> float
 3.2.0, SDL_cos, Stdinc, , cos, double @-> returning double, float -> float
 3.2.0, SDL_cosf, Stdinc, , cosf, float @-> returning float, float -> float
-3.2.0, SDL_crc16, Stdinc, , crc16, uint16 @-> ptr void @-> size_t @-> returning int_as_ushort, int -> ptr void -> int -> int_as_ushort
+3.2.0, SDL_crc16, Stdinc, , crc16, uint16 @-> ptr void @-> size_t @-> returning int_as_ushort, int -> ptr void -> int -> int
 3.2.0, SDL_crc32, Stdinc, , crc32, uint32 @-> ptr void @-> size_t @-> returning int_as_uint, int -> ptr void -> int -> int
 3.2.0, SDL_exp, Stdinc, , exp, double @-> returning double, float -> float
 3.2.0, SDL_expf, Stdinc, , expf, float @-> returning float, float -> float
@@ -1141,9 +1141,9 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_strtod, Stdinc, , strtod, string @-> ptr string @-> returning double, string -> ptr string -> float
 3.2.0, SDL_strtok_r, Stdinc, , strtok_r, string @-> string @-> ptr string @-> returning string, string -> string -> ptr string -> string
 3.2.0, SDL_strtol, Stdinc, , strtol, string @-> ptr string @-> int @-> returning long, string -> ptr string -> int -> int
-3.2.0, SDL_strtoll, Stdinc, , strtoll, string @-> ptr string @-> int @-> returning int64_as_llong, string -> ptr string -> int -> int64_as_llong
-3.2.0, SDL_strtoul, Stdinc, , strtoul, string @-> ptr string @-> int @-> returning int64_as_ulong, string -> ptr string -> int -> int64_as_ulong
-3.2.0, SDL_strtoull, Stdinc, , strtoull, string @-> ptr string @-> int @-> returning int64_as_ullong, string -> ptr string -> int -> int64_as_ullong
+3.2.0, SDL_strtoll, Stdinc, , strtoll, string @-> ptr string @-> int @-> returning int64_as_llong, string -> ptr string -> int -> int64
+3.2.0, SDL_strtoul, Stdinc, , strtoul, string @-> ptr string @-> int @-> returning int64_as_ulong, string -> ptr string -> int -> int64
+3.2.0, SDL_strtoull, Stdinc, , strtoull, string @-> ptr string @-> int @-> returning int64_as_ullong, string -> ptr string -> int -> int64
 3.2.0, SDL_strupr, Stdinc, , strupr, string @-> returning string, string -> string
 3.2.0, SDL_tan, Stdinc, , tan, double @-> returning double, float -> float
 3.2.0, SDL_tanf, Stdinc, , tanf, float @-> returning float, float -> float
@@ -1191,7 +1191,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.4.0, SDL_LoadPNG_IO, Surface, Surface, load_png_io, io_stream @-> bool @-> returning (some_to_ok surface_opt), io_stream -> bool -> (surface option) result
 3.4.0, SDL_LoadSurface, Surface, Surface, load, string @-> returning (some_to_ok surface_opt), string -> (surface option) result
 3.4.0, SDL_LoadSurface_IO, Surface, Surface, load_io, io_stream @-> bool @-> returning (some_to_ok surface_opt), io_stream -> bool -> (surface option) result
-3.4.0, SDL_PutAudioStreamDataNoCopy, Audio, AudioStream, put_data_no_copy, audio_stream @-> ptr void @-> int @-> audio_stream_data_complete_callback @-> ptr void @-> returning true_to_ok, audio_stream -> ptr void -> int -> audio_stream_data_complete_callback -> ptr void -> unit result
+3.4.0, SDL_PutAudioStreamDataNoCopy, Audio, AudioStream, put_data_no_copy, audio_stream @-> ptr void @-> int @-> audio_stream_data_complete_callback_opt @-> ptr void @-> returning true_to_ok, audio_stream -> ptr void -> int -> audio_stream_data_complete_callback option -> ptr void -> unit result
 3.4.0, SDL_PutAudioStreamPlanarData, Audio, AudioStream, put_planar_data, audio_stream @-> ptr (ptr void) @-> int @-> int @-> returning true_to_ok, audio_stream -> ptr (ptr void) -> int -> int -> unit result
 3.4.0, SDL_RenderTexture9GridTiled, Render, Renderer, render_texture9_grid_tiled, renderer @-> texture @-> f_rect_opt @-> float @-> float @-> float @-> float @-> float @-> f_rect_opt @-> float @-> returning true_to_ok, renderer -> texture -> f_rect option -> float -> float -> float -> float -> float -> f_rect option -> float -> unit result
 3.4.0, SDL_RotateSurface, Surface, Surface, rotate, surface @-> float @-> returning (some_to_ok surface_opt), surface -> float -> (surface option) result
@@ -1200,7 +1200,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.4.0, SDL_SetDefaultTextureScaleMode, Render, Renderer, set_default_texture_scale_mode, renderer @-> scale_mode @-> returning true_to_ok, renderer -> scale_mode -> unit result
 3.4.0, SDL_SetGPURenderState, Render, Renderer, set_gpu_render_state, renderer @-> gpu_render_state_opt @-> returning true_to_ok, renderer -> gpu_render_state option -> unit result
 3.4.0, SDL_SetGPURenderStateFragmentUniforms, Render, GPURenderState, set_fragment_uniforms, gpu_render_state @-> uint32 @-> ptr void @-> uint32 @-> returning true_to_ok, gpu_render_state -> int -> ptr void -> int -> unit result
-3.4.0, SDL_SetRelativeMouseTransform, Mouse, , set_relative_mouse_transform, mouse_motion_transform_callback @-> ptr void @-> returning true_to_ok, mouse_motion_transform_callback -> ptr void -> unit result
+3.4.0, SDL_SetRelativeMouseTransform, Mouse, , set_relative_mouse_transform, mouse_motion_transform_callback_opt @-> ptr void @-> returning true_to_ok, mouse_motion_transform_callback option -> ptr void -> unit result
 3.4.0, SDL_SetRenderTextureAddressMode, Render, Renderer, set_texture_address_mode, renderer @-> texture_address_mode @-> texture_address_mode @-> returning true_to_ok, renderer -> texture_address_mode -> texture_address_mode -> unit result
 3.4.0, SDL_SetTexturePalette, Render, Texture, set_palette, texture @-> palette @-> returning true_to_ok, texture -> palette -> unit result
 3.4.0, SDL_SetWindowFillDocument, Video, Window, set_fill_document, window @-> bool @-> returning true_to_ok, window -> bool -> unit result

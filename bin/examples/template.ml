@@ -18,7 +18,7 @@ type state = {
 let init () =
   Sdl.set_app_metadata
     "Example HUMAN READABLE NAME" "1.0" "com.example.CATEGORY-NAME" |> go;
-  match Sdl.init Sdl.init_video with
+  match Sdl.(init init_video) with
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->

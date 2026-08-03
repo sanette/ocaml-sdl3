@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -50,7 +50,7 @@ let get_audio_device_name devid =
   get_audio_device_name (Unsigned.UInt.of_int devid)
 
 let get_audio_device_format = ff "SDL_GetAudioDeviceFormat"
-  (audio_device_id @-> ptr audio_spec @-> ptr int @-> returning bool)
+  (audio_device_id @-> audio_spec @-> ptr int @-> returning bool)
 let get_audio_device_format devid spec =
   let sample_frames = allocate int 0 in
   if get_audio_device_format (Unsigned.UInt.of_int devid) spec sample_frames then Ok (!@ sample_frames) else error ()
@@ -71,7 +71,7 @@ let get_audio_device_channel_map devid =
   get_audio_device_channel_map (Unsigned.UInt.of_int devid)
 
 let open_audio_device = ff "SDL_OpenAudioDevice"
-  (audio_device_id @-> ptr audio_spec @-> returning int_as_uint)
+  (audio_device_id @-> audio_spec_opt @-> returning int_as_uint)
 let open_audio_device devid spec =
   open_audio_device (Unsigned.UInt.of_int devid) spec
 
@@ -133,12 +133,12 @@ let unbind_audio_streams streams =
   unbind_audio_streams streams num_streams
 
 let set_audio_postmix_callback = ff "SDL_SetAudioPostmixCallback"
-  (audio_device_id @-> audio_postmix_callback @-> ptr void @-> returning true_to_ok)
+  (audio_device_id @-> audio_postmix_callback_opt @-> ptr void @-> returning true_to_ok)
 let set_audio_postmix_callback devid callback userdata =
   set_audio_postmix_callback (Unsigned.UInt.of_int devid) callback userdata
 
 let load_wav = ff "SDL_LoadWAV"
-  (string @-> ptr audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning true_to_ok)
+  (string @-> audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning true_to_ok)
 
 let mix_audio = ff "SDL_MixAudio"
   (ptr uint8 @-> ptr uint8 @-> audio_format @-> uint32 @-> float @-> returning true_to_ok)
@@ -156,16 +156,16 @@ let get_device = ff "SDL_GetAudioStreamDevice"
   (audio_stream @-> returning int_as_uint)
 
 let create = ff "SDL_CreateAudioStream"
-  (ptr audio_spec @-> ptr audio_spec @-> returning (some_to_ok audio_stream_opt))
+  (audio_spec_opt @-> audio_spec_opt @-> returning (some_to_ok audio_stream_opt))
 
 let get_properties = ff "SDL_GetAudioStreamProperties"
   (audio_stream @-> returning int_as_uint)
 
 let get_format = ff "SDL_GetAudioStreamFormat"
-  (audio_stream @-> ptr audio_spec @-> ptr audio_spec @-> returning true_to_ok)
+  (audio_stream @-> audio_spec_opt @-> audio_spec_opt @-> returning true_to_ok)
 
 let set_format = ff "SDL_SetAudioStreamFormat"
-  (audio_stream @-> ptr audio_spec @-> ptr audio_spec @-> returning true_to_ok)
+  (audio_stream @-> audio_spec_opt @-> audio_spec_opt @-> returning true_to_ok)
 
 let get_frequency_ratio = ff "SDL_GetAudioStreamFrequencyRatio"
   (audio_stream @-> returning float)
@@ -211,11 +211,39 @@ let set_input_channel_map = ff "SDL_SetAudioStreamInputChannelMap"
 let set_output_channel_map = ff "SDL_SetAudioStreamOutputChannelMap"
   (audio_stream @-> ptr (const int) @-> int @-> returning true_to_ok)
 
+
+let as_bytes ba =
+  let len = Bigarray.Array1.size_in_bytes ba in
+  let p = Ctypes.bigarray_start Ctypes.array1 ba in
+  Ctypes.bigarray_of_ptr Ctypes.array1 len Bigarray.int8_unsigned p
+
 let put_data = ff "SDL_PutAudioStreamData"
   (audio_stream @-> ptr void @-> int @-> returning true_to_ok)
+let put_data_i stream ba =
+  let len = Bigarray.Array1.size_in_bytes ba in
+  let p = Ctypes.bigarray_start Ctypes.array1 ba in
+  let data = coerce (ptr uint8) (ptr void) p in
+  put_data stream data len
+
+let put_data_f ?count stream ba =
+  let len = match count with
+    | None -> Bigarray.Array1.size_in_bytes ba
+    | Some c -> c * Bigarray.(kind_size_in_bytes (Array1.kind ba)) in
+  let p = Ctypes.bigarray_start Ctypes.array1 ba in
+  let data = coerce (ptr float) (ptr void) p in
+  put_data stream data len
+
+let put_data ?count stream ba =
+  let len = match count with
+    | None -> Bigarray.Array1.size_in_bytes ba
+    | Some c -> c * Bigarray.(kind_size_in_bytes (Array1.kind ba)) in
+  let p = Ctypes.bigarray_start Ctypes.array1 ba in
+  let typ = typ_of_bigarray_kind (Bigarray.Array1.kind ba) in
+  let data = coerce (ptr typ) (ptr void) p in
+  put_data stream data len
 
 let put_data_no_copy = ff "SDL_PutAudioStreamDataNoCopy"
-  (audio_stream @-> ptr void @-> int @-> audio_stream_data_complete_callback @-> ptr void @-> returning true_to_ok)
+  (audio_stream @-> ptr void @-> int @-> audio_stream_data_complete_callback_opt @-> ptr void @-> returning true_to_ok)
 
 let put_planar_data = ff "SDL_PutAudioStreamPlanarData"
   (audio_stream @-> ptr (ptr void) @-> int @-> int @-> returning true_to_ok)
@@ -235,10 +263,10 @@ let flush = ff "SDL_FlushAudioStream"
 let clear = ff "SDL_ClearAudioStream"
   (audio_stream @-> returning true_to_ok)
 
-let pause_device = ff "SDL_PauseAudioStreamDevice"
+let pause_device = ff ~release_runtime_lock:true "SDL_PauseAudioStreamDevice"
   (audio_stream @-> returning true_to_ok)
 
-let resume_device = ff "SDL_ResumeAudioStreamDevice"
+let resume_device = ff ~release_runtime_lock:true "SDL_ResumeAudioStreamDevice"
   (audio_stream @-> returning true_to_ok)
 
 let device_paused = ff "SDL_AudioStreamDevicePaused"
@@ -260,21 +288,22 @@ let destroy = ff "SDL_DestroyAudioStream"
   (audio_stream @-> returning void)
 
 let open_audio_device_stream = ff "SDL_OpenAudioDeviceStream"
-  (audio_device_id @-> ptr audio_spec @-> audio_stream_callback @-> ptr void @-> returning (some_to_ok audio_stream_opt))
-let open_audio_device_stream devid spec callback userdata =
-  open_audio_device_stream (Unsigned.UInt.of_int devid) spec callback userdata
+  (audio_device_id @-> audio_spec_opt @-> audio_stream_callback_opt @-> ptr void @-> returning (some_to_ok audio_stream_opt))
+let open_audio_device_stream devid spec callback =
+  open_audio_device_stream (Unsigned.UInt.of_int devid) spec callback null
+
 
 end
 
 module IOStream = struct
 let load_wav_io = ff "SDL_LoadWAV_IO"
-  (io_stream @-> bool @-> ptr audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning true_to_ok)
+  (io_stream @-> bool @-> audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning true_to_ok)
 
 end
 
 module AudioSpec = struct
 let convert_audio_samples = ff "SDL_ConvertAudioSamples"
-  (ptr audio_spec @-> ptr uint8 @-> int @-> ptr audio_spec @-> ptr (ptr uint8) @-> ptr int @-> returning bool)
+  (audio_spec @-> ptr uint8 @-> int @-> audio_spec @-> ptr (ptr uint8) @-> ptr int @-> returning bool)
 let convert_audio_samples src_spec src_data src_len dst_spec dst_data =
   let dst_len = allocate int 0 in
   if convert_audio_samples src_spec src_data src_len dst_spec dst_data dst_len then Ok (!@ dst_len) else error ()
@@ -291,4 +320,3 @@ let get_silence_value_for_format = ff "SDL_GetSilenceValueForFormat"
   (audio_format @-> returning int)
 
 end
-
