@@ -101,7 +101,7 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
 
 + [`examples/audio/04-multiple-streams`](https://examples.libsdl.org/SDL3/audio/04-multiple-streams/)
 
-![screenshot](examples/renderer/19-affine-textures/affine-textures.png)
+![screenshot](https://raw.githubusercontent.com/sanette/ocaml-sdl3/refs/heads/main/bin/examples/renderer/19-affine-textures/affine-textures.png)
 
 ## Other examples
 
