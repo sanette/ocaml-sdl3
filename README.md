@@ -26,7 +26,7 @@ started the project) and is not part of this repository.
 # Warning! early stage of developpment!
 
 There are more than a thousand functions bound... don't expect all of
-them to work! _Very_ few has been tested yet. On the other hand you
+them to work! _Very_ few have been tested yet. On the other hand you
 can see that the examples below already cover quite a lot of
 interesting stuff.
 
