@@ -8,11 +8,11 @@ keyboard, mouse, joystick, and graphics hardware via
 OpenGL/Direct3D/Metal/Vulkan. ")
 
 The `ocaml-SDL3` project (`opam` name is just `sdl3`) aims at giving
-access to (almost) all SDL3 functions from an `ocaml` program, by
-creating bindings via the `ctypes` library. The bindings are meant to
-be **very thin** (that is to say: very close to the C
-version). Nothing prevents you from constructing nice and safer
-wrappers for functions you use the most.
+access to (almost) all SDL3 functions from an `ocaml` program (running
+from Linux, MacOS or Windows), by creating bindings via the `ctypes`
+library. The bindings are meant to be **very thin** (that is to say:
+very close to the C version). Nothing prevents you from constructing
+nice and safer wrappers for functions you use the most.
 
 
 Compiled `ocaml` programs using this library will dynamically load the
@@ -63,11 +63,10 @@ and then follow build instructions.
 
 # Try examples
 
-```bash
-cd bin
-export SDL3_LIBRARY=SDL/build/libSDL3.so
-```
-(adjust `SDL3_LIBRARY` to your correct location)
+```bash cd bin export SDL3_LIBRARY=SDL/build/libSDL3.so ``` (adjust
+`SDL3_LIBRARY` to your correct location and OS --- the file for
+Windows should probably be "`SDL3.dll`", and for MacOS either
+"`libSDL3.so.0`" or "`libSDL3.dylib`"]).
 
 ## Official SDL3 examples
 
