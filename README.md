@@ -99,7 +99,7 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
 
 + [examples/renderer/19-affine-textures](https://examples.libsdl.org/SDL3/renderer/19-affine-textures/)
 
-![screenshot](https://raw.githubusercontent.com/sanette/ocaml-sdl3/refs/heads/main/bin/examples/renderer/19-affine-textures/affine-textures.png)
+![screenshot](examples/renderer/19-affine-textures/affine-textures.png)
 
 ## Other examples
 

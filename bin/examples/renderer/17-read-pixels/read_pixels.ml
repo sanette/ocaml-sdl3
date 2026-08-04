@@ -37,15 +37,15 @@ let ( let* ) (o, errmsg, state) f =
 (* This function runs once at startup and returns a fresh application state. *)
 let init () =
   Sdl.set_app_metadata
-    "Example HUMAN READABLE NAME" "1.0" "com.example.CATEGORY-NAME" |> go;
+    "Example Renderer Read Pixels" "1.0" "com.example.renderer-read-pixels" |> go;
 
   let* () = Sdl.init Sdl.init_video, "Couldn't initialize SDL", None in
-  let* (window, renderer) = Sdl.create_window_and_renderer "examples/CATEGORY/NAME" window_width window_height
+  let* (window, renderer) = Sdl.create_window_and_renderer "examples/renderer/read-pixels" window_width window_height
       Sdl.window_resizable, "Couldn't create window/renderer", None  in
 
   Sdl.Renderer.set_logical_presentation renderer window_width window_height
     Sdl.logical_presentation_letterbox |> go;
-  Sdl.Renderer.set_v_sync renderer 1 |> go;
+  Sdl.Renderer.set_v_sync renderer 1 |> go; (* not in the original SDL3 code but nice to your CPU! *)
 
   (* Textures are pixel data that we upload to the video hardware for fast
      drawing. Lots of 2D engines refer to these as "sprites." We'll do a static

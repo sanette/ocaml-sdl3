@@ -23,7 +23,7 @@ let init () =
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->
-    match Sdl.create_window_and_renderer "examples/renderer/clear" window_width window_height
+    match Sdl.create_window_and_renderer "examples/renderer/affine-textures" window_width window_height
             Sdl.window_resizable with
     | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e;
       T.APP_FAILURE, None
