@@ -7,9 +7,10 @@ open Printf
 let go = Result.get_ok
 let do_option o f = Option.iter f o
 
+type wave_data = Bigarray.((int, int8_unsigned_elt, c_layout) Array1.t)
 type sound = {
   stream : T.audio_stream;
-  wav_data: Bigarray.((int, int8_unsigned_elt, c_layout) Array1.t)
+  wav_data : wave_data
 }
 
 type state = {
