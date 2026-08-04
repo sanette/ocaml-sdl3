@@ -1,0 +1,7 @@
+(executable
+ (name affine_textures)
+ (libraries sdl3))
+
+(install
+  (section libexec_root)
+  (files logo-with-name-bkg.png sample.png))

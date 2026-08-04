@@ -93,11 +93,13 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
    dune exec ./read_and_draw.exe
    ```
 
-+ examples/audio/01-simple-playback
++ [examples/audio/01-simple-playback](https://examples.libsdl.org/SDL3/audio/01-simple-playback/)
 
-+ examples/audio/02-simple-playback-callback
++ [examples/audio/02-simple-playback-callback](https://examples.libsdl.org/SDL3/audio/02-simple-playback-callback/)
 
++ [examples/renderer/19-affine-textures](https://examples.libsdl.org/SDL3/renderer/19-affine-textures/)
 
+![screenshot](examples/renderer/19-affine-textures/affine-textures.png)
 
 ## Other examples
 

@@ -28,6 +28,7 @@ let init () =
     | Ok (window, renderer) ->
       Sdl.Renderer.set_logical_presentation renderer 640 480
         Sdl.logical_presentation_letterbox |> go;
+      Sdl.Renderer.set_v_sync renderer 1 |> go; (* not in the original SDL3 code but nice to your CPU! *)
 
       let state = { window; renderer } in
       T.APP_CONTINUE, Some state (* carry on with the program! *)

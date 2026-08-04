@@ -45,6 +45,7 @@ let init () =
 
   Sdl.Renderer.set_logical_presentation renderer window_width window_height
     Sdl.logical_presentation_letterbox |> go;
+  Sdl.Renderer.set_v_sync renderer 1 |> go;
 
   (* Textures are pixel data that we upload to the video hardware for fast
      drawing. Lots of 2D engines refer to these as "sprites." We'll do a static

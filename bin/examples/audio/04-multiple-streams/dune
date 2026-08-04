@@ -1,0 +1,7 @@
+(executable
+ (name multiple_streams)
+ (libraries sdl3))
+
+(install
+  (section libexec_root)
+  (files sample.wav sword.wav))

@@ -138,7 +138,19 @@ let set_audio_postmix_callback devid callback userdata =
   set_audio_postmix_callback (Unsigned.UInt.of_int devid) callback userdata
 
 let load_wav = ff "SDL_LoadWAV"
-  (string @-> audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning true_to_ok)
+  (string @-> audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning bool)
+let load_wav path =
+  let spec = AudioSpec.create () in
+  let audio_len = allocate uint (Unsigned.UInt.of_int 0) in
+  let null_uint8 = from_voidp uint8 null in
+  let audio_buf = allocate (ptr uint8) null_uint8 in
+  if load_wav path spec audio_buf audio_len then
+    let len = Unsigned.UInt.to_int (!@ audio_len) in
+    let p = !@ audio_buf in
+    let typ = typ_of_bigarray_kind (Bigarray.int8_unsigned) in
+    let p = coerce (ptr uint8) (ptr typ) p in
+    let ba = bigarray_of_ptr array1 len Bigarray.int8_unsigned p in
+    Ok (spec, ba) else error ()
 
 let mix_audio = ff "SDL_MixAudio"
   (ptr uint8 @-> ptr uint8 @-> audio_format @-> uint32 @-> float @-> returning true_to_ok)
@@ -212,10 +224,29 @@ let set_output_channel_map = ff "SDL_SetAudioStreamOutputChannelMap"
   (audio_stream @-> ptr (const int) @-> int @-> returning true_to_ok)
 
 
-let as_bytes ba =
+let floats_as_bytes ba =
   let len = Bigarray.Array1.size_in_bytes ba in
   let p = Ctypes.bigarray_start Ctypes.array1 ba in
+  let p = coerce (ptr float) (ptr int) p in
   Ctypes.bigarray_of_ptr Ctypes.array1 len Bigarray.int8_unsigned p
+
+let bytes_as_floats ba =
+  let len = Bigarray.Array1.size_in_bytes ba in
+  if len mod (Bigarray.(kind_size_in_bytes float32)) <> 0
+  then invalid_arg "[as_floats]: bigarray has wrong size";
+  let len = len / Bigarray.(kind_size_in_bytes float32) in
+  let p = Ctypes.bigarray_start Ctypes.array1 ba in
+  let p = coerce (ptr int) (ptr float) p in
+  Ctypes.bigarray_of_ptr Ctypes.array1 len Bigarray.float32 p
+
+let test () =
+  let a = Bigarray.(Array1.create float32 c_layout 512) in
+  let ab = floats_as_bytes a in
+  print_endline (string_of_int (Bigarray.Array1.dim ab));
+  let af = bytes_as_floats ab in
+  print_endline (string_of_int (Bigarray.Array1.dim af))
+
+(* let () = test () *)
 
 let put_data = ff "SDL_PutAudioStreamData"
   (audio_stream @-> ptr void @-> int @-> returning true_to_ok)
