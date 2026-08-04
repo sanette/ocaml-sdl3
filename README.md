@@ -43,7 +43,7 @@ improved.
 # Install
 
 The `sdl3` opam package is available through:
-```
+```bash
 opam pin https://github.com/sanette/ocaml-sdl3.git
 ```
 
@@ -53,7 +53,7 @@ in debug mode, your code should work as long as you only use functions
 that are covered by 3.4.12 and by your installed version.
 
 To install 3.4.12, For instance, do
-```
+```bash
 git clone https://github.com/libsdl-org/SDL.git vendored/SDL
 cd vendored/SDL
 git checkout release-3.4.12
@@ -81,28 +81,28 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
   used for all of these examples. You can execute this empty template
   with:
 
-  ```
+  ```bash
   cd examples/template.ml
   dune exec ./template.exe
   ```
 
 + [`examples/renderer/01-clear`](https://examples.libsdl.org/SDL3/renderer/01-clear/):
 
-  ```
+  ```bash
   cd examples/renderer/01-clear
   dune exec ./clear.exe
   ```
 
 + [`examples/renderer/17-read-pixels`](https://examples.libsdl.org/SDL3/renderer/17-read-pixels/): requires SDL >= 3.4.0
 
-  ```
+  ```bash
   cd examples/renderer/17-read-pixels
   dune exec ./read_pixels.exe
   ```
 
 + [`examples/renderer/19-affine-textures`](https://examples.libsdl.org/SDL3/renderer/19-affine-textures/): requires SDL >= 3.4.0
 
-  ```
+  ```bash
   cd examples/renderer/19-affine-textures
   dune exec ./affine_textures.exe
   ```
@@ -112,28 +112,28 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
 
 + [`examples/camera/01-read-and-draw`](https://examples.libsdl.org/SDL3/camera/01-read-and-draw/):
 
-  ```
+  ```bash
   cd examples/camera/01-read-and-draw
   dune exec ./read_and_draw.exe
   ```
 
 + [`examples/audio/01-simple-playback`](https://examples.libsdl.org/SDL3/audio/01-simple-playback/)
 
-  ```
+  ```bash
   cd examples/audio/01-simple-playback
   dune exec ./simple_playback.exe
   ```
 
 + [`examples/audio/02-simple-playback-callback`](https://examples.libsdl.org/SDL3/audio/02-simple-playback-callback/)
 
-  ```
+  ```bash
   cd examples/audio/02-simple-playback-callback
   dune exec ./simple_playback_callback.exe
   ```
 
 + [`examples/audio/04-multiple-streams`](https://examples.libsdl.org/SDL3/audio/04-multiple-streams/)
 
-  ```
+  ```bash
   cd examples/audio/04-multiple-streams
   dune exec ./multiple_streams.exe
   ```
