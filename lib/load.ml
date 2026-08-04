@@ -11,7 +11,7 @@ let _pre = if debug then print_endline else ignore
 
 let sdl3_candidates =
   match Sys.os_type with
-  | "Win32" | "Cygwin" -> [ "SDL2.dll" ]
+  | "Win32" | "Cygwin" -> [ "SDL3.dll" ]
   | "Unix" -> [ (* Linux *)"libSDL3.so"; "libSDL3.so.0";(* MacOS *)"libSDL3.dylib"]
   | _ -> []
 
