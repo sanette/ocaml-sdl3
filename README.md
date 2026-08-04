@@ -63,9 +63,14 @@ and then follow build instructions.
 
 # Try examples
 
-```bash cd bin export SDL3_LIBRARY=SDL/build/libSDL3.so ``` (adjust
-`SDL3_LIBRARY` to your correct location and OS --- the file for
-Windows should probably be "`SDL3.dll`", and for MacOS either
+First, enter:
+```bash
+cd bin
+export SDL3_LIBRARY=SDL/build/libSDL3.so
+```
+
+(adjust `SDL3_LIBRARY` to your correct location and OS --- the file
+for Windows should probably be "`SDL3.dll`", and for MacOS either
 "`libSDL3.so.0`" or "`libSDL3.dylib`"]).
 
 ## Official SDL3 examples
