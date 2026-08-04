@@ -86,22 +86,45 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
   dune exec ./read_pixels.exe
   ```
 
-+ [`examples/renderer/19-affine-textures`](https://examples.libsdl.org/SDL3/renderer/19-affine-textures/)
++ [`examples/renderer/19-affine-textures`](https://examples.libsdl.org/SDL3/renderer/19-affine-textures/): requires SDL >= 3.4.0
+
+  ```
+  cd examples/renderer/19-affine-textures
+  dune exec ./affine_textures.exe
+  ```
+
+  ![screenshot](https://raw.githubusercontent.com/sanette/ocaml-sdl3/refs/heads/main/bin/examples/renderer/19-affine-textures/affine-textures.png)
+
 
 + [`examples/camera/01-read-and-draw`](https://examples.libsdl.org/SDL3/camera/01-read-and-draw/):
 
-   ```
-   cd examples/camera/01-read-and-draw
-   dune exec ./read_and_draw.exe
-   ```
+  ```
+  cd examples/camera/01-read-and-draw
+  dune exec ./read_and_draw.exe
+  ```
 
 + [`examples/audio/01-simple-playback`](https://examples.libsdl.org/SDL3/audio/01-simple-playback/)
 
+  ```
+  cd examples/audio/01-simple-playback
+  dune exec ./simple_playback.exe
+  ```
+
 + [`examples/audio/02-simple-playback-callback`](https://examples.libsdl.org/SDL3/audio/02-simple-playback-callback/)
+
+  ```
+  cd examples/audio/02-simple-playback-callback
+  dune exec ./simple_playback_callback.exe
+  ```
 
 + [`examples/audio/04-multiple-streams`](https://examples.libsdl.org/SDL3/audio/04-multiple-streams/)
 
-![screenshot](https://raw.githubusercontent.com/sanette/ocaml-sdl3/refs/heads/main/bin/examples/renderer/19-affine-textures/affine-textures.png)
+  ```
+  cd examples/audio/04-multiple-streams
+  dune exec ./multiple_streams.exe
+  ```
+
+
 
 ## Other examples
 
