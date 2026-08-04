@@ -26,7 +26,7 @@ let feed_the_audio_stream_more =
     let additional_amount = additional_amount / Bigarray.(kind_size_in_bytes float32) in
     let rec loop aa =
       if aa > 0 then begin
-        let total = Int.min aa dim_samples in
+        let total = min aa dim_samples in
         for i = 0 to total - 1 do
           let phase = float (!current_sine_sample * freq) /. 8000. in
           samples.{i} <- Sdl.sin (phase *. 2. *. Sdl.pi_f);
