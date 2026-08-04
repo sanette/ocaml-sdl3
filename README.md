@@ -72,6 +72,13 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
   dune exec ./template.exe
   ```
 
++ [`examples/renderer/01-clear`](https://examples.libsdl.org/SDL3/renderer/01-clear/):
+
+  ```
+  cd examples/renderer/01-clear
+  dune exec ./clear.exe
+  ```
+
 + [`examples/renderer/17-read-pixels`](https://examples.libsdl.org/SDL3/renderer/17-read-pixels/): requires SDL >= 3.4.0
 
   ```
@@ -79,12 +86,7 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
   dune exec ./read_pixels.exe
   ```
 
-+ [`examples/renderer/01-clear`](https://examples.libsdl.org/SDL3/renderer/01-clear/):
-
-  ```
-  cd examples/renderer/01-clear
-  dune exec ./clear.exe
-  ```
++ [`examples/renderer/19-affine-textures`](https://examples.libsdl.org/SDL3/renderer/19-affine-textures/)
 
 + [`examples/camera/01-read-and-draw`](https://examples.libsdl.org/SDL3/camera/01-read-and-draw/):
 
@@ -93,11 +95,11 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
    dune exec ./read_and_draw.exe
    ```
 
-+ [examples/audio/01-simple-playback](https://examples.libsdl.org/SDL3/audio/01-simple-playback/)
++ [`examples/audio/01-simple-playback`](https://examples.libsdl.org/SDL3/audio/01-simple-playback/)
 
-+ [examples/audio/02-simple-playback-callback](https://examples.libsdl.org/SDL3/audio/02-simple-playback-callback/)
++ [`examples/audio/02-simple-playback-callback`](https://examples.libsdl.org/SDL3/audio/02-simple-playback-callback/)
 
-+ [examples/renderer/19-affine-textures](https://examples.libsdl.org/SDL3/renderer/19-affine-textures/)
++ [`examples/audio/04-multiple-streams`](https://examples.libsdl.org/SDL3/audio/04-multiple-streams/)
 
 ![screenshot](examples/renderer/19-affine-textures/affine-textures.png)
 
