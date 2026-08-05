@@ -936,7 +936,9 @@ module Color = struct
   let b = field t "b" int_as_uchar
   let a = field t "a" int_as_uchar
   let () = seal t
-  let create () = make t
+  let create () : t = make t (* initialized to zero *)
+  let get = getf
+  let set = setf
 end
 type color = Color.t
 let color = Color.t
@@ -951,6 +953,9 @@ module FColor = struct
   let b = field t "b" float
   let a = field t "a" float
   let () = seal t
+  let create () : t = make t
+  let get = getf
+  let set = setf
 end
 type f_color = FColor.t
 let f_color = FColor.t
@@ -5380,10 +5385,13 @@ module Vertex = struct
   type _t
   type t = _t structure
   let t : t typ = structure "SDL_Vertex"
-  let position = field t "position" f_point
+  let position = field t "position" f_point_raw
   let color = field t "color" f_color
-  let tex_coord = field t "tex_coord" f_point
+  let tex_coord = field t "tex_coord" f_point_raw
   let () = seal t
+  let create () : t = make t
+  let get (u : t) = getf u
+  let set = setf
 end
 type vertex = Vertex.t
 let vertex = Vertex.t

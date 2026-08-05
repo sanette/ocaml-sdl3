@@ -65,6 +65,8 @@ and then follow build instructions.
 
 First, enter:
 ```bash
+dune clean
+dune build
 cd bin
 export SDL3_LIBRARY=SDL/build/libSDL3.so
 ```
