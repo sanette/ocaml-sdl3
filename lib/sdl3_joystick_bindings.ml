@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -23,7 +23,7 @@ let get_joysticks () =
   let count = allocate int 0 in
   let p = get_joysticks count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n

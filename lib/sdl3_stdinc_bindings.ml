@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -163,20 +163,20 @@ let memcmp s1 s2 len =
   memcmp s1 s2 (Unsigned.Size_t.of_int len)
 
 let wcslen = ff "SDL_wcslen"
-  (ptr int32_t @-> returning size_t)
+  (ptr_opt int32_t @-> returning size_t)
 
 let wcsnlen = ff "SDL_wcsnlen"
-  (ptr int32_t @-> size_t @-> returning size_t)
+  (ptr_opt int32_t @-> size_t @-> returning size_t)
 let wcsnlen wstr maxlen =
   wcsnlen wstr (Unsigned.Size_t.of_int maxlen)
 
 let wcslcpy = ff "SDL_wcslcpy"
-  (ptr int32_t @-> ptr int32_t @-> size_t @-> returning size_t)
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning size_t)
 let wcslcpy dst src maxlen =
   wcslcpy dst src (Unsigned.Size_t.of_int maxlen)
 
 let wcslcat = ff "SDL_wcslcat"
-  (ptr int32_t @-> ptr int32_t @-> size_t @-> returning size_t)
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning size_t)
 let wcslcat dst src maxlen =
   wcslcat dst src (Unsigned.Size_t.of_int maxlen)
 
@@ -184,31 +184,31 @@ let wcsdup = ff "SDL_wcsdup"
   (ptr int32_t @-> returning (ptr int32_t))
 
 let wcsstr = ff "SDL_wcsstr"
-  (ptr int32_t @-> ptr int32_t @-> returning (ptr int32_t))
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> returning (ptr int32_t))
 
 let wcsnstr = ff "SDL_wcsnstr"
-  (ptr int32_t @-> ptr int32_t @-> size_t @-> returning (ptr int32_t))
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning (ptr int32_t))
 let wcsnstr haystack needle maxlen =
   wcsnstr haystack needle (Unsigned.Size_t.of_int maxlen)
 
 let wcscmp = ff "SDL_wcscmp"
-  (ptr int32_t @-> ptr int32_t @-> returning int)
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> returning int)
 
 let wcsncmp = ff "SDL_wcsncmp"
-  (ptr int32_t @-> ptr int32_t @-> size_t @-> returning int)
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning int)
 let wcsncmp str1 str2 maxlen =
   wcsncmp str1 str2 (Unsigned.Size_t.of_int maxlen)
 
 let wcscasecmp = ff "SDL_wcscasecmp"
-  (ptr int32_t @-> ptr int32_t @-> returning int)
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> returning int)
 
 let wcsncasecmp = ff "SDL_wcsncasecmp"
-  (ptr int32_t @-> ptr int32_t @-> size_t @-> returning int)
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning int)
 let wcsncasecmp str1 str2 maxlen =
   wcsncasecmp str1 str2 (Unsigned.Size_t.of_int maxlen)
 
 let wcstol = ff "SDL_wcstol"
-  (ptr int32_t @-> ptr (ptr int32_t) @-> int @-> returning long)
+  (ptr_opt int32_t @-> ptr_opt (ptr int32_t) @-> int @-> returning long)
 
 let strlen = ff "SDL_strlen"
   (string @-> returning size_t)
@@ -309,19 +309,19 @@ let atof = ff "SDL_atof"
   (string @-> returning double)
 
 let strtol = ff "SDL_strtol"
-  (string @-> ptr string @-> int @-> returning long)
+  (string @-> ptr_opt string @-> int @-> returning long)
 
 let strtoul = ff "SDL_strtoul"
-  (string @-> ptr string @-> int @-> returning int64_as_ulong)
+  (string @-> ptr_opt string @-> int @-> returning int64_as_ulong)
 
 let strtoll = ff "SDL_strtoll"
-  (string @-> ptr string @-> int @-> returning int64_as_llong)
+  (string @-> ptr_opt string @-> int @-> returning int64_as_llong)
 
 let strtoull = ff "SDL_strtoull"
-  (string @-> ptr string @-> int @-> returning int64_as_ullong)
+  (string @-> ptr_opt string @-> int @-> returning int64_as_ullong)
 
 let strtod = ff "SDL_strtod"
-  (string @-> ptr string @-> returning double)
+  (string @-> ptr_opt string @-> returning double)
 
 let strcmp = ff "SDL_strcmp"
   (string @-> string @-> returning int)
@@ -343,7 +343,7 @@ let strpbrk = ff "SDL_strpbrk"
   (string @-> string @-> returning string)
 
 let step_utf8 = ff "SDL_StepUTF8"
-  (ptr string @-> ptr size_t @-> returning int_as_uint)
+  (ptr string @-> ptr_opt size_t @-> returning int_as_uint)
 
 let step_back_utf8 = ff "SDL_StepBackUTF8"
   (string @-> ptr string @-> returning int_as_uint)

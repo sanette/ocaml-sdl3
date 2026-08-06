@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -19,7 +19,7 @@ let get_properties = ff "SDL_GetProcessProperties"
   (process @-> returning int_as_uint)
 
 let read = ff "SDL_ReadProcess"
-  (process @-> ptr size_t @-> ptr int @-> returning (ptr void))
+  (process @-> ptr_opt size_t @-> ptr int @-> returning (ptr void))
 let read process datasize =
   let exitcode = allocate int 0 in
   let ret = read process datasize exitcode in

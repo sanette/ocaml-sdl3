@@ -1,5 +1,3 @@
-(* TODO ne marche pas*)
-
 (* ocaml-SDL3 example *)
 (* Adapted from examples/renderer/17-read-pixels from the SDL3 sources (public domain) *)
 
@@ -33,7 +31,7 @@ let ( let* ) (o, errmsg, state) f =
 
 (* This function runs once at startup and returns a fresh application state. *)
 let init () =
-  Sdl.LogPriority.set_log_priorities Sdl.log_priority_trace;
+  Sdl.LogPriority.set_log_priorities Sdl.log_priority_invalid;
   Sdl.set_app_metadata
     "Example Renderer Geometry" "1.0" "com.example.renderer-geometry" |> go;
 
@@ -90,7 +88,7 @@ let iterate state =
 
   print_endline "got position";
 
-  let x0 = Sdl.FPoint.(Ctypes.getf position x) in (* FIXME one needs Ctyprd.getf here... *)
+  let x0 = Sdl.FPoint.(Ctypes.getf position x) in (* FIXME one needs Ctypes.getf here... *)
   print_endline (string_of_float x0);
 
   Sdl.FPoint.(set position x (float window_width /. 2.));
@@ -125,8 +123,10 @@ let iterate state =
   T.FColor.(set color a 1.);
 
   print_endline "vertices ok";
-  (* Sdl.Renderer.render_geometry state.renderer None (\* TODO : None *\) *)
-  (*   [v0;v1;v2] [] |> go; *)
+  let () = match Sdl.Renderer.render_geometry state.renderer None
+          [v0;v1;v2] [] with
+  | Error (`Msg e) -> Sdl.App.log "Cannot render geometry: %s" e; raise Exit
+  | Ok () -> () in
 
   let v0 = T.Vertex.create () in
   let position = T.Vertex.(get v0 position) in
@@ -139,7 +139,9 @@ let iterate state =
   let position = T.Vertex.(get v1 position) in
   Sdl.FPoint.(set position x 150.);
   Sdl.FPoint.(set position y 10.);
+  let tex_coord = T.Vertex.(get v1 tex_coord) in
   let color = T.Vertex.(get v1 color) in
+  Sdl.FPoint.(set tex_coord x 1.);
   T.FColor.(List.iter (fun f -> set color f 1.) [r;g;b;a]);
 
   let v2 = T.Vertex.create () in
@@ -147,11 +149,11 @@ let iterate state =
   Sdl.FPoint.(set position x 10.);
   Sdl.FPoint.(set position y 150.);
   let tex_coord = T.Vertex.(get v2 tex_coord) in
-  Sdl.FPoint.(set tex_coord x 1.);
-  let color = T.Vertex.(get v1 color) in
+  Sdl.FPoint.(set tex_coord y 1.);
+  let color = T.Vertex.(get v2 color) in
   T.FColor.(List.iter (fun f -> set color f 1.) [r;g;b;a]);
 
-  Sdl.Renderer.render_geometry state.renderer texture [v0;v1;v2] [] |> go;
+  Sdl.Renderer.render_geometry state.renderer (Some texture) [v0;v1;v2] [] |> go;
   print_endline "render_geometry ok";
 
   List.iter (fun v ->
@@ -160,16 +162,16 @@ let iterate state =
       Sdl.FPoint.(set position x (x0 +. 450.))) [v0;v1;v2];
 
   let v3 = T.Vertex.create () in
-  let position = T.Vertex.(get v0 position) in
-  Sdl.FPoint.(set position x 650.);
+  let position = T.Vertex.(get v3 position) in
+  Sdl.FPoint.(set position x 600.);
   Sdl.FPoint.(set position y 150.);
-  let color = T.Vertex.(get v0 color) in
+  let color = T.Vertex.(get v3 color) in
   T.FColor.(List.iter (fun f -> set color f 1.) [r;g;b;a]);
   let tex_coord = T.Vertex.(get v3 tex_coord) in
   Sdl.FPoint.(set tex_coord x 1.);
   Sdl.FPoint.(set tex_coord y 1.);
 
-  Sdl.Renderer.render_geometry state.renderer texture [v0;v1;v2;v3] [0;1;2;1;2;3] |> go;
+  Sdl.Renderer.render_geometry state.renderer (Some texture) [v0;v1;v2;v3] [0;1;2;1;2;3] |> go;
 
   Sdl.Renderer.render_present state.renderer |> go;
 

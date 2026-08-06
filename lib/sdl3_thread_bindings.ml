@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -54,10 +54,10 @@ end
 
 module AtomicInt = struct
 let get_tls = ff "SDL_GetTLS"
-  (ptr tlsid @-> returning (ptr void))
+  (ptr_opt tlsid @-> returning (ptr void))
 
 let set_tls = ff "SDL_SetTLS"
-  (ptr tlsid @-> ptr void @-> tls_destructor_callback_opt @-> returning true_to_ok)
+  (ptr_opt tlsid @-> ptr void @-> tls_destructor_callback_opt @-> returning true_to_ok)
 
 end
 

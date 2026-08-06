@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -47,7 +47,7 @@ let get_images surface =
   let count = allocate int 0 in
   let p = get_images surface count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
@@ -107,7 +107,10 @@ let has_color_key = ff "SDL_SurfaceHasColorKey"
   (surface @-> returning bool)
 
 let get_color_key = ff "SDL_GetSurfaceColorKey"
-  (surface @-> ptr uint32 @-> returning true_to_ok)
+  (surface @-> ptr uint32 @-> returning bool)
+let get_color_key surface =
+  let key = allocate uint (Unsigned.UInt.of_int 0) in
+  if get_color_key surface key then Ok (Unsigned.UInt.to_int (!@ key)) else error ()
 
 let set_color_mod = ff "SDL_SetSurfaceColorMod"
   (surface @-> uint8 @-> uint8 @-> uint8 @-> returning true_to_ok)
@@ -145,7 +148,7 @@ let set_clip_rect = ff "SDL_SetSurfaceClipRect"
   (surface @-> rect_opt @-> returning true_to_ok)
 
 let get_clip_rect = ff "SDL_GetSurfaceClipRect"
-  (surface @-> rect @-> returning true_to_ok)
+  (surface @-> ptr rect @-> returning true_to_ok)
 
 let flip = ff "SDL_FlipSurface"
   (surface @-> flip_mode @-> returning true_to_ok)
@@ -179,9 +182,9 @@ let fill_rect dst rect color =
   fill_rect dst rect (Unsigned.UInt.of_int color)
 
 let fill_rects = ff "SDL_FillSurfaceRects"
-  (surface @-> rect @-> int @-> uint32 @-> returning true_to_ok)
+  (surface @-> ptr rect @-> int @-> uint32 @-> returning true_to_ok)
 let fill_rects dst rects color =
-  let rects, count = carray_of_list rect_raw rects in
+  let rects, count = carray_of_list rect rects in
   fill_rects dst rects count (Unsigned.UInt.of_int color)
 
 let blit = ff "SDL_BlitSurface"

@@ -35,6 +35,7 @@ module Alignment_test = struct
 end
 type alignment_test = Alignment_test.t
 let alignment_test = Alignment_test.t
+let alignment_test_opt = Helpers.value_opt_as_ptr alignment_test
 
 
 type dummy_enum =
@@ -98,6 +99,7 @@ module AssertData = struct
 end
 type assert_data = AssertData.t
 let assert_data = AssertData.t
+let assert_data_opt = Helpers.value_opt_as_ptr assert_data
 
 
 let assertion_handler = funptr (ptr assert_data @-> ptr void @-> returning assert_state)
@@ -150,6 +152,7 @@ module AsyncIOOutcome = struct
 end
 type async_io_outcome = AsyncIOOutcome.t
 let async_io_outcome = AsyncIOOutcome.t
+let async_io_outcome_opt = Helpers.value_opt_as_ptr async_io_outcome
 
 
 
@@ -168,6 +171,7 @@ module AtomicInt = struct
 end
 type atomic_int = AtomicInt.t
 let atomic_int = AtomicInt.t
+let atomic_int_opt = Helpers.value_opt_as_ptr atomic_int
 
 
 module AtomicU32 = struct
@@ -179,6 +183,7 @@ module AtomicU32 = struct
 end
 type atomic_u32 = AtomicU32.t
 let atomic_u32 = AtomicU32.t
+let atomic_u32_opt = Helpers.value_opt_as_ptr atomic_u32
 
 
 let properties_id = uint (* prim *)
@@ -296,6 +301,7 @@ module InitState = struct
 end
 type init_state = InitState.t
 let init_state = InitState.t
+let init_state_opt = Helpers.value_opt_as_ptr init_state
 
 
 type io_status =
@@ -345,6 +351,7 @@ module IOStreamInterface = struct
 end
 type io_stream_interface = IOStreamInterface.t
 let io_stream_interface = IOStreamInterface.t
+let io_stream_interface_opt = Helpers.value_opt_as_ptr io_stream_interface
 
 
 
@@ -413,14 +420,12 @@ type audio_stream = unit ptr
 let audio_stream : audio_stream typ = ptr void
 let audio_stream_opt : audio_stream option typ = ptr_opt void
 
-type audio_stream_callback = unit ptr -> audio_stream -> int -> int -> unit
-
 let audio_stream_data_complete_callback = funptr (ptr void @-> ptr void @-> int @-> returning void)
 let audio_stream_data_complete_callback_opt = funptr_opt (ptr void @-> ptr void @-> int @-> returning void)
 let audio_stream_callback = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_stream @-> int @-> int @-> returning void)
 let audio_stream_callback_opt = funptr_opt ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_stream @-> int @-> int @-> returning void)
-let audio_postmix_callback = funptr (ptr void @-> audio_spec @-> ptr float @-> int @-> returning void)
-let audio_postmix_callback_opt = funptr_opt (ptr void @-> audio_spec @-> ptr float @-> int @-> returning void)
+let audio_postmix_callback = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_spec @-> ptr float @-> int @-> returning void)
+let audio_postmix_callback_opt = funptr_opt ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_spec @-> ptr float @-> int @-> returning void)
 let blend_mode = uint (* prim *)
 type blend_operation =
   | BLENDOPERATION_ADD
@@ -936,12 +941,13 @@ module Color = struct
   let b = field t "b" int_as_uchar
   let a = field t "a" int_as_uchar
   let () = seal t
-  let create () : t = make t (* initialized to zero *)
+  let create () = make t
   let get = getf
   let set = setf
 end
 type color = Color.t
 let color = Color.t
+let color_opt = Helpers.value_opt_as_ptr color
 
 
 module FColor = struct
@@ -953,12 +959,13 @@ module FColor = struct
   let b = field t "b" float
   let a = field t "a" float
   let () = seal t
-  let create () : t = make t
+  let create () = make t
   let get = getf
   let set = setf
 end
 type f_color = FColor.t
 let f_color = FColor.t
+let f_color_opt = Helpers.value_opt_as_ptr f_color
 
 
 module Palette = struct
@@ -1007,94 +1014,75 @@ module PixelFormatDetails = struct
 end
 type pixel_format_details = PixelFormatDetails.t
 let pixel_format_details = PixelFormatDetails.t
+let pixel_format_details_opt = Helpers.value_opt_as_ptr pixel_format_details
 
 
 module Point = struct
-  type _t_raw
-  type t_raw = _t_raw structure
-  let t : t_raw typ = structure "SDL_Point"
+  type _t
+  type t = _t structure
+  let t : t typ = structure "SDL_Point"
   let x = field t "x" int
   let y = field t "y" int
   let () = seal t
-  let t_raw = t
-  type t = t_raw ptr
-  let t : t typ = ptr t_raw
-  let t_opt : t option typ = ptr_opt t_raw
-  let get (e : t) field = getf {structured = e} field
-  let set (e : t) field v = setf {structured = e} field v
-  let create () : t = allocate_n t_raw ~count:1
+  let create () = make t
+  let get = getf
+  let set = setf
 end
 type point = Point.t
 let point = Point.t
-let point_opt = Point.t_opt
-let point_raw = Point.t_raw
+let point_opt = Helpers.value_opt_as_ptr point
 
 
 module FPoint = struct
-  type _t_raw
-  type t_raw = _t_raw structure
-  let t : t_raw typ = structure "SDL_FPoint"
+  type _t
+  type t = _t structure
+  let t : t typ = structure "SDL_FPoint"
   let x = field t "x" float
   let y = field t "y" float
   let () = seal t
-  let t_raw = t
-  type t = t_raw ptr
-  let t : t typ = ptr t_raw
-  let t_opt : t option typ = ptr_opt t_raw
-  let get (e : t) field = getf {structured = e} field
-  let set (e : t) field v = setf {structured = e} field v
-  let create () : t = allocate_n t_raw ~count:1
+  let create () = make t
+  let get = getf
+  let set = setf
 end
 type f_point = FPoint.t
 let f_point = FPoint.t
-let f_point_opt = FPoint.t_opt
-let f_point_raw = FPoint.t_raw
+let f_point_opt = Helpers.value_opt_as_ptr f_point
 
 
 module Rect = struct
-  type _t_raw
-  type t_raw = _t_raw structure
-  let t : t_raw typ = structure "SDL_Rect"
+  type _t
+  type t = _t structure
+  let t : t typ = structure "SDL_Rect"
   let x = field t "x" int
   let y = field t "y" int
   let w = field t "w" int
   let h = field t "h" int
   let () = seal t
-  let t_raw = t
-  type t = t_raw ptr
-  let t : t typ = ptr t_raw
-  let t_opt : t option typ = ptr_opt t_raw
-  let get (e : t) field = getf {structured = e} field
-  let set (e : t) field v = setf {structured = e} field v
-  let create () : t = allocate_n t_raw ~count:1
+  let create () = make t
+  let get = getf
+  let set = setf
 end
 type rect = Rect.t
 let rect = Rect.t
-let rect_opt = Rect.t_opt
-let rect_raw = Rect.t_raw
+let rect_opt = Helpers.value_opt_as_ptr rect
 
 
 module FRect = struct
-  type _t_raw
-  type t_raw = _t_raw structure
-  let t : t_raw typ = structure "SDL_FRect"
+  type _t
+  type t = _t structure
+  let t : t typ = structure "SDL_FRect"
   let x = field t "x" float
   let y = field t "y" float
   let w = field t "w" float
   let h = field t "h" float
   let () = seal t
-  let t_raw = t
-  type t = t_raw ptr
-  let t : t typ = ptr t_raw
-  let t_opt : t option typ = ptr_opt t_raw
-  let get (e : t) field = getf {structured = e} field
-  let set (e : t) field v = setf {structured = e} field v
-  let create () : t = allocate_n t_raw ~count:1
+  let create () = make t
+  let get = getf
+  let set = setf
 end
 type f_rect = FRect.t
 let f_rect = FRect.t
-let f_rect_opt = FRect.t_opt
-let f_rect_raw = FRect.t_raw
+let f_rect_opt = Helpers.value_opt_as_ptr f_rect
 
 
 let surface_flags = uint (* prim *)
@@ -1426,7 +1414,7 @@ let hit_test_result_to_enum : hit_test_result -> hit_test_result_enum = function
   | HITTEST_RESIZE_BOTTOMLEFT -> hittest_resize_bottomleft
   | HITTEST_RESIZE_LEFT -> hittest_resize_left
 
-let hit_test = funptr (window @-> point @-> ptr void @-> returning hit_test_result)
+let hit_test = funptr (window @-> ptr point @-> ptr void @-> returning hit_test_result)
 let egl_attrib_array_callback_opt = funptr_opt (ptr void @-> returning (ptr long))
 let egl_int_array_callback_opt = funptr_opt (ptr void @-> ptr void @-> ptr void @-> returning (ptr int))
 module DialogFileFilter = struct
@@ -1439,6 +1427,7 @@ module DialogFileFilter = struct
 end
 type dialog_file_filter = DialogFileFilter.t
 let dialog_file_filter = DialogFileFilter.t
+let dialog_file_filter_opt = Helpers.value_opt_as_ptr dialog_file_filter
 
 
 let dialog_file_callback = funptr (ptr void @-> ptr string @-> int @-> returning void)
@@ -1586,6 +1575,7 @@ module VirtualJoystickTouchpadDesc = struct
 end
 type virtual_joystick_touchpad_desc = VirtualJoystickTouchpadDesc.t
 let virtual_joystick_touchpad_desc = VirtualJoystickTouchpadDesc.t
+let virtual_joystick_touchpad_desc_opt = Helpers.value_opt_as_ptr virtual_joystick_touchpad_desc
 
 
 module VirtualJoystickSensorDesc = struct
@@ -1598,6 +1588,7 @@ module VirtualJoystickSensorDesc = struct
 end
 type virtual_joystick_sensor_desc = VirtualJoystickSensorDesc.t
 let virtual_joystick_sensor_desc = VirtualJoystickSensorDesc.t
+let virtual_joystick_sensor_desc_opt = Helpers.value_opt_as_ptr virtual_joystick_sensor_desc
 
 
 module VirtualJoystickDesc = struct
@@ -1634,6 +1625,7 @@ module VirtualJoystickDesc = struct
 end
 type virtual_joystick_desc = VirtualJoystickDesc.t
 let virtual_joystick_desc = VirtualJoystickDesc.t
+let virtual_joystick_desc_opt = Helpers.value_opt_as_ptr virtual_joystick_desc
 
 
 
@@ -1822,6 +1814,7 @@ module Gamepad_binding_input_axis = struct
 end
 type gamepad_binding_input_axis = Gamepad_binding_input_axis.t
 let gamepad_binding_input_axis = Gamepad_binding_input_axis.t
+let gamepad_binding_input_axis_opt = Helpers.value_opt_as_ptr gamepad_binding_input_axis
 
 
   let axis = field t "axis" gamepad_binding_input_axis
@@ -1835,6 +1828,7 @@ module Gamepad_binding_input_hat = struct
 end
 type gamepad_binding_input_hat = Gamepad_binding_input_hat.t
 let gamepad_binding_input_hat = Gamepad_binding_input_hat.t
+let gamepad_binding_input_hat_opt = Helpers.value_opt_as_ptr gamepad_binding_input_hat
 
 
   let hat = field t "hat" gamepad_binding_input_hat
@@ -1842,6 +1836,7 @@ let gamepad_binding_input_hat = Gamepad_binding_input_hat.t
 end
 type gamepad_binding_input = Gamepad_binding_input.t
 let gamepad_binding_input = Gamepad_binding_input.t
+let gamepad_binding_input_opt = Helpers.value_opt_as_ptr gamepad_binding_input
 
 
   let input = field t "input" gamepad_binding_input
@@ -1862,6 +1857,7 @@ module Gamepad_binding_output_axis = struct
 end
 type gamepad_binding_output_axis = Gamepad_binding_output_axis.t
 let gamepad_binding_output_axis = Gamepad_binding_output_axis.t
+let gamepad_binding_output_axis_opt = Helpers.value_opt_as_ptr gamepad_binding_output_axis
 
 
   let axis = field t "axis" gamepad_binding_output_axis
@@ -1869,6 +1865,7 @@ let gamepad_binding_output_axis = Gamepad_binding_output_axis.t
 end
 type gamepad_binding_output = Gamepad_binding_output.t
 let gamepad_binding_output = Gamepad_binding_output.t
+let gamepad_binding_output_opt = Helpers.value_opt_as_ptr gamepad_binding_output
 
 
   let output = field t "output" gamepad_binding_output
@@ -1876,6 +1873,7 @@ let gamepad_binding_output = Gamepad_binding_output.t
 end
 type gamepad_binding = GamepadBinding.t
 let gamepad_binding = GamepadBinding.t
+let gamepad_binding_opt = Helpers.value_opt_as_ptr gamepad_binding
 
 
 type scancode =
@@ -2503,6 +2501,7 @@ module CursorFrameInfo = struct
 end
 type cursor_frame_info = CursorFrameInfo.t
 let cursor_frame_info = CursorFrameInfo.t
+let cursor_frame_info_opt = Helpers.value_opt_as_ptr cursor_frame_info
 
 
 let mouse_button_flags = uint (* prim *)
@@ -2537,6 +2536,7 @@ module Finger = struct
 end
 type finger = Finger.t
 let finger = Finger.t
+let finger_opt = Helpers.value_opt_as_ptr finger
 
 
 let pen_id = uint (* prim *)
@@ -2845,6 +2845,7 @@ module CommonEvent = struct
 end
 type common_event = CommonEvent.t
 let common_event = CommonEvent.t
+let common_event_opt = Helpers.value_opt_as_ptr common_event
 
 
 module DisplayEvent = struct
@@ -2861,6 +2862,7 @@ module DisplayEvent = struct
 end
 type display_event = DisplayEvent.t
 let display_event = DisplayEvent.t
+let display_event_opt = Helpers.value_opt_as_ptr display_event
 
 
 module WindowEvent = struct
@@ -2877,6 +2879,7 @@ module WindowEvent = struct
 end
 type window_event = WindowEvent.t
 let window_event = WindowEvent.t
+let window_event_opt = Helpers.value_opt_as_ptr window_event
 
 
 module KeyboardDeviceEvent = struct
@@ -2891,6 +2894,7 @@ module KeyboardDeviceEvent = struct
 end
 type keyboard_device_event = KeyboardDeviceEvent.t
 let keyboard_device_event = KeyboardDeviceEvent.t
+let keyboard_device_event_opt = Helpers.value_opt_as_ptr keyboard_device_event
 
 
 module KeyboardEvent = struct
@@ -2912,6 +2916,7 @@ module KeyboardEvent = struct
 end
 type keyboard_event = KeyboardEvent.t
 let keyboard_event = KeyboardEvent.t
+let keyboard_event_opt = Helpers.value_opt_as_ptr keyboard_event
 
 
 module TextEditingEvent = struct
@@ -2929,6 +2934,7 @@ module TextEditingEvent = struct
 end
 type text_editing_event = TextEditingEvent.t
 let text_editing_event = TextEditingEvent.t
+let text_editing_event_opt = Helpers.value_opt_as_ptr text_editing_event
 
 
 module TextEditingCandidatesEvent = struct
@@ -2950,6 +2956,7 @@ module TextEditingCandidatesEvent = struct
 end
 type text_editing_candidates_event = TextEditingCandidatesEvent.t
 let text_editing_candidates_event = TextEditingCandidatesEvent.t
+let text_editing_candidates_event_opt = Helpers.value_opt_as_ptr text_editing_candidates_event
 
 
 module TextInputEvent = struct
@@ -2965,6 +2972,7 @@ module TextInputEvent = struct
 end
 type text_input_event = TextInputEvent.t
 let text_input_event = TextInputEvent.t
+let text_input_event_opt = Helpers.value_opt_as_ptr text_input_event
 
 
 module MouseDeviceEvent = struct
@@ -2979,6 +2987,7 @@ module MouseDeviceEvent = struct
 end
 type mouse_device_event = MouseDeviceEvent.t
 let mouse_device_event = MouseDeviceEvent.t
+let mouse_device_event_opt = Helpers.value_opt_as_ptr mouse_device_event
 
 
 module MouseMotionEvent = struct
@@ -2999,6 +3008,7 @@ module MouseMotionEvent = struct
 end
 type mouse_motion_event = MouseMotionEvent.t
 let mouse_motion_event = MouseMotionEvent.t
+let mouse_motion_event_opt = Helpers.value_opt_as_ptr mouse_motion_event
 
 
 module MouseButtonEvent = struct
@@ -3020,6 +3030,7 @@ module MouseButtonEvent = struct
 end
 type mouse_button_event = MouseButtonEvent.t
 let mouse_button_event = MouseButtonEvent.t
+let mouse_button_event_opt = Helpers.value_opt_as_ptr mouse_button_event
 
 
 module MouseWheelEvent = struct
@@ -3042,6 +3053,7 @@ module MouseWheelEvent = struct
 end
 type mouse_wheel_event = MouseWheelEvent.t
 let mouse_wheel_event = MouseWheelEvent.t
+let mouse_wheel_event_opt = Helpers.value_opt_as_ptr mouse_wheel_event
 
 
 module JoyAxisEvent = struct
@@ -3062,6 +3074,7 @@ module JoyAxisEvent = struct
 end
 type joy_axis_event = JoyAxisEvent.t
 let joy_axis_event = JoyAxisEvent.t
+let joy_axis_event_opt = Helpers.value_opt_as_ptr joy_axis_event
 
 
 module JoyBallEvent = struct
@@ -3082,6 +3095,7 @@ module JoyBallEvent = struct
 end
 type joy_ball_event = JoyBallEvent.t
 let joy_ball_event = JoyBallEvent.t
+let joy_ball_event_opt = Helpers.value_opt_as_ptr joy_ball_event
 
 
 module JoyHatEvent = struct
@@ -3100,6 +3114,7 @@ module JoyHatEvent = struct
 end
 type joy_hat_event = JoyHatEvent.t
 let joy_hat_event = JoyHatEvent.t
+let joy_hat_event_opt = Helpers.value_opt_as_ptr joy_hat_event
 
 
 module JoyButtonEvent = struct
@@ -3118,6 +3133,7 @@ module JoyButtonEvent = struct
 end
 type joy_button_event = JoyButtonEvent.t
 let joy_button_event = JoyButtonEvent.t
+let joy_button_event_opt = Helpers.value_opt_as_ptr joy_button_event
 
 
 module JoyDeviceEvent = struct
@@ -3132,6 +3148,7 @@ module JoyDeviceEvent = struct
 end
 type joy_device_event = JoyDeviceEvent.t
 let joy_device_event = JoyDeviceEvent.t
+let joy_device_event_opt = Helpers.value_opt_as_ptr joy_device_event
 
 
 module JoyBatteryEvent = struct
@@ -3148,6 +3165,7 @@ module JoyBatteryEvent = struct
 end
 type joy_battery_event = JoyBatteryEvent.t
 let joy_battery_event = JoyBatteryEvent.t
+let joy_battery_event_opt = Helpers.value_opt_as_ptr joy_battery_event
 
 
 module GamepadAxisEvent = struct
@@ -3168,6 +3186,7 @@ module GamepadAxisEvent = struct
 end
 type gamepad_axis_event = GamepadAxisEvent.t
 let gamepad_axis_event = GamepadAxisEvent.t
+let gamepad_axis_event_opt = Helpers.value_opt_as_ptr gamepad_axis_event
 
 
 module GamepadButtonEvent = struct
@@ -3186,6 +3205,7 @@ module GamepadButtonEvent = struct
 end
 type gamepad_button_event = GamepadButtonEvent.t
 let gamepad_button_event = GamepadButtonEvent.t
+let gamepad_button_event_opt = Helpers.value_opt_as_ptr gamepad_button_event
 
 
 module GamepadDeviceEvent = struct
@@ -3200,6 +3220,7 @@ module GamepadDeviceEvent = struct
 end
 type gamepad_device_event = GamepadDeviceEvent.t
 let gamepad_device_event = GamepadDeviceEvent.t
+let gamepad_device_event_opt = Helpers.value_opt_as_ptr gamepad_device_event
 
 
 module GamepadTouchpadEvent = struct
@@ -3219,6 +3240,7 @@ module GamepadTouchpadEvent = struct
 end
 type gamepad_touchpad_event = GamepadTouchpadEvent.t
 let gamepad_touchpad_event = GamepadTouchpadEvent.t
+let gamepad_touchpad_event_opt = Helpers.value_opt_as_ptr gamepad_touchpad_event
 
 
 module GamepadSensorEvent = struct
@@ -3236,6 +3258,7 @@ module GamepadSensorEvent = struct
 end
 type gamepad_sensor_event = GamepadSensorEvent.t
 let gamepad_sensor_event = GamepadSensorEvent.t
+let gamepad_sensor_event_opt = Helpers.value_opt_as_ptr gamepad_sensor_event
 
 
 module AudioDeviceEvent = struct
@@ -3254,6 +3277,7 @@ module AudioDeviceEvent = struct
 end
 type audio_device_event = AudioDeviceEvent.t
 let audio_device_event = AudioDeviceEvent.t
+let audio_device_event_opt = Helpers.value_opt_as_ptr audio_device_event
 
 
 module CameraDeviceEvent = struct
@@ -3268,6 +3292,7 @@ module CameraDeviceEvent = struct
 end
 type camera_device_event = CameraDeviceEvent.t
 let camera_device_event = CameraDeviceEvent.t
+let camera_device_event_opt = Helpers.value_opt_as_ptr camera_device_event
 
 
 module RenderEvent = struct
@@ -3282,6 +3307,7 @@ module RenderEvent = struct
 end
 type render_event = RenderEvent.t
 let render_event = RenderEvent.t
+let render_event_opt = Helpers.value_opt_as_ptr render_event
 
 
 module TouchFingerEvent = struct
@@ -3303,6 +3329,7 @@ module TouchFingerEvent = struct
 end
 type touch_finger_event = TouchFingerEvent.t
 let touch_finger_event = TouchFingerEvent.t
+let touch_finger_event_opt = Helpers.value_opt_as_ptr touch_finger_event
 
 
 module PinchFingerEvent = struct
@@ -3318,6 +3345,7 @@ module PinchFingerEvent = struct
 end
 type pinch_finger_event = PinchFingerEvent.t
 let pinch_finger_event = PinchFingerEvent.t
+let pinch_finger_event_opt = Helpers.value_opt_as_ptr pinch_finger_event
 
 
 module PenProximityEvent = struct
@@ -3333,6 +3361,7 @@ module PenProximityEvent = struct
 end
 type pen_proximity_event = PenProximityEvent.t
 let pen_proximity_event = PenProximityEvent.t
+let pen_proximity_event_opt = Helpers.value_opt_as_ptr pen_proximity_event
 
 
 module PenMotionEvent = struct
@@ -3351,6 +3380,7 @@ module PenMotionEvent = struct
 end
 type pen_motion_event = PenMotionEvent.t
 let pen_motion_event = PenMotionEvent.t
+let pen_motion_event_opt = Helpers.value_opt_as_ptr pen_motion_event
 
 
 module PenTouchEvent = struct
@@ -3371,6 +3401,7 @@ module PenTouchEvent = struct
 end
 type pen_touch_event = PenTouchEvent.t
 let pen_touch_event = PenTouchEvent.t
+let pen_touch_event_opt = Helpers.value_opt_as_ptr pen_touch_event
 
 
 module PenButtonEvent = struct
@@ -3391,6 +3422,7 @@ module PenButtonEvent = struct
 end
 type pen_button_event = PenButtonEvent.t
 let pen_button_event = PenButtonEvent.t
+let pen_button_event_opt = Helpers.value_opt_as_ptr pen_button_event
 
 
 module PenAxisEvent = struct
@@ -3411,6 +3443,7 @@ module PenAxisEvent = struct
 end
 type pen_axis_event = PenAxisEvent.t
 let pen_axis_event = PenAxisEvent.t
+let pen_axis_event_opt = Helpers.value_opt_as_ptr pen_axis_event
 
 
 module DropEvent = struct
@@ -3429,6 +3462,7 @@ module DropEvent = struct
 end
 type drop_event = DropEvent.t
 let drop_event = DropEvent.t
+let drop_event_opt = Helpers.value_opt_as_ptr drop_event
 
 
 module ClipboardEvent = struct
@@ -3445,6 +3479,7 @@ module ClipboardEvent = struct
 end
 type clipboard_event = ClipboardEvent.t
 let clipboard_event = ClipboardEvent.t
+let clipboard_event_opt = Helpers.value_opt_as_ptr clipboard_event
 
 
 module SensorEvent = struct
@@ -3461,6 +3496,7 @@ module SensorEvent = struct
 end
 type sensor_event = SensorEvent.t
 let sensor_event = SensorEvent.t
+let sensor_event_opt = Helpers.value_opt_as_ptr sensor_event
 
 
 module QuitEvent = struct
@@ -3474,6 +3510,7 @@ module QuitEvent = struct
 end
 type quit_event = QuitEvent.t
 let quit_event = QuitEvent.t
+let quit_event_opt = Helpers.value_opt_as_ptr quit_event
 
 
 module UserEvent = struct
@@ -3491,6 +3528,7 @@ module UserEvent = struct
 end
 type user_event = UserEvent.t
 let user_event = UserEvent.t
+let user_event_opt = Helpers.value_opt_as_ptr user_event
 
 
 module Event = struct (* union 'SDL_Event' *)
@@ -3625,6 +3663,7 @@ module PathInfo = struct
 end
 type path_info = PathInfo.t
 let path_info = PathInfo.t
+let path_info_opt = Helpers.value_opt_as_ptr path_info
 
 
 let glob_flags = uint (* prim *)
@@ -4366,6 +4405,7 @@ module GPUViewport = struct
 end
 type gpu_viewport = GPUViewport.t
 let gpu_viewport = GPUViewport.t
+let gpu_viewport_opt = Helpers.value_opt_as_ptr gpu_viewport
 
 
 module GPUTextureTransferInfo = struct
@@ -4380,6 +4420,7 @@ module GPUTextureTransferInfo = struct
 end
 type gpu_texture_transfer_info = GPUTextureTransferInfo.t
 let gpu_texture_transfer_info = GPUTextureTransferInfo.t
+let gpu_texture_transfer_info_opt = Helpers.value_opt_as_ptr gpu_texture_transfer_info
 
 
 module GPUTransferBufferLocation = struct
@@ -4392,6 +4433,7 @@ module GPUTransferBufferLocation = struct
 end
 type gpu_transfer_buffer_location = GPUTransferBufferLocation.t
 let gpu_transfer_buffer_location = GPUTransferBufferLocation.t
+let gpu_transfer_buffer_location_opt = Helpers.value_opt_as_ptr gpu_transfer_buffer_location
 
 
 module GPUTextureLocation = struct
@@ -4408,6 +4450,7 @@ module GPUTextureLocation = struct
 end
 type gpu_texture_location = GPUTextureLocation.t
 let gpu_texture_location = GPUTextureLocation.t
+let gpu_texture_location_opt = Helpers.value_opt_as_ptr gpu_texture_location
 
 
 module GPUTextureRegion = struct
@@ -4427,6 +4470,7 @@ module GPUTextureRegion = struct
 end
 type gpu_texture_region = GPUTextureRegion.t
 let gpu_texture_region = GPUTextureRegion.t
+let gpu_texture_region_opt = Helpers.value_opt_as_ptr gpu_texture_region
 
 
 module GPUBlitRegion = struct
@@ -4444,6 +4488,7 @@ module GPUBlitRegion = struct
 end
 type gpu_blit_region = GPUBlitRegion.t
 let gpu_blit_region = GPUBlitRegion.t
+let gpu_blit_region_opt = Helpers.value_opt_as_ptr gpu_blit_region
 
 
 module GPUBufferLocation = struct
@@ -4456,6 +4501,7 @@ module GPUBufferLocation = struct
 end
 type gpu_buffer_location = GPUBufferLocation.t
 let gpu_buffer_location = GPUBufferLocation.t
+let gpu_buffer_location_opt = Helpers.value_opt_as_ptr gpu_buffer_location
 
 
 module GPUBufferRegion = struct
@@ -4469,6 +4515,7 @@ module GPUBufferRegion = struct
 end
 type gpu_buffer_region = GPUBufferRegion.t
 let gpu_buffer_region = GPUBufferRegion.t
+let gpu_buffer_region_opt = Helpers.value_opt_as_ptr gpu_buffer_region
 
 
 module GPUIndirectDrawCommand = struct
@@ -4483,6 +4530,7 @@ module GPUIndirectDrawCommand = struct
 end
 type gpu_indirect_draw_command = GPUIndirectDrawCommand.t
 let gpu_indirect_draw_command = GPUIndirectDrawCommand.t
+let gpu_indirect_draw_command_opt = Helpers.value_opt_as_ptr gpu_indirect_draw_command
 
 
 module GPUIndexedIndirectDrawCommand = struct
@@ -4498,6 +4546,7 @@ module GPUIndexedIndirectDrawCommand = struct
 end
 type gpu_indexed_indirect_draw_command = GPUIndexedIndirectDrawCommand.t
 let gpu_indexed_indirect_draw_command = GPUIndexedIndirectDrawCommand.t
+let gpu_indexed_indirect_draw_command_opt = Helpers.value_opt_as_ptr gpu_indexed_indirect_draw_command
 
 
 module GPUIndirectDispatchCommand = struct
@@ -4511,6 +4560,7 @@ module GPUIndirectDispatchCommand = struct
 end
 type gpu_indirect_dispatch_command = GPUIndirectDispatchCommand.t
 let gpu_indirect_dispatch_command = GPUIndirectDispatchCommand.t
+let gpu_indirect_dispatch_command_opt = Helpers.value_opt_as_ptr gpu_indirect_dispatch_command
 
 
 module GPUSamplerCreateInfo = struct
@@ -4537,6 +4587,7 @@ module GPUSamplerCreateInfo = struct
 end
 type gpu_sampler_create_info = GPUSamplerCreateInfo.t
 let gpu_sampler_create_info = GPUSamplerCreateInfo.t
+let gpu_sampler_create_info_opt = Helpers.value_opt_as_ptr gpu_sampler_create_info
 
 
 module GPUVertexBufferDescription = struct
@@ -4551,6 +4602,7 @@ module GPUVertexBufferDescription = struct
 end
 type gpu_vertex_buffer_description = GPUVertexBufferDescription.t
 let gpu_vertex_buffer_description = GPUVertexBufferDescription.t
+let gpu_vertex_buffer_description_opt = Helpers.value_opt_as_ptr gpu_vertex_buffer_description
 
 
 module GPUVertexAttribute = struct
@@ -4565,6 +4617,7 @@ module GPUVertexAttribute = struct
 end
 type gpu_vertex_attribute = GPUVertexAttribute.t
 let gpu_vertex_attribute = GPUVertexAttribute.t
+let gpu_vertex_attribute_opt = Helpers.value_opt_as_ptr gpu_vertex_attribute
 
 
 module GPUVertexInputState = struct
@@ -4579,6 +4632,7 @@ module GPUVertexInputState = struct
 end
 type gpu_vertex_input_state = GPUVertexInputState.t
 let gpu_vertex_input_state = GPUVertexInputState.t
+let gpu_vertex_input_state_opt = Helpers.value_opt_as_ptr gpu_vertex_input_state
 
 
 module GPUStencilOpState = struct
@@ -4593,6 +4647,7 @@ module GPUStencilOpState = struct
 end
 type gpu_stencil_op_state = GPUStencilOpState.t
 let gpu_stencil_op_state = GPUStencilOpState.t
+let gpu_stencil_op_state_opt = Helpers.value_opt_as_ptr gpu_stencil_op_state
 
 
 module GPUColorTargetBlendState = struct
@@ -4614,6 +4669,7 @@ module GPUColorTargetBlendState = struct
 end
 type gpu_color_target_blend_state = GPUColorTargetBlendState.t
 let gpu_color_target_blend_state = GPUColorTargetBlendState.t
+let gpu_color_target_blend_state_opt = Helpers.value_opt_as_ptr gpu_color_target_blend_state
 
 
 module GPUShaderCreateInfo = struct
@@ -4634,6 +4690,7 @@ module GPUShaderCreateInfo = struct
 end
 type gpu_shader_create_info = GPUShaderCreateInfo.t
 let gpu_shader_create_info = GPUShaderCreateInfo.t
+let gpu_shader_create_info_opt = Helpers.value_opt_as_ptr gpu_shader_create_info
 
 
 module GPUTextureCreateInfo = struct
@@ -4653,6 +4710,7 @@ module GPUTextureCreateInfo = struct
 end
 type gpu_texture_create_info = GPUTextureCreateInfo.t
 let gpu_texture_create_info = GPUTextureCreateInfo.t
+let gpu_texture_create_info_opt = Helpers.value_opt_as_ptr gpu_texture_create_info
 
 
 module GPUBufferCreateInfo = struct
@@ -4666,6 +4724,7 @@ module GPUBufferCreateInfo = struct
 end
 type gpu_buffer_create_info = GPUBufferCreateInfo.t
 let gpu_buffer_create_info = GPUBufferCreateInfo.t
+let gpu_buffer_create_info_opt = Helpers.value_opt_as_ptr gpu_buffer_create_info
 
 
 module GPUTransferBufferCreateInfo = struct
@@ -4679,6 +4738,7 @@ module GPUTransferBufferCreateInfo = struct
 end
 type gpu_transfer_buffer_create_info = GPUTransferBufferCreateInfo.t
 let gpu_transfer_buffer_create_info = GPUTransferBufferCreateInfo.t
+let gpu_transfer_buffer_create_info_opt = Helpers.value_opt_as_ptr gpu_transfer_buffer_create_info
 
 
 module GPURasterizerState = struct
@@ -4699,6 +4759,7 @@ module GPURasterizerState = struct
 end
 type gpu_rasterizer_state = GPURasterizerState.t
 let gpu_rasterizer_state = GPURasterizerState.t
+let gpu_rasterizer_state_opt = Helpers.value_opt_as_ptr gpu_rasterizer_state
 
 
 module GPUMultisampleState = struct
@@ -4715,6 +4776,7 @@ module GPUMultisampleState = struct
 end
 type gpu_multisample_state = GPUMultisampleState.t
 let gpu_multisample_state = GPUMultisampleState.t
+let gpu_multisample_state_opt = Helpers.value_opt_as_ptr gpu_multisample_state
 
 
 module GPUDepthStencilState = struct
@@ -4736,6 +4798,7 @@ module GPUDepthStencilState = struct
 end
 type gpu_depth_stencil_state = GPUDepthStencilState.t
 let gpu_depth_stencil_state = GPUDepthStencilState.t
+let gpu_depth_stencil_state_opt = Helpers.value_opt_as_ptr gpu_depth_stencil_state
 
 
 module GPUColorTargetDescription = struct
@@ -4748,6 +4811,7 @@ module GPUColorTargetDescription = struct
 end
 type gpu_color_target_description = GPUColorTargetDescription.t
 let gpu_color_target_description = GPUColorTargetDescription.t
+let gpu_color_target_description_opt = Helpers.value_opt_as_ptr gpu_color_target_description
 
 
 module GPUGraphicsPipelineTargetInfo = struct
@@ -4765,6 +4829,7 @@ module GPUGraphicsPipelineTargetInfo = struct
 end
 type gpu_graphics_pipeline_target_info = GPUGraphicsPipelineTargetInfo.t
 let gpu_graphics_pipeline_target_info = GPUGraphicsPipelineTargetInfo.t
+let gpu_graphics_pipeline_target_info_opt = Helpers.value_opt_as_ptr gpu_graphics_pipeline_target_info
 
 
 module GPUGraphicsPipelineCreateInfo = struct
@@ -4784,6 +4849,7 @@ module GPUGraphicsPipelineCreateInfo = struct
 end
 type gpu_graphics_pipeline_create_info = GPUGraphicsPipelineCreateInfo.t
 let gpu_graphics_pipeline_create_info = GPUGraphicsPipelineCreateInfo.t
+let gpu_graphics_pipeline_create_info_opt = Helpers.value_opt_as_ptr gpu_graphics_pipeline_create_info
 
 
 module GPUComputePipelineCreateInfo = struct
@@ -4808,6 +4874,7 @@ module GPUComputePipelineCreateInfo = struct
 end
 type gpu_compute_pipeline_create_info = GPUComputePipelineCreateInfo.t
 let gpu_compute_pipeline_create_info = GPUComputePipelineCreateInfo.t
+let gpu_compute_pipeline_create_info_opt = Helpers.value_opt_as_ptr gpu_compute_pipeline_create_info
 
 
 module GPUColorTargetInfo = struct
@@ -4831,6 +4898,7 @@ module GPUColorTargetInfo = struct
 end
 type gpu_color_target_info = GPUColorTargetInfo.t
 let gpu_color_target_info = GPUColorTargetInfo.t
+let gpu_color_target_info_opt = Helpers.value_opt_as_ptr gpu_color_target_info
 
 
 module GPUDepthStencilTargetInfo = struct
@@ -4851,6 +4919,7 @@ module GPUDepthStencilTargetInfo = struct
 end
 type gpu_depth_stencil_target_info = GPUDepthStencilTargetInfo.t
 let gpu_depth_stencil_target_info = GPUDepthStencilTargetInfo.t
+let gpu_depth_stencil_target_info_opt = Helpers.value_opt_as_ptr gpu_depth_stencil_target_info
 
 
 module GPUBlitInfo = struct
@@ -4871,6 +4940,7 @@ module GPUBlitInfo = struct
 end
 type gpu_blit_info = GPUBlitInfo.t
 let gpu_blit_info = GPUBlitInfo.t
+let gpu_blit_info_opt = Helpers.value_opt_as_ptr gpu_blit_info
 
 
 module GPUBufferBinding = struct
@@ -4883,6 +4953,7 @@ module GPUBufferBinding = struct
 end
 type gpu_buffer_binding = GPUBufferBinding.t
 let gpu_buffer_binding = GPUBufferBinding.t
+let gpu_buffer_binding_opt = Helpers.value_opt_as_ptr gpu_buffer_binding
 
 
 module GPUTextureSamplerBinding = struct
@@ -4895,6 +4966,7 @@ module GPUTextureSamplerBinding = struct
 end
 type gpu_texture_sampler_binding = GPUTextureSamplerBinding.t
 let gpu_texture_sampler_binding = GPUTextureSamplerBinding.t
+let gpu_texture_sampler_binding_opt = Helpers.value_opt_as_ptr gpu_texture_sampler_binding
 
 
 module GPUStorageBufferReadWriteBinding = struct
@@ -4910,6 +4982,7 @@ module GPUStorageBufferReadWriteBinding = struct
 end
 type gpu_storage_buffer_read_write_binding = GPUStorageBufferReadWriteBinding.t
 let gpu_storage_buffer_read_write_binding = GPUStorageBufferReadWriteBinding.t
+let gpu_storage_buffer_read_write_binding_opt = Helpers.value_opt_as_ptr gpu_storage_buffer_read_write_binding
 
 
 module GPUStorageTextureReadWriteBinding = struct
@@ -4927,6 +5000,7 @@ module GPUStorageTextureReadWriteBinding = struct
 end
 type gpu_storage_texture_read_write_binding = GPUStorageTextureReadWriteBinding.t
 let gpu_storage_texture_read_write_binding = GPUStorageTextureReadWriteBinding.t
+let gpu_storage_texture_read_write_binding_opt = Helpers.value_opt_as_ptr gpu_storage_texture_read_write_binding
 
 
 module GPUVulkanOptions = struct
@@ -4944,6 +5018,7 @@ module GPUVulkanOptions = struct
 end
 type gpu_vulkan_options = GPUVulkanOptions.t
 let gpu_vulkan_options = GPUVulkanOptions.t
+let gpu_vulkan_options_opt = Helpers.value_opt_as_ptr gpu_vulkan_options
 
 
 
@@ -4965,6 +5040,7 @@ module HapticDirection = struct
 end
 type haptic_direction = HapticDirection.t
 let haptic_direction = HapticDirection.t
+let haptic_direction_opt = Helpers.value_opt_as_ptr haptic_direction
 
 
 module HapticConstant = struct
@@ -4986,6 +5062,7 @@ module HapticConstant = struct
 end
 type haptic_constant = HapticConstant.t
 let haptic_constant = HapticConstant.t
+let haptic_constant_opt = Helpers.value_opt_as_ptr haptic_constant
 
 
 module HapticPeriodic = struct
@@ -5010,6 +5087,7 @@ module HapticPeriodic = struct
 end
 type haptic_periodic = HapticPeriodic.t
 let haptic_periodic = HapticPeriodic.t
+let haptic_periodic_opt = Helpers.value_opt_as_ptr haptic_periodic
 
 
 module HapticCondition = struct
@@ -5032,6 +5110,7 @@ module HapticCondition = struct
 end
 type haptic_condition = HapticCondition.t
 let haptic_condition = HapticCondition.t
+let haptic_condition_opt = Helpers.value_opt_as_ptr haptic_condition
 
 
 module HapticRamp = struct
@@ -5054,6 +5133,7 @@ module HapticRamp = struct
 end
 type haptic_ramp = HapticRamp.t
 let haptic_ramp = HapticRamp.t
+let haptic_ramp_opt = Helpers.value_opt_as_ptr haptic_ramp
 
 
 module HapticLeftRight = struct
@@ -5068,6 +5148,7 @@ module HapticLeftRight = struct
 end
 type haptic_left_right = HapticLeftRight.t
 let haptic_left_right = HapticLeftRight.t
+let haptic_left_right_opt = Helpers.value_opt_as_ptr haptic_left_right
 
 
 module HapticCustom = struct
@@ -5092,6 +5173,7 @@ module HapticCustom = struct
 end
 type haptic_custom = HapticCustom.t
 let haptic_custom = HapticCustom.t
+let haptic_custom_opt = Helpers.value_opt_as_ptr haptic_custom
 
 
 module HapticEffect = struct (* union 'SDL_HapticEffect' *)
@@ -5109,6 +5191,7 @@ module HapticEffect = struct (* union 'SDL_HapticEffect' *)
 end
 type haptic_effect = HapticEffect.t
 let haptic_effect = HapticEffect.t
+let haptic_effect_opt = Helpers.value_opt_as_ptr haptic_effect
 
 
 let haptic_id = uint (* prim *)
@@ -5158,6 +5241,7 @@ module Hid_device_info = struct
 end
 type hid_device_info = Hid_device_info.t
 let hid_device_info = Hid_device_info.t
+let hid_device_info_opt = Helpers.value_opt_as_ptr hid_device_info
 
 
 type hint_priority =
@@ -5209,6 +5293,7 @@ module Locale = struct
 end
 type locale = Locale.t
 let locale = Locale.t
+let locale_opt = Helpers.value_opt_as_ptr locale
 
 
 type log_category =
@@ -5297,6 +5382,7 @@ module MessageBoxButtonData = struct
 end
 type message_box_button_data = MessageBoxButtonData.t
 let message_box_button_data = MessageBoxButtonData.t
+let message_box_button_data_opt = Helpers.value_opt_as_ptr message_box_button_data
 
 
 module MessageBoxColor = struct
@@ -5310,6 +5396,7 @@ module MessageBoxColor = struct
 end
 type message_box_color = MessageBoxColor.t
 let message_box_color = MessageBoxColor.t
+let message_box_color_opt = Helpers.value_opt_as_ptr message_box_color
 
 
 type message_box_color_type =
@@ -5340,6 +5427,7 @@ module MessageBoxColorScheme = struct
 end
 type message_box_color_scheme = MessageBoxColorScheme.t
 let message_box_color_scheme = MessageBoxColorScheme.t
+let message_box_color_scheme_opt = Helpers.value_opt_as_ptr message_box_color_scheme
 
 
 module MessageBoxData = struct
@@ -5357,6 +5445,7 @@ module MessageBoxData = struct
 end
 type message_box_data = MessageBoxData.t
 let message_box_data = MessageBoxData.t
+let message_box_data_opt = Helpers.value_opt_as_ptr message_box_data
 
 
 let metal_view = ptr void
@@ -5385,16 +5474,17 @@ module Vertex = struct
   type _t
   type t = _t structure
   let t : t typ = structure "SDL_Vertex"
-  let position = field t "position" f_point_raw
+  let position = field t "position" f_point
   let color = field t "color" f_color
-  let tex_coord = field t "tex_coord" f_point_raw
+  let tex_coord = field t "tex_coord" f_point
   let () = seal t
-  let create () : t = make t
-  let get (u : t) = getf u
+  let create () = make t
+  let get = getf
   let set = setf
 end
 type vertex = Vertex.t
 let vertex = Vertex.t
+let vertex_opt = Helpers.value_opt_as_ptr vertex
 
 
 type texture_access =
@@ -5486,6 +5576,7 @@ module GPURenderStateCreateInfo = struct
 end
 type gpu_render_state_create_info = GPURenderStateCreateInfo.t
 let gpu_render_state_create_info = GPURenderStateCreateInfo.t
+let gpu_render_state_create_info_opt = Helpers.value_opt_as_ptr gpu_render_state_create_info
 
 
 
@@ -5514,6 +5605,7 @@ module StorageInterface = struct
 end
 type storage_interface = StorageInterface.t
 let storage_interface = StorageInterface.t
+let storage_interface_opt = Helpers.value_opt_as_ptr storage_interface
 
 
 
@@ -5556,6 +5648,7 @@ module DateTime = struct
 end
 type date_time = DateTime.t
 let date_time = DateTime.t
+let date_time_opt = Helpers.value_opt_as_ptr date_time
 
 
 type date_format =
@@ -5583,7 +5676,7 @@ let time_format_to_enum : time_format -> time_format_enum = function
   | TIME_FORMAT_12HR -> time_format_12_hr
 
 let timer_id = uint (* prim *)
-let timer_callback = funptr (ptr void @-> uint @-> uint @-> returning uint)
+let timer_callback = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> uint @-> uint @-> returning uint)
 let ns_timer_callback = funptr (ptr void @-> uint @-> ulong @-> returning ulong)
 
 (* No definition (opaque struct) *)

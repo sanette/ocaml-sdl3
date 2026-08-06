@@ -7,10 +7,10 @@ let ff = Load.foreign
 
 module Global = struct
 let show_open_file_dialog = ff "SDL_ShowOpenFileDialog"
-  (dialog_file_callback @-> ptr void @-> window_opt @-> ptr dialog_file_filter @-> int @-> string @-> bool @-> returning void)
+  (dialog_file_callback @-> ptr void @-> window_opt @-> dialog_file_filter_opt @-> int @-> string @-> bool @-> returning void)
 
 let show_save_file_dialog = ff "SDL_ShowSaveFileDialog"
-  (dialog_file_callback @-> ptr void @-> window_opt @-> ptr dialog_file_filter @-> int @-> string @-> returning void)
+  (dialog_file_callback @-> ptr void @-> window_opt @-> dialog_file_filter_opt @-> int @-> string @-> returning void)
 
 let show_open_folder_dialog = ff "SDL_ShowOpenFolderDialog"
   (dialog_file_callback @-> ptr void @-> window_opt @-> string @-> bool @-> returning void)

@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -29,7 +29,7 @@ let copy_file = ff "SDL_CopyFile"
   (string @-> string @-> returning true_to_ok)
 
 let get_path_info = ff "SDL_GetPathInfo"
-  (string @-> ptr path_info @-> returning true_to_ok)
+  (string @-> path_info_opt @-> returning true_to_ok)
 
 let glob_directory = ff "SDL_GlobDirectory"
   (string @-> string @-> glob_flags @-> ptr int @-> returning (ptr string))
@@ -38,7 +38,7 @@ let glob_directory path pattern flags =
   let count = allocate int 0 in
   let p = glob_directory path pattern flags count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n

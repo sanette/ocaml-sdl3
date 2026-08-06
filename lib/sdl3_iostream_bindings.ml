@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -57,7 +57,7 @@ let flush_io = ff "SDL_FlushIO"
   (io_stream @-> returning true_to_ok)
 
 let load_file_io = ff "SDL_LoadFile_IO"
-  (io_stream @-> ptr size_t @-> bool @-> returning (ptr void))
+  (io_stream @-> ptr_opt size_t @-> bool @-> returning (ptr void))
 
 let save_file_io = ff "SDL_SaveFile_IO"
   (io_stream @-> ptr void @-> size_t @-> bool @-> returning true_to_ok)
@@ -92,13 +92,19 @@ let read_s16_be = ff "SDL_ReadS16BE"
   (io_stream @-> ptr sint16 @-> returning true_to_ok)
 
 let read_u32_le = ff "SDL_ReadU32LE"
-  (io_stream @-> ptr uint32 @-> returning true_to_ok)
+  (io_stream @-> ptr uint32 @-> returning bool)
+let read_u32_le src =
+  let value = allocate uint (Unsigned.UInt.of_int 0) in
+  if read_u32_le src value then Ok (Unsigned.UInt.to_int (!@ value)) else error ()
 
 let read_s32_le = ff "SDL_ReadS32LE"
   (io_stream @-> ptr sint32 @-> returning true_to_ok)
 
 let read_u32_be = ff "SDL_ReadU32BE"
-  (io_stream @-> ptr uint32 @-> returning true_to_ok)
+  (io_stream @-> ptr uint32 @-> returning bool)
+let read_u32_be src =
+  let value = allocate uint (Unsigned.UInt.of_int 0) in
+  if read_u32_be src value then Ok (Unsigned.UInt.to_int (!@ value)) else error ()
 
 let read_s32_be = ff "SDL_ReadS32BE"
   (io_stream @-> ptr sint32 @-> returning true_to_ok)
@@ -191,7 +197,7 @@ end
 
 module Global = struct
 let load_file = ff "SDL_LoadFile"
-  (string @-> ptr size_t @-> returning (ptr void))
+  (string @-> ptr_opt size_t @-> returning (ptr void))
 
 let save_file = ff "SDL_SaveFile"
   (string @-> ptr void @-> size_t @-> returning true_to_ok)

@@ -13,7 +13,7 @@ let get_preferred_locales () =
   let count = allocate int 0 in
   let p = get_preferred_locales count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n

@@ -6,12 +6,16 @@ open Sdl3
 let go = Result.get_ok
 let do_option o f = Option.iter f o
 
-type state = {
+type 'a state = {
   window : T.window;
   renderer : T.renderer;
-  callback : T.audio_stream_callback option;
-  (* We need to save the callback somewhere to make sure OCaml does not GC
-     it. *)
+  callback : 'a option; (* We need to save the callback somewhere to make sure
+                           OCaml does not GC it. *)
+  (* TODO write explicit callback types in the binding. Here:
+
+ type audio_stream_callback = unit ptr -> audio_stream -> int -> int -> unit *)
+
+
 }
 
 (* This function will be called (usually in a background thread) when the audio stream is consuming data. *)
@@ -68,7 +72,7 @@ let init () =
       let callback = Some feed_the_audio_stream_more in
       let state = {state with callback} in
       match Sdl.AudioStream.open_audio_device_stream Sdl.audio_device_default_playback
-              (Some spec) callback with
+              (Some spec) callback Ctypes.null with
       | Error (`Msg e) -> Sdl.App.log "Couldn't create audio stream: %s" e;
         T.APP_FAILURE, Some state
       | Ok stream ->

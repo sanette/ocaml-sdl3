@@ -13,8 +13,8 @@ let create_with_fields create set list =
   List.iter (fun (field, value) -> set s field value) list;
   s
 
-let create_frect = Sdl.FRect.(create_with_fields create set)
-let create_fpoint = Sdl.FPoint.(create_with_fields create set)
+let create_frect = Sdl.FRect.(create_with_fields create Ctypes.setf)
+let create_fpoint = Sdl.FPoint.(create_with_fields create Ctypes.setf)
 
 let () =
   print "Initializing SDL3...";
@@ -68,10 +68,10 @@ let () =
       go (Sdl.Renderer.render_clear renderer);
 
       let angle = float i (* +. (1. +. cos (1. +. float i /. 5.)) *) in
-      Sdl.FRect.(set rect x (float i /. 10.));
-      Sdl.FRect.(set rect y (float (!wh - 70) *.
+      Sdl.FRect.(Ctypes.setf rect x (float i /. 10.));
+      Sdl.FRect.(Ctypes.setf rect y (float (!wh - 70) *.
                          (1. -. abs_float (sin (10. *. float i /. float !wh)))));
-      go (Sdl.Renderer.render_texture_rotated renderer ball None (Some ( rect))
+      go (Sdl.Renderer.render_texture_rotated renderer ball None (Some rect)
             angle (Some center) Sdl.flip_none);
       let rec event_loop () =
         let has_event = Sdl.Event.poll (Some e) in
@@ -95,7 +95,7 @@ let () =
 
       go (Sdl.Renderer.set_draw_color renderer 255 25 255 255);
       let p = create_fpoint Sdl.FPoint.[(x, float i /. 10.); (y, float i /. 20.)] in
-      point_list := (Ctypes.(!@) p) :: !point_list;
+      point_list := p :: !point_list;
       (* for j = 1 to i do *)
       (*   go (Renderer.render_point renderer (float j /. 10.) (float j /. 20.)) *)
       (* done; *)

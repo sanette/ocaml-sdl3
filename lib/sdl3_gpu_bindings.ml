@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -207,10 +207,18 @@ let blit_gpu_texture = ff "SDL_BlitGPUTexture"
   (gpu_command_buffer @-> ptr gpu_blit_info @-> returning void)
 
 let acquire_gpu_swapchain_texture = ff "SDL_AcquireGPUSwapchainTexture"
-  (gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning true_to_ok)
+  (gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning bool)
+let acquire_gpu_swapchain_texture command_buffer window swapchain_texture =
+  let swapchain_texture_width = allocate uint (Unsigned.UInt.of_int 0) in
+  let swapchain_texture_height = allocate uint (Unsigned.UInt.of_int 0) in
+  if acquire_gpu_swapchain_texture command_buffer window swapchain_texture swapchain_texture_width swapchain_texture_height then Ok (Unsigned.UInt.to_int (!@ swapchain_texture_width), Unsigned.UInt.to_int (!@ swapchain_texture_height)) else error ()
 
 let wait_and_acquire_gpu_swapchain_texture = ff "SDL_WaitAndAcquireGPUSwapchainTexture"
-  (gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning true_to_ok)
+  (gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning bool)
+let wait_and_acquire_gpu_swapchain_texture command_buffer window swapchain_texture =
+  let swapchain_texture_width = allocate uint (Unsigned.UInt.of_int 0) in
+  let swapchain_texture_height = allocate uint (Unsigned.UInt.of_int 0) in
+  if wait_and_acquire_gpu_swapchain_texture command_buffer window swapchain_texture swapchain_texture_width swapchain_texture_height then Ok (Unsigned.UInt.to_int (!@ swapchain_texture_width), Unsigned.UInt.to_int (!@ swapchain_texture_height)) else error ()
 
 let submit = ff "SDL_SubmitGPUCommandBuffer"
   (gpu_command_buffer @-> returning true_to_ok)
@@ -222,7 +230,7 @@ end
 
 module GPURenderPass = struct
 let begin_ = ff "SDL_BeginGPURenderPass"
-  (gpu_command_buffer @-> ptr gpu_color_target_info @-> uint32 @-> ptr gpu_depth_stencil_target_info @-> returning (some_to_ok gpu_render_pass_opt))
+  (gpu_command_buffer @-> ptr gpu_color_target_info @-> uint32 @-> gpu_depth_stencil_target_info_opt @-> returning (some_to_ok gpu_render_pass_opt))
 let begin_ command_buffer color_target_infos num_color_targets depth_stencil_target_info =
   begin_ command_buffer color_target_infos (Unsigned.UInt.of_int num_color_targets) depth_stencil_target_info
 
@@ -233,7 +241,7 @@ let set_gpu_viewport = ff "SDL_SetGPUViewport"
   (gpu_render_pass @-> ptr gpu_viewport @-> returning void)
 
 let set_gpu_scissor = ff "SDL_SetGPUScissor"
-  (gpu_render_pass @-> rect @-> returning void)
+  (gpu_render_pass @-> ptr rect @-> returning void)
 
 let set_gpu_blend_constants = ff "SDL_SetGPUBlendConstants"
   (gpu_render_pass @-> f_color @-> returning void)

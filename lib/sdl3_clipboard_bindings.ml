@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -41,13 +41,13 @@ let has_clipboard_data = ff "SDL_HasClipboardData"
   (string @-> returning bool)
 
 let get_clipboard_mime_types = ff "SDL_GetClipboardMimeTypes"
-  (ptr size_t @-> returning (ptr string))
+  (ptr_opt size_t @-> returning (ptr string))
 (* Wrapper for returning string list *)
 let get_clipboard_mime_types () =
-  let num_mime_types = allocate size_t (Unsigned.Size_t.of_int 0) in
+  let num_mime_types = Some (allocate size_t (Unsigned.Size_t.of_int 0)) in
   let p = get_clipboard_mime_types num_mime_types in
   if is_null p then []
-  else let n = Unsigned.Size_t.to_int (!@ num_mime_types) in
+  else let n = Unsigned.Size_t.to_int (!@ (Option.get num_mime_types)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n

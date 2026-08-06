@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -17,7 +17,7 @@ let get_keyboards () =
   let count = allocate int 0 in
   let p = get_keyboards count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
@@ -103,7 +103,7 @@ let get_key_from scancode modstate key_event =
   get_key_from scancode (Unsigned.UShort.of_int modstate) key_event
 
 let get_from_key = ff "SDL_GetScancodeFromKey"
-  (keycode @-> ptr keymod @-> returning scancode)
+  (keycode @-> ptr_opt keymod @-> returning scancode)
 let get_from_key key modstate =
   get_from_key (Unsigned.UInt.of_int key) modstate
 

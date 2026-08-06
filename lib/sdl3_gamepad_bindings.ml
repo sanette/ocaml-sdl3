@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -23,7 +23,7 @@ let get_gamepad_mappings () =
   let count = allocate int 0 in
   let p = get_gamepad_mappings count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
@@ -44,7 +44,7 @@ let get_gamepads () =
   let count = allocate int 0 in
   let p = get_gamepads count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
@@ -199,7 +199,7 @@ let get_bindings gamepad =
   let count = allocate int 0 in
   let p = get_bindings gamepad count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
@@ -227,7 +227,7 @@ let get_num_touchpad_fingers = ff "SDL_GetNumGamepadTouchpadFingers"
   (gamepad @-> int @-> returning int)
 
 let get_touchpad_finger = ff "SDL_GetGamepadTouchpadFinger"
-  (gamepad @-> int @-> int @-> ptr bool @-> ptr float @-> ptr float @-> ptr float @-> returning bool)
+  (gamepad @-> int @-> int @-> ptr_opt bool @-> ptr float @-> ptr float @-> ptr float @-> returning bool)
 let get_touchpad_finger gamepad touchpad finger down =
   let x = allocate float 0. in
   let y = allocate float 0. in

@@ -163,7 +163,8 @@ let iterate state =
   Sdl.FRect.(set dst y 0.);
   Sdl.FRect.(set dst w (float window_width /. 4.));
   Sdl.FRect.(set dst h (float window_height /. 4.));
-  Sdl.Renderer.render_texture state.renderer converted_texture None (Some dst) |> go;
+  Sdl.Renderer.render_texture state.renderer converted_texture None
+    (Some dst) |> go;
 
   Sdl.Renderer.render_present state.renderer |> go;
 

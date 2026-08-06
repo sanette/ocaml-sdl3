@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -29,7 +29,7 @@ let delay_ns = ff ~release_runtime_lock:true "SDL_DelayNS"
 let delay_ns ns =
   delay_ns (Unsigned.ULong.of_int64 ns)
 
-let delay_precise = ff ~release_runtime_lock:true "SDL_DelayPrecise"
+let delay_precise = ff "SDL_DelayPrecise"
   (uint64 @-> returning void)
 let delay_precise ns =
   delay_precise (Unsigned.ULong.of_int64 ns)
@@ -51,3 +51,4 @@ let remove_timer id =
 
 end
 include Global
+

@@ -36,7 +36,7 @@ let init () =
       Sdl.AudioSpec.(set spec freq 8000);
 
       match Sdl.AudioStream.open_audio_device_stream Sdl.audio_device_default_playback
-              (Some spec) None with
+              (Some spec) None Ctypes.null with
       | Error (`Msg e) -> Sdl.App.log "Couldn't create audio stream: %s" e;
         T.APP_FAILURE, Some state
       | Ok stream ->
@@ -64,7 +64,7 @@ let iterate state =
       state.current_sine_sample <- state.current_sine_sample + 1
     done;
     state.current_sine_sample <- state.current_sine_sample mod 8000;
-    Sdl.AudioStream.put_data_f stream samples |> go;
+    Sdl.AudioStream.put_data stream samples |> go;
 
     Sdl.Renderer.render_clear state.renderer |> go ;
     Sdl.Renderer.render_present state.renderer |> go

@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -11,7 +11,14 @@ let get_name = ff "SDL_GetPixelFormatName"
   (pixel_format @-> returning string)
 
 let get_masks_for = ff "SDL_GetMasksForPixelFormat"
-  (pixel_format @-> ptr int @-> ptr uint32 @-> ptr uint32 @-> ptr uint32 @-> ptr uint32 @-> returning true_to_ok)
+  (pixel_format @-> ptr int @-> ptr uint32 @-> ptr uint32 @-> ptr uint32 @-> ptr uint32 @-> returning bool)
+let get_masks_for format =
+  let bpp = allocate int 0 in
+  let rmask = allocate uint (Unsigned.UInt.of_int 0) in
+  let gmask = allocate uint (Unsigned.UInt.of_int 0) in
+  let bmask = allocate uint (Unsigned.UInt.of_int 0) in
+  let amask = allocate uint (Unsigned.UInt.of_int 0) in
+  if get_masks_for format bpp rmask gmask bmask amask then Ok (!@ bpp, Unsigned.UInt.to_int (!@ rmask), Unsigned.UInt.to_int (!@ gmask), Unsigned.UInt.to_int (!@ bmask), Unsigned.UInt.to_int (!@ amask)) else error ()
 
 let get_for_masks = ff "SDL_GetPixelFormatForMasks"
   (int @-> uint32 @-> uint32 @-> uint32 @-> uint32 @-> returning pixel_format)

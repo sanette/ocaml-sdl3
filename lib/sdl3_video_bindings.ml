@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -23,7 +23,7 @@ let get_displays () =
   let count = allocate int 0 in
   let p = get_displays count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
@@ -44,12 +44,12 @@ let get_display_name display_id =
   get_display_name (Unsigned.UInt.of_int display_id)
 
 let get_display_bounds = ff "SDL_GetDisplayBounds"
-  (display_id @-> rect @-> returning true_to_ok)
+  (display_id @-> ptr rect @-> returning true_to_ok)
 let get_display_bounds display_id rect =
   get_display_bounds (Unsigned.UInt.of_int display_id) rect
 
 let get_display_usable_bounds = ff "SDL_GetDisplayUsableBounds"
-  (display_id @-> rect @-> returning true_to_ok)
+  (display_id @-> ptr rect @-> returning true_to_ok)
 let get_display_usable_bounds display_id rect =
   get_display_usable_bounds (Unsigned.UInt.of_int display_id) rect
 
@@ -65,7 +65,7 @@ let get_fullscreen_display_modes display_id =
   let count = allocate int 0 in
   let p = get_fullscreen_display_modes display_id count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
@@ -85,7 +85,7 @@ let get_windows () =
   let count = allocate int 0 in
   let p = get_windows count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
@@ -175,13 +175,13 @@ end
 
 module Point = struct
 let get_display_for = ff "SDL_GetDisplayForPoint"
-  (point @-> returning int_as_uint)
+  (ptr point @-> returning int_as_uint)
 
 end
 
 module Rect = struct
 let get_display_for = ff "SDL_GetDisplayForRect"
-  (rect @-> returning int_as_uint)
+  (ptr rect @-> returning int_as_uint)
 
 end
 
@@ -269,7 +269,7 @@ let get_size window =
   if get_size window w h then Ok (!@ w, !@ h) else error ()
 
 let get_safe_area = ff "SDL_GetWindowSafeArea"
-  (window @-> rect @-> returning true_to_ok)
+  (window @-> ptr rect @-> returning true_to_ok)
 
 let set_aspect_ratio = ff "SDL_SetWindowAspectRatio"
   (window @-> float @-> float @-> returning true_to_ok)
@@ -372,7 +372,7 @@ let update_surface = ff "SDL_UpdateWindowSurface"
   (window @-> returning true_to_ok)
 
 let update_surface_rects = ff "SDL_UpdateWindowSurfaceRects"
-  (window @-> rect @-> int @-> returning true_to_ok)
+  (window @-> ptr rect @-> int @-> returning true_to_ok)
 
 let destroy_surface = ff "SDL_DestroyWindowSurface"
   (window @-> returning true_to_ok)
@@ -396,7 +396,7 @@ let set_mouse_rect = ff "SDL_SetWindowMouseRect"
   (window @-> rect_opt @-> returning true_to_ok)
 
 let get_mouse_rect = ff "SDL_GetWindowMouseRect"
-  (window @-> returning (some_to_ok rect_opt))
+  (window @-> returning (ptr rect))
 
 let set_opacity = ff "SDL_SetWindowOpacity"
   (window @-> float @-> returning true_to_ok)

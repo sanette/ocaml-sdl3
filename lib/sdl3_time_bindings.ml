@@ -1,14 +1,14 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
 module DateFormat = struct
 let get_date_time_locale_preferences = ff "SDL_GetDateTimeLocalePreferences"
-  (ptr date_format @-> ptr time_format @-> returning true_to_ok)
+  (ptr_opt date_format @-> ptr_opt time_format @-> returning true_to_ok)
 
 end
 
@@ -26,8 +26,11 @@ let time_to_date_time ticks dt local_time =
 
 let time_to_windows = ff "SDL_TimeToWindows"
   (time @-> ptr uint32 @-> ptr uint32 @-> returning void)
-let time_to_windows ticks dw_low_date_time dw_high_date_time =
-  time_to_windows (Signed.Long.of_int ticks) dw_low_date_time dw_high_date_time
+let time_to_windows ticks =
+  let dw_low_date_time = allocate uint (Unsigned.UInt.of_int 0) in
+  let dw_high_date_time = allocate uint (Unsigned.UInt.of_int 0) in
+  time_to_windows (Signed.Long.of_int ticks) dw_low_date_time dw_high_date_time;
+  (Unsigned.UInt.to_int (!@ dw_low_date_time), Unsigned.UInt.to_int (!@ dw_high_date_time))
 
 let time_from_windows = ff "SDL_TimeFromWindows"
   (uint32 @-> uint32 @-> returning time)

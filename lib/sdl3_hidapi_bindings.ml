@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -38,7 +38,7 @@ end
 
 module Hid_device = struct
 let hid_open = ff "SDL_hid_open"
-  (ushort @-> ushort @-> ptr int32_t @-> returning (some_to_ok hid_device_opt))
+  (ushort @-> ushort @-> ptr_opt int32_t @-> returning (some_to_ok hid_device_opt))
 let hid_open vendor_id product_id serial_number =
   hid_open (Unsigned.UShort.of_int vendor_id) (Unsigned.UShort.of_int product_id) serial_number
 

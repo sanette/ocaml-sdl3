@@ -13,7 +13,7 @@ let get_touch_devices () =
   let count = allocate int 0 in
   let p = get_touch_devices count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
@@ -32,7 +32,7 @@ let get_touch_fingers touch_id =
   let count = allocate int 0 in
   let p = get_touch_fingers touch_id count in
   if is_null p then []
-  else let n =  (!@ count) in
+  else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n

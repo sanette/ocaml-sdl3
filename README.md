@@ -88,11 +88,18 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
   dune exec ./template.exe
   ```
 
-+ [`examples/renderer/01-clear`](https://examples.libsdl.org/SDL3/renderer/01-clear/):
++ [`examples/renderer/01-clear`](https://examples.libsdl.org/SDL3/renderer/01-clear/)
 
   ```bash
   cd examples/renderer/01-clear
   dune exec ./clear.exe
+  ```
+
++ [`examples/renderer/10-geometry`](https://examples.libsdl.org/SDL3/renderer/10-geometry/): requires SDL >= 3.4.0
+
+  ```bash
+  cd examples/renderer/10-geometry
+  dune exec ./geometry.exe
   ```
 
 + [`examples/renderer/17-read-pixels`](https://examples.libsdl.org/SDL3/renderer/17-read-pixels/): requires SDL >= 3.4.0
@@ -112,7 +119,7 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
   ![screenshot](https://raw.githubusercontent.com/sanette/ocaml-sdl3/refs/heads/main/bin/examples/renderer/19-affine-textures/affine-textures.png)
 
 
-+ [`examples/camera/01-read-and-draw`](https://examples.libsdl.org/SDL3/camera/01-read-and-draw/):
++ [`examples/camera/01-read-and-draw`](https://examples.libsdl.org/SDL3/camera/01-read-and-draw/)
 
   ```bash
   cd examples/camera/01-read-and-draw

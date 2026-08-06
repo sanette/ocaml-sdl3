@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -105,19 +105,19 @@ let set_viewport = ff "SDL_SetRenderViewport"
   (renderer @-> rect_opt @-> returning true_to_ok)
 
 let get_viewport = ff "SDL_GetRenderViewport"
-  (renderer @-> rect @-> returning true_to_ok)
+  (renderer @-> ptr rect @-> returning true_to_ok)
 
 let render_viewport_set = ff "SDL_RenderViewportSet"
   (renderer @-> returning true_to_ok)
 
 let get_safe_area = ff "SDL_GetRenderSafeArea"
-  (renderer @-> rect @-> returning true_to_ok)
+  (renderer @-> ptr rect @-> returning true_to_ok)
 
 let set_clip_rect = ff "SDL_SetRenderClipRect"
   (renderer @-> rect_opt @-> returning true_to_ok)
 
 let get_clip_rect = ff "SDL_GetRenderClipRect"
-  (renderer @-> rect @-> returning true_to_ok)
+  (renderer @-> ptr rect @-> returning true_to_ok)
 
 let render_clip_enabled = ff "SDL_RenderClipEnabled"
   (renderer @-> returning bool)
@@ -182,36 +182,36 @@ let render_point = ff "SDL_RenderPoint"
   (renderer @-> float @-> float @-> returning true_to_ok)
 
 let render_points = ff "SDL_RenderPoints"
-  (renderer @-> f_point @-> int @-> returning true_to_ok)
+  (renderer @-> ptr f_point @-> int @-> returning true_to_ok)
 let render_points renderer points =
-  let points, count = carray_of_list f_point_raw points in
+  let points, count = carray_of_list f_point points in
   render_points renderer points count
 
 let render_line = ff "SDL_RenderLine"
   (renderer @-> float @-> float @-> float @-> float @-> returning true_to_ok)
 
 let render_lines = ff "SDL_RenderLines"
-  (renderer @-> f_point @-> int @-> returning true_to_ok)
+  (renderer @-> ptr f_point @-> int @-> returning true_to_ok)
 let render_lines renderer points =
-  let points, count = carray_of_list f_point_raw points in
+  let points, count = carray_of_list f_point points in
   render_lines renderer points count
 
 let render_rect = ff "SDL_RenderRect"
   (renderer @-> f_rect_opt @-> returning true_to_ok)
 
 let render_rects = ff "SDL_RenderRects"
-  (renderer @-> f_rect @-> int @-> returning true_to_ok)
+  (renderer @-> ptr f_rect @-> int @-> returning true_to_ok)
 let render_rects renderer rects =
-  let rects, count = carray_of_list f_rect_raw rects in
+  let rects, count = carray_of_list f_rect rects in
   render_rects renderer rects count
 
 let render_fill_rect = ff "SDL_RenderFillRect"
   (renderer @-> f_rect_opt @-> returning true_to_ok)
 
 let render_fill_rects = ff "SDL_RenderFillRects"
-  (renderer @-> f_rect @-> int @-> returning true_to_ok)
+  (renderer @-> ptr f_rect @-> int @-> returning true_to_ok)
 let render_fill_rects renderer rects =
-  let rects, count = carray_of_list f_rect_raw rects in
+  let rects, count = carray_of_list f_rect rects in
   render_fill_rects renderer rects count
 
 let render_texture = ff "SDL_RenderTexture"
@@ -233,14 +233,14 @@ let render_texture9_grid_tiled = ff "SDL_RenderTexture9GridTiled"
   (renderer @-> texture @-> f_rect_opt @-> float @-> float @-> float @-> float @-> float @-> f_rect_opt @-> float @-> returning true_to_ok)
 
 let render_geometry = ff "SDL_RenderGeometry"
-  (renderer @-> texture @-> ptr vertex @-> int @-> ptr (const int) @-> int @-> returning true_to_ok)
+  (renderer @-> texture_opt @-> ptr vertex @-> int @-> ptr_opt (const int) @-> int @-> returning true_to_ok)
 let render_geometry renderer texture vertices indices =
   let vertices, num_vertices = carray_of_list vertex vertices in
-  let indices, num_indices = carray_of_list (const int) indices in
+  let indices, num_indices = carray_of_list_opt (const int) indices in
   render_geometry renderer texture vertices num_vertices indices num_indices
 
 let render_geometry_raw = ff "SDL_RenderGeometryRaw"
-  (renderer @-> texture @-> ptr (const float) @-> int @-> ptr f_color @-> int @-> ptr (const float) @-> int @-> int @-> ptr void @-> int @-> int @-> returning true_to_ok)
+  (renderer @-> texture_opt @-> ptr (const float) @-> int @-> ptr f_color @-> int @-> ptr (const float) @-> int @-> int @-> ptr void @-> int @-> int @-> returning true_to_ok)
 let render_geometry_raw renderer texture xy xy_stride color color_stride uv uv_stride num_vertices indices size_indices =
   let indices, num_indices = carray_of_list void indices in
   render_geometry_raw renderer texture xy xy_stride color color_stride uv uv_stride num_vertices indices num_indices size_indices
@@ -249,7 +249,7 @@ let set_texture_address_mode = ff "SDL_SetRenderTextureAddressMode"
   (renderer @-> texture_address_mode @-> texture_address_mode @-> returning true_to_ok)
 
 let get_texture_address_mode = ff "SDL_GetRenderTextureAddressMode"
-  (renderer @-> ptr texture_address_mode @-> ptr texture_address_mode @-> returning true_to_ok)
+  (renderer @-> ptr_opt texture_address_mode @-> ptr_opt texture_address_mode @-> returning true_to_ok)
 
 let render_read_pixels = ff "SDL_RenderReadPixels"
   (renderer @-> rect_opt @-> returning (some_to_ok surface_opt))
@@ -433,3 +433,4 @@ let destroy = ff "SDL_DestroyGPURenderState"
   (gpu_render_state @-> returning void)
 
 end
+
