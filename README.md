@@ -78,6 +78,7 @@ for Windows should probably be "`SDL3.dll`", and for MacOS either
 ## Official SDL3 examples
 
 Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml-SDL3`.
+(I use them in an essential way to validate/fix the bindings.)
 
 + `examples/template.ml` is the template (using the 'callback' style)
   used for all of these examples. You can execute this empty template
