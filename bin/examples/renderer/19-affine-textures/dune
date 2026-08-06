@@ -4,4 +4,4 @@
 
 (install
   (section libexec_root)
-  (files sample.png))
+  (files logo-with-name-bkg.png))
