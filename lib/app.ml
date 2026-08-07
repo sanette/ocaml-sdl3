@@ -53,7 +53,7 @@ type 'a app =
   { init : unit -> T.app_result * ('a option);
     event : 'a -> T.event -> T.app_result;
     iterate : 'a -> T.app_result;
-    quit : 'a option -> T.app_result -> unit;
+    quit : 'a option -> T.app_result -> T.app_result;
     max_events : int
   }
 
@@ -77,7 +77,24 @@ let create ?(max_events=10) ~init ~event ~iterate ~quit () =
   { init; event; iterate; quit; max_events }
 
 let quit app state ret =
-  app.quit state ret
+  Sdl3_video_bindings.get_windows ()
+  |> List.iter (fun window ->
+      let () = match Sdl3_render_bindings.Renderer.get window with
+        | Error (`Msg e) -> log "Cannot get window's renderer: %s." e
+        | Ok renderer ->
+          Sdl3_render_bindings.Renderer.destroy renderer;
+          log "Renderer destroyed." in
+      Sdl3_video_bindings.Window.destroy window;
+      log "Window destroyed.");
+  match app.quit state ret with
+  | T.APP_SUCCESS -> begin
+      Sdl3_init_bindings.quit ();
+      match ret with
+      | T.APP_FAILURE -> log "Application failure"; exit 1
+      | T.APP_SUCCESS -> log "Application terminated successfully"; exit 0
+      | T.APP_CONTINUE -> log "Application both terminates and wants to continue!"; exit 1
+    end
+  | _ -> ()
 
 let run app =
   let ret, state = app.init () in

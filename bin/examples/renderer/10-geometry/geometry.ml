@@ -6,8 +6,11 @@ open Sdl3
 let go = Result.get_ok
 let do_option o f = Option.iter f o
 
+let set_point p (x0, y0) =
+  Sdl.FPoint.(set p x x0);
+  Sdl.FPoint.(set p y y0)
+
 type state = {
-  window : T.window;
   renderer : T.renderer;
   texture : T.texture option;
 }
@@ -31,12 +34,12 @@ let ( let* ) (o, errmsg, state) f =
 
 (* This function runs once at startup and returns a fresh application state. *)
 let init () =
-  Sdl.LogPriority.set_log_priorities Sdl.log_priority_invalid;
+  (* Sdl.LogPriority.set_log_priorities Sdl.log_priority_invalid; *)
   Sdl.set_app_metadata
     "Example Renderer Geometry" "1.0" "com.example.renderer-geometry" |> go;
 
   let* () = Sdl.init Sdl.init_video, "Couldn't initialize SDL", None in
-  let* (window, renderer) = Sdl.create_window_and_renderer "examples/renderer/geometry"
+  let* (_window, renderer) = Sdl.create_window_and_renderer "examples/renderer/geometry"
       window_width window_height Sdl.window_resizable, "Couldn't create window/renderer", None  in
 
   Sdl.Renderer.set_logical_presentation renderer window_width window_height
@@ -49,7 +52,7 @@ let init () =
   (* SDL_Surface is pixel data the CPU can access. SDL_Texture is pixel data the
      GPU can access. *)
   (* Load a .png into a surface, move it to a texture from there. *)
-  let state = { window; renderer; texture = None } in
+  let state = { renderer; texture = None } in
   let png_path = Filename.concat (Sdl.get_base_path ()) "sample.png" in
   let* surface = Sdl.Surface.load_png png_path,
                  "Couldn't load bitmap", Some state in
@@ -57,7 +60,6 @@ let init () =
                  "Couldn't create static texture", Some state in
   let state = { state with texture = Some texture } in
   Sdl.Surface.destroy surface;
-  print_endline "texture ok";
   T.APP_CONTINUE, Some state (* carry on with the program! *)
 
 (* This function runs when a new event (mouse input, keypresses, etc) occurs. *)
@@ -78,51 +80,37 @@ let iterate state =
   Sdl.Renderer.set_draw_color state.renderer 0 0 0 Sdl.alpha_opaque |> go;
   Sdl.Renderer.render_clear state.renderer |> go;
 
-  print_endline "clear ok";
-
   let v0 = T.Vertex.create () in
-
-  print_endline "vertex created";
-
   let position = T.Vertex.(get v0 position) in
-
-  print_endline "got position";
-
-  let x0 = Sdl.FPoint.(Ctypes.getf position x) in (* FIXME one needs Ctypes.getf here... *)
-  print_endline (string_of_float x0);
+  assert (Sdl.FPoint.(get position x) = 0.);
 
   Sdl.FPoint.(set position x (float window_width /. 2.));
-
-  print_endline "x set";
-
   Sdl.FPoint.(set position y ((float window_height -. size) /. 2.));
-
-  print_endline "position set";
-
 
   let color = T.Vertex.(get v0 color) in
   T.FColor.(set color r 1.);
   T.FColor.(set color a 1.);
 
-  print_endline "v0 ok";
-
   let v1 = T.Vertex.create () in
   let position = T.Vertex.(get v1 position) in
-  Sdl.FPoint.(set position x ((float window_width +. size) /. 2.));
-  Sdl.FPoint.(set position y ((float window_height +. size) /. 2.));
+  (* IMPORTANT: "position" is a field in the Vertex structure, it is
+     automatically created in [v1]: one should not create and set a new
+     "position", but only modify it in-place, to avoid memory leaks (the old
+     "position" would not be freed). *)
+  set_point position ((float window_width +. size) /. 2.,
+                      (float window_height +. size) /. 2.);
   let color = T.Vertex.(get v1 color) in
   T.FColor.(set color g 1.);
   T.FColor.(set color a 1.);
 
   let v2 = T.Vertex.create () in
   let position = T.Vertex.(get v2 position) in
-  Sdl.FPoint.(set position x ((float window_width -. size) /. 2.));
-  Sdl.FPoint.(set position y ((float window_height +. size) /. 2.));
+  set_point position ((float window_width -. size) /. 2.,
+                      (float window_height +. size) /. 2.);
   let color = T.Vertex.(get v2 color) in
   T.FColor.(set color b 1.);
   T.FColor.(set color a 1.);
 
-  print_endline "vertices ok";
   let () = match Sdl.Renderer.render_geometry state.renderer None
           [v0;v1;v2] [] with
   | Error (`Msg e) -> Sdl.App.log "Cannot render geometry: %s" e; raise Exit
@@ -130,31 +118,27 @@ let iterate state =
 
   let v0 = T.Vertex.create () in
   let position = T.Vertex.(get v0 position) in
-  Sdl.FPoint.(set position x 10.);
-  Sdl.FPoint.(set position y 10.);
+  set_point position (10., 10.);
   let color = T.Vertex.(get v0 color) in
   T.FColor.(List.iter (fun f -> set color f 1.) [r;g;b;a]);
 
   let v1 = T.Vertex.create () in
   let position = T.Vertex.(get v1 position) in
-  Sdl.FPoint.(set position x 150.);
-  Sdl.FPoint.(set position y 10.);
+  set_point position (150., 10.);
   let tex_coord = T.Vertex.(get v1 tex_coord) in
   let color = T.Vertex.(get v1 color) in
-  Sdl.FPoint.(set tex_coord x 1.);
+  set_point tex_coord (1., 0.);
   T.FColor.(List.iter (fun f -> set color f 1.) [r;g;b;a]);
 
   let v2 = T.Vertex.create () in
   let position = T.Vertex.(get v2 position) in
-  Sdl.FPoint.(set position x 10.);
-  Sdl.FPoint.(set position y 150.);
+  set_point position (10., 150.);
   let tex_coord = T.Vertex.(get v2 tex_coord) in
-  Sdl.FPoint.(set tex_coord y 1.);
+  set_point tex_coord (0., 1.);
   let color = T.Vertex.(get v2 color) in
   T.FColor.(List.iter (fun f -> set color f 1.) [r;g;b;a]);
 
   Sdl.Renderer.render_geometry state.renderer (Some texture) [v0;v1;v2] [] |> go;
-  print_endline "render_geometry ok";
 
   List.iter (fun v ->
       let position  = T.Vertex.(get v position) in
@@ -163,13 +147,11 @@ let iterate state =
 
   let v3 = T.Vertex.create () in
   let position = T.Vertex.(get v3 position) in
-  Sdl.FPoint.(set position x 600.);
-  Sdl.FPoint.(set position y 150.);
+  set_point position (600., 150.);
   let color = T.Vertex.(get v3 color) in
   T.FColor.(List.iter (fun f -> set color f 1.) [r;g;b;a]);
   let tex_coord = T.Vertex.(get v3 tex_coord) in
-  Sdl.FPoint.(set tex_coord x 1.);
-  Sdl.FPoint.(set tex_coord y 1.);
+  set_point tex_coord (1., 1.);
 
   Sdl.Renderer.render_geometry state.renderer (Some texture) [v0;v1;v2;v3] [0;1;2;1;2;3] |> go;
 
@@ -178,16 +160,10 @@ let iterate state =
   T.APP_CONTINUE (* carry on with the program! *)
 
 (* This function runs once at shutdown. *)
-let quit state ret =
+let quit state _ret =
   do_option state (fun state ->
-      do_option state.texture Sdl.Texture.destroy;
-      Sdl.Renderer.destroy state.renderer;
-      Sdl.Window.destroy state.window);
-  Sdl.quit ();
-  match ret with
-  | T.APP_FAILURE -> Sdl.App.log "Application failure"; exit 1
-  | T.APP_SUCCESS -> Sdl.App.log "Application terminated successfully"; exit 0
-  | T.APP_CONTINUE -> Sdl.App.log "Application both terminates and wants to continue!"; exit 1
+      do_option state.texture Sdl.Texture.destroy);
+  T.APP_SUCCESS
 
 let () =
   let app = Sdl.App.create ~init ~event ~iterate ~quit () in

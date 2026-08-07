@@ -4,10 +4,8 @@
 open Sdl3
 
 let go = Result.get_ok
-let do_option o f = Option.iter f o
 
 type state = {
-  window : T.window;
   renderer : T.renderer;
   stream : T.audio_stream option;
   mutable current_sine_sample : int
@@ -25,16 +23,12 @@ let init () =
             Sdl.window_resizable with
     | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e;
       T.APP_FAILURE, None
-    | Ok (window, renderer) ->
-      let state = { window; renderer; stream = None; current_sine_sample=0 } in
+    | Ok (_window, renderer) ->
+      let state = { renderer; stream = None; current_sine_sample=0 } in
       Sdl.Renderer.set_logical_presentation renderer 640 480
         Sdl.logical_presentation_letterbox |> go;
 
-      let spec = Sdl.AudioSpec.create () in
-      Sdl.AudioSpec.(set spec channels 1);
-      Sdl.AudioSpec.(set spec format Sdl.audio_f32);
-      Sdl.AudioSpec.(set spec freq 8000);
-
+      let spec = Sdl.AudioSpec.create ~channels:1 ~format:Sdl.audio_f32 ~freq:8000 () in
       match Sdl.AudioStream.open_audio_device_stream Sdl.audio_device_default_playback
               (Some spec) None Ctypes.null with
       | Error (`Msg e) -> Sdl.App.log "Couldn't create audio stream: %s" e;
@@ -73,15 +67,9 @@ let iterate state =
   T.APP_CONTINUE (* carry on with the program! *)
 
 (* This function runs once at shutdown. *)
-let quit state ret =
-  do_option state (fun state ->
-      Sdl.Renderer.destroy state.renderer;
-      Sdl.Window.destroy state.window);
-  Sdl.quit ();
-  match ret with
-  | T.APP_FAILURE -> Sdl.App.log "Application failure"; exit 1
-  | T.APP_SUCCESS -> Sdl.App.log "Application terminated successfully"; exit 0
-  | T.APP_CONTINUE -> Sdl.App.log "Application both terminates and wants to continue!"; exit 1
+let quit _state _ret =
+  (* SDL will clean up the window/renderer for us. *)
+  T.APP_SUCCESS
 
 let () =
   let app = Sdl.App.create ~init ~event ~iterate ~quit () in

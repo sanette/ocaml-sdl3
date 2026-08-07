@@ -5,7 +5,6 @@
 open Sdl3
 
 let go = Result.get_ok
-let do_option o f = Option.iter f o
 
 type state = {
   (* Add here any global variable that you may need. Values not defined by the
@@ -41,20 +40,18 @@ let event _state e =
   else T.APP_CONTINUE (* carry on with the program! *)
 
 (* This function runs once per frame, and is the heart of the program. *)
-let iterate _state =
-    T.APP_CONTINUE (* carry on with the program! *)
+let iterate state =
+  ignore state.window; (* do something instead! *)
+  ignore state.renderer; (* idem *)
+  T.APP_CONTINUE (* carry on with the program! *)
 
 (* This function runs once at shutdown. *)
-let quit state ret =
-  do_option state (fun state ->
-      Sdl.Renderer.destroy state.renderer;
-      Sdl.Window.destroy state.window);
-  Sdl.quit ();
-  match ret with
-  | T.APP_FAILURE -> Sdl.App.log "Application failure"; exit 1
-  | T.APP_SUCCESS -> Sdl.App.log "Application terminated successfully"; exit 0
-  | T.APP_CONTINUE -> Sdl.App.log "Application both terminates and wants to continue!"; exit 1
+let quit _state _ret =
+  (* SDL will clean up the window/renderer for us. *)
+  T.APP_SUCCESS (* we really want to exit *)
 
 let () =
   let app = Sdl.App.create ~init ~event ~iterate ~quit () in
   Sdl.App.run app
+(* If [quit] returns APP_SUCCESS, the program will exit here, nothing beyond
+   this point will be executed. *)

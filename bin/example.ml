@@ -8,14 +8,6 @@ let print s = Printf.ksprintf print_endline s
 let go = Result.get_ok
 let ( ++ ) = Int64.logor
 
-let create_with_fields create set list =
-  let s = create () in
-  List.iter (fun (field, value) -> set s field value) list;
-  s
-
-let create_frect = Sdl.FRect.(create_with_fields create Ctypes.setf)
-let create_fpoint = Sdl.FPoint.(create_with_fields create Ctypes.setf)
-
 let () =
   print "Initializing SDL3...";
 
@@ -38,10 +30,8 @@ let () =
   (*   set r h 70.; *)
   (*   r in *)
   print "create rect";
-  let rect = create_frect Sdl.FRect.[(x, 10.); (y, 20.); (w, 70.); (h, 70.)] in
-  (* let rect = Ctypes.(!@ rect) in *)
-  let center = create_fpoint Sdl.FPoint.[(x, 35.); (y, 35.)] in
-
+  let rect = Sdl.FRect.create ~x:10. ~y:20. ~w:70. ~h:70. () in
+  let center = Sdl.FPoint.create ~x:35. ~y:35. () in
   let renderer = Sdl.Renderer.create window "" |> go in
   print "Renderer created";
   go (Sdl.Renderer.set_v_sync renderer 1);
@@ -68,8 +58,8 @@ let () =
       go (Sdl.Renderer.render_clear renderer);
 
       let angle = float i (* +. (1. +. cos (1. +. float i /. 5.)) *) in
-      Sdl.FRect.(Ctypes.setf rect x (float i /. 10.));
-      Sdl.FRect.(Ctypes.setf rect y (float (!wh - 70) *.
+      Sdl.FRect.(set rect x (float i /. 10.));
+      Sdl.FRect.(set rect y (float (!wh - 70) *.
                          (1. -. abs_float (sin (10. *. float i /. float !wh)))));
       go (Sdl.Renderer.render_texture_rotated renderer ball None (Some rect)
             angle (Some center) Sdl.flip_none);
@@ -94,7 +84,7 @@ let () =
       y := !y -. 1.;
 
       go (Sdl.Renderer.set_draw_color renderer 255 25 255 255);
-      let p = create_fpoint Sdl.FPoint.[(x, float i /. 10.); (y, float i /. 20.)] in
+      let p = Sdl.FPoint.create ~x:(float i /. 10.) ~y:(float i /. 20.) () in
       point_list := p :: !point_list;
       (* for j = 1 to i do *)
       (*   go (Renderer.render_point renderer (float j /. 10.) (float j /. 20.)) *)

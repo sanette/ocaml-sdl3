@@ -7,7 +7,6 @@ let go = Result.get_ok
 let do_option o f = Option.iter f o
 
 type state = {
-  window : T.window;
   renderer : T.renderer;
   texture : T.texture option;
   texture_width : int;
@@ -40,7 +39,7 @@ let init () =
     "Example Renderer Read Pixels" "1.0" "com.example.renderer-read-pixels" |> go;
 
   let* () = Sdl.init Sdl.init_video, "Couldn't initialize SDL", None in
-  let* (window, renderer) = Sdl.create_window_and_renderer "examples/renderer/read-pixels" window_width window_height
+  let* (_window, renderer) = Sdl.create_window_and_renderer "examples/renderer/read-pixels" window_width window_height
       Sdl.window_resizable, "Couldn't create window/renderer", None  in
 
   Sdl.Renderer.set_logical_presentation renderer window_width window_height
@@ -53,7 +52,7 @@ let init () =
   (* SDL_Surface is pixel data the CPU can access. SDL_Texture is pixel data the
      GPU can access. *)
   (* Load a .png into a surface, move it to a texture from there. *)
-  let state = { window; renderer ;
+  let state = { renderer ;
                 texture = None; texture_width = 0; texture_height = 0;
                 converted_texture = None;
                 converted_texture_width = 0; converted_texture_height = 0 } in
@@ -90,14 +89,15 @@ let iterate state =
   let rotation = (float (Int64.to_int now mod 2000) /. 2000.) *. 360. in
   Sdl.Renderer.set_draw_color state.renderer 0 0 0 Sdl.alpha_opaque |> go;
   Sdl.Renderer.render_clear state.renderer |> go;
-  let dst = Sdl.FRect.create () in
-  Sdl.FRect.(set dst x (float (window_width - state.texture_width) /. 2.));
-  Sdl.FRect.(set dst y (float (window_height - state.texture_height) /. 2.));
-  Sdl.FRect.(set dst w (float state.texture_width));
-  Sdl.FRect.(set dst h (float state.texture_height));
-  let center = Sdl.FPoint.create () in
-  Sdl.FPoint.(set center x (float state.texture_width /. 2.));
-  Sdl.FPoint.(set center y (float state.texture_height /. 2.));
+  let dst = Sdl.FRect.create
+      ~x:(float (window_width - state.texture_width) /. 2.)
+      ~y:(float (window_height - state.texture_height) /. 2.)
+      ~w:(float state.texture_width)
+      ~h:(float state.texture_height) () in
+  let center = Sdl.FPoint.create
+      (* other values (w and h) are zero by default *)
+      ~x:(float state.texture_width /. 2.)
+      ~y:(float state.texture_height /. 2.) () in
   Sdl.Renderer.render_texture_rotated state.renderer texture
     None (Some dst) rotation (Some center) Sdl.flip_none |> go;
 
@@ -116,12 +116,12 @@ let iterate state =
     else surface in
 
   let w = Sdl.Surface.(get surface w) in
-  let h =  Sdl.Surface.(get surface h) in
+  let h = Sdl.Surface.(get surface h) in
 
   let ct () =
-     Sdl.Texture.create state.renderer Sdl.pixelformat_rgba8888
-          Sdl.textureaccess_streaming w h,
-                 "Couldn't (re)create conversion texture" in
+    Sdl.Texture.create state.renderer Sdl.pixelformat_rgba8888
+      Sdl.textureaccess_streaming w h,
+    "Couldn't (re)create conversion texture" in
 
   let changed = ref false in
   let* converted_texture = begin
@@ -158,11 +158,9 @@ let iterate state =
   Sdl.Texture.update converted_texture None Sdl.Surface.(get surface pixels) pitch |> go;
   Sdl.Surface.destroy surface;
 
-  let dst = Sdl.FRect.create () in
-  Sdl.FRect.(set dst x 0.);
-  Sdl.FRect.(set dst y 0.);
-  Sdl.FRect.(set dst w (float window_width /. 4.));
-  Sdl.FRect.(set dst h (float window_height /. 4.));
+  let dst = Sdl.FRect.create (* values x and y are 0 by default *)
+      ~w:(float window_width /. 4.)
+      ~h:(float window_height /. 4.) () in
   Sdl.Renderer.render_texture state.renderer converted_texture None
     (Some dst) |> go;
 
@@ -171,17 +169,11 @@ let iterate state =
   T.APP_CONTINUE (* carry on with the program! *)
 
 (* This function runs once at shutdown. *)
-let quit state ret =
+let quit state _ret =
   do_option state (fun state ->
       do_option state.texture Sdl.Texture.destroy;
-      do_option state.converted_texture Sdl.Texture.destroy;
-      Sdl.Renderer.destroy state.renderer;
-      Sdl.Window.destroy state.window);
-  Sdl.quit ();
-  match ret with
-  | T.APP_FAILURE -> Sdl.App.log "Application failure"; exit 1
-  | T.APP_SUCCESS -> Sdl.App.log "Application terminated successfully"; exit 0
-  | T.APP_CONTINUE -> Sdl.App.log "Application both terminates and wants to continue!"; exit 1
+      do_option state.converted_texture Sdl.Texture.destroy);
+  T.APP_SUCCESS
 
 let () =
   let app = Sdl.App.create ~init ~event ~iterate ~quit () in

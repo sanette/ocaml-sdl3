@@ -406,7 +406,15 @@ module AudioSpec = struct
   let t_opt : t option typ = ptr_opt t_raw
   let get (e : t) field = getf {structured = e} field
   let set (e : t) field v = setf {structured = e} field v
-  let create () : t = allocate_n t_raw ~count:1
+  let format_ = format
+  let channels_ = channels
+  let freq_ = freq
+  let create ?format ?channels ?freq () : t =
+    let ret = allocate_n t_raw ~count:1 in
+    Option.iter (set ret format_) format;
+    Option.iter (set ret channels_) channels;
+    Option.iter (set ret freq_) freq;
+    ret
 end
 type audio_spec = AudioSpec.t
 let audio_spec = AudioSpec.t
@@ -941,9 +949,19 @@ module Color = struct
   let b = field t "b" int_as_uchar
   let a = field t "a" int_as_uchar
   let () = seal t
-  let create () = make t
+  let r_ = r
+  let g_ = g
+  let b_ = b
+  let a_ = a
   let get = getf
   let set = setf
+  let create ?r ?g ?b ?a () : t =
+    let ret = make t in
+    Option.iter (set ret r_) r;
+    Option.iter (set ret g_) g;
+    Option.iter (set ret b_) b;
+    Option.iter (set ret a_) a;
+    ret
 end
 type color = Color.t
 let color = Color.t
@@ -959,9 +977,19 @@ module FColor = struct
   let b = field t "b" float
   let a = field t "a" float
   let () = seal t
-  let create () = make t
+  let r_ = r
+  let g_ = g
+  let b_ = b
+  let a_ = a
   let get = getf
   let set = setf
+  let create ?r ?g ?b ?a () : t =
+    let ret = make t in
+    Option.iter (set ret r_) r;
+    Option.iter (set ret g_) g;
+    Option.iter (set ret b_) b;
+    Option.iter (set ret a_) a;
+    ret
 end
 type f_color = FColor.t
 let f_color = FColor.t
@@ -1024,9 +1052,15 @@ module Point = struct
   let x = field t "x" int
   let y = field t "y" int
   let () = seal t
-  let create () = make t
+  let x_ = x
+  let y_ = y
   let get = getf
   let set = setf
+  let create ?x ?y () : t =
+    let ret = make t in
+    Option.iter (set ret x_) x;
+    Option.iter (set ret y_) y;
+    ret
 end
 type point = Point.t
 let point = Point.t
@@ -1040,9 +1074,15 @@ module FPoint = struct
   let x = field t "x" float
   let y = field t "y" float
   let () = seal t
-  let create () = make t
+  let x_ = x
+  let y_ = y
   let get = getf
   let set = setf
+  let create ?x ?y () : t =
+    let ret = make t in
+    Option.iter (set ret x_) x;
+    Option.iter (set ret y_) y;
+    ret
 end
 type f_point = FPoint.t
 let f_point = FPoint.t
@@ -1058,9 +1098,19 @@ module Rect = struct
   let w = field t "w" int
   let h = field t "h" int
   let () = seal t
-  let create () = make t
+  let x_ = x
+  let y_ = y
+  let w_ = w
+  let h_ = h
   let get = getf
   let set = setf
+  let create ?x ?y ?w ?h () : t =
+    let ret = make t in
+    Option.iter (set ret x_) x;
+    Option.iter (set ret y_) y;
+    Option.iter (set ret w_) w;
+    Option.iter (set ret h_) h;
+    ret
 end
 type rect = Rect.t
 let rect = Rect.t
@@ -1076,9 +1126,19 @@ module FRect = struct
   let w = field t "w" float
   let h = field t "h" float
   let () = seal t
-  let create () = make t
+  let x_ = x
+  let y_ = y
+  let w_ = w
+  let h_ = h
   let get = getf
   let set = setf
+  let create ?x ?y ?w ?h () : t =
+    let ret = make t in
+    Option.iter (set ret x_) x;
+    Option.iter (set ret y_) y;
+    Option.iter (set ret w_) w;
+    Option.iter (set ret h_) h;
+    ret
 end
 type f_rect = FRect.t
 let f_rect = FRect.t
@@ -1242,7 +1302,27 @@ module DisplayMode = struct
   let t_opt : t option typ = ptr_opt t_raw
   let get (e : t) field = getf {structured = e} field
   let set (e : t) field v = setf {structured = e} field v
-  let create () : t = allocate_n t_raw ~count:1
+  let display_id_ = display_id
+  let format_ = format
+  let w_ = w
+  let h_ = h
+  let pixel_density_ = pixel_density
+  let refresh_rate_ = refresh_rate
+  let refresh_rate_numerator_ = refresh_rate_numerator
+  let refresh_rate_denominator_ = refresh_rate_denominator
+  let internal_ = internal
+  let create ?display_id ?format ?w ?h ?pixel_density ?refresh_rate ?refresh_rate_numerator ?refresh_rate_denominator ?internal () : t =
+    let ret = allocate_n t_raw ~count:1 in
+    Option.iter (set ret display_id_) display_id;
+    Option.iter (set ret format_) format;
+    Option.iter (set ret w_) w;
+    Option.iter (set ret h_) h;
+    Option.iter (set ret pixel_density_) pixel_density;
+    Option.iter (set ret refresh_rate_) refresh_rate;
+    Option.iter (set ret refresh_rate_numerator_) refresh_rate_numerator;
+    Option.iter (set ret refresh_rate_denominator_) refresh_rate_denominator;
+    Option.iter (set ret internal_) internal;
+    ret
 end
 type display_mode = DisplayMode.t
 let display_mode = DisplayMode.t
@@ -3582,7 +3662,89 @@ module Event = struct (* union 'SDL_Event' *)
   let t_opt : t option typ = ptr_opt t_raw
   let get (e : t) field = getf {structured = e} field
   let set (e : t) field v = setf {structured = e} field v
-  let create () : t = allocate_n t_raw ~count:1
+  let typ_ = typ
+  let common_ = common
+  let display_ = display
+  let window_ = window
+  let kdevice_ = kdevice
+  let key_ = key
+  let edit_ = edit
+  let edit_candidates_ = edit_candidates
+  let text_ = text
+  let mdevice_ = mdevice
+  let motion_ = motion
+  let button_ = button
+  let wheel_ = wheel
+  let jdevice_ = jdevice
+  let jaxis_ = jaxis
+  let jball_ = jball
+  let jhat_ = jhat
+  let jbutton_ = jbutton
+  let jbattery_ = jbattery
+  let gdevice_ = gdevice
+  let gaxis_ = gaxis
+  let gbutton_ = gbutton
+  let gtouchpad_ = gtouchpad
+  let gsensor_ = gsensor
+  let adevice_ = adevice
+  let cdevice_ = cdevice
+  let sensor_ = sensor
+  let quit_ = quit
+  let user_ = user
+  let tfinger_ = tfinger
+  let pinch_ = pinch
+  let pproximity_ = pproximity
+  let ptouch_ = ptouch
+  let pmotion_ = pmotion
+  let pbutton_ = pbutton
+  let paxis_ = paxis
+  let render_ = render
+  let drop_ = drop
+  let clipboard_ = clipboard
+  let padding_ = padding
+  let create ?typ ?common ?display ?window ?kdevice ?key ?edit ?edit_candidates ?text ?mdevice ?motion ?button ?wheel ?jdevice ?jaxis ?jball ?jhat ?jbutton ?jbattery ?gdevice ?gaxis ?gbutton ?gtouchpad ?gsensor ?adevice ?cdevice ?sensor ?quit ?user ?tfinger ?pinch ?pproximity ?ptouch ?pmotion ?pbutton ?paxis ?render ?drop ?clipboard ?padding () : t =
+    let ret = allocate_n t_raw ~count:1 in
+    Option.iter (set ret typ_) typ;
+    Option.iter (set ret common_) common;
+    Option.iter (set ret display_) display;
+    Option.iter (set ret window_) window;
+    Option.iter (set ret kdevice_) kdevice;
+    Option.iter (set ret key_) key;
+    Option.iter (set ret edit_) edit;
+    Option.iter (set ret edit_candidates_) edit_candidates;
+    Option.iter (set ret text_) text;
+    Option.iter (set ret mdevice_) mdevice;
+    Option.iter (set ret motion_) motion;
+    Option.iter (set ret button_) button;
+    Option.iter (set ret wheel_) wheel;
+    Option.iter (set ret jdevice_) jdevice;
+    Option.iter (set ret jaxis_) jaxis;
+    Option.iter (set ret jball_) jball;
+    Option.iter (set ret jhat_) jhat;
+    Option.iter (set ret jbutton_) jbutton;
+    Option.iter (set ret jbattery_) jbattery;
+    Option.iter (set ret gdevice_) gdevice;
+    Option.iter (set ret gaxis_) gaxis;
+    Option.iter (set ret gbutton_) gbutton;
+    Option.iter (set ret gtouchpad_) gtouchpad;
+    Option.iter (set ret gsensor_) gsensor;
+    Option.iter (set ret adevice_) adevice;
+    Option.iter (set ret cdevice_) cdevice;
+    Option.iter (set ret sensor_) sensor;
+    Option.iter (set ret quit_) quit;
+    Option.iter (set ret user_) user;
+    Option.iter (set ret tfinger_) tfinger;
+    Option.iter (set ret pinch_) pinch;
+    Option.iter (set ret pproximity_) pproximity;
+    Option.iter (set ret ptouch_) ptouch;
+    Option.iter (set ret pmotion_) pmotion;
+    Option.iter (set ret pbutton_) pbutton;
+    Option.iter (set ret paxis_) paxis;
+    Option.iter (set ret render_) render;
+    Option.iter (set ret drop_) drop;
+    Option.iter (set ret clipboard_) clipboard;
+    Option.iter (set ret padding_) padding;
+    ret
 end
 type event = Event.t
 let event = Event.t
@@ -5478,9 +5640,17 @@ module Vertex = struct
   let color = field t "color" f_color
   let tex_coord = field t "tex_coord" f_point
   let () = seal t
-  let create () = make t
+  let position_ = position
+  let color_ = color
+  let tex_coord_ = tex_coord
   let get = getf
   let set = setf
+  let create ?position ?color ?tex_coord () : t =
+    let ret = make t in
+    Option.iter (set ret position_) position;
+    Option.iter (set ret color_) color;
+    Option.iter (set ret tex_coord_) tex_coord;
+    ret
 end
 type vertex = Vertex.t
 let vertex = Vertex.t

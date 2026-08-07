@@ -7,7 +7,6 @@ let go = Result.get_ok
 let do_option o f = Option.iter f o
 
 type state = {
-  window : T.window;
   renderer : T.renderer;
   texture : T.texture option;
 }
@@ -27,11 +26,11 @@ let init () =
             Sdl.window_resizable with
     | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e;
       T.APP_FAILURE, None
-    | Ok (window, renderer) ->
+    | Ok (_window, renderer) ->
       Sdl.Renderer.set_logical_presentation renderer 640 480
         Sdl.logical_presentation_letterbox |> go;
       Sdl.Renderer.set_v_sync renderer 1 |> go; (* not in the original SDL3 code but nice to your CPU! *)
-      let state = { window; renderer; texture = None } in
+      let state = { renderer; texture = None } in
 
       let png_path = Filename.concat (Sdl.get_base_path ()) "logo-with-name-bkg.png" in
       match Sdl.Surface.load_png png_path with
@@ -93,15 +92,15 @@ let iterate state =
             (origin_idx lxor 7, right_idx lxor 7, down_idx lxor 7)
           else
             (origin_idx, right_idx, down_idx) in
-        let origin = Sdl.FPoint.create () in
-        Sdl.FPoint.(set origin x (x0 +. px *. corners.(0 + 2*origin_index)));
-        Sdl.FPoint.(set origin y (y0 +. px *. corners.(1 + 2*origin_index)));
-        let right = Sdl.FPoint.create () in
-        Sdl.FPoint.(set right x (x0 +. px *. corners.(0 + 2*right_index)));
-        Sdl.FPoint.(set right y (y0 +. px *. corners.(1 + 2*right_index)));
-        let down = Sdl.FPoint.create () in
-        Sdl.FPoint.(set down x (x0 +. px *. corners.(0 + 2*down_index)));
-        Sdl.FPoint.(set down y (y0 +. px *. corners.(1 + 2*down_index)));
+        let origin = Sdl.FPoint.create
+            ~x:(x0 +. px *. corners.(0 + 2*origin_index))
+            ~y:(y0 +. px *. corners.(1 + 2*origin_index)) () in
+        let right = Sdl.FPoint.create
+            ~x:(x0 +. px *. corners.(0 + 2*right_index))
+            ~y:(y0 +. px *. corners.(1 + 2*right_index)) () in
+        let down = Sdl.FPoint.create
+            ~x:(x0 +. px *. corners.(0 + 2*down_index))
+            ~y:(y0 +. px *. corners.(1 + 2*down_index)) () in
         Sdl.Renderer.render_texture_affine state.renderer texture None (Some origin) (Some right) (Some down) |> go
       end
       done;
@@ -110,17 +109,15 @@ let iterate state =
   T.APP_CONTINUE (* carry on with the program! *)
 
 (* This function runs once at shutdown. *)
-let quit state ret =
+let quit state _ret =
+  (* SDL will clean up the window/renderer for us. *)
   do_option state (fun state ->
-      do_option state.texture Sdl.Texture.destroy;
-      Sdl.Renderer.destroy state.renderer;
-      Sdl.Window.destroy state.window);
-  Sdl.quit ();
-  match ret with
-  | T.APP_FAILURE -> Sdl.App.log "Application failure"; exit 1
-  | T.APP_SUCCESS -> Sdl.App.log "Application terminated successfully"; exit 0
-  | T.APP_CONTINUE -> Sdl.App.log "Application both terminates and wants to continue!"; exit 1
+      do_option state.texture Sdl.Texture.destroy);
+  T.APP_SUCCESS
 
 let () =
   let app = Sdl.App.create ~init ~event ~iterate ~quit () in
-  Sdl.App.run app
+  Sdl.App.run app;
+  (* Because [quit] returns APP_SUCCESS, the program exits here, nothing beyonod
+     this point will be executed. *)
+  print_endline "This is never reached"
