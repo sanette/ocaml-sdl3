@@ -745,9 +745,6 @@ let major_version = 3
 let minor_version = 4
 let micro_version = 12
 
-(* enum SDL_DUMMY_ENUM, type = dummy_enum *)
-let dummy_enum_value = 0x0
-
 (* enum SDL_AssertState, type = assert_state *)
 let assertion_retry = 0x0
 let assertion_break = 0x1

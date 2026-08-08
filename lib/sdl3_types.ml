@@ -38,19 +38,6 @@ let alignment_test = Alignment_test.t
 let alignment_test_opt = Helpers.value_opt_as_ptr alignment_test
 
 
-type dummy_enum =
-  | DUMMY_ENUM_VALUE
-
-type dummy_enum_enum = int
-let dummy_enum = int
-
-let dummy_enum_to_enum : dummy_enum -> dummy_enum_enum = function
-  | DUMMY_ENUM_VALUE -> dummy_enum_value
-
-let dummy_enum_of_enum : dummy_enum_enum -> dummy_enum = function
-  | e when e = dummy_enum_value -> DUMMY_ENUM_VALUE
-  | _ -> invalid_arg "Wrong value for dummy_enum."
-
 let malloc_func = funptr (ulong @-> returning (ptr void))
 let calloc_func = funptr (ulong @-> ulong @-> returning (ptr void))
 let realloc_func = funptr (ptr void @-> ulong @-> returning (ptr void))
