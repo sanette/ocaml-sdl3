@@ -16,24 +16,15 @@ type state = {
   mutable texture : T.texture option
 }
 
-let event _state e =
-  let typ = Sdl.Event.(get e typ) in
-  if typ = Sdl.event_quit then T.APP_SUCCESS
-  else if typ = Sdl.event_camera_device_approved
-  then (print "Camera use approved by user!";
-        T.APP_CONTINUE)
-  else if typ = Sdl.event_camera_device_denied
-  then (print "Camera use denied by user!";
-        T.APP_CONTINUE)
-  else T.APP_CONTINUE
-
 let init () =
+  Sdl.set_app_metadata
+    "Example Camera Read and Draw" "1.0" "com.example.camera-read-and-draw" |> go;
   match Sdl.(init (init_video lor init_camera)) with
   | Error (`Msg e) ->
     print "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->
-    match Sdl.create_window_and_renderer "camera" 640 480
+    match Sdl.create_window_and_renderer "examples/camera/read-and-draw" 640 480
             Sdl.window_resizable with
     | Error (`Msg e) ->
       print "Couldn't create window/renderer: %s" e;
@@ -41,6 +32,7 @@ let init () =
     | Ok (window, renderer) ->
       let state = { window; renderer; camera = None; texture = None } in
 
+      (* We add some tests here that are not in the original SDL example *)
       let n = Sdl.get_num_camera_drivers () in
       print "Number of camera drivers: %i" n;
 
@@ -65,6 +57,15 @@ let init () =
         | Ok camera ->
           T.APP_CONTINUE, Some {state with camera = Some camera}
 
+let event _state e =
+  match Sdl.Event.(get e typ) |> T.event_type_of_enum with
+  | T.EVENT_QUIT -> T.APP_SUCCESS
+  | T.EVENT_CAMERA_DEVICE_APPROVED -> print "Camera use approved by user!";
+    T.APP_CONTINUE
+  | T.EVENT_CAMERA_DEVICE_DENIED -> print "Camera use denied by user!";
+    T.APP_CONTINUE
+  | _ -> T.APP_CONTINUE
+
 let iterate state =
   let renderer = state.renderer in
   let camera = Option.get state.camera in
@@ -74,14 +75,14 @@ let iterate state =
     print "Not available (%s)" e;
     Sdl.delay 100;
     T.APP_CONTINUE (* an error is normal here while the camera becomes ready *)
-  | Ok (surf, ts) ->
+  | Ok (frame, ts) ->
     print "timestamp=%i" (Int64.to_int ts);
-    let pixels = Sdl.Surface.(get surf pixels) in
-    let pitch = Sdl.Surface.(get surf pitch) in
-    let format = Sdl.Surface.(get surf format) in
+    let pixels = Sdl.Surface.(get frame pixels) in
+    let pitch = Sdl.Surface.(get frame pitch) in
+    let format = Sdl.Surface.(get frame format) in
     let tex = match state.texture with
       | None ->
-        let w,h = Sdl.Surface.(get surf w), Sdl.Surface.(get surf h) in
+        let w,h = Sdl.Surface.(get frame w), Sdl.Surface.(get frame h) in
         Sdl.Window.set_size state.window w h |> go;
         Sdl.Renderer.set_logical_presentation renderer w h
           Sdl.logical_presentation_letterbox |> go;
@@ -92,7 +93,7 @@ let iterate state =
       | Some tex -> tex
     in
     Sdl.Texture.update tex None pixels pitch |> go;
-    Sdl.Camera.release_frame camera surf;
+    Sdl.Camera.release_frame camera frame;
     Sdl.Renderer.set_draw_color renderer 0x99 0x99 0x99 Sdl.alpha_opaque |> go;
     Sdl.Renderer.render_clear renderer |> go;
     Sdl.Renderer.render_texture renderer tex None None |> go;
@@ -100,19 +101,13 @@ let iterate state =
     Sdl.delay 32;
     T.APP_CONTINUE
 
-let quit state ret =
+let quit state _ret =
   do_option state (fun state ->
       do_option state.camera (fun camera ->
           print_endline "Closing camera...";
           Sdl.Camera.close camera);
-      do_option state.texture Sdl.Texture.destroy;
-      Sdl.Renderer.destroy state.renderer;
-      Sdl.Window.destroy state.window);
-  Sdl.quit ();
-  match ret with
-  | T.APP_FAILURE -> Sdl.App.log "Application failure"; exit 1
-  | T.APP_SUCCESS -> Sdl.App.log "Application terminated successfully"; exit 0
-  | T.APP_CONTINUE -> Sdl.App.log "Application both terminates and wants to continue!"; exit 1
+      do_option state.texture Sdl.Texture.destroy);
+  T.APP_SUCCESS
 
 let () =
   let app = Sdl.App.create ~init ~event ~iterate ~quit () in

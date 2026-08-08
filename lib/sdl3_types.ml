@@ -47,6 +47,10 @@ let dummy_enum = int
 let dummy_enum_to_enum : dummy_enum -> dummy_enum_enum = function
   | DUMMY_ENUM_VALUE -> dummy_enum_value
 
+let dummy_enum_of_enum : dummy_enum_enum -> dummy_enum = function
+  | e when e = dummy_enum_value -> DUMMY_ENUM_VALUE
+  | _ -> invalid_arg "Wrong value for dummy_enum."
+
 let malloc_func = funptr (ulong @-> returning (ptr void))
 let calloc_func = funptr (ulong @-> ulong @-> returning (ptr void))
 let realloc_func = funptr (ptr void @-> ulong @-> returning (ptr void))
@@ -83,6 +87,14 @@ let assert_state_to_enum : assert_state -> assert_state_enum = function
   | ASSERTION_ABORT -> assertion_abort
   | ASSERTION_IGNORE -> assertion_ignore
   | ASSERTION_ALWAYS_IGNORE -> assertion_always_ignore
+
+let assert_state_of_enum : assert_state_enum -> assert_state = function
+  | e when e = assertion_retry -> ASSERTION_RETRY
+  | e when e = assertion_break -> ASSERTION_BREAK
+  | e when e = assertion_abort -> ASSERTION_ABORT
+  | e when e = assertion_ignore -> ASSERTION_IGNORE
+  | e when e = assertion_always_ignore -> ASSERTION_ALWAYS_IGNORE
+  | _ -> invalid_arg "Wrong value for assert_state."
 
 module AssertData = struct
   type _t
@@ -123,6 +135,12 @@ let async_io_task_type_to_enum : async_io_task_type -> async_io_task_type_enum =
   | ASYNCIO_TASK_WRITE -> asyncio_task_write
   | ASYNCIO_TASK_CLOSE -> asyncio_task_close
 
+let async_io_task_type_of_enum : async_io_task_type_enum -> async_io_task_type = function
+  | e when e = asyncio_task_read -> ASYNCIO_TASK_READ
+  | e when e = asyncio_task_write -> ASYNCIO_TASK_WRITE
+  | e when e = asyncio_task_close -> ASYNCIO_TASK_CLOSE
+  | _ -> invalid_arg "Wrong value for async_io_task_type."
+
 type async_io_result =
   | ASYNCIO_COMPLETE
   | ASYNCIO_FAILURE
@@ -135,6 +153,12 @@ let async_io_result_to_enum : async_io_result -> async_io_result_enum = function
   | ASYNCIO_COMPLETE -> asyncio_complete
   | ASYNCIO_FAILURE -> asyncio_failure
   | ASYNCIO_CANCELED -> asyncio_canceled
+
+let async_io_result_of_enum : async_io_result_enum -> async_io_result = function
+  | e when e = asyncio_complete -> ASYNCIO_COMPLETE
+  | e when e = asyncio_failure -> ASYNCIO_FAILURE
+  | e when e = asyncio_canceled -> ASYNCIO_CANCELED
+  | _ -> invalid_arg "Wrong value for async_io_result."
 
 module AsyncIOOutcome = struct
   type _t
@@ -206,6 +230,15 @@ let property_type_to_enum : property_type -> property_type_enum = function
   | PROPERTY_TYPE_FLOAT -> property_type_float
   | PROPERTY_TYPE_BOOLEAN -> property_type_boolean
 
+let property_type_of_enum : property_type_enum -> property_type = function
+  | e when e = property_type_invalid -> PROPERTY_TYPE_INVALID
+  | e when e = property_type_pointer -> PROPERTY_TYPE_POINTER
+  | e when e = property_type_string -> PROPERTY_TYPE_STRING
+  | e when e = property_type_number -> PROPERTY_TYPE_NUMBER
+  | e when e = property_type_float -> PROPERTY_TYPE_FLOAT
+  | e when e = property_type_boolean -> PROPERTY_TYPE_BOOLEAN
+  | _ -> invalid_arg "Wrong value for property_type."
+
 let cleanup_property_callback = funptr (ptr void @-> ptr void @-> returning void)
 let cleanup_property_callback_opt = funptr_opt (ptr void @-> ptr void @-> returning void)
 let enumerate_properties_callback = funptr (ptr void @-> uint @-> string @-> returning void)
@@ -232,6 +265,13 @@ let thread_priority_to_enum : thread_priority -> thread_priority_enum = function
   | THREAD_PRIORITY_HIGH -> thread_priority_high
   | THREAD_PRIORITY_TIME_CRITICAL -> thread_priority_time_critical
 
+let thread_priority_of_enum : thread_priority_enum -> thread_priority = function
+  | e when e = thread_priority_low -> THREAD_PRIORITY_LOW
+  | e when e = thread_priority_normal -> THREAD_PRIORITY_NORMAL
+  | e when e = thread_priority_high -> THREAD_PRIORITY_HIGH
+  | e when e = thread_priority_time_critical -> THREAD_PRIORITY_TIME_CRITICAL
+  | _ -> invalid_arg "Wrong value for thread_priority."
+
 type thread_state =
   | THREAD_UNKNOWN
   | THREAD_ALIVE
@@ -246,6 +286,13 @@ let thread_state_to_enum : thread_state -> thread_state_enum = function
   | THREAD_ALIVE -> thread_alive
   | THREAD_DETACHED -> thread_detached
   | THREAD_COMPLETE -> thread_complete
+
+let thread_state_of_enum : thread_state_enum -> thread_state = function
+  | e when e = thread_unknown -> THREAD_UNKNOWN
+  | e when e = thread_alive -> THREAD_ALIVE
+  | e when e = thread_detached -> THREAD_DETACHED
+  | e when e = thread_complete -> THREAD_COMPLETE
+  | _ -> invalid_arg "Wrong value for thread_state."
 
 let thread_function = funptr (ptr void @-> returning int)
 let function_pointer_opt = funptr_opt (void @-> returning void)
@@ -290,6 +337,13 @@ let init_status_to_enum : init_status -> init_status_enum = function
   | INIT_STATUS_INITIALIZED -> init_status_initialized
   | INIT_STATUS_UNINITIALIZING -> init_status_uninitializing
 
+let init_status_of_enum : init_status_enum -> init_status = function
+  | e when e = init_status_uninitialized -> INIT_STATUS_UNINITIALIZED
+  | e when e = init_status_initializing -> INIT_STATUS_INITIALIZING
+  | e when e = init_status_initialized -> INIT_STATUS_INITIALIZED
+  | e when e = init_status_uninitializing -> INIT_STATUS_UNINITIALIZING
+  | _ -> invalid_arg "Wrong value for init_status."
+
 module InitState = struct
   type _t
   type t = _t structure
@@ -323,6 +377,15 @@ let io_status_to_enum : io_status -> io_status_enum = function
   | IO_STATUS_READONLY -> io_status_readonly
   | IO_STATUS_WRITEONLY -> io_status_writeonly
 
+let io_status_of_enum : io_status_enum -> io_status = function
+  | e when e = io_status_ready -> IO_STATUS_READY
+  | e when e = io_status_error -> IO_STATUS_ERROR
+  | e when e = io_status_eof -> IO_STATUS_EOF
+  | e when e = io_status_not_ready -> IO_STATUS_NOT_READY
+  | e when e = io_status_readonly -> IO_STATUS_READONLY
+  | e when e = io_status_writeonly -> IO_STATUS_WRITEONLY
+  | _ -> invalid_arg "Wrong value for io_status."
+
 type io_whence =
   | IO_SEEK_SET
   | IO_SEEK_CUR
@@ -335,6 +398,12 @@ let io_whence_to_enum : io_whence -> io_whence_enum = function
   | IO_SEEK_SET -> io_seek_set
   | IO_SEEK_CUR -> io_seek_cur
   | IO_SEEK_END -> io_seek_end
+
+let io_whence_of_enum : io_whence_enum -> io_whence = function
+  | e when e = io_seek_set -> IO_SEEK_SET
+  | e when e = io_seek_cur -> IO_SEEK_CUR
+  | e when e = io_seek_end -> IO_SEEK_END
+  | _ -> invalid_arg "Wrong value for io_whence."
 
 module IOStreamInterface = struct
   type _t
@@ -390,6 +459,25 @@ let audio_format_to_enum : audio_format -> audio_format_enum = function
   | AUDIO_S16 -> audio_s16
   | AUDIO_S32 -> audio_s32
   | AUDIO_F32 -> audio_f32
+
+let audio_format_of_enum : audio_format_enum -> audio_format =
+  let tbl = Hashtbl.create 12 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (audio_unknown, AUDIO_UNKNOWN);
+      (audio_u8, AUDIO_U8);
+      (audio_s8, AUDIO_S8);
+      (audio_s16_le, AUDIO_S16LE);
+      (audio_s16_be, AUDIO_S16BE);
+      (audio_s32_le, AUDIO_S32LE);
+      (audio_s32_be, AUDIO_S32BE);
+      (audio_f32_le, AUDIO_F32LE);
+      (audio_f32_be, AUDIO_F32BE);
+      (audio_s16, AUDIO_S16);
+      (audio_s32, AUDIO_S32);
+      (audio_f32, AUDIO_F32);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for audio_format."
 
 let audio_device_id = uint (* prim *)
 module AudioSpec = struct
@@ -452,6 +540,14 @@ let blend_operation_to_enum : blend_operation -> blend_operation_enum = function
   | BLENDOPERATION_MINIMUM -> blendoperation_minimum
   | BLENDOPERATION_MAXIMUM -> blendoperation_maximum
 
+let blend_operation_of_enum : blend_operation_enum -> blend_operation = function
+  | e when e = blendoperation_add -> BLENDOPERATION_ADD
+  | e when e = blendoperation_subtract -> BLENDOPERATION_SUBTRACT
+  | e when e = blendoperation_rev_subtract -> BLENDOPERATION_REV_SUBTRACT
+  | e when e = blendoperation_minimum -> BLENDOPERATION_MINIMUM
+  | e when e = blendoperation_maximum -> BLENDOPERATION_MAXIMUM
+  | _ -> invalid_arg "Wrong value for blend_operation."
+
 type blend_factor =
   | BLENDFACTOR_ZERO
   | BLENDFACTOR_ONE
@@ -478,6 +574,23 @@ let blend_factor_to_enum : blend_factor -> blend_factor_enum = function
   | BLENDFACTOR_ONE_MINUS_DST_COLOR -> blendfactor_one_minus_dst_color
   | BLENDFACTOR_DST_ALPHA -> blendfactor_dst_alpha
   | BLENDFACTOR_ONE_MINUS_DST_ALPHA -> blendfactor_one_minus_dst_alpha
+
+let blend_factor_of_enum : blend_factor_enum -> blend_factor =
+  let tbl = Hashtbl.create 10 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (blendfactor_zero, BLENDFACTOR_ZERO);
+      (blendfactor_one, BLENDFACTOR_ONE);
+      (blendfactor_src_color, BLENDFACTOR_SRC_COLOR);
+      (blendfactor_one_minus_src_color, BLENDFACTOR_ONE_MINUS_SRC_COLOR);
+      (blendfactor_src_alpha, BLENDFACTOR_SRC_ALPHA);
+      (blendfactor_one_minus_src_alpha, BLENDFACTOR_ONE_MINUS_SRC_ALPHA);
+      (blendfactor_dst_color, BLENDFACTOR_DST_COLOR);
+      (blendfactor_one_minus_dst_color, BLENDFACTOR_ONE_MINUS_DST_COLOR);
+      (blendfactor_dst_alpha, BLENDFACTOR_DST_ALPHA);
+      (blendfactor_one_minus_dst_alpha, BLENDFACTOR_ONE_MINUS_DST_ALPHA);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for blend_factor."
 
 type pixel_type =
   | PIXELTYPE_UNKNOWN
@@ -512,6 +625,26 @@ let pixel_type_to_enum : pixel_type -> pixel_type_enum = function
   | PIXELTYPE_ARRAYF32 -> pixeltype_arrayf32
   | PIXELTYPE_INDEX2 -> pixeltype_index2
 
+let pixel_type_of_enum : pixel_type_enum -> pixel_type =
+  let tbl = Hashtbl.create 13 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (pixeltype_unknown, PIXELTYPE_UNKNOWN);
+      (pixeltype_index1, PIXELTYPE_INDEX1);
+      (pixeltype_index4, PIXELTYPE_INDEX4);
+      (pixeltype_index8, PIXELTYPE_INDEX8);
+      (pixeltype_packed8, PIXELTYPE_PACKED8);
+      (pixeltype_packed16, PIXELTYPE_PACKED16);
+      (pixeltype_packed32, PIXELTYPE_PACKED32);
+      (pixeltype_arrayu8, PIXELTYPE_ARRAYU8);
+      (pixeltype_arrayu16, PIXELTYPE_ARRAYU16);
+      (pixeltype_arrayu32, PIXELTYPE_ARRAYU32);
+      (pixeltype_arrayf16, PIXELTYPE_ARRAYF16);
+      (pixeltype_arrayf32, PIXELTYPE_ARRAYF32);
+      (pixeltype_index2, PIXELTYPE_INDEX2);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for pixel_type."
+
 type bitmap_order =
   | BITMAPORDER_NONE
   | BITMAPORDER_4321
@@ -524,6 +657,12 @@ let bitmap_order_to_enum : bitmap_order -> bitmap_order_enum = function
   | BITMAPORDER_NONE -> bitmaporder_none
   | BITMAPORDER_4321 -> bitmaporder_4321
   | BITMAPORDER_1234 -> bitmaporder_1234
+
+let bitmap_order_of_enum : bitmap_order_enum -> bitmap_order = function
+  | e when e = bitmaporder_none -> BITMAPORDER_NONE
+  | e when e = bitmaporder_4321 -> BITMAPORDER_4321
+  | e when e = bitmaporder_1234 -> BITMAPORDER_1234
+  | _ -> invalid_arg "Wrong value for bitmap_order."
 
 type packed_order =
   | PACKEDORDER_NONE
@@ -550,6 +689,22 @@ let packed_order_to_enum : packed_order -> packed_order_enum = function
   | PACKEDORDER_ABGR -> packedorder_abgr
   | PACKEDORDER_BGRA -> packedorder_bgra
 
+let packed_order_of_enum : packed_order_enum -> packed_order =
+  let tbl = Hashtbl.create 9 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (packedorder_none, PACKEDORDER_NONE);
+      (packedorder_xrgb, PACKEDORDER_XRGB);
+      (packedorder_rgbx, PACKEDORDER_RGBX);
+      (packedorder_argb, PACKEDORDER_ARGB);
+      (packedorder_rgba, PACKEDORDER_RGBA);
+      (packedorder_xbgr, PACKEDORDER_XBGR);
+      (packedorder_bgrx, PACKEDORDER_BGRX);
+      (packedorder_abgr, PACKEDORDER_ABGR);
+      (packedorder_bgra, PACKEDORDER_BGRA);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for packed_order."
+
 type array_order =
   | ARRAYORDER_NONE
   | ARRAYORDER_RGB
@@ -570,6 +725,16 @@ let array_order_to_enum : array_order -> array_order_enum = function
   | ARRAYORDER_BGR -> arrayorder_bgr
   | ARRAYORDER_BGRA -> arrayorder_bgra
   | ARRAYORDER_ABGR -> arrayorder_abgr
+
+let array_order_of_enum : array_order_enum -> array_order = function
+  | e when e = arrayorder_none -> ARRAYORDER_NONE
+  | e when e = arrayorder_rgb -> ARRAYORDER_RGB
+  | e when e = arrayorder_rgba -> ARRAYORDER_RGBA
+  | e when e = arrayorder_argb -> ARRAYORDER_ARGB
+  | e when e = arrayorder_bgr -> ARRAYORDER_BGR
+  | e when e = arrayorder_bgra -> ARRAYORDER_BGRA
+  | e when e = arrayorder_abgr -> ARRAYORDER_ABGR
+  | _ -> invalid_arg "Wrong value for array_order."
 
 type packed_layout =
   | PACKEDLAYOUT_NONE
@@ -595,6 +760,22 @@ let packed_layout_to_enum : packed_layout -> packed_layout_enum = function
   | PACKEDLAYOUT_8888 -> packedlayout_8888
   | PACKEDLAYOUT_2101010 -> packedlayout_2101010
   | PACKEDLAYOUT_1010102 -> packedlayout_1010102
+
+let packed_layout_of_enum : packed_layout_enum -> packed_layout =
+  let tbl = Hashtbl.create 9 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (packedlayout_none, PACKEDLAYOUT_NONE);
+      (packedlayout_332, PACKEDLAYOUT_332);
+      (packedlayout_4444, PACKEDLAYOUT_4444);
+      (packedlayout_1555, PACKEDLAYOUT_1555);
+      (packedlayout_5551, PACKEDLAYOUT_5551);
+      (packedlayout_565, PACKEDLAYOUT_565);
+      (packedlayout_8888, PACKEDLAYOUT_8888);
+      (packedlayout_2101010, PACKEDLAYOUT_2101010);
+      (packedlayout_1010102, PACKEDLAYOUT_1010102);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for packed_layout."
 
 type pixel_format =
   | PIXELFORMAT_UNKNOWN
@@ -749,6 +930,86 @@ let pixel_format_to_enum : pixel_format -> pixel_format_enum = function
   | PIXELFORMAT_BGRX32 -> pixelformat_bgrx32
   | PIXELFORMAT_XBGR32 -> pixelformat_xbgr32
 
+let pixel_format_of_enum : pixel_format_enum -> pixel_format =
+  let tbl = Hashtbl.create 73 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (pixelformat_unknown, PIXELFORMAT_UNKNOWN);
+      (pixelformat_index1_lsb, PIXELFORMAT_INDEX1LSB);
+      (pixelformat_index1_msb, PIXELFORMAT_INDEX1MSB);
+      (pixelformat_index2_lsb, PIXELFORMAT_INDEX2LSB);
+      (pixelformat_index2_msb, PIXELFORMAT_INDEX2MSB);
+      (pixelformat_index4_lsb, PIXELFORMAT_INDEX4LSB);
+      (pixelformat_index4_msb, PIXELFORMAT_INDEX4MSB);
+      (pixelformat_index8, PIXELFORMAT_INDEX8);
+      (pixelformat_rgb332, PIXELFORMAT_RGB332);
+      (pixelformat_xrgb4444, PIXELFORMAT_XRGB4444);
+      (pixelformat_xbgr4444, PIXELFORMAT_XBGR4444);
+      (pixelformat_xrgb1555, PIXELFORMAT_XRGB1555);
+      (pixelformat_xbgr1555, PIXELFORMAT_XBGR1555);
+      (pixelformat_argb4444, PIXELFORMAT_ARGB4444);
+      (pixelformat_rgba4444, PIXELFORMAT_RGBA4444);
+      (pixelformat_abgr4444, PIXELFORMAT_ABGR4444);
+      (pixelformat_bgra4444, PIXELFORMAT_BGRA4444);
+      (pixelformat_argb1555, PIXELFORMAT_ARGB1555);
+      (pixelformat_rgba5551, PIXELFORMAT_RGBA5551);
+      (pixelformat_abgr1555, PIXELFORMAT_ABGR1555);
+      (pixelformat_bgra5551, PIXELFORMAT_BGRA5551);
+      (pixelformat_rgb565, PIXELFORMAT_RGB565);
+      (pixelformat_bgr565, PIXELFORMAT_BGR565);
+      (pixelformat_rgb24, PIXELFORMAT_RGB24);
+      (pixelformat_bgr24, PIXELFORMAT_BGR24);
+      (pixelformat_xrgb8888, PIXELFORMAT_XRGB8888);
+      (pixelformat_rgbx8888, PIXELFORMAT_RGBX8888);
+      (pixelformat_xbgr8888, PIXELFORMAT_XBGR8888);
+      (pixelformat_bgrx8888, PIXELFORMAT_BGRX8888);
+      (pixelformat_argb8888, PIXELFORMAT_ARGB8888);
+      (pixelformat_rgba8888, PIXELFORMAT_RGBA8888);
+      (pixelformat_abgr8888, PIXELFORMAT_ABGR8888);
+      (pixelformat_bgra8888, PIXELFORMAT_BGRA8888);
+      (pixelformat_xrgb2101010, PIXELFORMAT_XRGB2101010);
+      (pixelformat_xbgr2101010, PIXELFORMAT_XBGR2101010);
+      (pixelformat_argb2101010, PIXELFORMAT_ARGB2101010);
+      (pixelformat_abgr2101010, PIXELFORMAT_ABGR2101010);
+      (pixelformat_rgb48, PIXELFORMAT_RGB48);
+      (pixelformat_bgr48, PIXELFORMAT_BGR48);
+      (pixelformat_rgba64, PIXELFORMAT_RGBA64);
+      (pixelformat_argb64, PIXELFORMAT_ARGB64);
+      (pixelformat_bgra64, PIXELFORMAT_BGRA64);
+      (pixelformat_abgr64, PIXELFORMAT_ABGR64);
+      (pixelformat_rgb48_float, PIXELFORMAT_RGB48_FLOAT);
+      (pixelformat_bgr48_float, PIXELFORMAT_BGR48_FLOAT);
+      (pixelformat_rgba64_float, PIXELFORMAT_RGBA64_FLOAT);
+      (pixelformat_argb64_float, PIXELFORMAT_ARGB64_FLOAT);
+      (pixelformat_bgra64_float, PIXELFORMAT_BGRA64_FLOAT);
+      (pixelformat_abgr64_float, PIXELFORMAT_ABGR64_FLOAT);
+      (pixelformat_rgb96_float, PIXELFORMAT_RGB96_FLOAT);
+      (pixelformat_bgr96_float, PIXELFORMAT_BGR96_FLOAT);
+      (pixelformat_rgba128_float, PIXELFORMAT_RGBA128_FLOAT);
+      (pixelformat_argb128_float, PIXELFORMAT_ARGB128_FLOAT);
+      (pixelformat_bgra128_float, PIXELFORMAT_BGRA128_FLOAT);
+      (pixelformat_abgr128_float, PIXELFORMAT_ABGR128_FLOAT);
+      (pixelformat_yv12, PIXELFORMAT_YV12);
+      (pixelformat_iyuv, PIXELFORMAT_IYUV);
+      (pixelformat_yuy2, PIXELFORMAT_YUY2);
+      (pixelformat_uyvy, PIXELFORMAT_UYVY);
+      (pixelformat_yvyu, PIXELFORMAT_YVYU);
+      (pixelformat_nv12, PIXELFORMAT_NV12);
+      (pixelformat_nv21, PIXELFORMAT_NV21);
+      (pixelformat_p010, PIXELFORMAT_P010);
+      (pixelformat_external_oes, PIXELFORMAT_EXTERNAL_OES);
+      (pixelformat_mjpg, PIXELFORMAT_MJPG);
+      (pixelformat_rgba32, PIXELFORMAT_RGBA32);
+      (pixelformat_argb32, PIXELFORMAT_ARGB32);
+      (pixelformat_bgra32, PIXELFORMAT_BGRA32);
+      (pixelformat_abgr32, PIXELFORMAT_ABGR32);
+      (pixelformat_rgbx32, PIXELFORMAT_RGBX32);
+      (pixelformat_xrgb32, PIXELFORMAT_XRGB32);
+      (pixelformat_bgrx32, PIXELFORMAT_BGRX32);
+      (pixelformat_xbgr32, PIXELFORMAT_XBGR32);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for pixel_format."
+
 type color_type =
   | COLOR_TYPE_UNKNOWN
   | COLOR_TYPE_RGB
@@ -762,6 +1023,12 @@ let color_type_to_enum : color_type -> color_type_enum = function
   | COLOR_TYPE_RGB -> color_type_rgb
   | COLOR_TYPE_YCBCR -> color_type_ycbcr
 
+let color_type_of_enum : color_type_enum -> color_type = function
+  | e when e = color_type_unknown -> COLOR_TYPE_UNKNOWN
+  | e when e = color_type_rgb -> COLOR_TYPE_RGB
+  | e when e = color_type_ycbcr -> COLOR_TYPE_YCBCR
+  | _ -> invalid_arg "Wrong value for color_type."
+
 type color_range =
   | COLOR_RANGE_UNKNOWN
   | COLOR_RANGE_LIMITED
@@ -774,6 +1041,12 @@ let color_range_to_enum : color_range -> color_range_enum = function
   | COLOR_RANGE_UNKNOWN -> color_range_unknown
   | COLOR_RANGE_LIMITED -> color_range_limited
   | COLOR_RANGE_FULL -> color_range_full
+
+let color_range_of_enum : color_range_enum -> color_range = function
+  | e when e = color_range_unknown -> COLOR_RANGE_UNKNOWN
+  | e when e = color_range_limited -> COLOR_RANGE_LIMITED
+  | e when e = color_range_full -> COLOR_RANGE_FULL
+  | _ -> invalid_arg "Wrong value for color_range."
 
 type color_primaries =
   | COLOR_PRIMARIES_UNKNOWN
@@ -809,6 +1082,27 @@ let color_primaries_to_enum : color_primaries -> color_primaries_enum = function
   | COLOR_PRIMARIES_SMPTE432 -> color_primaries_smpte432
   | COLOR_PRIMARIES_EBU3213 -> color_primaries_ebu3213
   | COLOR_PRIMARIES_CUSTOM -> color_primaries_custom
+
+let color_primaries_of_enum : color_primaries_enum -> color_primaries =
+  let tbl = Hashtbl.create 14 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (color_primaries_unknown, COLOR_PRIMARIES_UNKNOWN);
+      (color_primaries_bt709, COLOR_PRIMARIES_BT709);
+      (color_primaries_unspecified, COLOR_PRIMARIES_UNSPECIFIED);
+      (color_primaries_bt470_m, COLOR_PRIMARIES_BT470M);
+      (color_primaries_bt470_bg, COLOR_PRIMARIES_BT470BG);
+      (color_primaries_bt601, COLOR_PRIMARIES_BT601);
+      (color_primaries_smpte240, COLOR_PRIMARIES_SMPTE240);
+      (color_primaries_generic_film, COLOR_PRIMARIES_GENERIC_FILM);
+      (color_primaries_bt2020, COLOR_PRIMARIES_BT2020);
+      (color_primaries_xyz, COLOR_PRIMARIES_XYZ);
+      (color_primaries_smpte431, COLOR_PRIMARIES_SMPTE431);
+      (color_primaries_smpte432, COLOR_PRIMARIES_SMPTE432);
+      (color_primaries_ebu3213, COLOR_PRIMARIES_EBU3213);
+      (color_primaries_custom, COLOR_PRIMARIES_CUSTOM);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for color_primaries."
 
 type transfer_characteristics =
   | TRANSFER_CHARACTERISTICS_UNKNOWN
@@ -855,6 +1149,32 @@ let transfer_characteristics_to_enum : transfer_characteristics -> transfer_char
   | TRANSFER_CHARACTERISTICS_HLG -> transfer_characteristics_hlg
   | TRANSFER_CHARACTERISTICS_CUSTOM -> transfer_characteristics_custom
 
+let transfer_characteristics_of_enum : transfer_characteristics_enum -> transfer_characteristics =
+  let tbl = Hashtbl.create 19 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (transfer_characteristics_unknown, TRANSFER_CHARACTERISTICS_UNKNOWN);
+      (transfer_characteristics_bt709, TRANSFER_CHARACTERISTICS_BT709);
+      (transfer_characteristics_unspecified, TRANSFER_CHARACTERISTICS_UNSPECIFIED);
+      (transfer_characteristics_gamma22, TRANSFER_CHARACTERISTICS_GAMMA22);
+      (transfer_characteristics_gamma28, TRANSFER_CHARACTERISTICS_GAMMA28);
+      (transfer_characteristics_bt601, TRANSFER_CHARACTERISTICS_BT601);
+      (transfer_characteristics_smpte240, TRANSFER_CHARACTERISTICS_SMPTE240);
+      (transfer_characteristics_linear, TRANSFER_CHARACTERISTICS_LINEAR);
+      (transfer_characteristics_log100, TRANSFER_CHARACTERISTICS_LOG100);
+      (transfer_characteristics_log100_sqrt10, TRANSFER_CHARACTERISTICS_LOG100_SQRT10);
+      (transfer_characteristics_iec61966, TRANSFER_CHARACTERISTICS_IEC61966);
+      (transfer_characteristics_bt1361, TRANSFER_CHARACTERISTICS_BT1361);
+      (transfer_characteristics_srgb, TRANSFER_CHARACTERISTICS_SRGB);
+      (transfer_characteristics_bt2020_10_bit, TRANSFER_CHARACTERISTICS_BT2020_10BIT);
+      (transfer_characteristics_bt2020_12_bit, TRANSFER_CHARACTERISTICS_BT2020_12BIT);
+      (transfer_characteristics_pq, TRANSFER_CHARACTERISTICS_PQ);
+      (transfer_characteristics_smpte428, TRANSFER_CHARACTERISTICS_SMPTE428);
+      (transfer_characteristics_hlg, TRANSFER_CHARACTERISTICS_HLG);
+      (transfer_characteristics_custom, TRANSFER_CHARACTERISTICS_CUSTOM);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for transfer_characteristics."
+
 type matrix_coefficients =
   | MATRIX_COEFFICIENTS_IDENTITY
   | MATRIX_COEFFICIENTS_BT709
@@ -892,6 +1212,28 @@ let matrix_coefficients_to_enum : matrix_coefficients -> matrix_coefficients_enu
   | MATRIX_COEFFICIENTS_ICTCP -> matrix_coefficients_ictcp
   | MATRIX_COEFFICIENTS_CUSTOM -> matrix_coefficients_custom
 
+let matrix_coefficients_of_enum : matrix_coefficients_enum -> matrix_coefficients =
+  let tbl = Hashtbl.create 15 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (matrix_coefficients_identity, MATRIX_COEFFICIENTS_IDENTITY);
+      (matrix_coefficients_bt709, MATRIX_COEFFICIENTS_BT709);
+      (matrix_coefficients_unspecified, MATRIX_COEFFICIENTS_UNSPECIFIED);
+      (matrix_coefficients_fcc, MATRIX_COEFFICIENTS_FCC);
+      (matrix_coefficients_bt470_bg, MATRIX_COEFFICIENTS_BT470BG);
+      (matrix_coefficients_bt601, MATRIX_COEFFICIENTS_BT601);
+      (matrix_coefficients_smpte240, MATRIX_COEFFICIENTS_SMPTE240);
+      (matrix_coefficients_ycgco, MATRIX_COEFFICIENTS_YCGCO);
+      (matrix_coefficients_bt2020_ncl, MATRIX_COEFFICIENTS_BT2020_NCL);
+      (matrix_coefficients_bt2020_cl, MATRIX_COEFFICIENTS_BT2020_CL);
+      (matrix_coefficients_smpte2085, MATRIX_COEFFICIENTS_SMPTE2085);
+      (matrix_coefficients_chroma_derived_ncl, MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL);
+      (matrix_coefficients_chroma_derived_cl, MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL);
+      (matrix_coefficients_ictcp, MATRIX_COEFFICIENTS_ICTCP);
+      (matrix_coefficients_custom, MATRIX_COEFFICIENTS_CUSTOM);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for matrix_coefficients."
+
 type chroma_location =
   | CHROMA_LOCATION_NONE
   | CHROMA_LOCATION_LEFT
@@ -906,6 +1248,13 @@ let chroma_location_to_enum : chroma_location -> chroma_location_enum = function
   | CHROMA_LOCATION_LEFT -> chroma_location_left
   | CHROMA_LOCATION_CENTER -> chroma_location_center
   | CHROMA_LOCATION_TOPLEFT -> chroma_location_topleft
+
+let chroma_location_of_enum : chroma_location_enum -> chroma_location = function
+  | e when e = chroma_location_none -> CHROMA_LOCATION_NONE
+  | e when e = chroma_location_left -> CHROMA_LOCATION_LEFT
+  | e when e = chroma_location_center -> CHROMA_LOCATION_CENTER
+  | e when e = chroma_location_topleft -> CHROMA_LOCATION_TOPLEFT
+  | _ -> invalid_arg "Wrong value for chroma_location."
 
 type colorspace =
   | COLORSPACE_UNKNOWN
@@ -939,6 +1288,26 @@ let colorspace_to_enum : colorspace -> colorspace_enum = function
   | COLORSPACE_BT2020_FULL -> colorspace_bt2020_full
   | COLORSPACE_RGB_DEFAULT -> colorspace_rgb_default
   | COLORSPACE_YUV_DEFAULT -> colorspace_yuv_default
+
+let colorspace_of_enum : colorspace_enum -> colorspace =
+  let tbl = Hashtbl.create 13 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (colorspace_unknown, COLORSPACE_UNKNOWN);
+      (colorspace_srgb, COLORSPACE_SRGB);
+      (colorspace_srgb_linear, COLORSPACE_SRGB_LINEAR);
+      (colorspace_hdr10, COLORSPACE_HDR10);
+      (colorspace_jpeg, COLORSPACE_JPEG);
+      (colorspace_bt601_limited, COLORSPACE_BT601_LIMITED);
+      (colorspace_bt601_full, COLORSPACE_BT601_FULL);
+      (colorspace_bt709_limited, COLORSPACE_BT709_LIMITED);
+      (colorspace_bt709_full, COLORSPACE_BT709_FULL);
+      (colorspace_bt2020_limited, COLORSPACE_BT2020_LIMITED);
+      (colorspace_bt2020_full, COLORSPACE_BT2020_FULL);
+      (colorspace_rgb_default, COLORSPACE_RGB_DEFAULT);
+      (colorspace_yuv_default, COLORSPACE_YUV_DEFAULT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for colorspace."
 
 module Color = struct
   type _t
@@ -1161,6 +1530,13 @@ let scale_mode_to_enum : scale_mode -> scale_mode_enum = function
   | SCALEMODE_LINEAR -> scalemode_linear
   | SCALEMODE_PIXELART -> scalemode_pixelart
 
+let scale_mode_of_enum : scale_mode_enum -> scale_mode = function
+  | e when e = scalemode_invalid -> SCALEMODE_INVALID
+  | e when e = scalemode_nearest -> SCALEMODE_NEAREST
+  | e when e = scalemode_linear -> SCALEMODE_LINEAR
+  | e when e = scalemode_pixelart -> SCALEMODE_PIXELART
+  | _ -> invalid_arg "Wrong value for scale_mode."
+
 type flip_mode =
   | FLIP_NONE
   | FLIP_HORIZONTAL
@@ -1175,6 +1551,13 @@ let flip_mode_to_enum : flip_mode -> flip_mode_enum = function
   | FLIP_HORIZONTAL -> flip_horizontal
   | FLIP_VERTICAL -> flip_vertical
   | FLIP_HORIZONTAL_AND_VERTICAL -> flip_horizontal_and_vertical
+
+let flip_mode_of_enum : flip_mode_enum -> flip_mode = function
+  | e when e = flip_none -> FLIP_NONE
+  | e when e = flip_horizontal -> FLIP_HORIZONTAL
+  | e when e = flip_vertical -> FLIP_VERTICAL
+  | e when e = flip_horizontal_and_vertical -> FLIP_HORIZONTAL_AND_VERTICAL
+  | _ -> invalid_arg "Wrong value for flip_mode."
 
 module Surface = struct
   type _t_raw
@@ -1246,6 +1629,12 @@ let camera_position_to_enum : camera_position -> camera_position_enum = function
   | CAMERA_POSITION_FRONT_FACING -> camera_position_front_facing
   | CAMERA_POSITION_BACK_FACING -> camera_position_back_facing
 
+let camera_position_of_enum : camera_position_enum -> camera_position = function
+  | e when e = camera_position_unknown -> CAMERA_POSITION_UNKNOWN
+  | e when e = camera_position_front_facing -> CAMERA_POSITION_FRONT_FACING
+  | e when e = camera_position_back_facing -> CAMERA_POSITION_BACK_FACING
+  | _ -> invalid_arg "Wrong value for camera_position."
+
 type camera_permission_state =
   | CAMERA_PERMISSION_STATE_DENIED
   | CAMERA_PERMISSION_STATE_PENDING
@@ -1258,6 +1647,12 @@ let camera_permission_state_to_enum : camera_permission_state -> camera_permissi
   | CAMERA_PERMISSION_STATE_DENIED -> camera_permission_state_denied
   | CAMERA_PERMISSION_STATE_PENDING -> camera_permission_state_pending
   | CAMERA_PERMISSION_STATE_APPROVED -> camera_permission_state_approved
+
+let camera_permission_state_of_enum : camera_permission_state_enum -> camera_permission_state = function
+  | e when e = camera_permission_state_denied -> CAMERA_PERMISSION_STATE_DENIED
+  | e when e = camera_permission_state_pending -> CAMERA_PERMISSION_STATE_PENDING
+  | e when e = camera_permission_state_approved -> CAMERA_PERMISSION_STATE_APPROVED
+  | _ -> invalid_arg "Wrong value for camera_permission_state."
 
 let clipboard_data_callback = funptr (ptr void @-> string @-> ptr ulong @-> returning (ptr void))
 let clipboard_cleanup_callback = funptr (ptr void @-> returning void)
@@ -1275,6 +1670,12 @@ let system_theme_to_enum : system_theme -> system_theme_enum = function
   | SYSTEM_THEME_UNKNOWN -> system_theme_unknown
   | SYSTEM_THEME_LIGHT -> system_theme_light
   | SYSTEM_THEME_DARK -> system_theme_dark
+
+let system_theme_of_enum : system_theme_enum -> system_theme = function
+  | e when e = system_theme_unknown -> SYSTEM_THEME_UNKNOWN
+  | e when e = system_theme_light -> SYSTEM_THEME_LIGHT
+  | e when e = system_theme_dark -> SYSTEM_THEME_DARK
+  | _ -> invalid_arg "Wrong value for system_theme."
 
 
 (* No definition (opaque struct) *)
@@ -1347,6 +1748,14 @@ let display_orientation_to_enum : display_orientation -> display_orientation_enu
   | ORIENTATION_PORTRAIT -> orientation_portrait
   | ORIENTATION_PORTRAIT_FLIPPED -> orientation_portrait_flipped
 
+let display_orientation_of_enum : display_orientation_enum -> display_orientation = function
+  | e when e = orientation_unknown -> ORIENTATION_UNKNOWN
+  | e when e = orientation_landscape -> ORIENTATION_LANDSCAPE
+  | e when e = orientation_landscape_flipped -> ORIENTATION_LANDSCAPE_FLIPPED
+  | e when e = orientation_portrait -> ORIENTATION_PORTRAIT
+  | e when e = orientation_portrait_flipped -> ORIENTATION_PORTRAIT_FLIPPED
+  | _ -> invalid_arg "Wrong value for display_orientation."
+
 
 (* No definition (opaque struct) *)
 type window = unit ptr
@@ -1367,6 +1776,12 @@ let flash_operation_to_enum : flash_operation -> flash_operation_enum = function
   | FLASH_BRIEFLY -> flash_briefly
   | FLASH_UNTIL_FOCUSED -> flash_until_focused
 
+let flash_operation_of_enum : flash_operation_enum -> flash_operation = function
+  | e when e = flash_cancel -> FLASH_CANCEL
+  | e when e = flash_briefly -> FLASH_BRIEFLY
+  | e when e = flash_until_focused -> FLASH_UNTIL_FOCUSED
+  | _ -> invalid_arg "Wrong value for flash_operation."
+
 type progress_state =
   | PROGRESS_STATE_INVALID
   | PROGRESS_STATE_NONE
@@ -1385,6 +1800,15 @@ let progress_state_to_enum : progress_state -> progress_state_enum = function
   | PROGRESS_STATE_NORMAL -> progress_state_normal
   | PROGRESS_STATE_PAUSED -> progress_state_paused
   | PROGRESS_STATE_ERROR -> progress_state_error
+
+let progress_state_of_enum : progress_state_enum -> progress_state = function
+  | e when e = progress_state_invalid -> PROGRESS_STATE_INVALID
+  | e when e = progress_state_none -> PROGRESS_STATE_NONE
+  | e when e = progress_state_indeterminate -> PROGRESS_STATE_INDETERMINATE
+  | e when e = progress_state_normal -> PROGRESS_STATE_NORMAL
+  | e when e = progress_state_paused -> PROGRESS_STATE_PAUSED
+  | e when e = progress_state_error -> PROGRESS_STATE_ERROR
+  | _ -> invalid_arg "Wrong value for progress_state."
 
 
 (* No definition (opaque struct) *)
@@ -1463,6 +1887,41 @@ let gl_attr_to_enum : gl_attr -> gl_attr_enum = function
   | GL_FLOATBUFFERS -> gl_floatbuffers
   | GL_EGL_PLATFORM -> gl_egl_platform
 
+let gl_attr_of_enum : gl_attr_enum -> gl_attr =
+  let tbl = Hashtbl.create 28 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (gl_red_size, GL_RED_SIZE);
+      (gl_green_size, GL_GREEN_SIZE);
+      (gl_blue_size, GL_BLUE_SIZE);
+      (gl_alpha_size, GL_ALPHA_SIZE);
+      (gl_buffer_size, GL_BUFFER_SIZE);
+      (gl_doublebuffer, GL_DOUBLEBUFFER);
+      (gl_depth_size, GL_DEPTH_SIZE);
+      (gl_stencil_size, GL_STENCIL_SIZE);
+      (gl_accum_red_size, GL_ACCUM_RED_SIZE);
+      (gl_accum_green_size, GL_ACCUM_GREEN_SIZE);
+      (gl_accum_blue_size, GL_ACCUM_BLUE_SIZE);
+      (gl_accum_alpha_size, GL_ACCUM_ALPHA_SIZE);
+      (gl_stereo, GL_STEREO);
+      (gl_multisamplebuffers, GL_MULTISAMPLEBUFFERS);
+      (gl_multisamplesamples, GL_MULTISAMPLESAMPLES);
+      (gl_accelerated_visual, GL_ACCELERATED_VISUAL);
+      (gl_retained_backing, GL_RETAINED_BACKING);
+      (gl_context_major_version, GL_CONTEXT_MAJOR_VERSION);
+      (gl_context_minor_version, GL_CONTEXT_MINOR_VERSION);
+      (gl_context_flags, GL_CONTEXT_FLAGS);
+      (gl_context_profile_mask, GL_CONTEXT_PROFILE_MASK);
+      (gl_share_with_current_context, GL_SHARE_WITH_CURRENT_CONTEXT);
+      (gl_framebuffer_srgb_capable, GL_FRAMEBUFFER_SRGB_CAPABLE);
+      (gl_context_release_behavior, GL_CONTEXT_RELEASE_BEHAVIOR);
+      (gl_context_reset_notification, GL_CONTEXT_RESET_NOTIFICATION);
+      (gl_context_no_error, GL_CONTEXT_NO_ERROR);
+      (gl_floatbuffers, GL_FLOATBUFFERS);
+      (gl_egl_platform, GL_EGL_PLATFORM);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for gl_attr."
+
 let gl_profile = uint (* prim *)
 let gl_context_flag = uint (* prim *)
 let gl_context_release_flag = uint (* prim *)
@@ -1494,6 +1953,23 @@ let hit_test_result_to_enum : hit_test_result -> hit_test_result_enum = function
   | HITTEST_RESIZE_BOTTOMLEFT -> hittest_resize_bottomleft
   | HITTEST_RESIZE_LEFT -> hittest_resize_left
 
+let hit_test_result_of_enum : hit_test_result_enum -> hit_test_result =
+  let tbl = Hashtbl.create 10 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (hittest_normal, HITTEST_NORMAL);
+      (hittest_draggable, HITTEST_DRAGGABLE);
+      (hittest_resize_topleft, HITTEST_RESIZE_TOPLEFT);
+      (hittest_resize_top, HITTEST_RESIZE_TOP);
+      (hittest_resize_topright, HITTEST_RESIZE_TOPRIGHT);
+      (hittest_resize_right, HITTEST_RESIZE_RIGHT);
+      (hittest_resize_bottomright, HITTEST_RESIZE_BOTTOMRIGHT);
+      (hittest_resize_bottom, HITTEST_RESIZE_BOTTOM);
+      (hittest_resize_bottomleft, HITTEST_RESIZE_BOTTOMLEFT);
+      (hittest_resize_left, HITTEST_RESIZE_LEFT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for hit_test_result."
+
 let hit_test = funptr (window @-> ptr point @-> ptr void @-> returning hit_test_result)
 let egl_attrib_array_callback_opt = funptr_opt (ptr void @-> returning (ptr long))
 let egl_int_array_callback_opt = funptr_opt (ptr void @-> ptr void @-> ptr void @-> returning (ptr int))
@@ -1523,6 +1999,12 @@ let file_dialog_type_to_enum : file_dialog_type -> file_dialog_type_enum = funct
   | FILEDIALOG_OPENFILE -> filedialog_openfile
   | FILEDIALOG_SAVEFILE -> filedialog_savefile
   | FILEDIALOG_OPENFOLDER -> filedialog_openfolder
+
+let file_dialog_type_of_enum : file_dialog_type_enum -> file_dialog_type = function
+  | e when e = filedialog_openfile -> FILEDIALOG_OPENFILE
+  | e when e = filedialog_savefile -> FILEDIALOG_SAVEFILE
+  | e when e = filedialog_openfolder -> FILEDIALOG_OPENFOLDER
+  | _ -> invalid_arg "Wrong value for file_dialog_type."
 
 module GUID = struct
   type _t_raw
@@ -1562,6 +2044,15 @@ let power_state_to_enum : power_state -> power_state_enum = function
   | POWERSTATE_CHARGING -> powerstate_charging
   | POWERSTATE_CHARGED -> powerstate_charged
 
+let power_state_of_enum : power_state_enum -> power_state = function
+  | e when e = powerstate_error -> POWERSTATE_ERROR
+  | e when e = powerstate_unknown -> POWERSTATE_UNKNOWN
+  | e when e = powerstate_on_battery -> POWERSTATE_ON_BATTERY
+  | e when e = powerstate_no_battery -> POWERSTATE_NO_BATTERY
+  | e when e = powerstate_charging -> POWERSTATE_CHARGING
+  | e when e = powerstate_charged -> POWERSTATE_CHARGED
+  | _ -> invalid_arg "Wrong value for power_state."
+
 
 (* No definition (opaque struct) *)
 type sensor = unit ptr
@@ -1593,6 +2084,22 @@ let sensor_type_to_enum : sensor_type -> sensor_type_enum = function
   | SENSOR_ACCEL_R -> sensor_accel_r
   | SENSOR_GYRO_R -> sensor_gyro_r
   | SENSOR_COUNT -> sensor_count
+
+let sensor_type_of_enum : sensor_type_enum -> sensor_type =
+  let tbl = Hashtbl.create 9 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (sensor_invalid, SENSOR_INVALID);
+      (sensor_unknown, SENSOR_UNKNOWN);
+      (sensor_accel, SENSOR_ACCEL);
+      (sensor_gyro, SENSOR_GYRO);
+      (sensor_accel_l, SENSOR_ACCEL_L);
+      (sensor_gyro_l, SENSOR_GYRO_L);
+      (sensor_accel_r, SENSOR_ACCEL_R);
+      (sensor_gyro_r, SENSOR_GYRO_R);
+      (sensor_count, SENSOR_COUNT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for sensor_type."
 
 
 (* No definition (opaque struct) *)
@@ -1630,6 +2137,24 @@ let joystick_type_to_enum : joystick_type -> joystick_type_enum = function
   | JOYSTICK_TYPE_THROTTLE -> joystick_type_throttle
   | JOYSTICK_TYPE_COUNT -> joystick_type_count
 
+let joystick_type_of_enum : joystick_type_enum -> joystick_type =
+  let tbl = Hashtbl.create 11 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (joystick_type_unknown, JOYSTICK_TYPE_UNKNOWN);
+      (joystick_type_gamepad, JOYSTICK_TYPE_GAMEPAD);
+      (joystick_type_wheel, JOYSTICK_TYPE_WHEEL);
+      (joystick_type_arcade_stick, JOYSTICK_TYPE_ARCADE_STICK);
+      (joystick_type_flight_stick, JOYSTICK_TYPE_FLIGHT_STICK);
+      (joystick_type_dance_pad, JOYSTICK_TYPE_DANCE_PAD);
+      (joystick_type_guitar, JOYSTICK_TYPE_GUITAR);
+      (joystick_type_drum_kit, JOYSTICK_TYPE_DRUM_KIT);
+      (joystick_type_arcade_pad, JOYSTICK_TYPE_ARCADE_PAD);
+      (joystick_type_throttle, JOYSTICK_TYPE_THROTTLE);
+      (joystick_type_count, JOYSTICK_TYPE_COUNT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for joystick_type."
+
 type joystick_connection_state =
   | JOYSTICK_CONNECTION_INVALID
   | JOYSTICK_CONNECTION_UNKNOWN
@@ -1644,6 +2169,13 @@ let joystick_connection_state_to_enum : joystick_connection_state -> joystick_co
   | JOYSTICK_CONNECTION_UNKNOWN -> joystick_connection_unknown
   | JOYSTICK_CONNECTION_WIRED -> joystick_connection_wired
   | JOYSTICK_CONNECTION_WIRELESS -> joystick_connection_wireless
+
+let joystick_connection_state_of_enum : joystick_connection_state_enum -> joystick_connection_state = function
+  | e when e = joystick_connection_invalid -> JOYSTICK_CONNECTION_INVALID
+  | e when e = joystick_connection_unknown -> JOYSTICK_CONNECTION_UNKNOWN
+  | e when e = joystick_connection_wired -> JOYSTICK_CONNECTION_WIRED
+  | e when e = joystick_connection_wireless -> JOYSTICK_CONNECTION_WIRELESS
+  | _ -> invalid_arg "Wrong value for joystick_connection_state."
 
 module VirtualJoystickTouchpadDesc = struct
   type _t
@@ -1747,6 +2279,26 @@ let gamepad_type_to_enum : gamepad_type -> gamepad_type_enum = function
   | GAMEPAD_TYPE_GAMECUBE -> gamepad_type_gamecube
   | GAMEPAD_TYPE_COUNT -> gamepad_type_count
 
+let gamepad_type_of_enum : gamepad_type_enum -> gamepad_type =
+  let tbl = Hashtbl.create 13 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (gamepad_type_unknown, GAMEPAD_TYPE_UNKNOWN);
+      (gamepad_type_standard, GAMEPAD_TYPE_STANDARD);
+      (gamepad_type_xbox360, GAMEPAD_TYPE_XBOX360);
+      (gamepad_type_xboxone, GAMEPAD_TYPE_XBOXONE);
+      (gamepad_type_ps3, GAMEPAD_TYPE_PS3);
+      (gamepad_type_ps4, GAMEPAD_TYPE_PS4);
+      (gamepad_type_ps5, GAMEPAD_TYPE_PS5);
+      (gamepad_type_nintendo_switch_pro, GAMEPAD_TYPE_NINTENDO_SWITCH_PRO);
+      (gamepad_type_nintendo_switch_joycon_left, GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT);
+      (gamepad_type_nintendo_switch_joycon_right, GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT);
+      (gamepad_type_nintendo_switch_joycon_pair, GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR);
+      (gamepad_type_gamecube, GAMEPAD_TYPE_GAMECUBE);
+      (gamepad_type_count, GAMEPAD_TYPE_COUNT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for gamepad_type."
+
 type gamepad_button =
   | GAMEPAD_BUTTON_INVALID
   | GAMEPAD_BUTTON_SOUTH
@@ -1810,6 +2362,41 @@ let gamepad_button_to_enum : gamepad_button -> gamepad_button_enum = function
   | GAMEPAD_BUTTON_MISC6 -> gamepad_button_misc6
   | GAMEPAD_BUTTON_COUNT -> gamepad_button_count
 
+let gamepad_button_of_enum : gamepad_button_enum -> gamepad_button =
+  let tbl = Hashtbl.create 28 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (gamepad_button_invalid, GAMEPAD_BUTTON_INVALID);
+      (gamepad_button_south, GAMEPAD_BUTTON_SOUTH);
+      (gamepad_button_east, GAMEPAD_BUTTON_EAST);
+      (gamepad_button_west, GAMEPAD_BUTTON_WEST);
+      (gamepad_button_north, GAMEPAD_BUTTON_NORTH);
+      (gamepad_button_back, GAMEPAD_BUTTON_BACK);
+      (gamepad_button_guide, GAMEPAD_BUTTON_GUIDE);
+      (gamepad_button_start, GAMEPAD_BUTTON_START);
+      (gamepad_button_left_stick, GAMEPAD_BUTTON_LEFT_STICK);
+      (gamepad_button_right_stick, GAMEPAD_BUTTON_RIGHT_STICK);
+      (gamepad_button_left_shoulder, GAMEPAD_BUTTON_LEFT_SHOULDER);
+      (gamepad_button_right_shoulder, GAMEPAD_BUTTON_RIGHT_SHOULDER);
+      (gamepad_button_dpad_up, GAMEPAD_BUTTON_DPAD_UP);
+      (gamepad_button_dpad_down, GAMEPAD_BUTTON_DPAD_DOWN);
+      (gamepad_button_dpad_left, GAMEPAD_BUTTON_DPAD_LEFT);
+      (gamepad_button_dpad_right, GAMEPAD_BUTTON_DPAD_RIGHT);
+      (gamepad_button_misc1, GAMEPAD_BUTTON_MISC1);
+      (gamepad_button_right_paddle1, GAMEPAD_BUTTON_RIGHT_PADDLE1);
+      (gamepad_button_left_paddle1, GAMEPAD_BUTTON_LEFT_PADDLE1);
+      (gamepad_button_right_paddle2, GAMEPAD_BUTTON_RIGHT_PADDLE2);
+      (gamepad_button_left_paddle2, GAMEPAD_BUTTON_LEFT_PADDLE2);
+      (gamepad_button_touchpad, GAMEPAD_BUTTON_TOUCHPAD);
+      (gamepad_button_misc2, GAMEPAD_BUTTON_MISC2);
+      (gamepad_button_misc3, GAMEPAD_BUTTON_MISC3);
+      (gamepad_button_misc4, GAMEPAD_BUTTON_MISC4);
+      (gamepad_button_misc5, GAMEPAD_BUTTON_MISC5);
+      (gamepad_button_misc6, GAMEPAD_BUTTON_MISC6);
+      (gamepad_button_count, GAMEPAD_BUTTON_COUNT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for gamepad_button."
+
 type gamepad_button_label =
   | GAMEPAD_BUTTON_LABEL_UNKNOWN
   | GAMEPAD_BUTTON_LABEL_A
@@ -1835,6 +2422,22 @@ let gamepad_button_label_to_enum : gamepad_button_label -> gamepad_button_label_
   | GAMEPAD_BUTTON_LABEL_SQUARE -> gamepad_button_label_square
   | GAMEPAD_BUTTON_LABEL_TRIANGLE -> gamepad_button_label_triangle
 
+let gamepad_button_label_of_enum : gamepad_button_label_enum -> gamepad_button_label =
+  let tbl = Hashtbl.create 9 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (gamepad_button_label_unknown, GAMEPAD_BUTTON_LABEL_UNKNOWN);
+      (gamepad_button_label_a, GAMEPAD_BUTTON_LABEL_A);
+      (gamepad_button_label_b, GAMEPAD_BUTTON_LABEL_B);
+      (gamepad_button_label_x, GAMEPAD_BUTTON_LABEL_X);
+      (gamepad_button_label_y, GAMEPAD_BUTTON_LABEL_Y);
+      (gamepad_button_label_cross, GAMEPAD_BUTTON_LABEL_CROSS);
+      (gamepad_button_label_circle, GAMEPAD_BUTTON_LABEL_CIRCLE);
+      (gamepad_button_label_square, GAMEPAD_BUTTON_LABEL_SQUARE);
+      (gamepad_button_label_triangle, GAMEPAD_BUTTON_LABEL_TRIANGLE);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for gamepad_button_label."
+
 type gamepad_axis =
   | GAMEPAD_AXIS_INVALID
   | GAMEPAD_AXIS_LEFTX
@@ -1858,6 +2461,17 @@ let gamepad_axis_to_enum : gamepad_axis -> gamepad_axis_enum = function
   | GAMEPAD_AXIS_RIGHT_TRIGGER -> gamepad_axis_right_trigger
   | GAMEPAD_AXIS_COUNT -> gamepad_axis_count
 
+let gamepad_axis_of_enum : gamepad_axis_enum -> gamepad_axis = function
+  | e when e = gamepad_axis_invalid -> GAMEPAD_AXIS_INVALID
+  | e when e = gamepad_axis_leftx -> GAMEPAD_AXIS_LEFTX
+  | e when e = gamepad_axis_lefty -> GAMEPAD_AXIS_LEFTY
+  | e when e = gamepad_axis_rightx -> GAMEPAD_AXIS_RIGHTX
+  | e when e = gamepad_axis_righty -> GAMEPAD_AXIS_RIGHTY
+  | e when e = gamepad_axis_left_trigger -> GAMEPAD_AXIS_LEFT_TRIGGER
+  | e when e = gamepad_axis_right_trigger -> GAMEPAD_AXIS_RIGHT_TRIGGER
+  | e when e = gamepad_axis_count -> GAMEPAD_AXIS_COUNT
+  | _ -> invalid_arg "Wrong value for gamepad_axis."
+
 type gamepad_binding_type =
   | GAMEPAD_BINDTYPE_NONE
   | GAMEPAD_BINDTYPE_BUTTON
@@ -1872,6 +2486,13 @@ let gamepad_binding_type_to_enum : gamepad_binding_type -> gamepad_binding_type_
   | GAMEPAD_BINDTYPE_BUTTON -> gamepad_bindtype_button
   | GAMEPAD_BINDTYPE_AXIS -> gamepad_bindtype_axis
   | GAMEPAD_BINDTYPE_HAT -> gamepad_bindtype_hat
+
+let gamepad_binding_type_of_enum : gamepad_binding_type_enum -> gamepad_binding_type = function
+  | e when e = gamepad_bindtype_none -> GAMEPAD_BINDTYPE_NONE
+  | e when e = gamepad_bindtype_button -> GAMEPAD_BINDTYPE_BUTTON
+  | e when e = gamepad_bindtype_axis -> GAMEPAD_BINDTYPE_AXIS
+  | e when e = gamepad_bindtype_hat -> GAMEPAD_BINDTYPE_HAT
+  | _ -> invalid_arg "Wrong value for gamepad_binding_type."
 
 module GamepadBinding = struct
   type _t
@@ -2461,6 +3082,262 @@ let scancode_to_enum : scancode -> scancode_enum = function
   | SCANCODE_RESERVED -> scancode_reserved
   | SCANCODE_COUNT -> scancode_count
 
+let scancode_of_enum : scancode_enum -> scancode =
+  let tbl = Hashtbl.create 249 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (scancode_unknown, SCANCODE_UNKNOWN);
+      (scancode_a, SCANCODE_A);
+      (scancode_b, SCANCODE_B);
+      (scancode_c, SCANCODE_C);
+      (scancode_d, SCANCODE_D);
+      (scancode_e, SCANCODE_E);
+      (scancode_f, SCANCODE_F);
+      (scancode_g, SCANCODE_G);
+      (scancode_h, SCANCODE_H);
+      (scancode_i, SCANCODE_I);
+      (scancode_j, SCANCODE_J);
+      (scancode_k, SCANCODE_K);
+      (scancode_l, SCANCODE_L);
+      (scancode_m, SCANCODE_M);
+      (scancode_n, SCANCODE_N);
+      (scancode_o, SCANCODE_O);
+      (scancode_p, SCANCODE_P);
+      (scancode_q, SCANCODE_Q);
+      (scancode_r, SCANCODE_R);
+      (scancode_s, SCANCODE_S);
+      (scancode_t, SCANCODE_T);
+      (scancode_u, SCANCODE_U);
+      (scancode_v, SCANCODE_V);
+      (scancode_w, SCANCODE_W);
+      (scancode_x, SCANCODE_X);
+      (scancode_y, SCANCODE_Y);
+      (scancode_z, SCANCODE_Z);
+      (scancode_1, SCANCODE_1);
+      (scancode_2, SCANCODE_2);
+      (scancode_3, SCANCODE_3);
+      (scancode_4, SCANCODE_4);
+      (scancode_5, SCANCODE_5);
+      (scancode_6, SCANCODE_6);
+      (scancode_7, SCANCODE_7);
+      (scancode_8, SCANCODE_8);
+      (scancode_9, SCANCODE_9);
+      (scancode_0, SCANCODE_0);
+      (scancode_return, SCANCODE_RETURN);
+      (scancode_escape, SCANCODE_ESCAPE);
+      (scancode_backspace, SCANCODE_BACKSPACE);
+      (scancode_tab, SCANCODE_TAB);
+      (scancode_space, SCANCODE_SPACE);
+      (scancode_minus, SCANCODE_MINUS);
+      (scancode_equals, SCANCODE_EQUALS);
+      (scancode_leftbracket, SCANCODE_LEFTBRACKET);
+      (scancode_rightbracket, SCANCODE_RIGHTBRACKET);
+      (scancode_backslash, SCANCODE_BACKSLASH);
+      (scancode_nonushash, SCANCODE_NONUSHASH);
+      (scancode_semicolon, SCANCODE_SEMICOLON);
+      (scancode_apostrophe, SCANCODE_APOSTROPHE);
+      (scancode_grave, SCANCODE_GRAVE);
+      (scancode_comma, SCANCODE_COMMA);
+      (scancode_period, SCANCODE_PERIOD);
+      (scancode_slash, SCANCODE_SLASH);
+      (scancode_capslock, SCANCODE_CAPSLOCK);
+      (scancode_f1, SCANCODE_F1);
+      (scancode_f2, SCANCODE_F2);
+      (scancode_f3, SCANCODE_F3);
+      (scancode_f4, SCANCODE_F4);
+      (scancode_f5, SCANCODE_F5);
+      (scancode_f6, SCANCODE_F6);
+      (scancode_f7, SCANCODE_F7);
+      (scancode_f8, SCANCODE_F8);
+      (scancode_f9, SCANCODE_F9);
+      (scancode_f10, SCANCODE_F10);
+      (scancode_f11, SCANCODE_F11);
+      (scancode_f12, SCANCODE_F12);
+      (scancode_printscreen, SCANCODE_PRINTSCREEN);
+      (scancode_scrolllock, SCANCODE_SCROLLLOCK);
+      (scancode_pause, SCANCODE_PAUSE);
+      (scancode_insert, SCANCODE_INSERT);
+      (scancode_home, SCANCODE_HOME);
+      (scancode_pageup, SCANCODE_PAGEUP);
+      (scancode_delete, SCANCODE_DELETE);
+      (scancode_end, SCANCODE_END);
+      (scancode_pagedown, SCANCODE_PAGEDOWN);
+      (scancode_right, SCANCODE_RIGHT);
+      (scancode_left, SCANCODE_LEFT);
+      (scancode_down, SCANCODE_DOWN);
+      (scancode_up, SCANCODE_UP);
+      (scancode_numlockclear, SCANCODE_NUMLOCKCLEAR);
+      (scancode_kp_divide, SCANCODE_KP_DIVIDE);
+      (scancode_kp_multiply, SCANCODE_KP_MULTIPLY);
+      (scancode_kp_minus, SCANCODE_KP_MINUS);
+      (scancode_kp_plus, SCANCODE_KP_PLUS);
+      (scancode_kp_enter, SCANCODE_KP_ENTER);
+      (scancode_kp_1, SCANCODE_KP_1);
+      (scancode_kp_2, SCANCODE_KP_2);
+      (scancode_kp_3, SCANCODE_KP_3);
+      (scancode_kp_4, SCANCODE_KP_4);
+      (scancode_kp_5, SCANCODE_KP_5);
+      (scancode_kp_6, SCANCODE_KP_6);
+      (scancode_kp_7, SCANCODE_KP_7);
+      (scancode_kp_8, SCANCODE_KP_8);
+      (scancode_kp_9, SCANCODE_KP_9);
+      (scancode_kp_0, SCANCODE_KP_0);
+      (scancode_kp_period, SCANCODE_KP_PERIOD);
+      (scancode_nonusbackslash, SCANCODE_NONUSBACKSLASH);
+      (scancode_application, SCANCODE_APPLICATION);
+      (scancode_power, SCANCODE_POWER);
+      (scancode_kp_equals, SCANCODE_KP_EQUALS);
+      (scancode_f13, SCANCODE_F13);
+      (scancode_f14, SCANCODE_F14);
+      (scancode_f15, SCANCODE_F15);
+      (scancode_f16, SCANCODE_F16);
+      (scancode_f17, SCANCODE_F17);
+      (scancode_f18, SCANCODE_F18);
+      (scancode_f19, SCANCODE_F19);
+      (scancode_f20, SCANCODE_F20);
+      (scancode_f21, SCANCODE_F21);
+      (scancode_f22, SCANCODE_F22);
+      (scancode_f23, SCANCODE_F23);
+      (scancode_f24, SCANCODE_F24);
+      (scancode_execute, SCANCODE_EXECUTE);
+      (scancode_help, SCANCODE_HELP);
+      (scancode_menu, SCANCODE_MENU);
+      (scancode_select, SCANCODE_SELECT);
+      (scancode_stop, SCANCODE_STOP);
+      (scancode_again, SCANCODE_AGAIN);
+      (scancode_undo, SCANCODE_UNDO);
+      (scancode_cut, SCANCODE_CUT);
+      (scancode_copy, SCANCODE_COPY);
+      (scancode_paste, SCANCODE_PASTE);
+      (scancode_find, SCANCODE_FIND);
+      (scancode_mute, SCANCODE_MUTE);
+      (scancode_volumeup, SCANCODE_VOLUMEUP);
+      (scancode_volumedown, SCANCODE_VOLUMEDOWN);
+      (scancode_kp_comma, SCANCODE_KP_COMMA);
+      (scancode_kp_equalsas400, SCANCODE_KP_EQUALSAS400);
+      (scancode_international1, SCANCODE_INTERNATIONAL1);
+      (scancode_international2, SCANCODE_INTERNATIONAL2);
+      (scancode_international3, SCANCODE_INTERNATIONAL3);
+      (scancode_international4, SCANCODE_INTERNATIONAL4);
+      (scancode_international5, SCANCODE_INTERNATIONAL5);
+      (scancode_international6, SCANCODE_INTERNATIONAL6);
+      (scancode_international7, SCANCODE_INTERNATIONAL7);
+      (scancode_international8, SCANCODE_INTERNATIONAL8);
+      (scancode_international9, SCANCODE_INTERNATIONAL9);
+      (scancode_lang1, SCANCODE_LANG1);
+      (scancode_lang2, SCANCODE_LANG2);
+      (scancode_lang3, SCANCODE_LANG3);
+      (scancode_lang4, SCANCODE_LANG4);
+      (scancode_lang5, SCANCODE_LANG5);
+      (scancode_lang6, SCANCODE_LANG6);
+      (scancode_lang7, SCANCODE_LANG7);
+      (scancode_lang8, SCANCODE_LANG8);
+      (scancode_lang9, SCANCODE_LANG9);
+      (scancode_alterase, SCANCODE_ALTERASE);
+      (scancode_sysreq, SCANCODE_SYSREQ);
+      (scancode_cancel, SCANCODE_CANCEL);
+      (scancode_clear, SCANCODE_CLEAR);
+      (scancode_prior, SCANCODE_PRIOR);
+      (scancode_return2, SCANCODE_RETURN2);
+      (scancode_separator, SCANCODE_SEPARATOR);
+      (scancode_out, SCANCODE_OUT);
+      (scancode_oper, SCANCODE_OPER);
+      (scancode_clearagain, SCANCODE_CLEARAGAIN);
+      (scancode_crsel, SCANCODE_CRSEL);
+      (scancode_exsel, SCANCODE_EXSEL);
+      (scancode_kp_00, SCANCODE_KP_00);
+      (scancode_kp_000, SCANCODE_KP_000);
+      (scancode_thousandsseparator, SCANCODE_THOUSANDSSEPARATOR);
+      (scancode_decimalseparator, SCANCODE_DECIMALSEPARATOR);
+      (scancode_currencyunit, SCANCODE_CURRENCYUNIT);
+      (scancode_currencysubunit, SCANCODE_CURRENCYSUBUNIT);
+      (scancode_kp_leftparen, SCANCODE_KP_LEFTPAREN);
+      (scancode_kp_rightparen, SCANCODE_KP_RIGHTPAREN);
+      (scancode_kp_leftbrace, SCANCODE_KP_LEFTBRACE);
+      (scancode_kp_rightbrace, SCANCODE_KP_RIGHTBRACE);
+      (scancode_kp_tab, SCANCODE_KP_TAB);
+      (scancode_kp_backspace, SCANCODE_KP_BACKSPACE);
+      (scancode_kp_a, SCANCODE_KP_A);
+      (scancode_kp_b, SCANCODE_KP_B);
+      (scancode_kp_c, SCANCODE_KP_C);
+      (scancode_kp_d, SCANCODE_KP_D);
+      (scancode_kp_e, SCANCODE_KP_E);
+      (scancode_kp_f, SCANCODE_KP_F);
+      (scancode_kp_xor, SCANCODE_KP_XOR);
+      (scancode_kp_power, SCANCODE_KP_POWER);
+      (scancode_kp_percent, SCANCODE_KP_PERCENT);
+      (scancode_kp_less, SCANCODE_KP_LESS);
+      (scancode_kp_greater, SCANCODE_KP_GREATER);
+      (scancode_kp_ampersand, SCANCODE_KP_AMPERSAND);
+      (scancode_kp_dblampersand, SCANCODE_KP_DBLAMPERSAND);
+      (scancode_kp_verticalbar, SCANCODE_KP_VERTICALBAR);
+      (scancode_kp_dblverticalbar, SCANCODE_KP_DBLVERTICALBAR);
+      (scancode_kp_colon, SCANCODE_KP_COLON);
+      (scancode_kp_hash, SCANCODE_KP_HASH);
+      (scancode_kp_space, SCANCODE_KP_SPACE);
+      (scancode_kp_at, SCANCODE_KP_AT);
+      (scancode_kp_exclam, SCANCODE_KP_EXCLAM);
+      (scancode_kp_memstore, SCANCODE_KP_MEMSTORE);
+      (scancode_kp_memrecall, SCANCODE_KP_MEMRECALL);
+      (scancode_kp_memclear, SCANCODE_KP_MEMCLEAR);
+      (scancode_kp_memadd, SCANCODE_KP_MEMADD);
+      (scancode_kp_memsubtract, SCANCODE_KP_MEMSUBTRACT);
+      (scancode_kp_memmultiply, SCANCODE_KP_MEMMULTIPLY);
+      (scancode_kp_memdivide, SCANCODE_KP_MEMDIVIDE);
+      (scancode_kp_plusminus, SCANCODE_KP_PLUSMINUS);
+      (scancode_kp_clear, SCANCODE_KP_CLEAR);
+      (scancode_kp_clearentry, SCANCODE_KP_CLEARENTRY);
+      (scancode_kp_binary, SCANCODE_KP_BINARY);
+      (scancode_kp_octal, SCANCODE_KP_OCTAL);
+      (scancode_kp_decimal, SCANCODE_KP_DECIMAL);
+      (scancode_kp_hexadecimal, SCANCODE_KP_HEXADECIMAL);
+      (scancode_lctrl, SCANCODE_LCTRL);
+      (scancode_lshift, SCANCODE_LSHIFT);
+      (scancode_lalt, SCANCODE_LALT);
+      (scancode_lgui, SCANCODE_LGUI);
+      (scancode_rctrl, SCANCODE_RCTRL);
+      (scancode_rshift, SCANCODE_RSHIFT);
+      (scancode_ralt, SCANCODE_RALT);
+      (scancode_rgui, SCANCODE_RGUI);
+      (scancode_mode, SCANCODE_MODE);
+      (scancode_sleep, SCANCODE_SLEEP);
+      (scancode_wake, SCANCODE_WAKE);
+      (scancode_channel_increment, SCANCODE_CHANNEL_INCREMENT);
+      (scancode_channel_decrement, SCANCODE_CHANNEL_DECREMENT);
+      (scancode_media_play, SCANCODE_MEDIA_PLAY);
+      (scancode_media_pause, SCANCODE_MEDIA_PAUSE);
+      (scancode_media_record, SCANCODE_MEDIA_RECORD);
+      (scancode_media_fast_forward, SCANCODE_MEDIA_FAST_FORWARD);
+      (scancode_media_rewind, SCANCODE_MEDIA_REWIND);
+      (scancode_media_next_track, SCANCODE_MEDIA_NEXT_TRACK);
+      (scancode_media_previous_track, SCANCODE_MEDIA_PREVIOUS_TRACK);
+      (scancode_media_stop, SCANCODE_MEDIA_STOP);
+      (scancode_media_eject, SCANCODE_MEDIA_EJECT);
+      (scancode_media_play_pause, SCANCODE_MEDIA_PLAY_PAUSE);
+      (scancode_media_select, SCANCODE_MEDIA_SELECT);
+      (scancode_ac_new, SCANCODE_AC_NEW);
+      (scancode_ac_open, SCANCODE_AC_OPEN);
+      (scancode_ac_close, SCANCODE_AC_CLOSE);
+      (scancode_ac_exit, SCANCODE_AC_EXIT);
+      (scancode_ac_save, SCANCODE_AC_SAVE);
+      (scancode_ac_print, SCANCODE_AC_PRINT);
+      (scancode_ac_properties, SCANCODE_AC_PROPERTIES);
+      (scancode_ac_search, SCANCODE_AC_SEARCH);
+      (scancode_ac_home, SCANCODE_AC_HOME);
+      (scancode_ac_back, SCANCODE_AC_BACK);
+      (scancode_ac_forward, SCANCODE_AC_FORWARD);
+      (scancode_ac_stop, SCANCODE_AC_STOP);
+      (scancode_ac_refresh, SCANCODE_AC_REFRESH);
+      (scancode_ac_bookmarks, SCANCODE_AC_BOOKMARKS);
+      (scancode_softleft, SCANCODE_SOFTLEFT);
+      (scancode_softright, SCANCODE_SOFTRIGHT);
+      (scancode_call, SCANCODE_CALL);
+      (scancode_endcall, SCANCODE_ENDCALL);
+      (scancode_reserved, SCANCODE_RESERVED);
+      (scancode_count, SCANCODE_COUNT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for scancode."
+
 let keycode = uint (* prim *)
 let keymod = ushort (* prim *)
 let keyboard_id = uint (* prim *)
@@ -2489,6 +3366,22 @@ let text_input_type_to_enum : text_input_type -> text_input_type_enum = function
   | TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN -> textinput_type_number_password_hidden
   | TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE -> textinput_type_number_password_visible
 
+let text_input_type_of_enum : text_input_type_enum -> text_input_type =
+  let tbl = Hashtbl.create 9 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (textinput_type_text, TEXTINPUT_TYPE_TEXT);
+      (textinput_type_text_name, TEXTINPUT_TYPE_TEXT_NAME);
+      (textinput_type_text_email, TEXTINPUT_TYPE_TEXT_EMAIL);
+      (textinput_type_text_username, TEXTINPUT_TYPE_TEXT_USERNAME);
+      (textinput_type_text_password_hidden, TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN);
+      (textinput_type_text_password_visible, TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE);
+      (textinput_type_number, TEXTINPUT_TYPE_NUMBER);
+      (textinput_type_number_password_hidden, TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN);
+      (textinput_type_number_password_visible, TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for text_input_type."
+
 type capitalization =
   | CAPITALIZE_NONE
   | CAPITALIZE_SENTENCES
@@ -2503,6 +3396,13 @@ let capitalization_to_enum : capitalization -> capitalization_enum = function
   | CAPITALIZE_SENTENCES -> capitalize_sentences
   | CAPITALIZE_WORDS -> capitalize_words
   | CAPITALIZE_LETTERS -> capitalize_letters
+
+let capitalization_of_enum : capitalization_enum -> capitalization = function
+  | e when e = capitalize_none -> CAPITALIZE_NONE
+  | e when e = capitalize_sentences -> CAPITALIZE_SENTENCES
+  | e when e = capitalize_words -> CAPITALIZE_WORDS
+  | e when e = capitalize_letters -> CAPITALIZE_LETTERS
+  | _ -> invalid_arg "Wrong value for capitalization."
 
 let mouse_id = uint (* prim *)
 
@@ -2560,6 +3460,34 @@ let system_cursor_to_enum : system_cursor -> system_cursor_enum = function
   | SYSTEM_CURSOR_W_RESIZE -> system_cursor_w_resize
   | SYSTEM_CURSOR_COUNT -> system_cursor_count
 
+let system_cursor_of_enum : system_cursor_enum -> system_cursor =
+  let tbl = Hashtbl.create 21 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (system_cursor_default, SYSTEM_CURSOR_DEFAULT);
+      (system_cursor_text, SYSTEM_CURSOR_TEXT);
+      (system_cursor_wait, SYSTEM_CURSOR_WAIT);
+      (system_cursor_crosshair, SYSTEM_CURSOR_CROSSHAIR);
+      (system_cursor_progress, SYSTEM_CURSOR_PROGRESS);
+      (system_cursor_nwse_resize, SYSTEM_CURSOR_NWSE_RESIZE);
+      (system_cursor_nesw_resize, SYSTEM_CURSOR_NESW_RESIZE);
+      (system_cursor_ew_resize, SYSTEM_CURSOR_EW_RESIZE);
+      (system_cursor_ns_resize, SYSTEM_CURSOR_NS_RESIZE);
+      (system_cursor_move, SYSTEM_CURSOR_MOVE);
+      (system_cursor_not_allowed, SYSTEM_CURSOR_NOT_ALLOWED);
+      (system_cursor_pointer, SYSTEM_CURSOR_POINTER);
+      (system_cursor_nw_resize, SYSTEM_CURSOR_NW_RESIZE);
+      (system_cursor_n_resize, SYSTEM_CURSOR_N_RESIZE);
+      (system_cursor_ne_resize, SYSTEM_CURSOR_NE_RESIZE);
+      (system_cursor_e_resize, SYSTEM_CURSOR_E_RESIZE);
+      (system_cursor_se_resize, SYSTEM_CURSOR_SE_RESIZE);
+      (system_cursor_s_resize, SYSTEM_CURSOR_S_RESIZE);
+      (system_cursor_sw_resize, SYSTEM_CURSOR_SW_RESIZE);
+      (system_cursor_w_resize, SYSTEM_CURSOR_W_RESIZE);
+      (system_cursor_count, SYSTEM_CURSOR_COUNT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for system_cursor."
+
 type mouse_wheel_direction =
   | MOUSEWHEEL_NORMAL
   | MOUSEWHEEL_FLIPPED
@@ -2570,6 +3498,11 @@ let mouse_wheel_direction = int
 let mouse_wheel_direction_to_enum : mouse_wheel_direction -> mouse_wheel_direction_enum = function
   | MOUSEWHEEL_NORMAL -> mousewheel_normal
   | MOUSEWHEEL_FLIPPED -> mousewheel_flipped
+
+let mouse_wheel_direction_of_enum : mouse_wheel_direction_enum -> mouse_wheel_direction = function
+  | e when e = mousewheel_normal -> MOUSEWHEEL_NORMAL
+  | e when e = mousewheel_flipped -> MOUSEWHEEL_FLIPPED
+  | _ -> invalid_arg "Wrong value for mouse_wheel_direction."
 
 module CursorFrameInfo = struct
   type _t
@@ -2603,6 +3536,13 @@ let touch_device_type_to_enum : touch_device_type -> touch_device_type_enum = fu
   | TOUCH_DEVICE_DIRECT -> touch_device_direct
   | TOUCH_DEVICE_INDIRECT_ABSOLUTE -> touch_device_indirect_absolute
   | TOUCH_DEVICE_INDIRECT_RELATIVE -> touch_device_indirect_relative
+
+let touch_device_type_of_enum : touch_device_type_enum -> touch_device_type = function
+  | e when e = touch_device_invalid -> TOUCH_DEVICE_INVALID
+  | e when e = touch_device_direct -> TOUCH_DEVICE_DIRECT
+  | e when e = touch_device_indirect_absolute -> TOUCH_DEVICE_INDIRECT_ABSOLUTE
+  | e when e = touch_device_indirect_relative -> TOUCH_DEVICE_INDIRECT_RELATIVE
+  | _ -> invalid_arg "Wrong value for touch_device_type."
 
 module Finger = struct
   type _t
@@ -2644,6 +3584,17 @@ let pen_axis_to_enum : pen_axis -> pen_axis_enum = function
   | PEN_AXIS_TANGENTIAL_PRESSURE -> pen_axis_tangential_pressure
   | PEN_AXIS_COUNT -> pen_axis_count
 
+let pen_axis_of_enum : pen_axis_enum -> pen_axis = function
+  | e when e = pen_axis_pressure -> PEN_AXIS_PRESSURE
+  | e when e = pen_axis_xtilt -> PEN_AXIS_XTILT
+  | e when e = pen_axis_ytilt -> PEN_AXIS_YTILT
+  | e when e = pen_axis_distance -> PEN_AXIS_DISTANCE
+  | e when e = pen_axis_rotation -> PEN_AXIS_ROTATION
+  | e when e = pen_axis_slider -> PEN_AXIS_SLIDER
+  | e when e = pen_axis_tangential_pressure -> PEN_AXIS_TANGENTIAL_PRESSURE
+  | e when e = pen_axis_count -> PEN_AXIS_COUNT
+  | _ -> invalid_arg "Wrong value for pen_axis."
+
 type pen_device_type =
   | PEN_DEVICE_TYPE_INVALID
   | PEN_DEVICE_TYPE_UNKNOWN
@@ -2658,6 +3609,13 @@ let pen_device_type_to_enum : pen_device_type -> pen_device_type_enum = function
   | PEN_DEVICE_TYPE_UNKNOWN -> pen_device_type_unknown
   | PEN_DEVICE_TYPE_DIRECT -> pen_device_type_direct
   | PEN_DEVICE_TYPE_INDIRECT -> pen_device_type_indirect
+
+let pen_device_type_of_enum : pen_device_type_enum -> pen_device_type = function
+  | e when e = pen_device_type_invalid -> PEN_DEVICE_TYPE_INVALID
+  | e when e = pen_device_type_unknown -> PEN_DEVICE_TYPE_UNKNOWN
+  | e when e = pen_device_type_direct -> PEN_DEVICE_TYPE_DIRECT
+  | e when e = pen_device_type_indirect -> PEN_DEVICE_TYPE_INDIRECT
+  | _ -> invalid_arg "Wrong value for pen_device_type."
 
 type event_type =
   | EVENT_FIRST
@@ -2913,6 +3871,137 @@ let event_type_to_enum : event_type -> event_type_enum = function
   | EVENT_USER -> event_user
   | EVENT_LAST -> event_last
   | EVENT_ENUM_PADDING -> event_enum_padding
+
+let event_type_of_enum : event_type_enum -> event_type =
+  let tbl = Hashtbl.create 124 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (event_first, EVENT_FIRST);
+      (event_quit, EVENT_QUIT);
+      (event_terminating, EVENT_TERMINATING);
+      (event_low_memory, EVENT_LOW_MEMORY);
+      (event_will_enter_background, EVENT_WILL_ENTER_BACKGROUND);
+      (event_did_enter_background, EVENT_DID_ENTER_BACKGROUND);
+      (event_will_enter_foreground, EVENT_WILL_ENTER_FOREGROUND);
+      (event_did_enter_foreground, EVENT_DID_ENTER_FOREGROUND);
+      (event_locale_changed, EVENT_LOCALE_CHANGED);
+      (event_system_theme_changed, EVENT_SYSTEM_THEME_CHANGED);
+      (event_display_orientation, EVENT_DISPLAY_ORIENTATION);
+      (event_display_added, EVENT_DISPLAY_ADDED);
+      (event_display_removed, EVENT_DISPLAY_REMOVED);
+      (event_display_moved, EVENT_DISPLAY_MOVED);
+      (event_display_desktop_mode_changed, EVENT_DISPLAY_DESKTOP_MODE_CHANGED);
+      (event_display_current_mode_changed, EVENT_DISPLAY_CURRENT_MODE_CHANGED);
+      (event_display_content_scale_changed, EVENT_DISPLAY_CONTENT_SCALE_CHANGED);
+      (event_display_usable_bounds_changed, EVENT_DISPLAY_USABLE_BOUNDS_CHANGED);
+      (event_display_first, EVENT_DISPLAY_FIRST);
+      (event_display_last, EVENT_DISPLAY_LAST);
+      (event_window_shown, EVENT_WINDOW_SHOWN);
+      (event_window_hidden, EVENT_WINDOW_HIDDEN);
+      (event_window_exposed, EVENT_WINDOW_EXPOSED);
+      (event_window_moved, EVENT_WINDOW_MOVED);
+      (event_window_resized, EVENT_WINDOW_RESIZED);
+      (event_window_pixel_size_changed, EVENT_WINDOW_PIXEL_SIZE_CHANGED);
+      (event_window_metal_view_resized, EVENT_WINDOW_METAL_VIEW_RESIZED);
+      (event_window_minimized, EVENT_WINDOW_MINIMIZED);
+      (event_window_maximized, EVENT_WINDOW_MAXIMIZED);
+      (event_window_restored, EVENT_WINDOW_RESTORED);
+      (event_window_mouse_enter, EVENT_WINDOW_MOUSE_ENTER);
+      (event_window_mouse_leave, EVENT_WINDOW_MOUSE_LEAVE);
+      (event_window_focus_gained, EVENT_WINDOW_FOCUS_GAINED);
+      (event_window_focus_lost, EVENT_WINDOW_FOCUS_LOST);
+      (event_window_close_requested, EVENT_WINDOW_CLOSE_REQUESTED);
+      (event_window_hit_test, EVENT_WINDOW_HIT_TEST);
+      (event_window_iccprof_changed, EVENT_WINDOW_ICCPROF_CHANGED);
+      (event_window_display_changed, EVENT_WINDOW_DISPLAY_CHANGED);
+      (event_window_display_scale_changed, EVENT_WINDOW_DISPLAY_SCALE_CHANGED);
+      (event_window_safe_area_changed, EVENT_WINDOW_SAFE_AREA_CHANGED);
+      (event_window_occluded, EVENT_WINDOW_OCCLUDED);
+      (event_window_enter_fullscreen, EVENT_WINDOW_ENTER_FULLSCREEN);
+      (event_window_leave_fullscreen, EVENT_WINDOW_LEAVE_FULLSCREEN);
+      (event_window_destroyed, EVENT_WINDOW_DESTROYED);
+      (event_window_hdr_state_changed, EVENT_WINDOW_HDR_STATE_CHANGED);
+      (event_window_first, EVENT_WINDOW_FIRST);
+      (event_window_last, EVENT_WINDOW_LAST);
+      (event_key_down, EVENT_KEY_DOWN);
+      (event_key_up, EVENT_KEY_UP);
+      (event_text_editing, EVENT_TEXT_EDITING);
+      (event_text_input, EVENT_TEXT_INPUT);
+      (event_keymap_changed, EVENT_KEYMAP_CHANGED);
+      (event_keyboard_added, EVENT_KEYBOARD_ADDED);
+      (event_keyboard_removed, EVENT_KEYBOARD_REMOVED);
+      (event_text_editing_candidates, EVENT_TEXT_EDITING_CANDIDATES);
+      (event_screen_keyboard_shown, EVENT_SCREEN_KEYBOARD_SHOWN);
+      (event_screen_keyboard_hidden, EVENT_SCREEN_KEYBOARD_HIDDEN);
+      (event_mouse_motion, EVENT_MOUSE_MOTION);
+      (event_mouse_button_down, EVENT_MOUSE_BUTTON_DOWN);
+      (event_mouse_button_up, EVENT_MOUSE_BUTTON_UP);
+      (event_mouse_wheel, EVENT_MOUSE_WHEEL);
+      (event_mouse_added, EVENT_MOUSE_ADDED);
+      (event_mouse_removed, EVENT_MOUSE_REMOVED);
+      (event_joystick_axis_motion, EVENT_JOYSTICK_AXIS_MOTION);
+      (event_joystick_ball_motion, EVENT_JOYSTICK_BALL_MOTION);
+      (event_joystick_hat_motion, EVENT_JOYSTICK_HAT_MOTION);
+      (event_joystick_button_down, EVENT_JOYSTICK_BUTTON_DOWN);
+      (event_joystick_button_up, EVENT_JOYSTICK_BUTTON_UP);
+      (event_joystick_added, EVENT_JOYSTICK_ADDED);
+      (event_joystick_removed, EVENT_JOYSTICK_REMOVED);
+      (event_joystick_battery_updated, EVENT_JOYSTICK_BATTERY_UPDATED);
+      (event_joystick_update_complete, EVENT_JOYSTICK_UPDATE_COMPLETE);
+      (event_gamepad_axis_motion, EVENT_GAMEPAD_AXIS_MOTION);
+      (event_gamepad_button_down, EVENT_GAMEPAD_BUTTON_DOWN);
+      (event_gamepad_button_up, EVENT_GAMEPAD_BUTTON_UP);
+      (event_gamepad_added, EVENT_GAMEPAD_ADDED);
+      (event_gamepad_removed, EVENT_GAMEPAD_REMOVED);
+      (event_gamepad_remapped, EVENT_GAMEPAD_REMAPPED);
+      (event_gamepad_touchpad_down, EVENT_GAMEPAD_TOUCHPAD_DOWN);
+      (event_gamepad_touchpad_motion, EVENT_GAMEPAD_TOUCHPAD_MOTION);
+      (event_gamepad_touchpad_up, EVENT_GAMEPAD_TOUCHPAD_UP);
+      (event_gamepad_sensor_update, EVENT_GAMEPAD_SENSOR_UPDATE);
+      (event_gamepad_update_complete, EVENT_GAMEPAD_UPDATE_COMPLETE);
+      (event_gamepad_steam_handle_updated, EVENT_GAMEPAD_STEAM_HANDLE_UPDATED);
+      (event_finger_down, EVENT_FINGER_DOWN);
+      (event_finger_up, EVENT_FINGER_UP);
+      (event_finger_motion, EVENT_FINGER_MOTION);
+      (event_finger_canceled, EVENT_FINGER_CANCELED);
+      (event_pinch_begin, EVENT_PINCH_BEGIN);
+      (event_pinch_update, EVENT_PINCH_UPDATE);
+      (event_pinch_end, EVENT_PINCH_END);
+      (event_clipboard_update, EVENT_CLIPBOARD_UPDATE);
+      (event_drop_file, EVENT_DROP_FILE);
+      (event_drop_text, EVENT_DROP_TEXT);
+      (event_drop_begin, EVENT_DROP_BEGIN);
+      (event_drop_complete, EVENT_DROP_COMPLETE);
+      (event_drop_position, EVENT_DROP_POSITION);
+      (event_audio_device_added, EVENT_AUDIO_DEVICE_ADDED);
+      (event_audio_device_removed, EVENT_AUDIO_DEVICE_REMOVED);
+      (event_audio_device_format_changed, EVENT_AUDIO_DEVICE_FORMAT_CHANGED);
+      (event_sensor_update, EVENT_SENSOR_UPDATE);
+      (event_pen_proximity_in, EVENT_PEN_PROXIMITY_IN);
+      (event_pen_proximity_out, EVENT_PEN_PROXIMITY_OUT);
+      (event_pen_down, EVENT_PEN_DOWN);
+      (event_pen_up, EVENT_PEN_UP);
+      (event_pen_button_down, EVENT_PEN_BUTTON_DOWN);
+      (event_pen_button_up, EVENT_PEN_BUTTON_UP);
+      (event_pen_motion, EVENT_PEN_MOTION);
+      (event_pen_axis, EVENT_PEN_AXIS);
+      (event_camera_device_added, EVENT_CAMERA_DEVICE_ADDED);
+      (event_camera_device_removed, EVENT_CAMERA_DEVICE_REMOVED);
+      (event_camera_device_approved, EVENT_CAMERA_DEVICE_APPROVED);
+      (event_camera_device_denied, EVENT_CAMERA_DEVICE_DENIED);
+      (event_render_targets_reset, EVENT_RENDER_TARGETS_RESET);
+      (event_render_device_reset, EVENT_RENDER_DEVICE_RESET);
+      (event_render_device_lost, EVENT_RENDER_DEVICE_LOST);
+      (event_private0, EVENT_PRIVATE0);
+      (event_private1, EVENT_PRIVATE1);
+      (event_private2, EVENT_PRIVATE2);
+      (event_private3, EVENT_PRIVATE3);
+      (event_poll_sentinel, EVENT_POLL_SENTINEL);
+      (event_user, EVENT_USER);
+      (event_last, EVENT_LAST);
+      (event_enum_padding, EVENT_ENUM_PADDING);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for event_type."
 
 module CommonEvent = struct
   type _t
@@ -3765,6 +4854,12 @@ let event_action_to_enum : event_action -> event_action_enum = function
   | PEEKEVENT -> peekevent
   | GETEVENT -> getevent
 
+let event_action_of_enum : event_action_enum -> event_action = function
+  | e when e = addevent -> ADDEVENT
+  | e when e = peekevent -> PEEKEVENT
+  | e when e = getevent -> GETEVENT
+  | _ -> invalid_arg "Wrong value for event_action."
+
 let event_filter = funptr (ptr void @-> event @-> returning bool)
 type folder =
   | FOLDER_HOME
@@ -3797,6 +4892,25 @@ let folder_to_enum : folder -> folder_enum = function
   | FOLDER_VIDEOS -> folder_videos
   | FOLDER_COUNT -> folder_count
 
+let folder_of_enum : folder_enum -> folder =
+  let tbl = Hashtbl.create 12 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (folder_home, FOLDER_HOME);
+      (folder_desktop, FOLDER_DESKTOP);
+      (folder_documents, FOLDER_DOCUMENTS);
+      (folder_downloads, FOLDER_DOWNLOADS);
+      (folder_music, FOLDER_MUSIC);
+      (folder_pictures, FOLDER_PICTURES);
+      (folder_publicshare, FOLDER_PUBLICSHARE);
+      (folder_savedgames, FOLDER_SAVEDGAMES);
+      (folder_screenshots, FOLDER_SCREENSHOTS);
+      (folder_templates, FOLDER_TEMPLATES);
+      (folder_videos, FOLDER_VIDEOS);
+      (folder_count, FOLDER_COUNT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for folder."
+
 type path_type =
   | PATHTYPE_NONE
   | PATHTYPE_FILE
@@ -3811,6 +4925,13 @@ let path_type_to_enum : path_type -> path_type_enum = function
   | PATHTYPE_FILE -> pathtype_file
   | PATHTYPE_DIRECTORY -> pathtype_directory
   | PATHTYPE_OTHER -> pathtype_other
+
+let path_type_of_enum : path_type_enum -> path_type = function
+  | e when e = pathtype_none -> PATHTYPE_NONE
+  | e when e = pathtype_file -> PATHTYPE_FILE
+  | e when e = pathtype_directory -> PATHTYPE_DIRECTORY
+  | e when e = pathtype_other -> PATHTYPE_OTHER
+  | _ -> invalid_arg "Wrong value for path_type."
 
 module PathInfo = struct
   type _t
@@ -3841,6 +4962,12 @@ let enumeration_result_to_enum : enumeration_result -> enumeration_result_enum =
   | ENUM_CONTINUE -> enum_continue
   | ENUM_SUCCESS -> enum_success
   | ENUM_FAILURE -> enum_failure
+
+let enumeration_result_of_enum : enumeration_result_enum -> enumeration_result = function
+  | e when e = enum_continue -> ENUM_CONTINUE
+  | e when e = enum_success -> ENUM_SUCCESS
+  | e when e = enum_failure -> ENUM_FAILURE
+  | _ -> invalid_arg "Wrong value for enumeration_result."
 
 let enumerate_directory_callback = funptr (ptr void @-> string @-> string @-> returning enumeration_result)
 
@@ -3938,6 +5065,14 @@ let gpu_primitive_type_to_enum : gpu_primitive_type -> gpu_primitive_type_enum =
   | GPU_PRIMITIVETYPE_LINESTRIP -> gpu_primitivetype_linestrip
   | GPU_PRIMITIVETYPE_POINTLIST -> gpu_primitivetype_pointlist
 
+let gpu_primitive_type_of_enum : gpu_primitive_type_enum -> gpu_primitive_type = function
+  | e when e = gpu_primitivetype_trianglelist -> GPU_PRIMITIVETYPE_TRIANGLELIST
+  | e when e = gpu_primitivetype_trianglestrip -> GPU_PRIMITIVETYPE_TRIANGLESTRIP
+  | e when e = gpu_primitivetype_linelist -> GPU_PRIMITIVETYPE_LINELIST
+  | e when e = gpu_primitivetype_linestrip -> GPU_PRIMITIVETYPE_LINESTRIP
+  | e when e = gpu_primitivetype_pointlist -> GPU_PRIMITIVETYPE_POINTLIST
+  | _ -> invalid_arg "Wrong value for gpu_primitive_type."
+
 type gpu_load_op =
   | GPU_LOADOP_LOAD
   | GPU_LOADOP_CLEAR
@@ -3950,6 +5085,12 @@ let gpu_load_op_to_enum : gpu_load_op -> gpu_load_op_enum = function
   | GPU_LOADOP_LOAD -> gpu_loadop_load
   | GPU_LOADOP_CLEAR -> gpu_loadop_clear
   | GPU_LOADOP_DONT_CARE -> gpu_loadop_dont_care
+
+let gpu_load_op_of_enum : gpu_load_op_enum -> gpu_load_op = function
+  | e when e = gpu_loadop_load -> GPU_LOADOP_LOAD
+  | e when e = gpu_loadop_clear -> GPU_LOADOP_CLEAR
+  | e when e = gpu_loadop_dont_care -> GPU_LOADOP_DONT_CARE
+  | _ -> invalid_arg "Wrong value for gpu_load_op."
 
 type gpu_store_op =
   | GPU_STOREOP_STORE
@@ -3966,6 +5107,13 @@ let gpu_store_op_to_enum : gpu_store_op -> gpu_store_op_enum = function
   | GPU_STOREOP_RESOLVE -> gpu_storeop_resolve
   | GPU_STOREOP_RESOLVE_AND_STORE -> gpu_storeop_resolve_and_store
 
+let gpu_store_op_of_enum : gpu_store_op_enum -> gpu_store_op = function
+  | e when e = gpu_storeop_store -> GPU_STOREOP_STORE
+  | e when e = gpu_storeop_dont_care -> GPU_STOREOP_DONT_CARE
+  | e when e = gpu_storeop_resolve -> GPU_STOREOP_RESOLVE
+  | e when e = gpu_storeop_resolve_and_store -> GPU_STOREOP_RESOLVE_AND_STORE
+  | _ -> invalid_arg "Wrong value for gpu_store_op."
+
 type gpu_index_element_size =
   | GPU_INDEXELEMENTSIZE_16BIT
   | GPU_INDEXELEMENTSIZE_32BIT
@@ -3976,6 +5124,11 @@ let gpu_index_element_size = int
 let gpu_index_element_size_to_enum : gpu_index_element_size -> gpu_index_element_size_enum = function
   | GPU_INDEXELEMENTSIZE_16BIT -> gpu_indexelementsize_16_bit
   | GPU_INDEXELEMENTSIZE_32BIT -> gpu_indexelementsize_32_bit
+
+let gpu_index_element_size_of_enum : gpu_index_element_size_enum -> gpu_index_element_size = function
+  | e when e = gpu_indexelementsize_16_bit -> GPU_INDEXELEMENTSIZE_16BIT
+  | e when e = gpu_indexelementsize_32_bit -> GPU_INDEXELEMENTSIZE_32BIT
+  | _ -> invalid_arg "Wrong value for gpu_index_element_size."
 
 type gpu_texture_format =
   | GPU_TEXTUREFORMAT_INVALID
@@ -4194,6 +5347,118 @@ let gpu_texture_format_to_enum : gpu_texture_format -> gpu_texture_format_enum =
   | GPU_TEXTUREFORMAT_ASTC_12x10_FLOAT -> gpu_textureformat_astc_12x10_float
   | GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT -> gpu_textureformat_astc_12x12_float
 
+let gpu_texture_format_of_enum : gpu_texture_format_enum -> gpu_texture_format =
+  let tbl = Hashtbl.create 105 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (gpu_textureformat_invalid, GPU_TEXTUREFORMAT_INVALID);
+      (gpu_textureformat_a8_unorm, GPU_TEXTUREFORMAT_A8_UNORM);
+      (gpu_textureformat_r8_unorm, GPU_TEXTUREFORMAT_R8_UNORM);
+      (gpu_textureformat_r8_g8_unorm, GPU_TEXTUREFORMAT_R8G8_UNORM);
+      (gpu_textureformat_r8_g8_b8_a8_unorm, GPU_TEXTUREFORMAT_R8G8B8A8_UNORM);
+      (gpu_textureformat_r16_unorm, GPU_TEXTUREFORMAT_R16_UNORM);
+      (gpu_textureformat_r16_g16_unorm, GPU_TEXTUREFORMAT_R16G16_UNORM);
+      (gpu_textureformat_r16_g16_b16_a16_unorm, GPU_TEXTUREFORMAT_R16G16B16A16_UNORM);
+      (gpu_textureformat_r10_g10_b10_a2_unorm, GPU_TEXTUREFORMAT_R10G10B10A2_UNORM);
+      (gpu_textureformat_b5_g6_r5_unorm, GPU_TEXTUREFORMAT_B5G6R5_UNORM);
+      (gpu_textureformat_b5_g5_r5_a1_unorm, GPU_TEXTUREFORMAT_B5G5R5A1_UNORM);
+      (gpu_textureformat_b4_g4_r4_a4_unorm, GPU_TEXTUREFORMAT_B4G4R4A4_UNORM);
+      (gpu_textureformat_b8_g8_r8_a8_unorm, GPU_TEXTUREFORMAT_B8G8R8A8_UNORM);
+      (gpu_textureformat_bc1_rgba_unorm, GPU_TEXTUREFORMAT_BC1_RGBA_UNORM);
+      (gpu_textureformat_bc2_rgba_unorm, GPU_TEXTUREFORMAT_BC2_RGBA_UNORM);
+      (gpu_textureformat_bc3_rgba_unorm, GPU_TEXTUREFORMAT_BC3_RGBA_UNORM);
+      (gpu_textureformat_bc4_r_unorm, GPU_TEXTUREFORMAT_BC4_R_UNORM);
+      (gpu_textureformat_bc5_rg_unorm, GPU_TEXTUREFORMAT_BC5_RG_UNORM);
+      (gpu_textureformat_bc7_rgba_unorm, GPU_TEXTUREFORMAT_BC7_RGBA_UNORM);
+      (gpu_textureformat_bc6_h_rgb_float, GPU_TEXTUREFORMAT_BC6H_RGB_FLOAT);
+      (gpu_textureformat_bc6_h_rgb_ufloat, GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT);
+      (gpu_textureformat_r8_snorm, GPU_TEXTUREFORMAT_R8_SNORM);
+      (gpu_textureformat_r8_g8_snorm, GPU_TEXTUREFORMAT_R8G8_SNORM);
+      (gpu_textureformat_r8_g8_b8_a8_snorm, GPU_TEXTUREFORMAT_R8G8B8A8_SNORM);
+      (gpu_textureformat_r16_snorm, GPU_TEXTUREFORMAT_R16_SNORM);
+      (gpu_textureformat_r16_g16_snorm, GPU_TEXTUREFORMAT_R16G16_SNORM);
+      (gpu_textureformat_r16_g16_b16_a16_snorm, GPU_TEXTUREFORMAT_R16G16B16A16_SNORM);
+      (gpu_textureformat_r16_float, GPU_TEXTUREFORMAT_R16_FLOAT);
+      (gpu_textureformat_r16_g16_float, GPU_TEXTUREFORMAT_R16G16_FLOAT);
+      (gpu_textureformat_r16_g16_b16_a16_float, GPU_TEXTUREFORMAT_R16G16B16A16_FLOAT);
+      (gpu_textureformat_r32_float, GPU_TEXTUREFORMAT_R32_FLOAT);
+      (gpu_textureformat_r32_g32_float, GPU_TEXTUREFORMAT_R32G32_FLOAT);
+      (gpu_textureformat_r32_g32_b32_a32_float, GPU_TEXTUREFORMAT_R32G32B32A32_FLOAT);
+      (gpu_textureformat_r11_g11_b10_ufloat, GPU_TEXTUREFORMAT_R11G11B10_UFLOAT);
+      (gpu_textureformat_r8_uint, GPU_TEXTUREFORMAT_R8_UINT);
+      (gpu_textureformat_r8_g8_uint, GPU_TEXTUREFORMAT_R8G8_UINT);
+      (gpu_textureformat_r8_g8_b8_a8_uint, GPU_TEXTUREFORMAT_R8G8B8A8_UINT);
+      (gpu_textureformat_r16_uint, GPU_TEXTUREFORMAT_R16_UINT);
+      (gpu_textureformat_r16_g16_uint, GPU_TEXTUREFORMAT_R16G16_UINT);
+      (gpu_textureformat_r16_g16_b16_a16_uint, GPU_TEXTUREFORMAT_R16G16B16A16_UINT);
+      (gpu_textureformat_r32_uint, GPU_TEXTUREFORMAT_R32_UINT);
+      (gpu_textureformat_r32_g32_uint, GPU_TEXTUREFORMAT_R32G32_UINT);
+      (gpu_textureformat_r32_g32_b32_a32_uint, GPU_TEXTUREFORMAT_R32G32B32A32_UINT);
+      (gpu_textureformat_r8_int, GPU_TEXTUREFORMAT_R8_INT);
+      (gpu_textureformat_r8_g8_int, GPU_TEXTUREFORMAT_R8G8_INT);
+      (gpu_textureformat_r8_g8_b8_a8_int, GPU_TEXTUREFORMAT_R8G8B8A8_INT);
+      (gpu_textureformat_r16_int, GPU_TEXTUREFORMAT_R16_INT);
+      (gpu_textureformat_r16_g16_int, GPU_TEXTUREFORMAT_R16G16_INT);
+      (gpu_textureformat_r16_g16_b16_a16_int, GPU_TEXTUREFORMAT_R16G16B16A16_INT);
+      (gpu_textureformat_r32_int, GPU_TEXTUREFORMAT_R32_INT);
+      (gpu_textureformat_r32_g32_int, GPU_TEXTUREFORMAT_R32G32_INT);
+      (gpu_textureformat_r32_g32_b32_a32_int, GPU_TEXTUREFORMAT_R32G32B32A32_INT);
+      (gpu_textureformat_r8_g8_b8_a8_unorm_srgb, GPU_TEXTUREFORMAT_R8G8B8A8_UNORM_SRGB);
+      (gpu_textureformat_b8_g8_r8_a8_unorm_srgb, GPU_TEXTUREFORMAT_B8G8R8A8_UNORM_SRGB);
+      (gpu_textureformat_bc1_rgba_unorm_srgb, GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB);
+      (gpu_textureformat_bc2_rgba_unorm_srgb, GPU_TEXTUREFORMAT_BC2_RGBA_UNORM_SRGB);
+      (gpu_textureformat_bc3_rgba_unorm_srgb, GPU_TEXTUREFORMAT_BC3_RGBA_UNORM_SRGB);
+      (gpu_textureformat_bc7_rgba_unorm_srgb, GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB);
+      (gpu_textureformat_d16_unorm, GPU_TEXTUREFORMAT_D16_UNORM);
+      (gpu_textureformat_d24_unorm, GPU_TEXTUREFORMAT_D24_UNORM);
+      (gpu_textureformat_d32_float, GPU_TEXTUREFORMAT_D32_FLOAT);
+      (gpu_textureformat_d24_unorm_s8_uint, GPU_TEXTUREFORMAT_D24_UNORM_S8_UINT);
+      (gpu_textureformat_d32_float_s8_uint, GPU_TEXTUREFORMAT_D32_FLOAT_S8_UINT);
+      (gpu_textureformat_astc_4x4_unorm, GPU_TEXTUREFORMAT_ASTC_4x4_UNORM);
+      (gpu_textureformat_astc_5x4_unorm, GPU_TEXTUREFORMAT_ASTC_5x4_UNORM);
+      (gpu_textureformat_astc_5x5_unorm, GPU_TEXTUREFORMAT_ASTC_5x5_UNORM);
+      (gpu_textureformat_astc_6x5_unorm, GPU_TEXTUREFORMAT_ASTC_6x5_UNORM);
+      (gpu_textureformat_astc_6x6_unorm, GPU_TEXTUREFORMAT_ASTC_6x6_UNORM);
+      (gpu_textureformat_astc_8x5_unorm, GPU_TEXTUREFORMAT_ASTC_8x5_UNORM);
+      (gpu_textureformat_astc_8x6_unorm, GPU_TEXTUREFORMAT_ASTC_8x6_UNORM);
+      (gpu_textureformat_astc_8x8_unorm, GPU_TEXTUREFORMAT_ASTC_8x8_UNORM);
+      (gpu_textureformat_astc_10x5_unorm, GPU_TEXTUREFORMAT_ASTC_10x5_UNORM);
+      (gpu_textureformat_astc_10x6_unorm, GPU_TEXTUREFORMAT_ASTC_10x6_UNORM);
+      (gpu_textureformat_astc_10x8_unorm, GPU_TEXTUREFORMAT_ASTC_10x8_UNORM);
+      (gpu_textureformat_astc_10x10_unorm, GPU_TEXTUREFORMAT_ASTC_10x10_UNORM);
+      (gpu_textureformat_astc_12x10_unorm, GPU_TEXTUREFORMAT_ASTC_12x10_UNORM);
+      (gpu_textureformat_astc_12x12_unorm, GPU_TEXTUREFORMAT_ASTC_12x12_UNORM);
+      (gpu_textureformat_astc_4x4_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_4x4_UNORM_SRGB);
+      (gpu_textureformat_astc_5x4_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_5x4_UNORM_SRGB);
+      (gpu_textureformat_astc_5x5_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_5x5_UNORM_SRGB);
+      (gpu_textureformat_astc_6x5_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_6x5_UNORM_SRGB);
+      (gpu_textureformat_astc_6x6_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_6x6_UNORM_SRGB);
+      (gpu_textureformat_astc_8x5_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_8x5_UNORM_SRGB);
+      (gpu_textureformat_astc_8x6_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_8x6_UNORM_SRGB);
+      (gpu_textureformat_astc_8x8_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_8x8_UNORM_SRGB);
+      (gpu_textureformat_astc_10x5_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_10x5_UNORM_SRGB);
+      (gpu_textureformat_astc_10x6_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_10x6_UNORM_SRGB);
+      (gpu_textureformat_astc_10x8_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_10x8_UNORM_SRGB);
+      (gpu_textureformat_astc_10x10_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_10x10_UNORM_SRGB);
+      (gpu_textureformat_astc_12x10_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_12x10_UNORM_SRGB);
+      (gpu_textureformat_astc_12x12_unorm_srgb, GPU_TEXTUREFORMAT_ASTC_12x12_UNORM_SRGB);
+      (gpu_textureformat_astc_4x4_float, GPU_TEXTUREFORMAT_ASTC_4x4_FLOAT);
+      (gpu_textureformat_astc_5x4_float, GPU_TEXTUREFORMAT_ASTC_5x4_FLOAT);
+      (gpu_textureformat_astc_5x5_float, GPU_TEXTUREFORMAT_ASTC_5x5_FLOAT);
+      (gpu_textureformat_astc_6x5_float, GPU_TEXTUREFORMAT_ASTC_6x5_FLOAT);
+      (gpu_textureformat_astc_6x6_float, GPU_TEXTUREFORMAT_ASTC_6x6_FLOAT);
+      (gpu_textureformat_astc_8x5_float, GPU_TEXTUREFORMAT_ASTC_8x5_FLOAT);
+      (gpu_textureformat_astc_8x6_float, GPU_TEXTUREFORMAT_ASTC_8x6_FLOAT);
+      (gpu_textureformat_astc_8x8_float, GPU_TEXTUREFORMAT_ASTC_8x8_FLOAT);
+      (gpu_textureformat_astc_10x5_float, GPU_TEXTUREFORMAT_ASTC_10x5_FLOAT);
+      (gpu_textureformat_astc_10x6_float, GPU_TEXTUREFORMAT_ASTC_10x6_FLOAT);
+      (gpu_textureformat_astc_10x8_float, GPU_TEXTUREFORMAT_ASTC_10x8_FLOAT);
+      (gpu_textureformat_astc_10x10_float, GPU_TEXTUREFORMAT_ASTC_10x10_FLOAT);
+      (gpu_textureformat_astc_12x10_float, GPU_TEXTUREFORMAT_ASTC_12x10_FLOAT);
+      (gpu_textureformat_astc_12x12_float, GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for gpu_texture_format."
+
 let gpu_texture_usage_flags = uint (* prim *)
 type gpu_texture_type =
   | GPU_TEXTURETYPE_2D
@@ -4212,6 +5477,14 @@ let gpu_texture_type_to_enum : gpu_texture_type -> gpu_texture_type_enum = funct
   | GPU_TEXTURETYPE_CUBE -> gpu_texturetype_cube
   | GPU_TEXTURETYPE_CUBE_ARRAY -> gpu_texturetype_cube_array
 
+let gpu_texture_type_of_enum : gpu_texture_type_enum -> gpu_texture_type = function
+  | e when e = gpu_texturetype_2_d -> GPU_TEXTURETYPE_2D
+  | e when e = gpu_texturetype_2_d_array -> GPU_TEXTURETYPE_2D_ARRAY
+  | e when e = gpu_texturetype_3_d -> GPU_TEXTURETYPE_3D
+  | e when e = gpu_texturetype_cube -> GPU_TEXTURETYPE_CUBE
+  | e when e = gpu_texturetype_cube_array -> GPU_TEXTURETYPE_CUBE_ARRAY
+  | _ -> invalid_arg "Wrong value for gpu_texture_type."
+
 type gpu_sample_count =
   | GPU_SAMPLECOUNT_1
   | GPU_SAMPLECOUNT_2
@@ -4226,6 +5499,13 @@ let gpu_sample_count_to_enum : gpu_sample_count -> gpu_sample_count_enum = funct
   | GPU_SAMPLECOUNT_2 -> gpu_samplecount_2
   | GPU_SAMPLECOUNT_4 -> gpu_samplecount_4
   | GPU_SAMPLECOUNT_8 -> gpu_samplecount_8
+
+let gpu_sample_count_of_enum : gpu_sample_count_enum -> gpu_sample_count = function
+  | e when e = gpu_samplecount_1 -> GPU_SAMPLECOUNT_1
+  | e when e = gpu_samplecount_2 -> GPU_SAMPLECOUNT_2
+  | e when e = gpu_samplecount_4 -> GPU_SAMPLECOUNT_4
+  | e when e = gpu_samplecount_8 -> GPU_SAMPLECOUNT_8
+  | _ -> invalid_arg "Wrong value for gpu_sample_count."
 
 type gpu_cube_map_face =
   | GPU_CUBEMAPFACE_POSITIVEX
@@ -4246,6 +5526,15 @@ let gpu_cube_map_face_to_enum : gpu_cube_map_face -> gpu_cube_map_face_enum = fu
   | GPU_CUBEMAPFACE_POSITIVEZ -> gpu_cubemapface_positivez
   | GPU_CUBEMAPFACE_NEGATIVEZ -> gpu_cubemapface_negativez
 
+let gpu_cube_map_face_of_enum : gpu_cube_map_face_enum -> gpu_cube_map_face = function
+  | e when e = gpu_cubemapface_positivex -> GPU_CUBEMAPFACE_POSITIVEX
+  | e when e = gpu_cubemapface_negativex -> GPU_CUBEMAPFACE_NEGATIVEX
+  | e when e = gpu_cubemapface_positivey -> GPU_CUBEMAPFACE_POSITIVEY
+  | e when e = gpu_cubemapface_negativey -> GPU_CUBEMAPFACE_NEGATIVEY
+  | e when e = gpu_cubemapface_positivez -> GPU_CUBEMAPFACE_POSITIVEZ
+  | e when e = gpu_cubemapface_negativez -> GPU_CUBEMAPFACE_NEGATIVEZ
+  | _ -> invalid_arg "Wrong value for gpu_cube_map_face."
+
 let gpu_buffer_usage_flags = uint (* prim *)
 type gpu_transfer_buffer_usage =
   | GPU_TRANSFERBUFFERUSAGE_UPLOAD
@@ -4258,6 +5547,11 @@ let gpu_transfer_buffer_usage_to_enum : gpu_transfer_buffer_usage -> gpu_transfe
   | GPU_TRANSFERBUFFERUSAGE_UPLOAD -> gpu_transferbufferusage_upload
   | GPU_TRANSFERBUFFERUSAGE_DOWNLOAD -> gpu_transferbufferusage_download
 
+let gpu_transfer_buffer_usage_of_enum : gpu_transfer_buffer_usage_enum -> gpu_transfer_buffer_usage = function
+  | e when e = gpu_transferbufferusage_upload -> GPU_TRANSFERBUFFERUSAGE_UPLOAD
+  | e when e = gpu_transferbufferusage_download -> GPU_TRANSFERBUFFERUSAGE_DOWNLOAD
+  | _ -> invalid_arg "Wrong value for gpu_transfer_buffer_usage."
+
 type gpu_shader_stage =
   | GPU_SHADERSTAGE_VERTEX
   | GPU_SHADERSTAGE_FRAGMENT
@@ -4268,6 +5562,11 @@ let gpu_shader_stage = int
 let gpu_shader_stage_to_enum : gpu_shader_stage -> gpu_shader_stage_enum = function
   | GPU_SHADERSTAGE_VERTEX -> gpu_shaderstage_vertex
   | GPU_SHADERSTAGE_FRAGMENT -> gpu_shaderstage_fragment
+
+let gpu_shader_stage_of_enum : gpu_shader_stage_enum -> gpu_shader_stage = function
+  | e when e = gpu_shaderstage_vertex -> GPU_SHADERSTAGE_VERTEX
+  | e when e = gpu_shaderstage_fragment -> GPU_SHADERSTAGE_FRAGMENT
+  | _ -> invalid_arg "Wrong value for gpu_shader_stage."
 
 let gpu_shader_format = uint (* prim *)
 type gpu_vertex_element_format =
@@ -4339,6 +5638,44 @@ let gpu_vertex_element_format_to_enum : gpu_vertex_element_format -> gpu_vertex_
   | GPU_VERTEXELEMENTFORMAT_HALF2 -> gpu_vertexelementformat_half2
   | GPU_VERTEXELEMENTFORMAT_HALF4 -> gpu_vertexelementformat_half4
 
+let gpu_vertex_element_format_of_enum : gpu_vertex_element_format_enum -> gpu_vertex_element_format =
+  let tbl = Hashtbl.create 31 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (gpu_vertexelementformat_invalid, GPU_VERTEXELEMENTFORMAT_INVALID);
+      (gpu_vertexelementformat_int, GPU_VERTEXELEMENTFORMAT_INT);
+      (gpu_vertexelementformat_int2, GPU_VERTEXELEMENTFORMAT_INT2);
+      (gpu_vertexelementformat_int3, GPU_VERTEXELEMENTFORMAT_INT3);
+      (gpu_vertexelementformat_int4, GPU_VERTEXELEMENTFORMAT_INT4);
+      (gpu_vertexelementformat_uint, GPU_VERTEXELEMENTFORMAT_UINT);
+      (gpu_vertexelementformat_uint2, GPU_VERTEXELEMENTFORMAT_UINT2);
+      (gpu_vertexelementformat_uint3, GPU_VERTEXELEMENTFORMAT_UINT3);
+      (gpu_vertexelementformat_uint4, GPU_VERTEXELEMENTFORMAT_UINT4);
+      (gpu_vertexelementformat_float, GPU_VERTEXELEMENTFORMAT_FLOAT);
+      (gpu_vertexelementformat_float2, GPU_VERTEXELEMENTFORMAT_FLOAT2);
+      (gpu_vertexelementformat_float3, GPU_VERTEXELEMENTFORMAT_FLOAT3);
+      (gpu_vertexelementformat_float4, GPU_VERTEXELEMENTFORMAT_FLOAT4);
+      (gpu_vertexelementformat_byte2, GPU_VERTEXELEMENTFORMAT_BYTE2);
+      (gpu_vertexelementformat_byte4, GPU_VERTEXELEMENTFORMAT_BYTE4);
+      (gpu_vertexelementformat_ubyte2, GPU_VERTEXELEMENTFORMAT_UBYTE2);
+      (gpu_vertexelementformat_ubyte4, GPU_VERTEXELEMENTFORMAT_UBYTE4);
+      (gpu_vertexelementformat_byte2_norm, GPU_VERTEXELEMENTFORMAT_BYTE2_NORM);
+      (gpu_vertexelementformat_byte4_norm, GPU_VERTEXELEMENTFORMAT_BYTE4_NORM);
+      (gpu_vertexelementformat_ubyte2_norm, GPU_VERTEXELEMENTFORMAT_UBYTE2_NORM);
+      (gpu_vertexelementformat_ubyte4_norm, GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM);
+      (gpu_vertexelementformat_short2, GPU_VERTEXELEMENTFORMAT_SHORT2);
+      (gpu_vertexelementformat_short4, GPU_VERTEXELEMENTFORMAT_SHORT4);
+      (gpu_vertexelementformat_ushort2, GPU_VERTEXELEMENTFORMAT_USHORT2);
+      (gpu_vertexelementformat_ushort4, GPU_VERTEXELEMENTFORMAT_USHORT4);
+      (gpu_vertexelementformat_short2_norm, GPU_VERTEXELEMENTFORMAT_SHORT2_NORM);
+      (gpu_vertexelementformat_short4_norm, GPU_VERTEXELEMENTFORMAT_SHORT4_NORM);
+      (gpu_vertexelementformat_ushort2_norm, GPU_VERTEXELEMENTFORMAT_USHORT2_NORM);
+      (gpu_vertexelementformat_ushort4_norm, GPU_VERTEXELEMENTFORMAT_USHORT4_NORM);
+      (gpu_vertexelementformat_half2, GPU_VERTEXELEMENTFORMAT_HALF2);
+      (gpu_vertexelementformat_half4, GPU_VERTEXELEMENTFORMAT_HALF4);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for gpu_vertex_element_format."
+
 type gpu_vertex_input_rate =
   | GPU_VERTEXINPUTRATE_VERTEX
   | GPU_VERTEXINPUTRATE_INSTANCE
@@ -4350,6 +5687,11 @@ let gpu_vertex_input_rate_to_enum : gpu_vertex_input_rate -> gpu_vertex_input_ra
   | GPU_VERTEXINPUTRATE_VERTEX -> gpu_vertexinputrate_vertex
   | GPU_VERTEXINPUTRATE_INSTANCE -> gpu_vertexinputrate_instance
 
+let gpu_vertex_input_rate_of_enum : gpu_vertex_input_rate_enum -> gpu_vertex_input_rate = function
+  | e when e = gpu_vertexinputrate_vertex -> GPU_VERTEXINPUTRATE_VERTEX
+  | e when e = gpu_vertexinputrate_instance -> GPU_VERTEXINPUTRATE_INSTANCE
+  | _ -> invalid_arg "Wrong value for gpu_vertex_input_rate."
+
 type gpu_fill_mode =
   | GPU_FILLMODE_FILL
   | GPU_FILLMODE_LINE
@@ -4360,6 +5702,11 @@ let gpu_fill_mode = int
 let gpu_fill_mode_to_enum : gpu_fill_mode -> gpu_fill_mode_enum = function
   | GPU_FILLMODE_FILL -> gpu_fillmode_fill
   | GPU_FILLMODE_LINE -> gpu_fillmode_line
+
+let gpu_fill_mode_of_enum : gpu_fill_mode_enum -> gpu_fill_mode = function
+  | e when e = gpu_fillmode_fill -> GPU_FILLMODE_FILL
+  | e when e = gpu_fillmode_line -> GPU_FILLMODE_LINE
+  | _ -> invalid_arg "Wrong value for gpu_fill_mode."
 
 type gpu_cull_mode =
   | GPU_CULLMODE_NONE
@@ -4374,6 +5721,12 @@ let gpu_cull_mode_to_enum : gpu_cull_mode -> gpu_cull_mode_enum = function
   | GPU_CULLMODE_FRONT -> gpu_cullmode_front
   | GPU_CULLMODE_BACK -> gpu_cullmode_back
 
+let gpu_cull_mode_of_enum : gpu_cull_mode_enum -> gpu_cull_mode = function
+  | e when e = gpu_cullmode_none -> GPU_CULLMODE_NONE
+  | e when e = gpu_cullmode_front -> GPU_CULLMODE_FRONT
+  | e when e = gpu_cullmode_back -> GPU_CULLMODE_BACK
+  | _ -> invalid_arg "Wrong value for gpu_cull_mode."
+
 type gpu_front_face =
   | GPU_FRONTFACE_COUNTER_CLOCKWISE
   | GPU_FRONTFACE_CLOCKWISE
@@ -4384,6 +5737,11 @@ let gpu_front_face = int
 let gpu_front_face_to_enum : gpu_front_face -> gpu_front_face_enum = function
   | GPU_FRONTFACE_COUNTER_CLOCKWISE -> gpu_frontface_counter_clockwise
   | GPU_FRONTFACE_CLOCKWISE -> gpu_frontface_clockwise
+
+let gpu_front_face_of_enum : gpu_front_face_enum -> gpu_front_face = function
+  | e when e = gpu_frontface_counter_clockwise -> GPU_FRONTFACE_COUNTER_CLOCKWISE
+  | e when e = gpu_frontface_clockwise -> GPU_FRONTFACE_CLOCKWISE
+  | _ -> invalid_arg "Wrong value for gpu_front_face."
 
 type gpu_compare_op =
   | GPU_COMPAREOP_INVALID
@@ -4410,6 +5768,22 @@ let gpu_compare_op_to_enum : gpu_compare_op -> gpu_compare_op_enum = function
   | GPU_COMPAREOP_GREATER_OR_EQUAL -> gpu_compareop_greater_or_equal
   | GPU_COMPAREOP_ALWAYS -> gpu_compareop_always
 
+let gpu_compare_op_of_enum : gpu_compare_op_enum -> gpu_compare_op =
+  let tbl = Hashtbl.create 9 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (gpu_compareop_invalid, GPU_COMPAREOP_INVALID);
+      (gpu_compareop_never, GPU_COMPAREOP_NEVER);
+      (gpu_compareop_less, GPU_COMPAREOP_LESS);
+      (gpu_compareop_equal, GPU_COMPAREOP_EQUAL);
+      (gpu_compareop_less_or_equal, GPU_COMPAREOP_LESS_OR_EQUAL);
+      (gpu_compareop_greater, GPU_COMPAREOP_GREATER);
+      (gpu_compareop_not_equal, GPU_COMPAREOP_NOT_EQUAL);
+      (gpu_compareop_greater_or_equal, GPU_COMPAREOP_GREATER_OR_EQUAL);
+      (gpu_compareop_always, GPU_COMPAREOP_ALWAYS);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for gpu_compare_op."
+
 type gpu_stencil_op =
   | GPU_STENCILOP_INVALID
   | GPU_STENCILOP_KEEP
@@ -4435,6 +5809,22 @@ let gpu_stencil_op_to_enum : gpu_stencil_op -> gpu_stencil_op_enum = function
   | GPU_STENCILOP_INCREMENT_AND_WRAP -> gpu_stencilop_increment_and_wrap
   | GPU_STENCILOP_DECREMENT_AND_WRAP -> gpu_stencilop_decrement_and_wrap
 
+let gpu_stencil_op_of_enum : gpu_stencil_op_enum -> gpu_stencil_op =
+  let tbl = Hashtbl.create 9 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (gpu_stencilop_invalid, GPU_STENCILOP_INVALID);
+      (gpu_stencilop_keep, GPU_STENCILOP_KEEP);
+      (gpu_stencilop_zero, GPU_STENCILOP_ZERO);
+      (gpu_stencilop_replace, GPU_STENCILOP_REPLACE);
+      (gpu_stencilop_increment_and_clamp, GPU_STENCILOP_INCREMENT_AND_CLAMP);
+      (gpu_stencilop_decrement_and_clamp, GPU_STENCILOP_DECREMENT_AND_CLAMP);
+      (gpu_stencilop_invert, GPU_STENCILOP_INVERT);
+      (gpu_stencilop_increment_and_wrap, GPU_STENCILOP_INCREMENT_AND_WRAP);
+      (gpu_stencilop_decrement_and_wrap, GPU_STENCILOP_DECREMENT_AND_WRAP);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for gpu_stencil_op."
+
 type gpu_blend_op =
   | GPU_BLENDOP_INVALID
   | GPU_BLENDOP_ADD
@@ -4453,6 +5843,15 @@ let gpu_blend_op_to_enum : gpu_blend_op -> gpu_blend_op_enum = function
   | GPU_BLENDOP_REVERSE_SUBTRACT -> gpu_blendop_reverse_subtract
   | GPU_BLENDOP_MIN -> gpu_blendop_min
   | GPU_BLENDOP_MAX -> gpu_blendop_max
+
+let gpu_blend_op_of_enum : gpu_blend_op_enum -> gpu_blend_op = function
+  | e when e = gpu_blendop_invalid -> GPU_BLENDOP_INVALID
+  | e when e = gpu_blendop_add -> GPU_BLENDOP_ADD
+  | e when e = gpu_blendop_subtract -> GPU_BLENDOP_SUBTRACT
+  | e when e = gpu_blendop_reverse_subtract -> GPU_BLENDOP_REVERSE_SUBTRACT
+  | e when e = gpu_blendop_min -> GPU_BLENDOP_MIN
+  | e when e = gpu_blendop_max -> GPU_BLENDOP_MAX
+  | _ -> invalid_arg "Wrong value for gpu_blend_op."
 
 type gpu_blend_factor =
   | GPU_BLENDFACTOR_INVALID
@@ -4489,6 +5888,27 @@ let gpu_blend_factor_to_enum : gpu_blend_factor -> gpu_blend_factor_enum = funct
   | GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR -> gpu_blendfactor_one_minus_constant_color
   | GPU_BLENDFACTOR_SRC_ALPHA_SATURATE -> gpu_blendfactor_src_alpha_saturate
 
+let gpu_blend_factor_of_enum : gpu_blend_factor_enum -> gpu_blend_factor =
+  let tbl = Hashtbl.create 14 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (gpu_blendfactor_invalid, GPU_BLENDFACTOR_INVALID);
+      (gpu_blendfactor_zero, GPU_BLENDFACTOR_ZERO);
+      (gpu_blendfactor_one, GPU_BLENDFACTOR_ONE);
+      (gpu_blendfactor_src_color, GPU_BLENDFACTOR_SRC_COLOR);
+      (gpu_blendfactor_one_minus_src_color, GPU_BLENDFACTOR_ONE_MINUS_SRC_COLOR);
+      (gpu_blendfactor_dst_color, GPU_BLENDFACTOR_DST_COLOR);
+      (gpu_blendfactor_one_minus_dst_color, GPU_BLENDFACTOR_ONE_MINUS_DST_COLOR);
+      (gpu_blendfactor_src_alpha, GPU_BLENDFACTOR_SRC_ALPHA);
+      (gpu_blendfactor_one_minus_src_alpha, GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA);
+      (gpu_blendfactor_dst_alpha, GPU_BLENDFACTOR_DST_ALPHA);
+      (gpu_blendfactor_one_minus_dst_alpha, GPU_BLENDFACTOR_ONE_MINUS_DST_ALPHA);
+      (gpu_blendfactor_constant_color, GPU_BLENDFACTOR_CONSTANT_COLOR);
+      (gpu_blendfactor_one_minus_constant_color, GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR);
+      (gpu_blendfactor_src_alpha_saturate, GPU_BLENDFACTOR_SRC_ALPHA_SATURATE);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for gpu_blend_factor."
+
 let gpu_color_component_flags = uchar (* prim *)
 type gpu_filter =
   | GPU_FILTER_NEAREST
@@ -4501,6 +5921,11 @@ let gpu_filter_to_enum : gpu_filter -> gpu_filter_enum = function
   | GPU_FILTER_NEAREST -> gpu_filter_nearest
   | GPU_FILTER_LINEAR -> gpu_filter_linear
 
+let gpu_filter_of_enum : gpu_filter_enum -> gpu_filter = function
+  | e when e = gpu_filter_nearest -> GPU_FILTER_NEAREST
+  | e when e = gpu_filter_linear -> GPU_FILTER_LINEAR
+  | _ -> invalid_arg "Wrong value for gpu_filter."
+
 type gpu_sampler_mipmap_mode =
   | GPU_SAMPLERMIPMAPMODE_NEAREST
   | GPU_SAMPLERMIPMAPMODE_LINEAR
@@ -4511,6 +5936,11 @@ let gpu_sampler_mipmap_mode = int
 let gpu_sampler_mipmap_mode_to_enum : gpu_sampler_mipmap_mode -> gpu_sampler_mipmap_mode_enum = function
   | GPU_SAMPLERMIPMAPMODE_NEAREST -> gpu_samplermipmapmode_nearest
   | GPU_SAMPLERMIPMAPMODE_LINEAR -> gpu_samplermipmapmode_linear
+
+let gpu_sampler_mipmap_mode_of_enum : gpu_sampler_mipmap_mode_enum -> gpu_sampler_mipmap_mode = function
+  | e when e = gpu_samplermipmapmode_nearest -> GPU_SAMPLERMIPMAPMODE_NEAREST
+  | e when e = gpu_samplermipmapmode_linear -> GPU_SAMPLERMIPMAPMODE_LINEAR
+  | _ -> invalid_arg "Wrong value for gpu_sampler_mipmap_mode."
 
 type gpu_sampler_address_mode =
   | GPU_SAMPLERADDRESSMODE_REPEAT
@@ -4525,6 +5955,12 @@ let gpu_sampler_address_mode_to_enum : gpu_sampler_address_mode -> gpu_sampler_a
   | GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT -> gpu_sampleraddressmode_mirrored_repeat
   | GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE -> gpu_sampleraddressmode_clamp_to_edge
 
+let gpu_sampler_address_mode_of_enum : gpu_sampler_address_mode_enum -> gpu_sampler_address_mode = function
+  | e when e = gpu_sampleraddressmode_repeat -> GPU_SAMPLERADDRESSMODE_REPEAT
+  | e when e = gpu_sampleraddressmode_mirrored_repeat -> GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT
+  | e when e = gpu_sampleraddressmode_clamp_to_edge -> GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE
+  | _ -> invalid_arg "Wrong value for gpu_sampler_address_mode."
+
 type gpu_present_mode =
   | GPU_PRESENTMODE_VSYNC
   | GPU_PRESENTMODE_IMMEDIATE
@@ -4537,6 +5973,12 @@ let gpu_present_mode_to_enum : gpu_present_mode -> gpu_present_mode_enum = funct
   | GPU_PRESENTMODE_VSYNC -> gpu_presentmode_vsync
   | GPU_PRESENTMODE_IMMEDIATE -> gpu_presentmode_immediate
   | GPU_PRESENTMODE_MAILBOX -> gpu_presentmode_mailbox
+
+let gpu_present_mode_of_enum : gpu_present_mode_enum -> gpu_present_mode = function
+  | e when e = gpu_presentmode_vsync -> GPU_PRESENTMODE_VSYNC
+  | e when e = gpu_presentmode_immediate -> GPU_PRESENTMODE_IMMEDIATE
+  | e when e = gpu_presentmode_mailbox -> GPU_PRESENTMODE_MAILBOX
+  | _ -> invalid_arg "Wrong value for gpu_present_mode."
 
 type gpu_swapchain_composition =
   | GPU_SWAPCHAINCOMPOSITION_SDR
@@ -4552,6 +5994,13 @@ let gpu_swapchain_composition_to_enum : gpu_swapchain_composition -> gpu_swapcha
   | GPU_SWAPCHAINCOMPOSITION_SDR_LINEAR -> gpu_swapchaincomposition_sdr_linear
   | GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR -> gpu_swapchaincomposition_hdr_extended_linear
   | GPU_SWAPCHAINCOMPOSITION_HDR10_ST2084 -> gpu_swapchaincomposition_hdr10_st2084
+
+let gpu_swapchain_composition_of_enum : gpu_swapchain_composition_enum -> gpu_swapchain_composition = function
+  | e when e = gpu_swapchaincomposition_sdr -> GPU_SWAPCHAINCOMPOSITION_SDR
+  | e when e = gpu_swapchaincomposition_sdr_linear -> GPU_SWAPCHAINCOMPOSITION_SDR_LINEAR
+  | e when e = gpu_swapchaincomposition_hdr_extended_linear -> GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR
+  | e when e = gpu_swapchaincomposition_hdr10_st2084 -> GPU_SWAPCHAINCOMPOSITION_HDR10_ST2084
+  | _ -> invalid_arg "Wrong value for gpu_swapchain_composition."
 
 module GPUViewport = struct
   type _t
@@ -5380,6 +6829,14 @@ let hid_bus_type_to_enum : hid_bus_type -> hid_bus_type_enum = function
   | HID_API_BUS_I2C -> hid_api_bus_i2_c
   | HID_API_BUS_SPI -> hid_api_bus_spi
 
+let hid_bus_type_of_enum : hid_bus_type_enum -> hid_bus_type = function
+  | e when e = hid_api_bus_unknown -> HID_API_BUS_UNKNOWN
+  | e when e = hid_api_bus_usb -> HID_API_BUS_USB
+  | e when e = hid_api_bus_bluetooth -> HID_API_BUS_BLUETOOTH
+  | e when e = hid_api_bus_i2_c -> HID_API_BUS_I2C
+  | e when e = hid_api_bus_spi -> HID_API_BUS_SPI
+  | _ -> invalid_arg "Wrong value for hid_bus_type."
+
 module Hid_device_info = struct
   type _t
   type t = _t structure
@@ -5419,6 +6876,12 @@ let hint_priority_to_enum : hint_priority -> hint_priority_enum = function
   | HINT_NORMAL -> hint_normal
   | HINT_OVERRIDE -> hint_override
 
+let hint_priority_of_enum : hint_priority_enum -> hint_priority = function
+  | e when e = hint_default -> HINT_DEFAULT
+  | e when e = hint_normal -> HINT_NORMAL
+  | e when e = hint_override -> HINT_OVERRIDE
+  | _ -> invalid_arg "Wrong value for hint_priority."
+
 let hint_callback = funptr (ptr void @-> string @-> string @-> string @-> returning void)
 let init_flags = uint (* prim *)
 type app_result =
@@ -5433,6 +6896,12 @@ let app_result_to_enum : app_result -> app_result_enum = function
   | APP_CONTINUE -> app_continue
   | APP_SUCCESS -> app_success
   | APP_FAILURE -> app_failure
+
+let app_result_of_enum : app_result_enum -> app_result = function
+  | e when e = app_continue -> APP_CONTINUE
+  | e when e = app_success -> APP_SUCCESS
+  | e when e = app_failure -> APP_FAILURE
+  | _ -> invalid_arg "Wrong value for app_result."
 
 let app_init_func = funptr (ptr (ptr void) @-> int @-> ptr string @-> returning app_result)
 let app_iterate_func = funptr (ptr void @-> returning app_result)
@@ -5505,6 +6974,33 @@ let log_category_to_enum : log_category -> log_category_enum = function
   | LOG_CATEGORY_RESERVED10 -> log_category_reserved10
   | LOG_CATEGORY_CUSTOM -> log_category_custom
 
+let log_category_of_enum : log_category_enum -> log_category =
+  let tbl = Hashtbl.create 20 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (log_category_application, LOG_CATEGORY_APPLICATION);
+      (log_category_error, LOG_CATEGORY_ERROR);
+      (log_category_assert, LOG_CATEGORY_ASSERT);
+      (log_category_system, LOG_CATEGORY_SYSTEM);
+      (log_category_audio, LOG_CATEGORY_AUDIO);
+      (log_category_video, LOG_CATEGORY_VIDEO);
+      (log_category_render, LOG_CATEGORY_RENDER);
+      (log_category_input, LOG_CATEGORY_INPUT);
+      (log_category_test, LOG_CATEGORY_TEST);
+      (log_category_gpu, LOG_CATEGORY_GPU);
+      (log_category_reserved2, LOG_CATEGORY_RESERVED2);
+      (log_category_reserved3, LOG_CATEGORY_RESERVED3);
+      (log_category_reserved4, LOG_CATEGORY_RESERVED4);
+      (log_category_reserved5, LOG_CATEGORY_RESERVED5);
+      (log_category_reserved6, LOG_CATEGORY_RESERVED6);
+      (log_category_reserved7, LOG_CATEGORY_RESERVED7);
+      (log_category_reserved8, LOG_CATEGORY_RESERVED8);
+      (log_category_reserved9, LOG_CATEGORY_RESERVED9);
+      (log_category_reserved10, LOG_CATEGORY_RESERVED10);
+      (log_category_custom, LOG_CATEGORY_CUSTOM);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for log_category."
+
 type log_priority =
   | LOG_PRIORITY_INVALID
   | LOG_PRIORITY_TRACE
@@ -5529,6 +7025,22 @@ let log_priority_to_enum : log_priority -> log_priority_enum = function
   | LOG_PRIORITY_ERROR -> log_priority_error
   | LOG_PRIORITY_CRITICAL -> log_priority_critical
   | LOG_PRIORITY_COUNT -> log_priority_count
+
+let log_priority_of_enum : log_priority_enum -> log_priority =
+  let tbl = Hashtbl.create 9 in
+  let () = List.iter (Helpers.hadd tbl) [
+      (log_priority_invalid, LOG_PRIORITY_INVALID);
+      (log_priority_trace, LOG_PRIORITY_TRACE);
+      (log_priority_verbose, LOG_PRIORITY_VERBOSE);
+      (log_priority_debug, LOG_PRIORITY_DEBUG);
+      (log_priority_info, LOG_PRIORITY_INFO);
+      (log_priority_warn, LOG_PRIORITY_WARN);
+      (log_priority_error, LOG_PRIORITY_ERROR);
+      (log_priority_critical, LOG_PRIORITY_CRITICAL);
+      (log_priority_count, LOG_PRIORITY_COUNT);
+    ] in fun e -> match Hashtbl.find_opt tbl e with
+    | Some v -> v
+    | None -> invalid_arg "Wrong value for log_priority."
 
 let log_output_function = funptr (ptr void @-> int @-> log_priority @-> string @-> returning void)
 let message_box_flags = uint (* prim *)
@@ -5579,6 +7091,15 @@ let message_box_color_type_to_enum : message_box_color_type -> message_box_color
   | MESSAGEBOX_COLOR_BUTTON_BACKGROUND -> messagebox_color_button_background
   | MESSAGEBOX_COLOR_BUTTON_SELECTED -> messagebox_color_button_selected
   | MESSAGEBOX_COLOR_COUNT -> messagebox_color_count
+
+let message_box_color_type_of_enum : message_box_color_type_enum -> message_box_color_type = function
+  | e when e = messagebox_color_background -> MESSAGEBOX_COLOR_BACKGROUND
+  | e when e = messagebox_color_text -> MESSAGEBOX_COLOR_TEXT
+  | e when e = messagebox_color_button_border -> MESSAGEBOX_COLOR_BUTTON_BORDER
+  | e when e = messagebox_color_button_background -> MESSAGEBOX_COLOR_BUTTON_BACKGROUND
+  | e when e = messagebox_color_button_selected -> MESSAGEBOX_COLOR_BUTTON_SELECTED
+  | e when e = messagebox_color_count -> MESSAGEBOX_COLOR_COUNT
+  | _ -> invalid_arg "Wrong value for message_box_color_type."
 
 module MessageBoxColorScheme = struct
   type _t
@@ -5632,6 +7153,13 @@ let process_io_to_enum : process_io -> process_io_enum = function
   | PROCESS_STDIO_APP -> process_stdio_app
   | PROCESS_STDIO_REDIRECT -> process_stdio_redirect
 
+let process_io_of_enum : process_io_enum -> process_io = function
+  | e when e = process_stdio_inherited -> PROCESS_STDIO_INHERITED
+  | e when e = process_stdio_null -> PROCESS_STDIO_NULL
+  | e when e = process_stdio_app -> PROCESS_STDIO_APP
+  | e when e = process_stdio_redirect -> PROCESS_STDIO_REDIRECT
+  | _ -> invalid_arg "Wrong value for process_io."
+
 module Vertex = struct
   type _t
   type t = _t structure
@@ -5670,6 +7198,12 @@ let texture_access_to_enum : texture_access -> texture_access_enum = function
   | TEXTUREACCESS_STREAMING -> textureaccess_streaming
   | TEXTUREACCESS_TARGET -> textureaccess_target
 
+let texture_access_of_enum : texture_access_enum -> texture_access = function
+  | e when e = textureaccess_static -> TEXTUREACCESS_STATIC
+  | e when e = textureaccess_streaming -> TEXTUREACCESS_STREAMING
+  | e when e = textureaccess_target -> TEXTUREACCESS_TARGET
+  | _ -> invalid_arg "Wrong value for texture_access."
+
 type texture_address_mode =
   | TEXTURE_ADDRESS_INVALID
   | TEXTURE_ADDRESS_AUTO
@@ -5684,6 +7218,13 @@ let texture_address_mode_to_enum : texture_address_mode -> texture_address_mode_
   | TEXTURE_ADDRESS_AUTO -> texture_address_auto
   | TEXTURE_ADDRESS_CLAMP -> texture_address_clamp
   | TEXTURE_ADDRESS_WRAP -> texture_address_wrap
+
+let texture_address_mode_of_enum : texture_address_mode_enum -> texture_address_mode = function
+  | e when e = texture_address_invalid -> TEXTURE_ADDRESS_INVALID
+  | e when e = texture_address_auto -> TEXTURE_ADDRESS_AUTO
+  | e when e = texture_address_clamp -> TEXTURE_ADDRESS_CLAMP
+  | e when e = texture_address_wrap -> TEXTURE_ADDRESS_WRAP
+  | _ -> invalid_arg "Wrong value for texture_address_mode."
 
 type renderer_logical_presentation =
   | LOGICAL_PRESENTATION_DISABLED
@@ -5701,6 +7242,14 @@ let renderer_logical_presentation_to_enum : renderer_logical_presentation -> ren
   | LOGICAL_PRESENTATION_LETTERBOX -> logical_presentation_letterbox
   | LOGICAL_PRESENTATION_OVERSCAN -> logical_presentation_overscan
   | LOGICAL_PRESENTATION_INTEGER_SCALE -> logical_presentation_integer_scale
+
+let renderer_logical_presentation_of_enum : renderer_logical_presentation_enum -> renderer_logical_presentation = function
+  | e when e = logical_presentation_disabled -> LOGICAL_PRESENTATION_DISABLED
+  | e when e = logical_presentation_stretch -> LOGICAL_PRESENTATION_STRETCH
+  | e when e = logical_presentation_letterbox -> LOGICAL_PRESENTATION_LETTERBOX
+  | e when e = logical_presentation_overscan -> LOGICAL_PRESENTATION_OVERSCAN
+  | e when e = logical_presentation_integer_scale -> LOGICAL_PRESENTATION_INTEGER_SCALE
+  | _ -> invalid_arg "Wrong value for renderer_logical_presentation."
 
 
 (* No definition (opaque struct) *)
@@ -5801,6 +7350,14 @@ let sandbox_to_enum : sandbox -> sandbox_enum = function
   | SANDBOX_SNAP -> sandbox_snap
   | SANDBOX_MACOS -> sandbox_macos
 
+let sandbox_of_enum : sandbox_enum -> sandbox = function
+  | e when e = sandbox_none -> SANDBOX_NONE
+  | e when e = sandbox_unknown_container -> SANDBOX_UNKNOWN_CONTAINER
+  | e when e = sandbox_flatpak -> SANDBOX_FLATPAK
+  | e when e = sandbox_snap -> SANDBOX_SNAP
+  | e when e = sandbox_macos -> SANDBOX_MACOS
+  | _ -> invalid_arg "Wrong value for sandbox."
+
 module DateTime = struct
   type _t
   type t = _t structure
@@ -5834,6 +7391,12 @@ let date_format_to_enum : date_format -> date_format_enum = function
   | DATE_FORMAT_DDMMYYYY -> date_format_ddmmyyyy
   | DATE_FORMAT_MMDDYYYY -> date_format_mmddyyyy
 
+let date_format_of_enum : date_format_enum -> date_format = function
+  | e when e = date_format_yyyymmdd -> DATE_FORMAT_YYYYMMDD
+  | e when e = date_format_ddmmyyyy -> DATE_FORMAT_DDMMYYYY
+  | e when e = date_format_mmddyyyy -> DATE_FORMAT_MMDDYYYY
+  | _ -> invalid_arg "Wrong value for date_format."
+
 type time_format =
   | TIME_FORMAT_24HR
   | TIME_FORMAT_12HR
@@ -5844,6 +7407,11 @@ let time_format = int
 let time_format_to_enum : time_format -> time_format_enum = function
   | TIME_FORMAT_24HR -> time_format_24_hr
   | TIME_FORMAT_12HR -> time_format_12_hr
+
+let time_format_of_enum : time_format_enum -> time_format = function
+  | e when e = time_format_24_hr -> TIME_FORMAT_24HR
+  | e when e = time_format_12_hr -> TIME_FORMAT_12HR
+  | _ -> invalid_arg "Wrong value for time_format."
 
 let timer_id = uint (* prim *)
 let timer_callback = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> uint @-> uint @-> returning uint)

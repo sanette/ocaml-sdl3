@@ -1,5 +1,5 @@
 (* ocaml-SDL3 example *)
-(* Adapted from examples/renderer/17-read-pixels from the SDL3 sources (public domain) *)
+(* Adapted from examples/renderer/10-geometry from the SDL3 sources (public domain) *)
 
 open Sdl3
 

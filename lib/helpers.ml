@@ -49,3 +49,5 @@ let value_opt_as_ptr t =
   let read p = if Ctypes_memory.is_null p then None else Some (!@ p) in
   let write = function None -> from_voidp t null | Some f -> addr f in
   view ~read ~write (ptr t)
+
+let hadd tbl ((k : int), v) = Hashtbl.add tbl k v
