@@ -83,7 +83,6 @@ and then you can use
 # My first app
 
 The "hello world" equivalent is to open a window and fill it with a nice color.
-ee7706
 
 ```ocaml
 open Sdl3
@@ -101,6 +100,8 @@ let () =
     Sdl.Renderer.render_clear renderer |> go;
     Sdl.Renderer.render_present renderer |> go;
     Sdl.delay 1000;
+	Sdl.Renderer.destroy renderer;
+    Sdl.Window.destroy window;
     Sdl.quit()
 ```
 

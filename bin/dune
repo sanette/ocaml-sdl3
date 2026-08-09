@@ -19,3 +19,8 @@
  (name camera)
  (modules camera)
  (libraries sdl3))
+
+(executable
+ (name my_app)
+ (modules my_app)
+ (libraries sdl3))
