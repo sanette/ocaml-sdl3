@@ -1,9 +1,14 @@
 (* ocaml-SDL3 example *)
 (* Adapted from examples/storage/01-user from the SDL3 sources (public domain) *)
 
+(* On my linux, this example will save the data in the file:
+   "$HOME/.local/share/libsdl/User Storage Example/save.sav"
+*)
+
 open Sdl3
 
 let go = Result.get_ok
+let ( |?> ) o f = Option.iter f o
 
 let save_state_unstarted = 1 (* blue *)
 let save_state_processing_game_world = 2 (* yellow *)
@@ -31,9 +36,7 @@ let write_save_data state = fun _ ->
   let game_world = Bigarray.(Array1.create int64 c_layout 1) in
   game_world.{0} <- Sdl.get_performance_counter ();
   match Sdl.Storage.open_user "libsdl" "User Storage Example" 0 with
-  | Error _ ->
-    set_save state save_state_final_check;
-    -1
+  | Error _ -> set_save state save_state_final_check; -1
   | Ok save_storage ->
     state.save_storage <- Some save_storage;
     set_save state save_state_preparing_storage;
@@ -44,16 +47,12 @@ let write_save_data state = fun _ ->
     | Ok () -> true in
     Sdl.Storage.close save_storage |> go;
     set_save state save_state_final_check;
-    if not write_result then -1
-    else 0
+    if not write_result then -1 else 0
 
 let read_save_data state = fun _ ->
   let game_world = Bigarray.(Array1.create int64 c_layout 1) in
-
   match Sdl.Storage.open_user "libsdl" "User Storage Example" 0 with
-  | Error _ ->
-    set_save state save_state_final_check;
-    -1
+  | Error _ -> set_save state save_state_final_check; -1
   | Ok save_storage ->
     state.save_storage <- Some save_storage;
     set_save state save_state_preparing_storage;
@@ -131,15 +130,19 @@ let event state e =
 (* This function runs once per frame, and is the heart of the program. *)
 let iterate state =
   let save_state = Sdl.AtomicInt.get state.current_save_state in
+  (* the main thread does not have to do much other than help the thread wait
+     for storage to be ready and read the result when the thread is finished *)
   if save_state = save_state_preparing_storage then begin
     let save_storage = Option.get state.save_storage in
-    Sdl.Storage.ready save_storage |> go;
-    set_save state save_state_processing_storage_file;
-    Sdl.Semaphore.signal state.storage_ready
-  end else if save_state = save_state_final_check then begin
-    state.save_thread |> Option.iter (fun save_thread ->
+    match Sdl.Storage.ready save_storage with
+    | Ok () ->
+      set_save state save_state_processing_storage_file;
+      Sdl.Semaphore.signal state.storage_ready
+    | Error _ -> ()
+  end
+  else if save_state = save_state_final_check then begin
+    state.save_thread |?> (fun save_thread ->
         state.save_result <- Sdl.Thread.wait save_thread;
-        Sdl.App.log "save_result = %i" state.save_result;
         state.save_thread <- None;
         if state.save_result = 0
         then Sdl.App.log "Save/Load complete!"
@@ -165,9 +168,10 @@ let iterate state =
 
 (* This function runs once at shutdown. *)
 let quit state _ret =
-  state |> Option.iter (fun state ->
+  state |?> (fun state ->
+      (* If saving/loading is still in progress, force the thread not to wait *)
       Sdl.Semaphore.signal state.storage_ready;
-      state.save_thread |> Option.iter (fun thread -> ignore (Sdl.Thread.wait thread));
+      state.save_thread |?> (fun thread -> ignore (Sdl.Thread.wait thread));
       Sdl.Semaphore.destroy state.storage_ready;
       ignore (state.thread_function));
   (* SDL will clean up the window/renderer for us. *)

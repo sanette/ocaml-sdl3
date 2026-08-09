@@ -105,7 +105,7 @@ let () =
     Sdl.quit()
 ```
 
-Save this to `my_app.ml` and then
+Save this to `my_app.ml`, compile as usual with `dune`, or directly:
 
 ```bash
 	ocamlfind ocamlopt -package sdl3 -thread -linkpkg -o my_app my_app.ml
