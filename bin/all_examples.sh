@@ -30,3 +30,6 @@ dune exec ./affine_textures.exe
 
 cd ../../camera/01-read-and-draw
 dune exec ./read_and_draw.exe
+
+cd ../../storage/01-user
+dune exec ./user.exe

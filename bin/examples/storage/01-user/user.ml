@@ -24,7 +24,7 @@ type 'a state = {
 }
 
 let set_save state value =
-  Sdl.AtomicInt.set (Ctypes.addr state.current_save_state) value |> ignore
+  Sdl.AtomicInt.set state.current_save_state value |> ignore
 
 let write_save_data state = fun _ ->
   set_save state save_state_processing_game_world;
@@ -130,7 +130,7 @@ let event state e =
 
 (* This function runs once per frame, and is the heart of the program. *)
 let iterate state =
-  let save_state = Sdl.AtomicInt.get (Ctypes.addr state.current_save_state) in
+  let save_state = Sdl.AtomicInt.get state.current_save_state in
   if save_state = save_state_preparing_storage then begin
     let save_storage = Option.get state.save_storage in
     Sdl.Storage.ready save_storage |> go;

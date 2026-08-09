@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -36,35 +36,35 @@ include Global
 
 module AtomicInt = struct
 let compare_and_swap = ff "SDL_CompareAndSwapAtomicInt"
-  (ptr atomic_int @-> int @-> int @-> returning true_to_ok)
+  (atomic_int @-> int @-> int @-> returning true_to_ok)
 
 let set = ff "SDL_SetAtomicInt"
-  (ptr atomic_int @-> int @-> returning int)
+  (atomic_int @-> int @-> returning int)
 
 let get = ff "SDL_GetAtomicInt"
-  (ptr atomic_int @-> returning int)
+  (atomic_int @-> returning int)
 
 let add = ff "SDL_AddAtomicInt"
-  (ptr atomic_int @-> int @-> returning int)
+  (atomic_int @-> int @-> returning int)
 
 end
 
 module AtomicU32 = struct
 let compare_and_swap = ff "SDL_CompareAndSwapAtomicU32"
-  (ptr atomic_u32 @-> uint32 @-> uint32 @-> returning true_to_ok)
+  (atomic_u32 @-> uint32 @-> uint32 @-> returning true_to_ok)
 let compare_and_swap a oldval newval =
   compare_and_swap a (Unsigned.UInt.of_int oldval) (Unsigned.UInt.of_int newval)
 
 let set = ff "SDL_SetAtomicU32"
-  (ptr atomic_u32 @-> uint32 @-> returning int_as_uint)
+  (atomic_u32 @-> uint32 @-> returning int_as_uint)
 let set a v =
   set a (Unsigned.UInt.of_int v)
 
 let get = ff "SDL_GetAtomicU32"
-  (ptr atomic_u32 @-> returning int_as_uint)
+  (atomic_u32 @-> returning int_as_uint)
 
 let add = ff "SDL_AddAtomicU32"
-  (ptr atomic_u32 @-> int @-> returning int_as_uint)
+  (atomic_u32 @-> int @-> returning int_as_uint)
 
 include AtomicU32
 

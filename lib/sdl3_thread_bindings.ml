@@ -1,15 +1,14 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
 module Thread = struct
 let create_runtime = ff "SDL_CreateThreadRuntime"
   (thread_function @-> string @-> ptr void @-> function_pointer_opt @-> function_pointer_opt @-> returning (some_to_ok thread_opt))
-
 let create_linux fn name = create_runtime fn name null None None
 
 let create_with_properties_runtime = ff "SDL_CreateThreadWithPropertiesRuntime"

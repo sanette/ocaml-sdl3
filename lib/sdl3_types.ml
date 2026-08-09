@@ -57,7 +57,7 @@ let iconv_data_t : iconv_data_t typ = ptr void
 let iconv_data_t_opt : iconv_data_t option typ = ptr_opt void
 
 let iconv_t = iconv_data_t
-let function_pointer = funptr (void @-> returning void)
+let function_pointer = funptr ~thread_registration:true ~runtime_lock:true (void @-> returning void)
 type assert_state =
   | ASSERTION_RETRY
   | ASSERTION_BREAK
@@ -174,28 +174,49 @@ let async_io_queue_opt : async_io_queue option typ = ptr_opt void
 
 let spin_lock = int (* prim *)
 module AtomicInt = struct
-  type _t
-  type t = _t structure
-  let t : t typ = structure "SDL_AtomicInt"
+  type _t_raw
+  type t_raw = _t_raw structure
+  let t : t_raw typ = structure "SDL_AtomicInt"
   let value = field t "value" int
-  let create () : t = make t
   let () = seal t
+  let t_raw = t
+  type t = t_raw ptr
+  let t : t typ = ptr t_raw
+  let t_opt : t option typ = ptr_opt t_raw
+  let set_ (e : t) field v = setf {structured = e} field v
+  let value_ = value
+  let create ?value () : t =
+    let ret = allocate_n t_raw ~count:1 in
+    Option.iter (set_ ret value_) value;
+    ret
 end
 type atomic_int = AtomicInt.t
 let atomic_int = AtomicInt.t
-let atomic_int_opt = Helpers.value_opt_as_ptr atomic_int
+let atomic_int_opt = AtomicInt.t_opt
+let atomic_int_raw = AtomicInt.t_raw
 
 
 module AtomicU32 = struct
-  type _t
-  type t = _t structure
-  let t : t typ = structure "SDL_AtomicU32"
+  type _t_raw
+  type t_raw = _t_raw structure
+  let t : t_raw typ = structure "SDL_AtomicU32"
   let value = field t "value" int_as_uint
   let () = seal t
+  let t_raw = t
+  type t = t_raw ptr
+  let t : t typ = ptr t_raw
+  let t_opt : t option typ = ptr_opt t_raw
+  let set_ (e : t) field v = setf {structured = e} field v
+  let value_ = value
+  let create ?value () : t =
+    let ret = allocate_n t_raw ~count:1 in
+    Option.iter (set_ ret value_) value;
+    ret
 end
 type atomic_u32 = AtomicU32.t
 let atomic_u32 = AtomicU32.t
-let atomic_u32_opt = Helpers.value_opt_as_ptr atomic_u32
+let atomic_u32_opt = AtomicU32.t_opt
+let atomic_u32_raw = AtomicU32.t_raw
 
 
 let properties_id = uint (* prim *)

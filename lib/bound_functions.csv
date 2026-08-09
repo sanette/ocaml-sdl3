@@ -2,7 +2,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_AcquireCameraFrame, Camera, Surface, acquire_camera_frame, camera @-> ptr uint64 @-> returning (some_to_ok surface_opt), camera -> int64
 3.2.0, SDL_AcquireGPUCommandBuffer, Gpu, GPUCommandBuffer, acquire, gpu_device @-> returning (some_to_ok gpu_command_buffer_opt), gpu_device -> (gpu_command_buffer option) result
 3.2.0, SDL_AcquireGPUSwapchainTexture, Gpu, GPUCommandBuffer, acquire_gpu_swapchain_texture, gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning bool, gpu_command_buffer -> window -> ptr gpu_texture -> (int * int) result
-3.2.0, SDL_AddAtomicInt, Atomic, AtomicInt, add, ptr atomic_int @-> int @-> returning int, ptr atomic_int -> int -> int
+3.2.0, SDL_AddAtomicInt, Atomic, AtomicInt, add, atomic_int @-> int @-> returning int, atomic_int -> int -> int
 3.2.0, SDL_AddEventWatch, Events, , add_event_watch, event_filter @-> ptr void @-> returning true_to_ok, event_filter -> ptr void -> unit result
 3.2.0, SDL_AddGamepadMapping, Gamepad, , add_gamepad_mapping, string @-> returning int, string -> int
 3.2.0, SDL_AddGamepadMappingsFromFile, Gamepad, , add_gamepad_mappings_from_file, string @-> returning int, string -> int
@@ -64,9 +64,9 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_CloseJoystick, Joystick, Joystick, close, joystick @-> returning void, joystick -> unit
 3.2.0, SDL_CloseSensor, Sensor, Sensor, close, sensor @-> returning void, sensor -> unit
 3.2.0, SDL_CloseStorage, Storage, Storage, close, storage @-> returning true_to_ok, storage -> unit result
-3.2.0, SDL_CompareAndSwapAtomicInt, Atomic, AtomicInt, compare_and_swap, ptr atomic_int @-> int @-> int @-> returning true_to_ok, ptr atomic_int -> int -> int -> unit result
+3.2.0, SDL_CompareAndSwapAtomicInt, Atomic, AtomicInt, compare_and_swap, atomic_int @-> int @-> int @-> returning true_to_ok, atomic_int -> int -> int -> unit result
 3.2.0, SDL_CompareAndSwapAtomicPointer, Atomic, , compare_and_swap_atomic_pointer, ptr (ptr void) @-> ptr void @-> ptr void @-> returning true_to_ok, ptr (ptr void) -> ptr void -> ptr void -> unit result
-3.2.0, SDL_CompareAndSwapAtomicU32, Atomic, AtomicU32, compare_and_swap, ptr atomic_u32 @-> uint32 @-> uint32 @-> returning true_to_ok, ptr atomic_u32 -> int -> int -> unit result
+3.2.0, SDL_CompareAndSwapAtomicU32, Atomic, AtomicU32, compare_and_swap, atomic_u32 @-> uint32 @-> uint32 @-> returning true_to_ok, atomic_u32 -> int -> int -> unit result
 3.2.0, SDL_ComposeCustomBlendMode, Blendmode, BlendFactor, compose_custom_blend_mode, blend_factor @-> blend_factor @-> blend_operation @-> blend_factor @-> blend_factor @-> blend_operation @-> returning int_as_uint, blend_factor -> blend_factor -> blend_operation -> blend_factor -> blend_factor -> blend_operation -> int
 3.2.0, SDL_ConvertAudioSamples, Audio, AudioSpec, convert_audio_samples, audio_spec @-> ptr uint8 @-> int @-> audio_spec @-> ptr_opt (ptr uint8) @-> ptr int @-> returning bool, audio_spec -> ptr uint8 -> int -> audio_spec -> ptr_opt (ptr uint8) -> int
 3.2.0, SDL_ConvertEventToRenderCoordinates, Render, Renderer, convert_event_to_render_coordinates, renderer @-> event @-> returning true_to_ok, renderer -> event -> unit result
@@ -215,9 +215,9 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_GetAssertionReport, Assert, AssertData, get_assertion_report, void @-> returning (ptr assert_data), unit -> ptr assert_data
 3.2.0, SDL_GetAsyncIOResult, Asyncio, AsyncIOQueue, get_async_io_result, async_io_queue @-> async_io_outcome_opt @-> returning true_to_ok, async_io_queue -> async_io_outcome option -> unit result
 3.2.0, SDL_GetAsyncIOSize, Asyncio, AsyncIO, get_size, async_io @-> returning sint64, async_io -> int
-3.2.0, SDL_GetAtomicInt, Atomic, AtomicInt, get, ptr atomic_int @-> returning int, ptr atomic_int -> int
+3.2.0, SDL_GetAtomicInt, Atomic, AtomicInt, get, atomic_int @-> returning int, atomic_int -> int
 3.2.0, SDL_GetAtomicPointer, Atomic, , get_atomic_pointer, ptr (ptr void) @-> returning (ptr void), ptr (ptr void) -> ptr void
-3.2.0, SDL_GetAtomicU32, Atomic, AtomicU32, get, ptr atomic_u32 @-> returning int_as_uint, ptr atomic_u32 -> int
+3.2.0, SDL_GetAtomicU32, Atomic, AtomicU32, get, atomic_u32 @-> returning int_as_uint, atomic_u32 -> int
 3.2.0, SDL_GetAudioDeviceChannelMap, Audio, , get_audio_device_channel_map, audio_device_id @-> ptr int @-> returning (ptr int), int -> int list
 3.2.0, SDL_GetAudioDeviceFormat, Audio, , get_audio_device_format, audio_device_id @-> audio_spec @-> ptr int @-> returning bool, int -> audio_spec -> int
 3.2.0, SDL_GetAudioDeviceGain, Audio, , get_audio_device_gain, audio_device_id @-> returning float, int -> float
@@ -783,9 +783,9 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_SetAppMetadata, Init, , set_app_metadata, string @-> string @-> string @-> returning true_to_ok, string -> string -> string -> unit result
 3.2.0, SDL_SetAppMetadataProperty, Init, , set_app_metadata_property, string @-> string @-> returning true_to_ok, string -> string -> unit result
 3.2.0, SDL_SetAssertionHandler, Assert, , set_assertion_handler, assertion_handler_opt @-> ptr void @-> returning void, assertion_handler option -> ptr void -> unit
-3.2.0, SDL_SetAtomicInt, Atomic, AtomicInt, set, ptr atomic_int @-> int @-> returning int, ptr atomic_int -> int -> int
+3.2.0, SDL_SetAtomicInt, Atomic, AtomicInt, set, atomic_int @-> int @-> returning int, atomic_int -> int -> int
 3.2.0, SDL_SetAtomicPointer, Atomic, , set_atomic_pointer, ptr (ptr void) @-> ptr void @-> returning (ptr void), ptr (ptr void) -> ptr void -> ptr void
-3.2.0, SDL_SetAtomicU32, Atomic, AtomicU32, set, ptr atomic_u32 @-> uint32 @-> returning int_as_uint, ptr atomic_u32 -> int -> int
+3.2.0, SDL_SetAtomicU32, Atomic, AtomicU32, set, atomic_u32 @-> uint32 @-> returning int_as_uint, atomic_u32 -> int -> int
 3.2.0, SDL_SetAudioDeviceGain, Audio, , set_audio_device_gain, audio_device_id @-> float @-> returning true_to_ok, int -> float -> unit result
 3.2.0, SDL_SetAudioPostmixCallback, Audio, , set_audio_postmix_callback, audio_device_id @-> audio_postmix_callback_opt @-> ptr void @-> returning true_to_ok, int -> audio_postmix_callback option -> ptr void -> unit result
 3.2.0, SDL_SetAudioStreamFormat, Audio, AudioStream, set_format, audio_stream @-> audio_spec_opt @-> audio_spec_opt @-> returning true_to_ok, audio_stream -> audio_spec option -> audio_spec option -> unit result
@@ -1170,7 +1170,7 @@ SDL version, SDL name, Module (SDL file), Submodule, OCaml name, raw signature, 
 3.2.0, SDL_wcsnstr, Stdinc, , wcsnstr, ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning (ptr int32_t), ptr_opt int32_t -> ptr_opt int32_t -> int -> ptr int32_t
 3.2.0, SDL_wcsstr, Stdinc, , wcsstr, ptr_opt int32_t @-> ptr_opt int32_t @-> returning (ptr int32_t), ptr_opt int32_t -> ptr_opt int32_t -> ptr int32_t
 3.2.0, SDL_wcstol, Stdinc, , wcstol, ptr_opt int32_t @-> ptr_opt (ptr int32_t) @-> int @-> returning long, ptr_opt int32_t -> ptr_opt (ptr int32_t) -> int -> int
-3.4.0, SDL_AddAtomicU32, Atomic, AtomicU32, add, ptr atomic_u32 @-> int @-> returning int_as_uint, ptr atomic_u32 -> int -> int
+3.4.0, SDL_AddAtomicU32, Atomic, AtomicU32, add, atomic_u32 @-> int @-> returning int_as_uint, atomic_u32 -> int -> int
 3.4.0, SDL_CreateAnimatedCursor, Mouse, Cursor, create_animated, ptr cursor_frame_info @-> int @-> int @-> int @-> returning (some_to_ok cursor_opt), ptr cursor_frame_info -> int -> int -> int -> (cursor option) result
 3.4.0, SDL_CreateGPURenderState, Render, GPURenderState, create, renderer @-> ptr gpu_render_state_create_info @-> returning (some_to_ok gpu_render_state_opt), renderer -> ptr gpu_render_state_create_info -> (gpu_render_state option) result
 3.4.0, SDL_CreateGPURenderer, Render, Renderer, create_gpu, gpu_device_opt @-> window_opt @-> returning (some_to_ok renderer_opt), gpu_device option -> window option -> (renderer option) result
