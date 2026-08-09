@@ -79,3 +79,41 @@ and then you can use
       640 480 Sdl.window_resizable, "Couldn't create window/renderer" in
 	  (* do something which returns [unit] --- which may include more "let*" statements!*)
 ```
+
+# My first app
+
+The "hello world" equivalent is to open a window and fill it with a nice color.
+ee7706
+
+```ocaml
+open Sdl3
+
+let go = Result.get_ok
+
+let () =
+  match Sdl.init Sdl.init_video with
+  | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e
+  | Ok () -> match Sdl.create_window_and_renderer "my_app" 640 480
+                     Sdl.window_resizable with
+  | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e
+  | Ok (_window, renderer) ->
+    Sdl.Renderer.set_draw_color renderer 0xEE 0x77 0x06 Sdl.alpha_opaque |> go;
+    Sdl.Renderer.render_clear renderer |> go;
+    Sdl.Renderer.render_present renderer |> go;
+    Sdl.delay 1000;
+    Sdl.quit()
+```
+
+Save this to `my_app.ml` and then
+
+```bash
+	ocamlfind ocamlopt -package sdl3 -thread -linkpkg -o my_app my_app.ml
+```
+
+and then execute:
+
+```bash
+	./my_app
+```
+
+![my_app](bin/my_app.png)

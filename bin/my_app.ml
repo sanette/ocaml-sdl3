@@ -1,0 +1,20 @@
+open Sdl3
+
+let go = Result.get_ok
+
+let () =
+  match Sdl.init Sdl.init_video with
+  | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e
+  | Ok () -> match Sdl.create_window_and_renderer "my_app" 640 480
+                     Sdl.window_resizable with
+  | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e
+  | Ok (_window, renderer) ->
+    Sdl.Renderer.set_draw_color renderer 0xEE 0x77 0x06 Sdl.alpha_opaque |> go;
+    Sdl.Renderer.render_clear renderer |> go;
+    Sdl.Renderer.render_present renderer |> go;
+    Sdl.delay 10000;
+    Sdl.quit()
+
+
+
+(* ocamlfind ocamlopt -package sdl3 -thread -linkpkg -o aaa aaa.ml *)
