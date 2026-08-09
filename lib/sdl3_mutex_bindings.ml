@@ -57,13 +57,13 @@ let create initial_value =
 let destroy = ff "SDL_DestroySemaphore"
   (semaphore @-> returning void)
 
-let wait = ff "SDL_WaitSemaphore"
+let wait = ff ~release_runtime_lock:true "SDL_WaitSemaphore"
   (semaphore @-> returning void)
 
-let try_wait = ff "SDL_TryWaitSemaphore"
+let try_wait = ff ~release_runtime_lock:true "SDL_TryWaitSemaphore"
   (semaphore @-> returning true_to_ok)
 
-let wait_timeout = ff "SDL_WaitSemaphoreTimeout"
+let wait_timeout = ff ~release_runtime_lock:true "SDL_WaitSemaphoreTimeout"
   (semaphore @-> sint32 @-> returning true_to_ok)
 
 let signal = ff "SDL_SignalSemaphore"
@@ -108,4 +108,3 @@ let set_initialized = ff "SDL_SetInitialized"
 include InitState
 
 end
-

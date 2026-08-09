@@ -37,13 +37,23 @@ let get_file_size storage path =
 
 let read_file = ff "SDL_ReadStorageFile"
   (storage @-> string @-> ptr void @-> uint64 @-> returning true_to_ok)
-let read_file storage path destination length =
-  read_file storage path destination (Unsigned.ULong.of_int64 length)
+let read_file storage path ba =
+  let len =  Bigarray.Array1.size_in_bytes ba in
+  let p = Ctypes.bigarray_start Ctypes.array1 ba in
+  let typ = typ_of_bigarray_kind (Bigarray.Array1.kind ba) in
+  let destination = coerce (ptr typ) (ptr void) p in
+  read_file storage path destination (Unsigned.ULong.of_int len)
 
 let write_file = ff "SDL_WriteStorageFile"
   (storage @-> string @-> ptr void @-> uint64 @-> returning true_to_ok)
-let write_file storage path source length =
-  write_file storage path source (Unsigned.ULong.of_int64 length)
+let write_file storage path ba =
+  let len =  Bigarray.Array1.size_in_bytes ba in
+  let p = Ctypes.bigarray_start Ctypes.array1 ba in
+  let typ = typ_of_bigarray_kind (Bigarray.Array1.kind ba) in
+  let source = coerce (ptr typ) (ptr void) p in
+  write_file storage path source (Unsigned.ULong.of_int len)
+
+
 
 let create_directory = ff "SDL_CreateStorageDirectory"
   (storage @-> string @-> returning true_to_ok)
@@ -82,4 +92,3 @@ let glob_directory storage path pattern flags =
   glob_directory storage path pattern (Unsigned.UInt.of_int flags)
 
 end
-

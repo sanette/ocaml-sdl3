@@ -178,6 +178,7 @@ module AtomicInt = struct
   type t = _t structure
   let t : t typ = structure "SDL_AtomicInt"
   let value = field t "value" int
+  let create () : t = make t
   let () = seal t
 end
 type atomic_int = AtomicInt.t
@@ -281,8 +282,8 @@ let thread_state_of_enum : thread_state_enum -> thread_state = function
   | e when e = thread_complete -> THREAD_COMPLETE
   | _ -> invalid_arg "Wrong value for thread_state."
 
-let thread_function = funptr (ptr void @-> returning int)
-let function_pointer_opt = funptr_opt (void @-> returning void)
+let thread_function = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> returning int)
+let function_pointer_opt = funptr_opt ~thread_registration:true ~runtime_lock:true (void @-> returning void)
 let tls_destructor_callback = funptr (ptr void @-> returning void)
 let tls_destructor_callback_opt = funptr_opt (ptr void @-> returning void)
 

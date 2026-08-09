@@ -10,6 +10,8 @@ module Thread = struct
 let create_runtime = ff "SDL_CreateThreadRuntime"
   (thread_function @-> string @-> ptr void @-> function_pointer_opt @-> function_pointer_opt @-> returning (some_to_ok thread_opt))
 
+let create_linux fn name = create_runtime fn name null None None
+
 let create_with_properties_runtime = ff "SDL_CreateThreadWithPropertiesRuntime"
   (properties_id @-> function_pointer_opt @-> function_pointer_opt @-> returning (some_to_ok thread_opt))
 let create_with_properties_runtime props pfn_begin_thread pfn_end_thread =
@@ -21,7 +23,7 @@ let get_name = ff "SDL_GetThreadName"
 let get_id = ff "SDL_GetThreadID"
   (thread @-> returning int64_as_ulong)
 
-let wait = ff "SDL_WaitThread"
+let wait = ff ~release_runtime_lock:true "SDL_WaitThread"
   (thread @-> ptr int @-> returning void)
 let wait thread =
   let status = allocate int 0 in
@@ -60,4 +62,3 @@ let set_tls = ff "SDL_SetTLS"
   (ptr_opt tlsid @-> ptr void @-> tls_destructor_callback_opt @-> returning true_to_ok)
 
 end
-
