@@ -148,6 +148,13 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
   dune exec ./multiple_streams.exe
   ```
 
++ [`examples/storage/01-user`](https://examples.libsdl.org/SDL3/storage/01-user/)
+
+  ```bash
+  cd examples/storage/01-user
+  dune exec ./user.exe
+  ```
+
 
 
 ## Other examples
