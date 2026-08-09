@@ -31,7 +31,7 @@ initialized. In particular, the "position" field is created. Therefore
    ```ocaml
    let v = T.Vertex.create () in
    let position = T.Vertex.(get v position) in
-   T.Vertex.(set position x 150.)  (* etc... *)
+   T.FRect.(set position x 150.)  (* etc... *)
    ```
 
 2. More importantly, you should never update the structure field (like
