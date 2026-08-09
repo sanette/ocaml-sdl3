@@ -42,4 +42,4 @@ initialized. In particular, the "position" field is created. Therefore
 
 # Atomic
 
-Do not access directly the "value" field of an AtomicInt or AtomicU32.
+Do not access directly the "value" field of an `AtomicInt` or `AtomicU32`.
