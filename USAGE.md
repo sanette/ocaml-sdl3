@@ -60,9 +60,10 @@ and then use it like this:
 Note, this OCaml version is "safer" than the C code since it will
 throw an exception in case of error.
 
-You may also obtain less "heavy" constructions (depending on your
+You may also obtain "less heavy" constructions (depending on your
 taste), even when you explicitely check for error, by using OCaml
-"let-binding" operators. For instance, first define:
+["let-binding" operators](https://ocaml.org/manual/5.5/bindingops.html). For
+instance, first define:
 
 ```ocaml
 	let ( let* ) (o, errmsg) f =
@@ -76,5 +77,5 @@ and then you can use
 ```ocaml
 	let* (window, renderer) = Sdl.create_window_and_renderer "my_app"
       640 480 Sdl.window_resizable, "Couldn't create window/renderer" in
-	  (* do something which returns [unit].*)
+	  (* do something which returns [unit] --- which may include more "let*" statements!*)
 ```
