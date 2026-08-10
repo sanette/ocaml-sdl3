@@ -118,3 +118,59 @@ and then execute:
 ```
 
 ![my_app](bin/my_app.png)
+
+# Naming conventions
+
+In the original C language, All SDL functions have the "camel case"
+form SDL_AaaaBbbbCccc... (except functions from `SDL_stdinc`), for
+instance `SDL_GetRendererProperties`; there is no further
+classification, no "module". The name are are long enough to remember
+what the function does. But, in the OCaml world, we like modules! So
+the game for us is to try to triage these functions into modules. This
+is not compulsory, but we found it nice (why? maybe for automatically
+grouping documentation). Of course we wish to keep similar names: ```
+SDL_GetRendererProperties ==> Sdl.Renderer.get_properties ```
+
+It turns out this is not so easy to do in an automatic way. Here are
+the rules currently implemented, but **they may change in the
+future**. (They produce some funny/non-wanted corner cases.) In case
+of doubt, refer to the file
+[lib/bound_functions.csv](lib/bound_functions.csv).
+
++ The `SDL_` prefix is removed, and the global module name is `Sdl`.
+
++ After the following rules have been applied, Camel case is converted
+  to snake case: `SDL_AaaaBbbb` ==> `Sdl.aaaa_bbbb`
+
++ If the function name contains `GetAaaa` or `CreateAaaa` "where
+  `Aaaa` is the _type of the first argument_, then "Aaaa" is the
+  module and we remove it from the function name:
+  ```
+	  SDL_GetRendererProperties ==> Sdl.Renderer.get_properties
+  ```
+  (the first argument has type `SDL_Renderer`.)
+
+  The rule for "create" may sound surprising, it's there for dealing with a few cases like
+  ```
+	  SDL_CreateSurfacePalette ==> Sdl.Surface.create_palette
+  ```
+  (We don't want to create a "Palette" module, we see it as a sub-object of "Surface".)
+
++ If the _return type_ of the function is an `SDL_*` type or a pointer
+  to an `SDL_*` type, this type becomes the module, and any occurence
+  of this type within the function name is removed.
+  ```
+	  SDL_CreateTextureFromSurface ==> Sdl.Texture.create_from_surface
+  ```
+
++ For all remaining functions, we use the type of the first argument
+  as the module if it is a `SDL_` type (or pointer to), and remove it
+  from the function name.
+  ```
+	  SDL_PauseAudioStreamDevice ==> Sdl.AudioStream.pause_device
+  ```
+
+All of this looks nice and good, but you will see that it may lead to
+wrong classification and weird names, so I have started to build a
+list of custom cases (I leave it to you to discover the remaining
+ones! don't hesitate to open an issue to record them.)
