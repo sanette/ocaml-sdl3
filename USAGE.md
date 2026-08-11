@@ -54,7 +54,7 @@ ignored. You can achieve this "unsafe" behaviour thanks to
 and then use it like this:
 
 ```ocaml
-	  Sdl.Renderer.render_present renderer |> go;
+	  Sdl.Renderer.present renderer |> go;
 ```
 
 Note, this OCaml version is "safer" than the C code since it will
@@ -92,15 +92,15 @@ let go = Result.get_ok
 let () =
   match Sdl.init Sdl.init_video with
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e
-  | Ok () -> match Sdl.create_window_and_renderer "my_app" 640 480
+  | Ok () -> match Sdl.Renderer.create_window_and "my_app" 640 480
                      Sdl.window_resizable with
   | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e
-  | Ok (_window, renderer) ->
+  | Ok (window, renderer) ->
     Sdl.Renderer.set_draw_color renderer 0xEE 0x77 0x06 Sdl.alpha_opaque |> go;
-    Sdl.Renderer.render_clear renderer |> go;
-    Sdl.Renderer.render_present renderer |> go;
+    Sdl.Renderer.clear renderer |> go;
+    Sdl.Renderer.present renderer |> go;
     Sdl.delay 1000;
-	Sdl.Renderer.destroy renderer;
+    Sdl.Renderer.destroy renderer;
     Sdl.Window.destroy window;
     Sdl.quit()
 ```
@@ -128,11 +128,14 @@ classification, no "module". The name are are long enough to remember
 what the function does. But, in the OCaml world, we like modules! So
 the game for us is to try to triage these functions into modules. This
 is not compulsory, but we found it nice (why? maybe for automatically
-grouping documentation). Of course we wish to keep similar names: ```
-SDL_GetRendererProperties ==> Sdl.Renderer.get_properties ```
+grouping documentation). Of course we wish to keep similar names:
+
+```
+SDL_GetRendererProperties ==> Sdl.Renderer.get_properties
+```
 
 It turns out this is not so easy to do in an automatic way. Here are
-the rules currently implemented, but **they may change in the
+the main rules currently implemented, but **they may change in the
 future**. (They produce some funny/non-wanted corner cases.) In case
 of doubt, refer to the file
 [lib/bound_functions.csv](lib/bound_functions.csv).
@@ -157,17 +160,24 @@ of doubt, refer to the file
   (We don't want to create a "Palette" module, we see it as a sub-object of "Surface".)
 
 + If the _return type_ of the function is an `SDL_*` type or a pointer
-  to an `SDL_*` type, this type becomes the module, and any occurence
-  of this type within the function name is removed.
+  to an `SDL_*` type, and is part of the name of the function, then
+  this type becomes the module, and any occurence of this type within
+  the function name is removed.
   ```
 	  SDL_CreateTextureFromSurface ==> Sdl.Texture.create_from_surface
   ```
 
-+ For all remaining functions, we use the type of the first argument
-  as the module if it is a `SDL_` type (or pointer to), and remove it
-  from the function name.
++ If the type of the first argument is an `SDL_` type (or pointer to),
+  and is part of the function name, it becomes the the module, and we
+  remove it from the function name.
   ```
 	  SDL_PauseAudioStreamDevice ==> Sdl.AudioStream.pause_device
+  ```
+
++ If the name of the _header file_ is part of the function name, it
+  becomes the the module, and we remove it from the function name.
+  ```
+	  SDL_SetAudioPostmixCallback ==> Audio.set_postmix_callback
   ```
 
 All of this looks nice and good, but you will see that it may lead to

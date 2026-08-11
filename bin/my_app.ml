@@ -5,7 +5,7 @@ let go = Result.get_ok
 let () =
   match Sdl.init Sdl.init_video with
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e
-  | Ok () -> match Sdl.Renderer.create_window_and "my_app" 640 480
+  | Ok () -> match Sdl.create_window_and_renderer "my_app" 640 480
                      Sdl.window_resizable with
   | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e
   | Ok (window, renderer) ->

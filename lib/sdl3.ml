@@ -261,6 +261,7 @@ end
   module Window = struct
     include Categories.Events.Window
     include Categories.Mouse.Window
+    include Categories.Render.Window
     include Categories.Video.Window
 end
 

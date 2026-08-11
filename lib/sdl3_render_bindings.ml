@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -12,13 +12,6 @@ let get_num_drivers = ff "SDL_GetNumRenderDrivers"
 
 let get_driver = ff "SDL_GetRenderDriver"
   (int @-> returning string)
-
-let create_window_and = ff "SDL_CreateWindowAndRenderer"
-  (string @-> int @-> int @-> window_flags @-> ptr window @-> ptr renderer @-> returning bool)
-let create_window_and title width height window_flags =
-  let window = allocate window null in
-  let renderer = allocate renderer null in
-  if create_window_and title width height (Unsigned.ULong.of_int64 window_flags) window renderer then Ok (!@ window, !@ renderer) else error ()
 
 let create = ff "SDL_CreateRenderer"
   (window @-> string @-> returning (some_to_ok renderer_opt))
@@ -39,9 +32,6 @@ let create_software = ff "SDL_CreateSoftwareRenderer"
 
 let get = ff "SDL_GetRenderer"
   (window @-> returning (some_to_ok renderer_opt))
-
-let get_window = ff "SDL_GetRenderWindow"
-  (renderer @-> returning (some_to_ok window_opt))
 
 let get_name = ff "SDL_GetRendererName"
   (renderer @-> returning string)
@@ -293,6 +283,29 @@ let set_gpu_state = ff "SDL_SetGPURenderState"
 
 end
 
+module Global = struct
+let create_window_and_renderer = ff "SDL_CreateWindowAndRenderer"
+  (string @-> int @-> int @-> window_flags @-> ptr window @-> ptr renderer @-> returning bool)
+let create_window_and_renderer title width height window_flags =
+  let window = allocate window null in
+  let renderer = allocate renderer null in
+  if create_window_and_renderer title width height (Unsigned.ULong.of_int64 window_flags) window renderer then Ok (!@ window, !@ renderer) else error ()
+
+let set_default_texture_scale_mode = ff "SDL_SetDefaultTextureScaleMode"
+  (renderer @-> scale_mode @-> returning true_to_ok)
+
+let get_default_texture_scale_mode = ff "SDL_GetDefaultTextureScaleMode"
+  (renderer @-> ptr scale_mode @-> returning true_to_ok)
+
+end
+include Global
+
+module Window = struct
+let get_render = ff "SDL_GetRenderWindow"
+  (renderer @-> returning (some_to_ok window_opt))
+
+end
+
 module Texture = struct
 let create = ff "SDL_CreateTexture"
   (renderer @-> pixel_format @-> texture_access @-> int @-> int @-> returning (some_to_ok texture_opt))
@@ -406,16 +419,6 @@ let destroy = ff "SDL_DestroyTexture"
 include Texture
 
 end
-
-module Global = struct
-let set_default_texture_scale_mode = ff "SDL_SetDefaultTextureScaleMode"
-  (renderer @-> scale_mode @-> returning true_to_ok)
-
-let get_default_texture_scale_mode = ff "SDL_GetDefaultTextureScaleMode"
-  (renderer @-> ptr scale_mode @-> returning true_to_ok)
-
-end
-include Global
 
 module GPURenderState = struct
 let create = ff "SDL_CreateGPURenderState"

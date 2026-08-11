@@ -39,7 +39,7 @@ let init () =
     "Example Renderer Read Pixels" "1.0" "com.example.renderer-read-pixels" |> go;
 
   let* () = Sdl.init Sdl.init_video, "Couldn't initialize SDL", None in
-  let* (_window, renderer) = Sdl.Renderer.create_window_and "examples/renderer/read-pixels" window_width window_height
+  let* (_window, renderer) = Sdl.create_window_and_renderer "examples/renderer/read-pixels" window_width window_height
       Sdl.window_resizable, "Couldn't create window/renderer", None  in
 
   Sdl.Renderer.set_logical_presentation renderer window_width window_height

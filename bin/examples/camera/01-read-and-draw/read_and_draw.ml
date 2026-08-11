@@ -24,7 +24,7 @@ let init () =
     print "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->
-    match Sdl.Renderer.create_window_and "examples/camera/read-and-draw" 640 480
+    match Sdl.create_window_and_renderer "examples/camera/read-and-draw" 640 480
             Sdl.window_resizable with
     | Error (`Msg e) ->
       print "Couldn't create window/renderer: %s" e;

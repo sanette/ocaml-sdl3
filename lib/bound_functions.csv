@@ -121,7 +121,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_CreateTrayMenu, Tray, Tray, create_menu, tray @-> returning (some_to_ok tray_menu_opt), tray -> (tray_menu option) result
 3.2.0, SDL_CreateTraySubmenu, Tray, Tray, create_submenu, tray_entry @-> returning (some_to_ok tray_menu_opt), tray_entry -> (tray_menu option) result
 3.2.0, SDL_CreateWindow, Video, Window, create, string @-> int @-> int @-> window_flags @-> returning (some_to_ok window_opt), string -> int -> int -> int64 -> (window option) result
-3.2.0, SDL_CreateWindowAndRenderer, Render, Renderer, create_window_and, string @-> int @-> int @-> window_flags @-> ptr window @-> ptr renderer @-> returning bool, string -> int -> int -> int64 -> (window * renderer) result
+3.2.0, SDL_CreateWindowAndRenderer, Render, , create_window_and_renderer, string @-> int @-> int @-> window_flags @-> ptr window @-> ptr renderer @-> returning bool, string -> int -> int -> int64 -> (window * renderer) result
 3.2.0, SDL_CreateWindowWithProperties, Video, Window, create_with_properties, properties_id @-> returning (some_to_ok window_opt), int -> (window option) result
 3.2.0, SDL_CursorVisible, Mouse, , cursor_visible, void @-> returning true_to_ok, unit -> unit result
 3.2.0, SDL_DateTimeToTime, Time, DateTime, to_time, ptr date_time @-> ptr time @-> returning bool, ptr date_time -> int
@@ -463,7 +463,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_GetRenderTarget, Render, Renderer, get_target, renderer @-> returning (some_to_ok texture_opt), renderer -> (texture option) result
 3.2.0, SDL_GetRenderVSync, Render, Renderer, get_v_sync, renderer @-> ptr int @-> returning bool, renderer -> int
 3.2.0, SDL_GetRenderViewport, Render, Renderer, get_viewport, renderer @-> ptr rect @-> returning true_to_ok, renderer -> ptr rect -> unit result
-3.2.0, SDL_GetRenderWindow, Render, Renderer, get_window, renderer @-> returning (some_to_ok window_opt), renderer -> (window option) result
+3.2.0, SDL_GetRenderWindow, Render, Window, get_render, renderer @-> returning (some_to_ok window_opt), renderer -> (window option) result
 3.2.0, SDL_GetRenderer, Render, Renderer, get, window @-> returning (some_to_ok renderer_opt), window -> (renderer option) result
 3.2.0, SDL_GetRendererFromTexture, Render, Renderer, get_from_texture, texture @-> returning (some_to_ok renderer_opt), texture -> (renderer option) result
 3.2.0, SDL_GetRendererName, Render, Renderer, get_name, renderer @-> returning string, renderer -> string
@@ -1200,7 +1200,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.4.0, SDL_SetDefaultTextureScaleMode, Render, , set_default_texture_scale_mode, renderer @-> scale_mode @-> returning true_to_ok, renderer -> scale_mode -> unit result
 3.4.0, SDL_SetGPURenderState, Render, Renderer, set_gpu_state, renderer @-> gpu_render_state_opt @-> returning true_to_ok, renderer -> gpu_render_state option -> unit result
 3.4.0, SDL_SetGPURenderStateFragmentUniforms, Render, GPURenderState, set_fragment_uniforms, gpu_render_state @-> uint32 @-> ptr void @-> uint32 @-> returning true_to_ok, gpu_render_state -> int -> ptr void -> int -> unit result
-3.4.0, SDL_SetRelativeMouseTransform, Mouse, , set_relative_mouse_transform, mouse_motion_transform_callback_opt @-> ptr void @-> returning true_to_ok, mouse_motion_transform_callback option -> ptr void -> unit result
+3.4.0, SDL_SetRelativeMouseTransform, Mouse, Mouse, set_relative_transform, mouse_motion_transform_callback_opt @-> ptr void @-> returning true_to_ok, mouse_motion_transform_callback option -> ptr void -> unit result
 3.4.0, SDL_SetRenderTextureAddressMode, Render, Renderer, set_render_texture_address_mode, renderer @-> texture_address_mode @-> texture_address_mode @-> returning true_to_ok, renderer -> texture_address_mode -> texture_address_mode -> unit result
 3.4.0, SDL_SetTexturePalette, Render, Texture, set_palette, texture @-> palette @-> returning true_to_ok, texture -> palette -> unit result
 3.4.0, SDL_SetWindowFillDocument, Video, Window, set_fill_document, window @-> bool @-> returning true_to_ok, window -> bool -> unit result

@@ -45,6 +45,9 @@ let get_relative_state () =
 let warp_global = ff "SDL_WarpMouseGlobal"
   (float @-> float @-> returning true_to_ok)
 
+let set_relative_transform = ff "SDL_SetRelativeMouseTransform"
+  (mouse_motion_transform_callback_opt @-> ptr void @-> returning true_to_ok)
+
 let capture = ff "SDL_CaptureMouse"
   (bool @-> returning true_to_ok)
 
@@ -64,9 +67,6 @@ let get_mice () =
         CArray.from_ptr p n
         |> CArray.to_list
         |> List.map Unsigned.UInt.to_int)
-
-let set_relative_mouse_transform = ff "SDL_SetRelativeMouseTransform"
-  (mouse_motion_transform_callback_opt @-> ptr void @-> returning true_to_ok)
 
 let show_cursor = ff "SDL_ShowCursor"
   (void @-> returning true_to_ok)

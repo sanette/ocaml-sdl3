@@ -27,7 +27,7 @@ let event_loop =
 let () =
   Sdl.(init (init_video lor init_camera)) |> go;
 
-  let win, renderer = Sdl.Renderer.create_window_and "camera" 640 480 Sdl.window_resizable
+  let win, renderer = Sdl.create_window_and_renderer "camera" 640 480 Sdl.window_resizable
     |> go in
 
   let n = Sdl.Camera.get_num_drivers () in
