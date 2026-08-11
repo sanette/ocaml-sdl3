@@ -1,15 +1,14 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
 module Thread = struct
 let create_runtime = ff "SDL_CreateThreadRuntime"
   (thread_function @-> string @-> ptr void @-> function_pointer_opt @-> function_pointer_opt @-> returning (some_to_ok thread_opt))
-let create_linux fn name = create_runtime fn name null None None
 
 let create_with_properties_runtime = ff "SDL_CreateThreadWithPropertiesRuntime"
   (properties_id @-> function_pointer_opt @-> function_pointer_opt @-> returning (some_to_ok thread_opt))
@@ -18,6 +17,9 @@ let create_with_properties_runtime props pfn_begin_thread pfn_end_thread =
 
 let get_name = ff "SDL_GetThreadName"
   (thread @-> returning string)
+
+let get_current_id = ff "SDL_GetCurrentThreadID"
+  (void @-> returning int64_as_ulong)
 
 let get_id = ff "SDL_GetThreadID"
   (thread @-> returning int64_as_ulong)
@@ -35,17 +37,11 @@ let get_state = ff "SDL_GetThreadState"
 let detach = ff "SDL_DetachThread"
   (thread @-> returning void)
 
-end
+(* Additional manual code: *)
 
-module Global = struct
-let get_current_thread_id = ff "SDL_GetCurrentThreadID"
-  (void @-> returning int64_as_ulong)
-
-let cleanup_tls = ff "SDL_CleanupTLS"
-  (void @-> returning void)
+let create_linux fn name = create_runtime fn name null None None
 
 end
-include Global
 
 module ThreadPriority = struct
 let set_current = ff "SDL_SetCurrentThreadPriority"
@@ -53,11 +49,16 @@ let set_current = ff "SDL_SetCurrentThreadPriority"
 
 end
 
-module AtomicInt = struct
+module Global = struct
 let get_tls = ff "SDL_GetTLS"
   (ptr_opt tlsid @-> returning (ptr void))
 
 let set_tls = ff "SDL_SetTLS"
   (ptr_opt tlsid @-> ptr void @-> tls_destructor_callback_opt @-> returning true_to_ok)
 
+let cleanup_tls = ff "SDL_CleanupTLS"
+  (void @-> returning void)
+
 end
+include Global
+

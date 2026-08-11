@@ -22,7 +22,7 @@ let init () =
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->
-    match Sdl.create_window_and_renderer "examples/renderer/affine-textures" window_width window_height
+    match Sdl.Renderer.create_window_and "examples/renderer/affine-textures" window_width window_height
             Sdl.window_resizable with
     | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e;
       T.APP_FAILURE, None
@@ -33,7 +33,7 @@ let init () =
       let state = { renderer; texture = None } in
 
       let png_path = Filename.concat (Sdl.get_base_path ()) "logo-with-name-bkg.png" in
-      match Sdl.Surface.load_png png_path with
+      match Sdl.load_png png_path with
       | Error (`Msg e) -> Sdl.App.log "Couldn't load bitmap: %s" e;
         T.APP_FAILURE, Some state
       | Ok surface ->
@@ -77,7 +77,7 @@ let iterate state =
   done;
 
   Sdl.Renderer.set_draw_color state.renderer 0x42 0x87 0xf5 Sdl.alpha_opaque |> go;
-  Sdl.Renderer.render_clear state.renderer |> go;
+  Sdl.Renderer.clear state.renderer |> go;
 
   for i = 0 to 6 do
     let dir = 3 land (if (i land 4) <> 0 then lnot i else i) in
@@ -92,20 +92,20 @@ let iterate state =
             (origin_idx lxor 7, right_idx lxor 7, down_idx lxor 7)
           else
             (origin_idx, right_idx, down_idx) in
-        let origin = Sdl.FPoint.create
+        let origin = T.FPoint.create
             ~x:(x0 +. px *. corners.(0 + 2*origin_index))
             ~y:(y0 +. px *. corners.(1 + 2*origin_index)) () in
-        let right = Sdl.FPoint.create
+        let right = T.FPoint.create
             ~x:(x0 +. px *. corners.(0 + 2*right_index))
             ~y:(y0 +. px *. corners.(1 + 2*right_index)) () in
-        let down = Sdl.FPoint.create
+        let down = T.FPoint.create
             ~x:(x0 +. px *. corners.(0 + 2*down_index))
             ~y:(y0 +. px *. corners.(1 + 2*down_index)) () in
         Sdl.Renderer.render_texture_affine state.renderer texture None (Some origin) (Some right) (Some down) |> go
       end
       done;
 
-  Sdl.Renderer.render_present state.renderer |> go;
+  Sdl.Renderer.present state.renderer |> go;
   T.APP_CONTINUE (* carry on with the program! *)
 
 (* This function runs once at shutdown. *)

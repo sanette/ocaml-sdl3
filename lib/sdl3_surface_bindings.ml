@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -67,30 +67,6 @@ let load_io = ff "SDL_LoadSurface_IO"
 
 let load = ff "SDL_LoadSurface"
   (string @-> returning (some_to_ok surface_opt))
-
-let load_bmp_io = ff "SDL_LoadBMP_IO"
-  (io_stream @-> bool @-> returning (some_to_ok surface_opt))
-
-let load_bmp = ff "SDL_LoadBMP"
-  (string @-> returning (some_to_ok surface_opt))
-
-let save_bmp_io = ff "SDL_SaveBMP_IO"
-  (surface @-> io_stream @-> bool @-> returning true_to_ok)
-
-let save_bmp = ff "SDL_SaveBMP"
-  (surface @-> string @-> returning true_to_ok)
-
-let load_png_io = ff "SDL_LoadPNG_IO"
-  (io_stream @-> bool @-> returning (some_to_ok surface_opt))
-
-let load_png = ff "SDL_LoadPNG"
-  (string @-> returning (some_to_ok surface_opt))
-
-let save_png_io = ff "SDL_SavePNG_IO"
-  (surface @-> io_stream @-> bool @-> returning true_to_ok)
-
-let save_png = ff "SDL_SavePNG"
-  (surface @-> string @-> returning true_to_ok)
 
 let set_rle = ff "SDL_SetSurfaceRLE"
   (surface @-> bool @-> returning true_to_ok)
@@ -257,9 +233,35 @@ let get_pixels_ba surf =
   Ctypes.bigarray_of_ptr Ctypes.array1 (pitch * h) Bigarray.int8_unsigned
     (coerce (ptr void) (ptr int) pixels)
 
+include Surface
+
 end
 
 module Global = struct
+let load_bmp_io = ff "SDL_LoadBMP_IO"
+  (io_stream @-> bool @-> returning (some_to_ok surface_opt))
+
+let load_bmp = ff "SDL_LoadBMP"
+  (string @-> returning (some_to_ok surface_opt))
+
+let save_bmp_io = ff "SDL_SaveBMP_IO"
+  (surface @-> io_stream @-> bool @-> returning true_to_ok)
+
+let save_bmp = ff "SDL_SaveBMP"
+  (surface @-> string @-> returning true_to_ok)
+
+let load_png_io = ff "SDL_LoadPNG_IO"
+  (io_stream @-> bool @-> returning (some_to_ok surface_opt))
+
+let load_png = ff "SDL_LoadPNG"
+  (string @-> returning (some_to_ok surface_opt))
+
+let save_png_io = ff "SDL_SavePNG_IO"
+  (surface @-> io_stream @-> bool @-> returning true_to_ok)
+
+let save_png = ff "SDL_SavePNG"
+  (surface @-> string @-> returning true_to_ok)
+
 let convert_pixels = ff "SDL_ConvertPixels"
   (int @-> int @-> pixel_format @-> ptr void @-> int @-> pixel_format @-> ptr void @-> int @-> returning true_to_ok)
 

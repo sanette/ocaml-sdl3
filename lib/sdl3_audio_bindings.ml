@@ -6,22 +6,22 @@ open Helpers
 
 let ff = Load.foreign
 
-module Global = struct
-let get_num_audio_drivers = ff "SDL_GetNumAudioDrivers"
+module Audio = struct
+let get_num_drivers = ff "SDL_GetNumAudioDrivers"
   (void @-> returning int)
 
-let get_audio_driver = ff "SDL_GetAudioDriver"
+let get_driver = ff "SDL_GetAudioDriver"
   (int @-> returning string)
 
-let get_current_audio_driver = ff "SDL_GetCurrentAudioDriver"
+let get_current_driver = ff "SDL_GetCurrentAudioDriver"
   (void @-> returning string)
 
-let get_audio_playback_devices = ff "SDL_GetAudioPlaybackDevices"
+let get_playback_devices = ff "SDL_GetAudioPlaybackDevices"
   (ptr int @-> returning (ptr audio_device_id))
 (* Wrapper for returning uint list *)
-let get_audio_playback_devices () =
+let get_playback_devices () =
   let count = allocate int 0 in
-  let p = get_audio_playback_devices count in
+  let p = get_playback_devices count in
   if is_null p then []
   else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
@@ -30,12 +30,12 @@ let get_audio_playback_devices () =
         |> CArray.to_list
         |> List.map Unsigned.UInt.to_int)
 
-let get_audio_recording_devices = ff "SDL_GetAudioRecordingDevices"
+let get_recording_devices = ff "SDL_GetAudioRecordingDevices"
   (ptr int @-> returning (ptr audio_device_id))
 (* Wrapper for returning uint list *)
-let get_audio_recording_devices () =
+let get_recording_devices () =
   let count = allocate int 0 in
-  let p = get_audio_recording_devices count in
+  let p = get_recording_devices count in
   if is_null p then []
   else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
@@ -44,120 +44,119 @@ let get_audio_recording_devices () =
         |> CArray.to_list
         |> List.map Unsigned.UInt.to_int)
 
-let get_audio_device_name = ff "SDL_GetAudioDeviceName"
+let bind_streams = ff "SDL_BindAudioStreams"
+  (audio_device_id @-> ptr audio_stream @-> int @-> returning true_to_ok)
+let bind_streams devid streams =
+  let streams, num_streams = carray_of_list audio_stream streams in
+  bind_streams (Unsigned.UInt.of_int devid) streams num_streams
+
+let bind_stream = ff "SDL_BindAudioStream"
+  (audio_device_id @-> audio_stream @-> returning true_to_ok)
+let bind_stream devid stream =
+  bind_stream (Unsigned.UInt.of_int devid) stream
+
+let unbind_streams = ff "SDL_UnbindAudioStreams"
+  (ptr_opt audio_stream @-> int @-> returning void)
+let unbind_streams streams =
+  let streams, num_streams = carray_of_list_opt audio_stream streams in
+  unbind_streams streams num_streams
+
+let set_postmix_callback = ff "SDL_SetAudioPostmixCallback"
+  (audio_device_id @-> audio_postmix_callback_opt @-> ptr void @-> returning true_to_ok)
+let set_postmix_callback devid callback userdata =
+  set_postmix_callback (Unsigned.UInt.of_int devid) callback userdata
+
+let mix = ff "SDL_MixAudio"
+  (ptr uint8 @-> ptr uint8 @-> audio_format @-> uint32 @-> float @-> returning true_to_ok)
+let mix dst src format len volume =
+  mix dst src format (Unsigned.UInt.of_int len) volume
+
+let convert_samples = ff "SDL_ConvertAudioSamples"
+  (audio_spec @-> ptr uint8 @-> int @-> audio_spec @-> ptr_opt (ptr uint8) @-> ptr int @-> returning bool)
+let convert_samples src_spec src_data src_len dst_spec dst_data =
+  let dst_len = allocate int 0 in
+  if convert_samples src_spec src_data src_len dst_spec dst_data dst_len then Ok (!@ dst_len) else error ()
+
+end
+
+module AudioDevice = struct
+let get_name = ff "SDL_GetAudioDeviceName"
   (audio_device_id @-> returning string)
-let get_audio_device_name devid =
-  get_audio_device_name (Unsigned.UInt.of_int devid)
+let get_name devid =
+  get_name (Unsigned.UInt.of_int devid)
 
-let get_audio_device_format = ff "SDL_GetAudioDeviceFormat"
+let get_format = ff "SDL_GetAudioDeviceFormat"
   (audio_device_id @-> audio_spec @-> ptr int @-> returning bool)
-let get_audio_device_format devid spec =
+let get_format devid spec =
   let sample_frames = allocate int 0 in
-  if get_audio_device_format (Unsigned.UInt.of_int devid) spec sample_frames then Ok (!@ sample_frames) else error ()
+  if get_format (Unsigned.UInt.of_int devid) spec sample_frames then Ok (!@ sample_frames) else error ()
 
-let get_audio_device_channel_map = ff "SDL_GetAudioDeviceChannelMap"
+let get_channel_map = ff "SDL_GetAudioDeviceChannelMap"
   (audio_device_id @-> ptr int @-> returning (ptr int))
 (* Wrapper for returning int list *)
-let get_audio_device_channel_map devid =
+let get_channel_map devid =
   let count = allocate int 0 in
-  let p = get_audio_device_channel_map devid count in
+  let p = get_channel_map devid count in
   if is_null p then []
   else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
       (fun () ->
         CArray.from_ptr p n
         |> CArray.to_list)
-let get_audio_device_channel_map devid =
-  get_audio_device_channel_map (Unsigned.UInt.of_int devid)
+let get_channel_map devid =
+  get_channel_map (Unsigned.UInt.of_int devid)
 
-let open_audio_device = ff "SDL_OpenAudioDevice"
+let open_ = ff "SDL_OpenAudioDevice"
   (audio_device_id @-> audio_spec_opt @-> returning int_as_uint)
-let open_audio_device devid spec =
-  open_audio_device (Unsigned.UInt.of_int devid) spec
+let open_ devid spec =
+  open_ (Unsigned.UInt.of_int devid) spec
 
-let is_audio_device_physical = ff "SDL_IsAudioDevicePhysical"
+let is_physical = ff "SDL_IsAudioDevicePhysical"
   (audio_device_id @-> returning bool)
-let is_audio_device_physical devid =
-  is_audio_device_physical (Unsigned.UInt.of_int devid)
+let is_physical devid =
+  is_physical (Unsigned.UInt.of_int devid)
 
-let is_audio_device_playback = ff "SDL_IsAudioDevicePlayback"
+let is_playback = ff "SDL_IsAudioDevicePlayback"
   (audio_device_id @-> returning bool)
-let is_audio_device_playback devid =
-  is_audio_device_playback (Unsigned.UInt.of_int devid)
+let is_playback devid =
+  is_playback (Unsigned.UInt.of_int devid)
 
-let pause_audio_device = ff "SDL_PauseAudioDevice"
+let pause = ff "SDL_PauseAudioDevice"
   (audio_device_id @-> returning true_to_ok)
-let pause_audio_device devid =
-  pause_audio_device (Unsigned.UInt.of_int devid)
+let pause devid =
+  pause (Unsigned.UInt.of_int devid)
 
-let resume_audio_device = ff "SDL_ResumeAudioDevice"
+let resume = ff "SDL_ResumeAudioDevice"
   (audio_device_id @-> returning true_to_ok)
-let resume_audio_device devid =
-  resume_audio_device (Unsigned.UInt.of_int devid)
+let resume devid =
+  resume (Unsigned.UInt.of_int devid)
 
-let audio_device_paused = ff "SDL_AudioDevicePaused"
+let paused = ff "SDL_AudioDevicePaused"
   (audio_device_id @-> returning true_to_ok)
-let audio_device_paused devid =
-  audio_device_paused (Unsigned.UInt.of_int devid)
+let paused devid =
+  paused (Unsigned.UInt.of_int devid)
 
-let get_audio_device_gain = ff "SDL_GetAudioDeviceGain"
+let get_gain = ff "SDL_GetAudioDeviceGain"
   (audio_device_id @-> returning float)
-let get_audio_device_gain devid =
-  get_audio_device_gain (Unsigned.UInt.of_int devid)
+let get_gain devid =
+  get_gain (Unsigned.UInt.of_int devid)
 
-let set_audio_device_gain = ff "SDL_SetAudioDeviceGain"
+let set_gain = ff "SDL_SetAudioDeviceGain"
   (audio_device_id @-> float @-> returning true_to_ok)
-let set_audio_device_gain devid gain =
-  set_audio_device_gain (Unsigned.UInt.of_int devid) gain
+let set_gain devid gain =
+  set_gain (Unsigned.UInt.of_int devid) gain
 
-let close_audio_device = ff "SDL_CloseAudioDevice"
+let close = ff "SDL_CloseAudioDevice"
   (audio_device_id @-> returning void)
-let close_audio_device devid =
-  close_audio_device (Unsigned.UInt.of_int devid)
+let close devid =
+  close (Unsigned.UInt.of_int devid)
 
-let bind_audio_streams = ff "SDL_BindAudioStreams"
-  (audio_device_id @-> ptr audio_stream @-> int @-> returning true_to_ok)
-let bind_audio_streams devid streams =
-  let streams, num_streams = carray_of_list audio_stream streams in
-  bind_audio_streams (Unsigned.UInt.of_int devid) streams num_streams
-
-let bind_audio_stream = ff "SDL_BindAudioStream"
-  (audio_device_id @-> audio_stream @-> returning true_to_ok)
-let bind_audio_stream devid stream =
-  bind_audio_stream (Unsigned.UInt.of_int devid) stream
-
-let unbind_audio_streams = ff "SDL_UnbindAudioStreams"
-  (ptr_opt audio_stream @-> int @-> returning void)
-let unbind_audio_streams streams =
-  let streams, num_streams = carray_of_list_opt audio_stream streams in
-  unbind_audio_streams streams num_streams
-
-let set_audio_postmix_callback = ff "SDL_SetAudioPostmixCallback"
-  (audio_device_id @-> audio_postmix_callback_opt @-> ptr void @-> returning true_to_ok)
-let set_audio_postmix_callback devid callback userdata =
-  set_audio_postmix_callback (Unsigned.UInt.of_int devid) callback userdata
-
-let load_wav = ff "SDL_LoadWAV"
-  (string @-> audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning bool)
-let load_wav path =
-  let spec = AudioSpec.create () in
-  let audio_len = allocate uint (Unsigned.UInt.of_int 0) in
-  let null_uint8 = from_voidp uint8 null in
-  let audio_buf = allocate (ptr uint8) null_uint8 in
-  if load_wav path spec audio_buf audio_len then
-    let len = Unsigned.UInt.to_int (!@ audio_len) in
-    let p = !@ audio_buf in
-    let typ = typ_of_bigarray_kind (Bigarray.int8_unsigned) in
-    let p = coerce (ptr uint8) (ptr typ) p in
-    let ba = bigarray_of_ptr array1 len Bigarray.int8_unsigned p in
-    Ok (spec, ba) else error ()
-let mix_audio = ff "SDL_MixAudio"
-  (ptr uint8 @-> ptr uint8 @-> audio_format @-> uint32 @-> float @-> returning true_to_ok)
-let mix_audio dst src format len volume =
-  mix_audio dst src format (Unsigned.UInt.of_int len) volume
+let open_stream = ff "SDL_OpenAudioDeviceStream"
+  (audio_device_id @-> audio_spec_opt @-> audio_stream_callback_opt @-> ptr void @-> returning (some_to_ok audio_stream_opt))
+let open_stream devid spec callback userdata =
+  open_stream (Unsigned.UInt.of_int devid) spec callback userdata
 
 end
-include Global
 
 module AudioStream = struct
 let unbind = ff "SDL_UnbindAudioStream"
@@ -232,6 +231,7 @@ let put_data ?count stream ba =
   let typ = typ_of_bigarray_kind (Bigarray.Array1.kind ba) in
   let data = coerce (ptr typ) (ptr void) p in
   put_data stream data len
+
 let put_data_no_copy = ff "SDL_PutAudioStreamDataNoCopy"
   (audio_stream @-> ptr void @-> int @-> audio_stream_data_complete_callback_opt @-> ptr void @-> returning true_to_ok)
 
@@ -277,39 +277,39 @@ let set_put_callback = ff "SDL_SetAudioStreamPutCallback"
 let destroy = ff "SDL_DestroyAudioStream"
   (audio_stream @-> returning void)
 
-let open_audio_device_stream = ff "SDL_OpenAudioDeviceStream"
-  (audio_device_id @-> audio_spec_opt @-> audio_stream_callback_opt @-> ptr void @-> returning (some_to_ok audio_stream_opt))
-let open_audio_device_stream devid spec callback userdata =
-  open_audio_device_stream (Unsigned.UInt.of_int devid) spec callback userdata
-
 end
 
-module IOStream = struct
+module Global = struct
 let load_wav_io = ff "SDL_LoadWAV_IO"
   (io_stream @-> bool @-> audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning bool)
 let load_wav_io src closeio spec audio_buf =
   let audio_len = allocate uint (Unsigned.UInt.of_int 0) in
   if load_wav_io src closeio spec audio_buf audio_len then Ok (Unsigned.UInt.to_int (!@ audio_len)) else error ()
 
+let load_wav = ff "SDL_LoadWAV"
+  (string @-> audio_spec @-> ptr (ptr uint8) @-> ptr uint32 @-> returning bool)
+let load_wav path =
+  let spec = AudioSpec.create () in
+  let audio_len = allocate uint (Unsigned.UInt.of_int 0) in
+  let null_uint8 = from_voidp uint8 null in
+  let audio_buf = allocate (ptr uint8) null_uint8 in
+  if load_wav path spec audio_buf audio_len then
+    let len = Unsigned.UInt.to_int (!@ audio_len) in
+    let p = !@ audio_buf in
+    let typ = typ_of_bigarray_kind (Bigarray.int8_unsigned) in
+    let p = coerce (ptr uint8) (ptr typ) p in
+    let ba = bigarray_of_ptr array1 len Bigarray.int8_unsigned p in
+    Ok (spec, ba) else error ()
+
+let get_silence_value_for_format = ff "SDL_GetSilenceValueForFormat"
+  (audio_format @-> returning int)
+
 end
-
-module AudioSpec = struct
-let convert_audio_samples = ff "SDL_ConvertAudioSamples"
-  (audio_spec @-> ptr uint8 @-> int @-> audio_spec @-> ptr_opt (ptr uint8) @-> ptr int @-> returning bool)
-let convert_audio_samples src_spec src_data src_len dst_spec dst_data =
-  let dst_len = allocate int 0 in
-  if convert_audio_samples src_spec src_data src_len dst_spec dst_data dst_len then Ok (!@ dst_len) else error ()
-
-include AudioSpec
-
-end
+include Global
 
 module AudioFormat = struct
 let get_name = ff "SDL_GetAudioFormatName"
   (audio_format @-> returning string)
-
-let get_silence_value_for_format = ff "SDL_GetSilenceValueForFormat"
-  (audio_format @-> returning int)
 
 end
 

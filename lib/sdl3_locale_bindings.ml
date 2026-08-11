@@ -5,13 +5,13 @@ open Sdl3_types
 
 let ff = Load.foreign
 
-module Global = struct
-let get_preferred_locales = ff "SDL_GetPreferredLocales"
+module Locale = struct
+let get_preferreds = ff "SDL_GetPreferredLocales"
   (ptr int @-> returning (ptr (ptr locale)))
 (* Wrapper for returning (ptr locale) list *)
-let get_preferred_locales () =
+let get_preferreds () =
   let count = allocate int 0 in
-  let p = get_preferred_locales count in
+  let p = get_preferreds count in
   if is_null p then []
   else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
@@ -19,6 +19,7 @@ let get_preferred_locales () =
         CArray.from_ptr p n
         |> CArray.to_list)
 
+include Locale
+
 end
-include Global
 

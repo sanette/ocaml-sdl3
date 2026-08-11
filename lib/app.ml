@@ -44,7 +44,7 @@ let log_trace c fmt =
    by default, unless you specify this: *)
 (* let () =  Sdl3_log_bindings.LogPriority.set_log_priorities Sdl.log_priority_trace *)
 (* or this: *)
-let () = Sdl3_log_bindings.set_log_priority
+let () = Sdl3_log_bindings.Log.set_priority
     Sdl.log_category_application Sdl.log_priority_trace
 
 (* the 'a type is the application state, which is app dependent, typically a

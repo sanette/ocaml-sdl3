@@ -3,39 +3,38 @@
 open Sdl3
 let () = 
   Sdl.init (Sdl.init_events) |> Result.get_ok;
-  include Sdl.AssertData
-  include Sdl.AssertState
+  include Sdl.Assertion
+  include Sdl.AssertionHandler
   include Sdl.AsyncIO
   include Sdl.AsyncIOQueue
+  include Sdl.Atomic
   include Sdl.AtomicInt
   include Sdl.AtomicU32
+  include Sdl.Audio
+  include Sdl.AudioDevice
   include Sdl.AudioFormat
-  include Sdl.AudioSpec
   include Sdl.AudioStream
-  include Sdl.BlendFactor
   include Sdl.Camera
-  include Sdl.CameraPosition
+  include Sdl.Clipboard
   include Sdl.Condition
   include Sdl.Cursor
-  include Sdl.DateFormat
   include Sdl.DateTime
+  include Sdl.Dialog
+  include Sdl.Display
   include Sdl.DisplayMode
   include Sdl.DisplayOrientation
   include Sdl.Environment
+  include Sdl.Error
   include Sdl.Event
-  include Sdl.FPoint
-  include Sdl.FRect
-  include Sdl.FileDialogType
+  include Sdl.EventFilter
+  include Sdl.Events
   include Sdl.Folder
-  include Sdl.GLAttr
-  include Sdl.GLContextState
   include Sdl.GPUBuffer
   include Sdl.GPUCommandBuffer
   include Sdl.GPUComputePass
   include Sdl.GPUComputePipeline
   include Sdl.GPUCopyPass
   include Sdl.GPUDevice
-  include Sdl.GPUFence
   include Sdl.GPUGraphicsPipeline
   include Sdl.GPURenderPass
   include Sdl.GPURenderState
@@ -51,24 +50,25 @@ let () =
   include Sdl.GamepadButtonLabel
   include Sdl.GamepadType
   include Sdl.Haptic
-  include Sdl.Hid_device
-  include Sdl.Hid_device_info
+  include Sdl.Hints
   include Sdl.IOStatus
-  include Sdl.IOStream
-  include Sdl.Iconv_data_t
-  include Sdl.InitState
   include Sdl.Joystick
-  include Sdl.JoystickType
+  include Sdl.Keyboard
+  include Sdl.Locale
+  include Sdl.Log
+  include Sdl.LogOutputFunction
   include Sdl.LogPriority
-  include Sdl.MessageBoxData
+  include Sdl.Metal
+  include Sdl.Mouse
   include Sdl.Mutex
   include Sdl.Palette
-  include Sdl.PenDeviceType
+  include Sdl.Pen
   include Sdl.PixelFormat
-  include Sdl.PixelFormatDetails
+  include Sdl.Platform
   include Sdl.Point
-  include Sdl.PowerState
+  include Sdl.Power
   include Sdl.Process
+  include Sdl.Properties
   include Sdl.PropertyType
   include Sdl.RWLock
   include Sdl.Rect
@@ -77,8 +77,6 @@ let () =
   include Sdl.Scancode
   include Sdl.Semaphore
   include Sdl.Sensor
-  include Sdl.SensorType
-  include Sdl.SharedObject
   include Sdl.Storage
   include Sdl.Surface
   include Sdl.SystemCursor
@@ -86,11 +84,14 @@ let () =
   include Sdl.Texture
   include Sdl.Thread
   include Sdl.ThreadPriority
-  include Sdl.TouchDeviceType
+  include Sdl.Time
+  include Sdl.Timer
+  include Sdl.Touch
   include Sdl.Tray
   include Sdl.TrayEntry
   include Sdl.TrayMenu
-  include Sdl.VirtualJoystickDesc
+  include Sdl.Version
+  include Sdl.Video
   include Sdl.Window
  let () = Sdl.quit ();
   print_endline "Ok"

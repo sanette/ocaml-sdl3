@@ -1,12 +1,12 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
-module IOStream = struct
+module Global = struct
 let io_from_file = ff "SDL_IOFromFile"
   (string @-> string @-> returning (some_to_ok io_stream_opt))
 
@@ -59,10 +59,18 @@ let flush_io = ff "SDL_FlushIO"
 let load_file_io = ff "SDL_LoadFile_IO"
   (io_stream @-> ptr_opt size_t @-> bool @-> returning (ptr void))
 
+let load_file = ff "SDL_LoadFile"
+  (string @-> ptr_opt size_t @-> returning (ptr void))
+
 let save_file_io = ff "SDL_SaveFile_IO"
   (io_stream @-> ptr void @-> size_t @-> bool @-> returning true_to_ok)
 let save_file_io src data datasize closeio =
   save_file_io src data (Unsigned.Size_t.of_int datasize) closeio
+
+let save_file = ff "SDL_SaveFile"
+  (string @-> ptr void @-> size_t @-> returning true_to_ok)
+let save_file file data datasize =
+  save_file file data (Unsigned.Size_t.of_int datasize)
 
 let read_u8 = ff "SDL_ReadU8"
   (io_stream @-> ptr uint8 @-> returning bool)
@@ -188,22 +196,11 @@ let write_s64_be dst value =
   write_s64_be dst (Signed.Long.of_int value)
 
 end
+include Global
 
 module IOStatus = struct
 let get = ff "SDL_GetIOStatus"
   (io_stream @-> returning io_status)
 
 end
-
-module Global = struct
-let load_file = ff "SDL_LoadFile"
-  (string @-> ptr_opt size_t @-> returning (ptr void))
-
-let save_file = ff "SDL_SaveFile"
-  (string @-> ptr void @-> size_t @-> returning true_to_ok)
-let save_file file data datasize =
-  save_file file data (Unsigned.Size_t.of_int datasize)
-
-end
-include Global
 

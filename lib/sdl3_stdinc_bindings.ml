@@ -532,6 +532,15 @@ let tan = ff "SDL_tan"
 let tanf = ff "SDL_tanf"
   (float @-> returning float)
 
+let iconv_open = ff "SDL_iconv_open"
+  (string @-> string @-> returning iconv_t)
+
+let iconv_close = ff "SDL_iconv_close"
+  (iconv_t @-> returning int)
+
+let iconv = ff "SDL_iconv"
+  (iconv_t @-> ptr string @-> ptr size_t @-> ptr string @-> ptr size_t @-> returning size_t)
+
 let iconv_string = ff "SDL_iconv_string"
   (string @-> string @-> string @-> size_t @-> returning string)
 let iconv_string tocode fromcode inbuf inbytesleft =
@@ -561,18 +570,6 @@ let unset_variable = ff "SDL_UnsetEnvironmentVariable"
 
 let destroy = ff "SDL_DestroyEnvironment"
   (environment @-> returning void)
-
-end
-
-module Iconv_data_t = struct
-let iconv_open = ff "SDL_iconv_open"
-  (string @-> string @-> returning iconv_t)
-
-let iconv_close = ff "SDL_iconv_close"
-  (iconv_t @-> returning int)
-
-let iconv = ff "SDL_iconv"
-  (iconv_t @-> ptr string @-> ptr size_t @-> ptr string @-> ptr size_t @-> returning size_t)
 
 end
 

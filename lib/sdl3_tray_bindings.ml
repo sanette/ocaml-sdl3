@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -19,33 +19,27 @@ let set_tooltip = ff "SDL_SetTrayTooltip"
 let create_menu = ff "SDL_CreateTrayMenu"
   (tray @-> returning (some_to_ok tray_menu_opt))
 
+let create_submenu = ff "SDL_CreateTraySubmenu"
+  (tray_entry @-> returning (some_to_ok tray_menu_opt))
+
 let get_menu = ff "SDL_GetTrayMenu"
   (tray @-> returning (some_to_ok tray_menu_opt))
+
+let get_submenu = ff "SDL_GetTraySubmenu"
+  (tray_entry @-> returning (some_to_ok tray_menu_opt))
+
+let get_entries = ff "SDL_GetTrayEntries"
+  (tray_menu @-> ptr int @-> returning (ptr tray_entry))
+let get_entries menu =
+  let count = allocate int 0 in
+  let ret = get_entries menu count in
+(ret, !@ count)
 
 let destroy = ff "SDL_DestroyTray"
   (tray @-> returning void)
 
-end
-
-module TrayMenu = struct
-let create_tray_submenu = ff "SDL_CreateTraySubmenu"
-  (tray_entry @-> returning (some_to_ok tray_menu_opt))
-
-let get_tray_submenu = ff "SDL_GetTraySubmenu"
-  (tray_entry @-> returning (some_to_ok tray_menu_opt))
-
-let get_tray_entries = ff "SDL_GetTrayEntries"
-  (tray_menu @-> ptr int @-> returning (ptr tray_entry))
-let get_tray_entries menu =
-  let count = allocate int 0 in
-  let ret = get_tray_entries menu count in
-(ret, !@ count)
-
-let get_parent_entry = ff "SDL_GetTrayMenuParentEntry"
-  (tray_menu @-> returning (some_to_ok tray_entry_opt))
-
-let get_parent_tray = ff "SDL_GetTrayMenuParentTray"
-  (tray_menu @-> returning (some_to_ok tray_opt))
+let updates = ff "SDL_UpdateTrays"
+  (void @-> returning void)
 
 end
 
@@ -87,10 +81,12 @@ let get_parent = ff "SDL_GetTrayEntryParent"
 
 end
 
-module Global = struct
-let update_trays = ff "SDL_UpdateTrays"
-  (void @-> returning void)
+module TrayMenu = struct
+let get_parent_entry = ff "SDL_GetTrayMenuParentEntry"
+  (tray_menu @-> returning (some_to_ok tray_entry_opt))
+
+let get_parent_tray = ff "SDL_GetTrayMenuParentTray"
+  (tray_menu @-> returning (some_to_ok tray_opt))
 
 end
-include Global
 

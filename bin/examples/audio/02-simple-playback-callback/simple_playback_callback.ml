@@ -55,7 +55,7 @@ let init () =
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->
-    match Sdl.create_window_and_renderer "examples/audio/simple-playback-callback" 640 480
+    match Sdl.Renderer.create_window_and "examples/audio/simple-playback-callback" 640 480
             Sdl.window_resizable with
     | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e;
       T.APP_FAILURE, None
@@ -64,14 +64,14 @@ let init () =
       Sdl.Renderer.set_logical_presentation renderer 640 480
         Sdl.logical_presentation_letterbox |> go;
 
-      let spec = Sdl.AudioSpec.create () in
-      Sdl.AudioSpec.(set spec channels 1);
-      Sdl.AudioSpec.(set spec format Sdl.audio_f32);
-      Sdl.AudioSpec.(set spec freq 8000);
+      let spec = T.AudioSpec.create () in
+      T.AudioSpec.(set spec channels 1);
+      T.AudioSpec.(set spec format Sdl.audio_f32);
+      T.AudioSpec.(set spec freq 8000);
 
       let callback = Some feed_the_audio_stream_more in
       let state = {state with callback} in
-      match Sdl.AudioStream.open_audio_device_stream Sdl.audio_device_default_playback
+      match Sdl.AudioDevice.open_stream Sdl.audio_device_default_playback
               (Some spec) callback Ctypes.null with
       | Error (`Msg e) -> Sdl.App.log "Couldn't create audio stream: %s" e;
         T.APP_FAILURE, Some state
@@ -88,8 +88,8 @@ let event _state e =
 
 (* This function runs once per frame, and is the heart of the program. *)
 let iterate state =
-  Sdl.Renderer.render_clear state.renderer |> go ;
-  Sdl.Renderer.render_present state.renderer |> go;
+  Sdl.Renderer.clear state.renderer |> go ;
+  Sdl.Renderer.present state.renderer |> go;
   (* Thread.yield (); *)
   T.APP_CONTINUE (* carry on with the program! *)
 

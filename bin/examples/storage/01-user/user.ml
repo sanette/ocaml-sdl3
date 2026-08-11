@@ -88,7 +88,7 @@ let init () =
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->
-    match Sdl.create_window_and_renderer "examples/storage/user" 640 480
+    match Sdl.Renderer.create_window_and "examples/storage/user" 640 480
             Sdl.window_resizable with
     | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e;
       T.APP_FAILURE, None
@@ -146,7 +146,7 @@ let iterate state =
         state.save_thread <- None;
         if state.save_result = 0
         then Sdl.App.log "Save/Load complete!"
-        else Sdl.App.log "Save/Load failed: %s" (Sdl.get_error ()));
+        else Sdl.App.log "Save/Load failed: %s" (Sdl.Error.get ()));
   end;
 
   let red, green, blue = match save_state with
@@ -161,8 +161,8 @@ let iterate state =
 
   Sdl.Renderer.set_draw_color_float state.renderer red green blue
     Sdl.alpha_opaque_float |> go;
-  Sdl.Renderer.render_clear state.renderer |> go;
-  Sdl.Renderer.render_present state.renderer |> go;
+  Sdl.Renderer.clear state.renderer |> go;
+  Sdl.Renderer.present state.renderer |> go;
 
   T.APP_CONTINUE (* carry on with the program! *)
 

@@ -6,28 +6,41 @@ open Helpers
 
 let ff = Load.foreign
 
-module Global = struct
-let get_global_properties = ff "SDL_GetGlobalProperties"
+module Properties = struct
+let get_global = ff "SDL_GetGlobalProperties"
   (void @-> returning int_as_uint)
 
-let create_properties = ff "SDL_CreateProperties"
+let create = ff "SDL_CreateProperties"
   (void @-> returning int_as_uint)
 
-let copy_properties = ff "SDL_CopyProperties"
+let copy = ff "SDL_CopyProperties"
   (properties_id @-> properties_id @-> returning true_to_ok)
-let copy_properties src dst =
-  copy_properties (Unsigned.UInt.of_int src) (Unsigned.UInt.of_int dst)
+let copy src dst =
+  copy (Unsigned.UInt.of_int src) (Unsigned.UInt.of_int dst)
 
-let lock_properties = ff "SDL_LockProperties"
+let lock = ff "SDL_LockProperties"
   (properties_id @-> returning true_to_ok)
-let lock_properties props =
-  lock_properties (Unsigned.UInt.of_int props)
+let lock props =
+  lock (Unsigned.UInt.of_int props)
 
-let unlock_properties = ff "SDL_UnlockProperties"
+let unlock = ff "SDL_UnlockProperties"
   (properties_id @-> returning void)
-let unlock_properties props =
-  unlock_properties (Unsigned.UInt.of_int props)
+let unlock props =
+  unlock (Unsigned.UInt.of_int props)
 
+let enumerate = ff "SDL_EnumerateProperties"
+  (properties_id @-> enumerate_properties_callback @-> ptr void @-> returning true_to_ok)
+let enumerate props callback userdata =
+  enumerate (Unsigned.UInt.of_int props) callback userdata
+
+let destroy = ff "SDL_DestroyProperties"
+  (properties_id @-> returning void)
+let destroy props =
+  destroy (Unsigned.UInt.of_int props)
+
+end
+
+module Global = struct
 let set_pointer_property_with_cleanup = ff "SDL_SetPointerPropertyWithCleanup"
   (properties_id @-> string @-> ptr void @-> cleanup_property_callback_opt @-> ptr void @-> returning true_to_ok)
 let set_pointer_property_with_cleanup props name value cleanup userdata =
@@ -92,16 +105,6 @@ let clear_property = ff "SDL_ClearProperty"
   (properties_id @-> string @-> returning true_to_ok)
 let clear_property props name =
   clear_property (Unsigned.UInt.of_int props) name
-
-let enumerate_properties = ff "SDL_EnumerateProperties"
-  (properties_id @-> enumerate_properties_callback @-> ptr void @-> returning true_to_ok)
-let enumerate_properties props callback userdata =
-  enumerate_properties (Unsigned.UInt.of_int props) callback userdata
-
-let destroy_properties = ff "SDL_DestroyProperties"
-  (properties_id @-> returning void)
-let destroy_properties props =
-  destroy_properties (Unsigned.UInt.of_int props)
 
 end
 include Global

@@ -6,22 +6,22 @@ open Helpers
 
 let ff = Load.foreign
 
-module Global = struct
-let lock_joysticks = ff "SDL_LockJoysticks"
+module Joystick = struct
+let locks = ff "SDL_LockJoysticks"
   (void @-> returning void)
 
-let unlock_joysticks = ff "SDL_UnlockJoysticks"
+let unlocks = ff "SDL_UnlockJoysticks"
   (void @-> returning void)
 
-let has_joystick = ff "SDL_HasJoystick"
-  (void @-> returning bool)
+let has = ff "SDL_HasJoystick"
+  (void @-> returning true_to_ok)
 
-let get_joysticks = ff "SDL_GetJoysticks"
+let gets = ff "SDL_GetJoysticks"
   (ptr int @-> returning (ptr joystick_id))
 (* Wrapper for returning uint list *)
-let get_joysticks () =
+let gets () =
   let count = allocate int 0 in
-  let p = get_joysticks count in
+  let p = gets count in
   if is_null p then []
   else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
@@ -30,85 +30,46 @@ let get_joysticks () =
         |> CArray.to_list
         |> List.map Unsigned.UInt.to_int)
 
-let get_joystick_name_for_id = ff "SDL_GetJoystickNameForID"
+let get_name_for_id = ff "SDL_GetJoystickNameForID"
   (joystick_id @-> returning string)
-let get_joystick_name_for_id instance_id =
-  get_joystick_name_for_id (Unsigned.UInt.of_int instance_id)
+let get_name_for_id instance_id =
+  get_name_for_id (Unsigned.UInt.of_int instance_id)
 
-let get_joystick_path_for_id = ff "SDL_GetJoystickPathForID"
+let get_path_for_id = ff "SDL_GetJoystickPathForID"
   (joystick_id @-> returning string)
-let get_joystick_path_for_id instance_id =
-  get_joystick_path_for_id (Unsigned.UInt.of_int instance_id)
+let get_path_for_id instance_id =
+  get_path_for_id (Unsigned.UInt.of_int instance_id)
 
-let get_joystick_player_index_for_id = ff "SDL_GetJoystickPlayerIndexForID"
+let get_player_index_for_id = ff "SDL_GetJoystickPlayerIndexForID"
   (joystick_id @-> returning int)
-let get_joystick_player_index_for_id instance_id =
-  get_joystick_player_index_for_id (Unsigned.UInt.of_int instance_id)
+let get_player_index_for_id instance_id =
+  get_player_index_for_id (Unsigned.UInt.of_int instance_id)
 
-let get_joystick_vendor_for_id = ff "SDL_GetJoystickVendorForID"
-  (joystick_id @-> returning int_as_ushort)
-let get_joystick_vendor_for_id instance_id =
-  get_joystick_vendor_for_id (Unsigned.UInt.of_int instance_id)
-
-let get_joystick_product_for_id = ff "SDL_GetJoystickProductForID"
-  (joystick_id @-> returning int_as_ushort)
-let get_joystick_product_for_id instance_id =
-  get_joystick_product_for_id (Unsigned.UInt.of_int instance_id)
-
-let get_joystick_product_version_for_id = ff "SDL_GetJoystickProductVersionForID"
-  (joystick_id @-> returning int_as_ushort)
-let get_joystick_product_version_for_id instance_id =
-  get_joystick_product_version_for_id (Unsigned.UInt.of_int instance_id)
-
-let detach_virtual_joystick = ff "SDL_DetachVirtualJoystick"
-  (joystick_id @-> returning true_to_ok)
-let detach_virtual_joystick instance_id =
-  detach_virtual_joystick (Unsigned.UInt.of_int instance_id)
-
-let is_joystick_virtual = ff "SDL_IsJoystickVirtual"
-  (joystick_id @-> returning bool)
-let is_joystick_virtual instance_id =
-  is_joystick_virtual (Unsigned.UInt.of_int instance_id)
-
-let set_joystick_events_enabled = ff "SDL_SetJoystickEventsEnabled"
-  (bool @-> returning void)
-
-let joystick_events_enabled = ff "SDL_JoystickEventsEnabled"
-  (void @-> returning bool)
-
-let update_joysticks = ff "SDL_UpdateJoysticks"
-  (void @-> returning void)
-
-end
-include Global
-
-module GUID = struct
-let get_joystick_for_id = ff "SDL_GetJoystickGUIDForID"
+let get_guid_for_id = ff "SDL_GetJoystickGUIDForID"
   (joystick_id @-> returning guid)
-let get_joystick_for_id instance_id =
-  get_joystick_for_id (Unsigned.UInt.of_int instance_id)
+let get_guid_for_id instance_id =
+  get_guid_for_id (Unsigned.UInt.of_int instance_id)
 
-let get_joystick_info = ff "SDL_GetJoystickGUIDInfo"
-  (guid @-> ptr uint16 @-> ptr uint16 @-> ptr uint16 @-> ptr uint16 @-> returning void)
-let get_joystick_info guid =
-  let vendor = allocate ushort (Unsigned.UShort.of_int 0) in
-  let product = allocate ushort (Unsigned.UShort.of_int 0) in
-  let version = allocate ushort (Unsigned.UShort.of_int 0) in
-  let crc16 = allocate ushort (Unsigned.UShort.of_int 0) in
-  get_joystick_info guid vendor product version crc16;
-  (Unsigned.UShort.to_int (!@ vendor), Unsigned.UShort.to_int (!@ product), Unsigned.UShort.to_int (!@ version), Unsigned.UShort.to_int (!@ crc16))
+let get_vendor_for_id = ff "SDL_GetJoystickVendorForID"
+  (joystick_id @-> returning int_as_ushort)
+let get_vendor_for_id instance_id =
+  get_vendor_for_id (Unsigned.UInt.of_int instance_id)
 
-end
+let get_product_for_id = ff "SDL_GetJoystickProductForID"
+  (joystick_id @-> returning int_as_ushort)
+let get_product_for_id instance_id =
+  get_product_for_id (Unsigned.UInt.of_int instance_id)
 
-module JoystickType = struct
-let get_for_id = ff "SDL_GetJoystickTypeForID"
+let get_product_version_for_id = ff "SDL_GetJoystickProductVersionForID"
+  (joystick_id @-> returning int_as_ushort)
+let get_product_version_for_id instance_id =
+  get_product_version_for_id (Unsigned.UInt.of_int instance_id)
+
+let get_type_for_id = ff "SDL_GetJoystickTypeForID"
   (joystick_id @-> returning joystick_type)
-let get_for_id instance_id =
-  get_for_id (Unsigned.UInt.of_int instance_id)
+let get_type_for_id instance_id =
+  get_type_for_id (Unsigned.UInt.of_int instance_id)
 
-end
-
-module Joystick = struct
 let open_ = ff "SDL_OpenJoystick"
   (joystick_id @-> returning (some_to_ok joystick_opt))
 let open_ instance_id =
@@ -121,6 +82,19 @@ let get_from_id instance_id =
 
 let get_from_player_index = ff "SDL_GetJoystickFromPlayerIndex"
   (int @-> returning (some_to_ok joystick_opt))
+
+let attach_virtual = ff "SDL_AttachVirtualJoystick"
+  (ptr virtual_joystick_desc @-> returning int_as_uint)
+
+let detach_virtual = ff "SDL_DetachVirtualJoystick"
+  (joystick_id @-> returning true_to_ok)
+let detach_virtual instance_id =
+  detach_virtual (Unsigned.UInt.of_int instance_id)
+
+let is_virtual = ff "SDL_IsJoystickVirtual"
+  (joystick_id @-> returning bool)
+let is_virtual instance_id =
+  is_virtual (Unsigned.UInt.of_int instance_id)
 
 let set_virtual_axis = ff "SDL_SetJoystickVirtualAxis"
   (joystick @-> int @-> sint16 @-> returning true_to_ok)
@@ -198,6 +172,15 @@ let get_num_hats = ff "SDL_GetNumJoystickHats"
 let get_num_buttons = ff "SDL_GetNumJoystickButtons"
   (joystick @-> returning int)
 
+let set_events_enabled = ff "SDL_SetJoystickEventsEnabled"
+  (bool @-> returning void)
+
+let events_enabled = ff "SDL_JoystickEventsEnabled"
+  (void @-> returning bool)
+
+let updates = ff "SDL_UpdateJoysticks"
+  (void @-> returning void)
+
 let get_axis = ff "SDL_GetJoystickAxis"
   (joystick @-> int @-> returning sint16)
 
@@ -250,11 +233,16 @@ let get_power_info joystick =
 
 end
 
-module VirtualJoystickDesc = struct
-let attach_virtual_joystick = ff "SDL_AttachVirtualJoystick"
-  (ptr virtual_joystick_desc @-> returning int_as_uint)
-
-include VirtualJoystickDesc
+module GUID = struct
+let get_joystick_info = ff "SDL_GetJoystickGUIDInfo"
+  (guid @-> ptr uint16 @-> ptr uint16 @-> ptr uint16 @-> ptr uint16 @-> returning void)
+let get_joystick_info guid =
+  let vendor = allocate ushort (Unsigned.UShort.of_int 0) in
+  let product = allocate ushort (Unsigned.UShort.of_int 0) in
+  let version = allocate ushort (Unsigned.UShort.of_int 0) in
+  let crc16 = allocate ushort (Unsigned.UShort.of_int 0) in
+  get_joystick_info guid vendor product version crc16;
+  (Unsigned.UShort.to_int (!@ vendor), Unsigned.UShort.to_int (!@ product), Unsigned.UShort.to_int (!@ version), Unsigned.UShort.to_int (!@ crc16))
 
 end
 

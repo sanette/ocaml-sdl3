@@ -6,13 +6,13 @@ open Helpers
 
 let ff = Load.foreign
 
-module Global = struct
-let get_sensors = ff "SDL_GetSensors"
+module Sensor = struct
+let gets = ff "SDL_GetSensors"
   (ptr int @-> returning (ptr sensor_id))
 (* Wrapper for returning uint list *)
-let get_sensors () =
+let gets () =
   let count = allocate int 0 in
-  let p = get_sensors count in
+  let p = gets count in
   if is_null p then []
   else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
@@ -21,31 +21,21 @@ let get_sensors () =
         |> CArray.to_list
         |> List.map Unsigned.UInt.to_int)
 
-let get_sensor_name_for_id = ff "SDL_GetSensorNameForID"
+let get_name_for_id = ff "SDL_GetSensorNameForID"
   (sensor_id @-> returning string)
-let get_sensor_name_for_id instance_id =
-  get_sensor_name_for_id (Unsigned.UInt.of_int instance_id)
+let get_name_for_id instance_id =
+  get_name_for_id (Unsigned.UInt.of_int instance_id)
 
-let get_sensor_non_portable_type_for_id = ff "SDL_GetSensorNonPortableTypeForID"
-  (sensor_id @-> returning int)
-let get_sensor_non_portable_type_for_id instance_id =
-  get_sensor_non_portable_type_for_id (Unsigned.UInt.of_int instance_id)
-
-let update_sensors = ff "SDL_UpdateSensors"
-  (void @-> returning void)
-
-end
-include Global
-
-module SensorType = struct
-let get_for_id = ff "SDL_GetSensorTypeForID"
+let get_type_for_id = ff "SDL_GetSensorTypeForID"
   (sensor_id @-> returning sensor_type)
-let get_for_id instance_id =
-  get_for_id (Unsigned.UInt.of_int instance_id)
+let get_type_for_id instance_id =
+  get_type_for_id (Unsigned.UInt.of_int instance_id)
 
-end
+let get_non_portable_type_for_id = ff "SDL_GetSensorNonPortableTypeForID"
+  (sensor_id @-> returning int)
+let get_non_portable_type_for_id instance_id =
+  get_non_portable_type_for_id (Unsigned.UInt.of_int instance_id)
 
-module Sensor = struct
 let open_ = ff "SDL_OpenSensor"
   (sensor_id @-> returning (some_to_ok sensor_opt))
 let open_ instance_id =
@@ -76,6 +66,9 @@ let get_data = ff "SDL_GetSensorData"
 
 let close = ff "SDL_CloseSensor"
   (sensor @-> returning void)
+
+let updates = ff "SDL_UpdateSensors"
+  (void @-> returning void)
 
 end
 

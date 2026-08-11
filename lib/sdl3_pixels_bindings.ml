@@ -44,7 +44,7 @@ include Palette
 
 end
 
-module PixelFormatDetails = struct
+module Global = struct
 let map_rgb = ff "SDL_MapRGB"
   (ptr pixel_format_details @-> palette_opt @-> uint8 @-> uint8 @-> uint8 @-> returning int_as_uint)
 let map_rgb format palette r g b =
@@ -55,11 +55,6 @@ let map_rgba = ff "SDL_MapRGBA"
 let map_rgba format palette r g b a =
   map_rgba format palette (Unsigned.UChar.of_int r) (Unsigned.UChar.of_int g) (Unsigned.UChar.of_int b) (Unsigned.UChar.of_int a)
 
-include PixelFormatDetails
-
-end
-
-module Global = struct
 let get_rgb = ff "SDL_GetRGB"
   (uint32 @-> ptr pixel_format_details @-> palette_opt @-> ptr uint8 @-> ptr uint8 @-> ptr uint8 @-> returning void)
 let get_rgb pixelvalue format palette =

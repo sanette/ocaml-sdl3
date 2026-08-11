@@ -6,13 +6,13 @@ open Helpers
 
 let ff = Load.foreign
 
-module Global = struct
-let get_haptics = ff "SDL_GetHaptics"
+module Haptic = struct
+let gets = ff "SDL_GetHaptics"
   (ptr int @-> returning (ptr haptic_id))
 (* Wrapper for returning uint list *)
-let get_haptics () =
+let gets () =
   let count = allocate int 0 in
-  let p = get_haptics count in
+  let p = gets count in
   if is_null p then []
   else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
@@ -21,18 +21,11 @@ let get_haptics () =
         |> CArray.to_list
         |> List.map Unsigned.UInt.to_int)
 
-let get_haptic_name_for_id = ff "SDL_GetHapticNameForID"
+let get_name_for_id = ff "SDL_GetHapticNameForID"
   (haptic_id @-> returning string)
-let get_haptic_name_for_id instance_id =
-  get_haptic_name_for_id (Unsigned.UInt.of_int instance_id)
+let get_name_for_id instance_id =
+  get_name_for_id (Unsigned.UInt.of_int instance_id)
 
-let is_mouse_haptic = ff "SDL_IsMouseHaptic"
-  (void @-> returning bool)
-
-end
-include Global
-
-module Haptic = struct
 let open_ = ff "SDL_OpenHaptic"
   (haptic_id @-> returning (some_to_ok haptic_opt))
 let open_ instance_id =
@@ -48,6 +41,9 @@ let get_id = ff "SDL_GetHapticID"
 
 let get_name = ff "SDL_GetHapticName"
   (haptic @-> returning string)
+
+let is_mouse = ff "SDL_IsMouseHaptic"
+  (void @-> returning bool)
 
 let open_from_mouse = ff "SDL_OpenHapticFromMouse"
   (void @-> returning (some_to_ok haptic_opt))

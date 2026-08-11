@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -15,9 +15,6 @@ let set_hint = ff "SDL_SetHint"
 
 let reset_hint = ff "SDL_ResetHint"
   (string @-> returning true_to_ok)
-
-let reset_hints = ff "SDL_ResetHints"
-  (void @-> returning void)
 
 let get_hint = ff "SDL_GetHint"
   (string @-> returning string)
@@ -33,4 +30,10 @@ let remove_hint_callback = ff "SDL_RemoveHintCallback"
 
 end
 include Global
+
+module Hints = struct
+let reset = ff "SDL_ResetHints"
+  (void @-> returning void)
+
+end
 

@@ -6,16 +6,16 @@ open Helpers
 
 let ff = Load.foreign
 
-module Global = struct
-let has_keyboard = ff "SDL_HasKeyboard"
-  (void @-> returning bool)
+module Keyboard = struct
+let has = ff "SDL_HasKeyboard"
+  (void @-> returning true_to_ok)
 
-let get_keyboards = ff "SDL_GetKeyboards"
+let gets = ff "SDL_GetKeyboards"
   (ptr int @-> returning (ptr keyboard_id))
 (* Wrapper for returning uint list *)
-let get_keyboards () =
+let gets () =
   let count = allocate int 0 in
-  let p = get_keyboards count in
+  let p = gets count in
   if is_null p then []
   else let n =  (!@ (count)) in
     Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
@@ -24,21 +24,33 @@ let get_keyboards () =
         |> CArray.to_list
         |> List.map Unsigned.UInt.to_int)
 
-let get_keyboard_name_for_id = ff "SDL_GetKeyboardNameForID"
+let get_name_for_id = ff "SDL_GetKeyboardNameForID"
   (keyboard_id @-> returning string)
-let get_keyboard_name_for_id instance_id =
-  get_keyboard_name_for_id (Unsigned.UInt.of_int instance_id)
+let get_name_for_id instance_id =
+  get_name_for_id (Unsigned.UInt.of_int instance_id)
 
-let get_keyboard_state = ff "SDL_GetKeyboardState"
+let get_focus = ff "SDL_GetKeyboardFocus"
+  (void @-> returning (some_to_ok window_opt))
+
+let get_state = ff "SDL_GetKeyboardState"
   (ptr int @-> returning (ptr bool))
-let get_keyboard_state () =
+let get_state () =
   let numkeys = allocate int 0 in
-  let ret = get_keyboard_state numkeys in
+  let ret = get_state numkeys in
 (ret, !@ numkeys)
 
-let reset_keyboard = ff "SDL_ResetKeyboard"
+let reset = ff "SDL_ResetKeyboard"
   (void @-> returning void)
 
+let has_screen_support = ff "SDL_HasScreenKeyboardSupport"
+  (void @-> returning bool)
+
+let screen_shown = ff "SDL_ScreenKeyboardShown"
+  (window @-> returning true_to_ok)
+
+end
+
+module Global = struct
 let get_mod_state = ff "SDL_GetModState"
   (void @-> returning int_as_ushort)
 
@@ -54,16 +66,6 @@ let get_key_name key =
 
 let get_key_from_name = ff "SDL_GetKeyFromName"
   (string @-> returning int_as_uint)
-
-let has_screen_keyboard_support = ff "SDL_HasScreenKeyboardSupport"
-  (void @-> returning bool)
-
-end
-include Global
-
-module Window = struct
-let get_keyboard_focus = ff "SDL_GetKeyboardFocus"
-  (void @-> returning (some_to_ok window_opt))
 
 let start_text_input = ff "SDL_StartTextInput"
   (window @-> returning true_to_ok)
@@ -91,10 +93,8 @@ let get_text_input_area window rect =
   let cursor = allocate int 0 in
   if get_text_input_area window rect cursor then Ok (!@ cursor) else error ()
 
-let screen_keyboard_shown = ff "SDL_ScreenKeyboardShown"
-  (window @-> returning true_to_ok)
-
 end
+include Global
 
 module Scancode = struct
 let get_key_from = ff "SDL_GetKeyFromScancode"

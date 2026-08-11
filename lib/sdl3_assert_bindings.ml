@@ -5,33 +5,27 @@ open Sdl3_types
 
 let ff = Load.foreign
 
-module AssertState = struct
-let report_assertion = ff "SDL_ReportAssertion"
+module Assertion = struct
+let report = ff "SDL_ReportAssertion"
   (ptr assert_data @-> string @-> string @-> int @-> returning assert_state)
 
-end
-
-module Global = struct
-let set_assertion_handler = ff "SDL_SetAssertionHandler"
-  (assertion_handler_opt @-> ptr void @-> returning void)
-
-let get_default_assertion_handler = ff "SDL_GetDefaultAssertionHandler"
+let get_default_handler = ff "SDL_GetDefaultAssertionHandler"
   (void @-> returning assertion_handler)
 
-let get_assertion_handler = ff "SDL_GetAssertionHandler"
+let get_handler = ff "SDL_GetAssertionHandler"
   (ptr (ptr void) @-> returning assertion_handler)
 
-let reset_assertion_report = ff "SDL_ResetAssertionReport"
+let get_report = ff "SDL_GetAssertionReport"
+  (void @-> returning (ptr assert_data))
+
+let reset_report = ff "SDL_ResetAssertionReport"
   (void @-> returning void)
 
 end
-include Global
 
-module AssertData = struct
-let get_assertion_report = ff "SDL_GetAssertionReport"
-  (void @-> returning (ptr assert_data))
-
-include AssertData
+module AssertionHandler = struct
+let set = ff "SDL_SetAssertionHandler"
+  (assertion_handler_opt @-> ptr void @-> returning void)
 
 end
 

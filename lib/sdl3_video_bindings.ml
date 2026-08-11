@@ -6,16 +6,25 @@ open Helpers
 
 let ff = Load.foreign
 
-module Global = struct
-let get_num_video_drivers = ff "SDL_GetNumVideoDrivers"
+module Video = struct
+let get_num_drivers = ff "SDL_GetNumVideoDrivers"
   (void @-> returning int)
 
-let get_video_driver = ff "SDL_GetVideoDriver"
+let get_driver = ff "SDL_GetVideoDriver"
   (int @-> returning string)
 
-let get_current_video_driver = ff "SDL_GetCurrentVideoDriver"
+let get_current_driver = ff "SDL_GetCurrentVideoDriver"
   (void @-> returning string)
 
+end
+
+module SystemTheme = struct
+let get = ff "SDL_GetSystemTheme"
+  (void @-> returning system_theme)
+
+end
+
+module Global = struct
 let get_displays = ff "SDL_GetDisplays"
   (ptr int @-> returning (ptr display_id))
 (* Wrapper for returning uint list *)
@@ -32,51 +41,6 @@ let get_displays () =
 
 let get_primary_display = ff "SDL_GetPrimaryDisplay"
   (void @-> returning int_as_uint)
-
-let get_display_properties = ff "SDL_GetDisplayProperties"
-  (display_id @-> returning int_as_uint)
-let get_display_properties display_id =
-  get_display_properties (Unsigned.UInt.of_int display_id)
-
-let get_display_name = ff "SDL_GetDisplayName"
-  (display_id @-> returning string)
-let get_display_name display_id =
-  get_display_name (Unsigned.UInt.of_int display_id)
-
-let get_display_bounds = ff "SDL_GetDisplayBounds"
-  (display_id @-> ptr rect @-> returning true_to_ok)
-let get_display_bounds display_id rect =
-  get_display_bounds (Unsigned.UInt.of_int display_id) rect
-
-let get_display_usable_bounds = ff "SDL_GetDisplayUsableBounds"
-  (display_id @-> ptr rect @-> returning true_to_ok)
-let get_display_usable_bounds display_id rect =
-  get_display_usable_bounds (Unsigned.UInt.of_int display_id) rect
-
-let get_display_content_scale = ff "SDL_GetDisplayContentScale"
-  (display_id @-> returning float)
-let get_display_content_scale display_id =
-  get_display_content_scale (Unsigned.UInt.of_int display_id)
-
-let get_fullscreen_display_modes = ff "SDL_GetFullscreenDisplayModes"
-  (display_id @-> ptr int @-> returning (ptr display_mode))
-(* Wrapper for returning display_mode list *)
-let get_fullscreen_display_modes display_id =
-  let count = allocate int 0 in
-  let p = get_fullscreen_display_modes display_id count in
-  if is_null p then []
-  else let n =  (!@ (count)) in
-    Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
-      (fun () ->
-        CArray.from_ptr p n
-        |> CArray.to_list)
-let get_fullscreen_display_modes display_id =
-  get_fullscreen_display_modes (Unsigned.UInt.of_int display_id)
-
-let get_closest_fullscreen_display_mode = ff "SDL_GetClosestFullscreenDisplayMode"
-  (display_id @-> int @-> int @-> float @-> bool @-> display_mode @-> returning true_to_ok)
-let get_closest_fullscreen_display_mode display_id w h refresh_rate include_high_density_modes closest =
-  get_closest_fullscreen_display_mode (Unsigned.UInt.of_int display_id) w h refresh_rate include_high_density_modes closest
 
 let get_windows = ff "SDL_GetWindows"
   (ptr int @-> returning (ptr window))
@@ -118,6 +82,24 @@ let gl_extension_supported = ff "SDL_GL_ExtensionSupported"
 let gl_reset_attributes = ff "SDL_GL_ResetAttributes"
   (void @-> returning void)
 
+let gl_set_attribute = ff "SDL_GL_SetAttribute"
+  (gl_attr @-> int @-> returning true_to_ok)
+
+let gl_get_attribute = ff "SDL_GL_GetAttribute"
+  (gl_attr @-> ptr int @-> returning bool)
+let gl_get_attribute attr =
+  let value = allocate int 0 in
+  if gl_get_attribute attr value then Ok (!@ value) else error ()
+
+let gl_create_context = ff "SDL_GL_CreateContext"
+  (window @-> returning gl_context)
+
+let gl_make_current = ff "SDL_GL_MakeCurrent"
+  (window @-> gl_context @-> returning true_to_ok)
+
+let gl_get_current_context = ff "SDL_GL_GetCurrentContext"
+  (void @-> returning gl_context)
+
 let egl_get_current_display = ff "SDL_EGL_GetCurrentDisplay"
   (void @-> returning egl_display)
 
@@ -136,12 +118,57 @@ let gl_get_swap_interval () =
   let interval = allocate int 0 in
   if gl_get_swap_interval interval then Ok (!@ interval) else error ()
 
+let gl_destroy_context = ff "SDL_GL_DestroyContext"
+  (gl_context @-> returning true_to_ok)
+
 end
 include Global
 
-module SystemTheme = struct
-let get = ff "SDL_GetSystemTheme"
-  (void @-> returning system_theme)
+module Display = struct
+let get_properties = ff "SDL_GetDisplayProperties"
+  (display_id @-> returning int_as_uint)
+let get_properties display_id =
+  get_properties (Unsigned.UInt.of_int display_id)
+
+let get_name = ff "SDL_GetDisplayName"
+  (display_id @-> returning string)
+let get_name display_id =
+  get_name (Unsigned.UInt.of_int display_id)
+
+let get_bounds = ff "SDL_GetDisplayBounds"
+  (display_id @-> ptr rect @-> returning true_to_ok)
+let get_bounds display_id rect =
+  get_bounds (Unsigned.UInt.of_int display_id) rect
+
+let get_usable_bounds = ff "SDL_GetDisplayUsableBounds"
+  (display_id @-> ptr rect @-> returning true_to_ok)
+let get_usable_bounds display_id rect =
+  get_usable_bounds (Unsigned.UInt.of_int display_id) rect
+
+let get_content_scale = ff "SDL_GetDisplayContentScale"
+  (display_id @-> returning float)
+let get_content_scale display_id =
+  get_content_scale (Unsigned.UInt.of_int display_id)
+
+let get_fullscreen_modes = ff "SDL_GetFullscreenDisplayModes"
+  (display_id @-> ptr int @-> returning (ptr display_mode))
+(* Wrapper for returning display_mode list *)
+let get_fullscreen_modes display_id =
+  let count = allocate int 0 in
+  let p = get_fullscreen_modes display_id count in
+  if is_null p then []
+  else let n =  (!@ (count)) in
+    Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
+      (fun () ->
+        CArray.from_ptr p n
+        |> CArray.to_list)
+let get_fullscreen_modes display_id =
+  get_fullscreen_modes (Unsigned.UInt.of_int display_id)
+
+let get_closest_fullscreen_mode = ff "SDL_GetClosestFullscreenDisplayMode"
+  (display_id @-> int @-> int @-> float @-> bool @-> display_mode @-> returning true_to_ok)
+let get_closest_fullscreen_mode display_id w h refresh_rate include_high_density_modes closest =
+  get_closest_fullscreen_mode (Unsigned.UInt.of_int display_id) w h refresh_rate include_high_density_modes closest
 
 end
 
@@ -440,9 +467,6 @@ let get_progress_value = ff "SDL_GetWindowProgressValue"
 let destroy = ff "SDL_DestroyWindow"
   (window @-> returning void)
 
-let gl_make_current = ff "SDL_GL_MakeCurrent"
-  (window @-> gl_context @-> returning true_to_ok)
-
 let gl_get_current = ff "SDL_GL_GetCurrentWindow"
   (void @-> returning (some_to_ok window_opt))
 
@@ -451,30 +475,6 @@ let egl_get_surface = ff "SDL_EGL_GetWindowSurface"
 
 let gl_swap = ff "SDL_GL_SwapWindow"
   (window @-> returning true_to_ok)
-
-end
-
-module GLAttr = struct
-let gl_set_attribute = ff "SDL_GL_SetAttribute"
-  (gl_attr @-> int @-> returning true_to_ok)
-
-let gl_get_attribute = ff "SDL_GL_GetAttribute"
-  (gl_attr @-> ptr int @-> returning bool)
-let gl_get_attribute attr =
-  let value = allocate int 0 in
-  if gl_get_attribute attr value then Ok (!@ value) else error ()
-
-end
-
-module GLContextState = struct
-let gl_create_context = ff "SDL_GL_CreateContext"
-  (window @-> returning gl_context)
-
-let gl_get_current_context = ff "SDL_GL_GetCurrentContext"
-  (void @-> returning gl_context)
-
-let gl_destroy_context = ff "SDL_GL_DestroyContext"
-  (gl_context @-> returning true_to_ok)
 
 end
 

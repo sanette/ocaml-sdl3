@@ -6,10 +6,51 @@ open Helpers
 
 let ff = Load.foreign
 
-module Global = struct
-let has_mouse = ff "SDL_HasMouse"
-  (void @-> returning bool)
+module Mouse = struct
+let has = ff "SDL_HasMouse"
+  (void @-> returning true_to_ok)
 
+let get_name_for_id = ff "SDL_GetMouseNameForID"
+  (mouse_id @-> returning string)
+let get_name_for_id instance_id =
+  get_name_for_id (Unsigned.UInt.of_int instance_id)
+
+let get_focus = ff "SDL_GetMouseFocus"
+  (void @-> returning (some_to_ok window_opt))
+
+let get_state = ff "SDL_GetMouseState"
+  (ptr float @-> ptr float @-> returning int_as_uint)
+let get_state () =
+  let x = allocate float 0. in
+  let y = allocate float 0. in
+  let ret = get_state x y in
+(ret, !@ x, !@ y)
+
+let get_global_state = ff "SDL_GetGlobalMouseState"
+  (ptr float @-> ptr float @-> returning int_as_uint)
+let get_global_state () =
+  let x = allocate float 0. in
+  let y = allocate float 0. in
+  let ret = get_global_state x y in
+(ret, !@ x, !@ y)
+
+let get_relative_state = ff "SDL_GetRelativeMouseState"
+  (ptr float @-> ptr float @-> returning int_as_uint)
+let get_relative_state () =
+  let x = allocate float 0. in
+  let y = allocate float 0. in
+  let ret = get_relative_state x y in
+(ret, !@ x, !@ y)
+
+let warp_global = ff "SDL_WarpMouseGlobal"
+  (float @-> float @-> returning true_to_ok)
+
+let capture = ff "SDL_CaptureMouse"
+  (bool @-> returning true_to_ok)
+
+end
+
+module Global = struct
 let get_mice = ff "SDL_GetMice"
   (ptr int @-> returning (ptr mouse_id))
 (* Wrapper for returning uint list *)
@@ -24,43 +65,8 @@ let get_mice () =
         |> CArray.to_list
         |> List.map Unsigned.UInt.to_int)
 
-let get_mouse_name_for_id = ff "SDL_GetMouseNameForID"
-  (mouse_id @-> returning string)
-let get_mouse_name_for_id instance_id =
-  get_mouse_name_for_id (Unsigned.UInt.of_int instance_id)
-
-let get_mouse_state = ff "SDL_GetMouseState"
-  (ptr float @-> ptr float @-> returning int_as_uint)
-let get_mouse_state () =
-  let x = allocate float 0. in
-  let y = allocate float 0. in
-  let ret = get_mouse_state x y in
-(ret, !@ x, !@ y)
-
-let get_global_mouse_state = ff "SDL_GetGlobalMouseState"
-  (ptr float @-> ptr float @-> returning int_as_uint)
-let get_global_mouse_state () =
-  let x = allocate float 0. in
-  let y = allocate float 0. in
-  let ret = get_global_mouse_state x y in
-(ret, !@ x, !@ y)
-
-let get_relative_mouse_state = ff "SDL_GetRelativeMouseState"
-  (ptr float @-> ptr float @-> returning int_as_uint)
-let get_relative_mouse_state () =
-  let x = allocate float 0. in
-  let y = allocate float 0. in
-  let ret = get_relative_mouse_state x y in
-(ret, !@ x, !@ y)
-
-let warp_mouse_global = ff "SDL_WarpMouseGlobal"
-  (float @-> float @-> returning true_to_ok)
-
 let set_relative_mouse_transform = ff "SDL_SetRelativeMouseTransform"
   (mouse_motion_transform_callback_opt @-> ptr void @-> returning true_to_ok)
-
-let capture_mouse = ff "SDL_CaptureMouse"
-  (bool @-> returning true_to_ok)
 
 let show_cursor = ff "SDL_ShowCursor"
   (void @-> returning true_to_ok)
@@ -75,9 +81,6 @@ end
 include Global
 
 module Window = struct
-let get_mouse_focus = ff "SDL_GetMouseFocus"
-  (void @-> returning (some_to_ok window_opt))
-
 let warp_mouse_in = ff "SDL_WarpMouseInWindow"
   (window_opt @-> float @-> float @-> returning void)
 

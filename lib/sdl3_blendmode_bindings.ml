@@ -5,9 +5,10 @@ open Sdl3_types
 
 let ff = Load.foreign
 
-module BlendFactor = struct
+module Global = struct
 let compose_custom_blend_mode = ff "SDL_ComposeCustomBlendMode"
   (blend_factor @-> blend_factor @-> blend_operation @-> blend_factor @-> blend_factor @-> blend_operation @-> returning int_as_uint)
 
 end
+include Global
 

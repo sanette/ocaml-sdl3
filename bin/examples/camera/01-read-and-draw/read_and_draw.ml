@@ -24,7 +24,7 @@ let init () =
     print "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->
-    match Sdl.create_window_and_renderer "examples/camera/read-and-draw" 640 480
+    match Sdl.Renderer.create_window_and "examples/camera/read-and-draw" 640 480
             Sdl.window_resizable with
     | Error (`Msg e) ->
       print "Couldn't create window/renderer: %s" e;
@@ -33,13 +33,13 @@ let init () =
       let state = { window; renderer; camera = None; texture = None } in
 
       (* We add some tests here that are not in the original SDL example *)
-      let n = Sdl.get_num_camera_drivers () in
+      let n = Sdl.Camera.get_num_drivers () in
       print "Number of camera drivers: %i" n;
 
-      let name = Sdl.get_current_camera_driver () in
+      let name = Sdl.Camera.get_current_driver () in
       print "Current camera driver: '%s'" name;
 
-      let cam_ids = Sdl.get_cameras () in
+      let cam_ids = Sdl.Camera.gets () in
 
       print "Found cameras : [%s]"
         (List.map string_of_int cam_ids
@@ -70,7 +70,7 @@ let iterate state =
   let renderer = state.renderer in
   let camera = Option.get state.camera in
 
-  match Sdl.Surface.acquire_camera_frame camera with
+  match Sdl.Camera.acquire_frame camera with
   | Error (`Msg e) ->
     print "Not available (%s)" e;
     Sdl.delay 100;
@@ -95,9 +95,9 @@ let iterate state =
     Sdl.Texture.update tex None pixels pitch |> go;
     Sdl.Camera.release_frame camera frame;
     Sdl.Renderer.set_draw_color renderer 0x99 0x99 0x99 Sdl.alpha_opaque |> go;
-    Sdl.Renderer.render_clear renderer |> go;
+    Sdl.Renderer.clear renderer |> go;
     Sdl.Renderer.render_texture renderer tex None None |> go;
-    Sdl.Renderer.render_present renderer |> go;
+    Sdl.Renderer.present renderer |> go;
     Sdl.delay 32;
     T.APP_CONTINUE
 

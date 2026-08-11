@@ -6,24 +6,20 @@ open Helpers
 
 let ff = Load.foreign
 
-module Global = struct
-let get_num_render_drivers = ff "SDL_GetNumRenderDrivers"
+module Renderer = struct
+let get_num_drivers = ff "SDL_GetNumRenderDrivers"
   (void @-> returning int)
 
-let get_render_driver = ff "SDL_GetRenderDriver"
+let get_driver = ff "SDL_GetRenderDriver"
   (int @-> returning string)
 
-let create_window_and_renderer = ff "SDL_CreateWindowAndRenderer"
+let create_window_and = ff "SDL_CreateWindowAndRenderer"
   (string @-> int @-> int @-> window_flags @-> ptr window @-> ptr renderer @-> returning bool)
-let create_window_and_renderer title width height window_flags =
+let create_window_and title width height window_flags =
   let window = allocate window null in
   let renderer = allocate renderer null in
-  if create_window_and_renderer title width height (Unsigned.ULong.of_int64 window_flags) window renderer then Ok (!@ window, !@ renderer) else error ()
+  if create_window_and title width height (Unsigned.ULong.of_int64 window_flags) window renderer then Ok (!@ window, !@ renderer) else error ()
 
-end
-include Global
-
-module Renderer = struct
 let create = ff "SDL_CreateRenderer"
   (window @-> string @-> returning (some_to_ok renderer_opt))
 
@@ -34,6 +30,9 @@ let create_with_properties props =
 
 let create_gpu = ff "SDL_CreateGPURenderer"
   (gpu_device_opt @-> window_opt @-> returning (some_to_ok renderer_opt))
+
+let get_gpu_device = ff "SDL_GetGPURendererDevice"
+  (renderer @-> returning (some_to_ok gpu_device_opt))
 
 let create_software = ff "SDL_CreateSoftwareRenderer"
   (surface @-> returning (some_to_ok renderer_opt))
@@ -57,18 +56,21 @@ let get_output_size renderer =
   let h = allocate int 0 in
   if get_output_size renderer w h then Ok (!@ w, !@ h) else error ()
 
-let get_current_render_output_size = ff "SDL_GetCurrentRenderOutputSize"
+let get_current_output_size = ff "SDL_GetCurrentRenderOutputSize"
   (renderer @-> ptr int @-> ptr int @-> returning bool)
-let get_current_render_output_size renderer =
+let get_current_output_size renderer =
   let w = allocate int 0 in
   let h = allocate int 0 in
-  if get_current_render_output_size renderer w h then Ok (!@ w, !@ h) else error ()
+  if get_current_output_size renderer w h then Ok (!@ w, !@ h) else error ()
 
 let get_from_texture = ff "SDL_GetRendererFromTexture"
   (texture @-> returning (some_to_ok renderer_opt))
 
 let set_target = ff "SDL_SetRenderTarget"
   (renderer @-> texture_opt @-> returning true_to_ok)
+
+let get_target = ff "SDL_GetRenderTarget"
+  (renderer @-> returning (some_to_ok texture_opt))
 
 let set_logical_presentation = ff "SDL_SetRenderLogicalPresentation"
   (renderer @-> int @-> int @-> renderer_logical_presentation @-> returning true_to_ok)
@@ -81,24 +83,24 @@ let get_logical_presentation renderer =
   let mode = allocate renderer_logical_presentation 0 in
   if get_logical_presentation renderer w h mode then Ok (!@ w, !@ h, !@ mode) else error ()
 
-let get_logical_presentation_rect = ff "SDL_GetRenderLogicalPresentationRect"
+let get_render_logical_presentation_rect = ff "SDL_GetRenderLogicalPresentationRect"
   (renderer @-> f_rect_opt @-> returning true_to_ok)
 
-let render_coordinates_from_window = ff "SDL_RenderCoordinatesFromWindow"
+let coordinates_from_window = ff "SDL_RenderCoordinatesFromWindow"
   (renderer @-> float @-> float @-> ptr float @-> ptr float @-> returning bool)
-let render_coordinates_from_window renderer window_x window_y =
+let coordinates_from_window renderer window_x window_y =
   let x = allocate float 0. in
   let y = allocate float 0. in
-  if render_coordinates_from_window renderer window_x window_y x y then Ok (!@ x, !@ y) else error ()
+  if coordinates_from_window renderer window_x window_y x y then Ok (!@ x, !@ y) else error ()
 
-let render_coordinates_to_window = ff "SDL_RenderCoordinatesToWindow"
+let coordinates_to_window = ff "SDL_RenderCoordinatesToWindow"
   (renderer @-> float @-> float @-> ptr float @-> ptr float @-> returning bool)
-let render_coordinates_to_window renderer x y =
+let coordinates_to_window renderer x y =
   let window_x = allocate float 0. in
   let window_y = allocate float 0. in
-  if render_coordinates_to_window renderer x y window_x window_y then Ok (!@ window_x, !@ window_y) else error ()
+  if coordinates_to_window renderer x y window_x window_y then Ok (!@ window_x, !@ window_y) else error ()
 
-let convert_event_to_render_coordinates = ff "SDL_ConvertEventToRenderCoordinates"
+let convert_event_to_coordinates = ff "SDL_ConvertEventToRenderCoordinates"
   (renderer @-> event @-> returning true_to_ok)
 
 let set_viewport = ff "SDL_SetRenderViewport"
@@ -107,19 +109,19 @@ let set_viewport = ff "SDL_SetRenderViewport"
 let get_viewport = ff "SDL_GetRenderViewport"
   (renderer @-> ptr rect @-> returning true_to_ok)
 
-let render_viewport_set = ff "SDL_RenderViewportSet"
+let viewport_set = ff "SDL_RenderViewportSet"
   (renderer @-> returning true_to_ok)
 
 let get_safe_area = ff "SDL_GetRenderSafeArea"
   (renderer @-> ptr rect @-> returning true_to_ok)
 
-let set_clip_rect = ff "SDL_SetRenderClipRect"
+let set_render_clip_rect = ff "SDL_SetRenderClipRect"
   (renderer @-> rect_opt @-> returning true_to_ok)
 
-let get_clip_rect = ff "SDL_GetRenderClipRect"
+let get_render_clip_rect = ff "SDL_GetRenderClipRect"
   (renderer @-> ptr rect @-> returning true_to_ok)
 
-let render_clip_enabled = ff "SDL_RenderClipEnabled"
+let clip_enabled = ff "SDL_RenderClipEnabled"
   (renderer @-> returning bool)
 
 let set_scale = ff "SDL_SetRenderScale"
@@ -175,7 +177,7 @@ let set_draw_blend_mode renderer blend_mode =
 let get_draw_blend_mode = ff "SDL_GetRenderDrawBlendMode"
   (renderer @-> ptr blend_mode @-> returning true_to_ok)
 
-let render_clear = ff "SDL_RenderClear"
+let clear = ff "SDL_RenderClear"
   (renderer @-> returning true_to_ok)
 
 let render_point = ff "SDL_RenderPoint"
@@ -245,16 +247,16 @@ let render_geometry_raw renderer texture xy xy_stride color color_stride uv uv_s
   let indices, num_indices = carray_of_list void indices in
   render_geometry_raw renderer texture xy xy_stride color color_stride uv uv_stride num_vertices indices num_indices size_indices
 
-let set_texture_address_mode = ff "SDL_SetRenderTextureAddressMode"
+let set_render_texture_address_mode = ff "SDL_SetRenderTextureAddressMode"
   (renderer @-> texture_address_mode @-> texture_address_mode @-> returning true_to_ok)
 
-let get_texture_address_mode = ff "SDL_GetRenderTextureAddressMode"
+let get_render_texture_address_mode = ff "SDL_GetRenderTextureAddressMode"
   (renderer @-> ptr_opt texture_address_mode @-> ptr_opt texture_address_mode @-> returning true_to_ok)
 
-let render_read_pixels = ff "SDL_RenderReadPixels"
+let read_pixels = ff "SDL_RenderReadPixels"
   (renderer @-> rect_opt @-> returning (some_to_ok surface_opt))
 
-let render_present = ff ~release_runtime_lock:true "SDL_RenderPresent"
+let present = ff ~release_runtime_lock:true "SDL_RenderPresent"
   (renderer @-> returning true_to_ok)
 
 let destroy = ff "SDL_DestroyRenderer"
@@ -269,10 +271,10 @@ let get_metal_layer = ff "SDL_GetRenderMetalLayer"
 let get_metal_command_encoder = ff "SDL_GetRenderMetalCommandEncoder"
   (renderer @-> returning (ptr void))
 
-let add_vulkan_render_semaphores = ff "SDL_AddVulkanRenderSemaphores"
+let add_vulkan_semaphores = ff "SDL_AddVulkanRenderSemaphores"
   (renderer @-> uint32 @-> sint64 @-> sint64 @-> returning true_to_ok)
-let add_vulkan_render_semaphores renderer wait_stage_mask wait_semaphore signal_semaphore =
-  add_vulkan_render_semaphores renderer (Unsigned.UInt.of_int wait_stage_mask) (Signed.Long.of_int wait_semaphore) (Signed.Long.of_int signal_semaphore)
+let add_vulkan_semaphores renderer wait_stage_mask wait_semaphore signal_semaphore =
+  add_vulkan_semaphores renderer (Unsigned.UInt.of_int wait_stage_mask) (Signed.Long.of_int wait_semaphore) (Signed.Long.of_int signal_semaphore)
 
 let set_v_sync = ff "SDL_SetRenderVSync"
   (renderer @-> int @-> returning true_to_ok)
@@ -286,20 +288,8 @@ let get_v_sync renderer =
 let render_debug_text = ff "SDL_RenderDebugText"
   (renderer @-> float @-> float @-> string @-> returning true_to_ok)
 
-let set_default_texture_scale_mode = ff "SDL_SetDefaultTextureScaleMode"
-  (renderer @-> scale_mode @-> returning true_to_ok)
-
-let get_default_texture_scale_mode = ff "SDL_GetDefaultTextureScaleMode"
-  (renderer @-> ptr scale_mode @-> returning true_to_ok)
-
-let set_gpu_render_state = ff "SDL_SetGPURenderState"
+let set_gpu_state = ff "SDL_SetGPURenderState"
   (renderer @-> gpu_render_state_opt @-> returning true_to_ok)
-
-end
-
-module GPUDevice = struct
-let get_gpu_renderer_device = ff "SDL_GetGPURendererDevice"
-  (renderer @-> returning (some_to_ok gpu_device_opt))
 
 end
 
@@ -410,15 +400,22 @@ let lock_to_surface = ff "SDL_LockTextureToSurface"
 let unlock = ff "SDL_UnlockTexture"
   (texture @-> returning void)
 
-let get_render_target = ff "SDL_GetRenderTarget"
-  (renderer @-> returning (some_to_ok texture_opt))
-
 let destroy = ff "SDL_DestroyTexture"
   (texture @-> returning void)
 
 include Texture
 
 end
+
+module Global = struct
+let set_default_texture_scale_mode = ff "SDL_SetDefaultTextureScaleMode"
+  (renderer @-> scale_mode @-> returning true_to_ok)
+
+let get_default_texture_scale_mode = ff "SDL_GetDefaultTextureScaleMode"
+  (renderer @-> ptr scale_mode @-> returning true_to_ok)
+
+end
+include Global
 
 module GPURenderState = struct
 let create = ff "SDL_CreateGPURenderState"

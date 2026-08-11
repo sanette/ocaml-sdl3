@@ -27,7 +27,7 @@ let init_sound audio_device fname =
     match Sdl.AudioStream.create (Some spec) None with
     | Error (`Msg e) -> Error (`Msg (sprintf "Couldn't create audio stream: %s\n" e))
     | Ok stream ->
-      match Sdl.bind_audio_stream audio_device stream with
+      match Sdl.Audio.bind_stream audio_device stream with
       | Error (`Msg e) ->
         Error (`Msg (sprintf "Failed to bind '%s' stream to device: %s" fname e))
       | Ok () -> Ok {stream; wav_data}
@@ -40,7 +40,7 @@ let init () =
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->
-    match Sdl.create_window_and_renderer "examples/audio/multiple-streams" 640 480
+    match Sdl.Renderer.create_window_and "examples/audio/multiple-streams" 640 480
             Sdl.window_resizable with
     | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e;
       T.APP_FAILURE, None
@@ -49,9 +49,9 @@ let init () =
       Sdl.Renderer.set_logical_presentation renderer 640 480
         Sdl.logical_presentation_letterbox |> go;
 
-      let audio_device = Sdl.open_audio_device Sdl.audio_device_default_playback None in
+      let audio_device = Sdl.AudioDevice.open_ Sdl.audio_device_default_playback None in
       if audio_device = 0 then begin
-        Sdl.App.log "Couldn't open audio device: %s" (Categories.Error.get_error ());
+        Sdl.App.log "Couldn't open audio device: %s" (Sdl.Error.get ());
         T.APP_FAILURE, Some state
       end else match init_sound audio_device "sample.wav" with
         | Error _ -> T.APP_FAILURE, Some state
@@ -80,8 +80,8 @@ let iterate state =
     ) state.sounds;
 
   Sdl.Renderer.set_draw_color state.renderer 0 0 0 255 |> go;
-  Sdl.Renderer.render_clear state.renderer |> go ;
-  Sdl.Renderer.render_present state.renderer |> go;
+  Sdl.Renderer.clear state.renderer |> go ;
+  Sdl.Renderer.present state.renderer |> go;
 
   T.APP_CONTINUE (* carry on with the program! *)
 

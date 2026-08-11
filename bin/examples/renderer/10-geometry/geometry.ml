@@ -7,8 +7,8 @@ let go = Result.get_ok
 let do_option o f = Option.iter f o
 
 let set_point p (x0, y0) =
-  Sdl.FPoint.(set p x x0);
-  Sdl.FPoint.(set p y y0)
+  T.FPoint.(set p x x0);
+  T.FPoint.(set p y y0)
 
 type state = {
   renderer : T.renderer;
@@ -39,7 +39,7 @@ let init () =
     "Example Renderer Geometry" "1.0" "com.example.renderer-geometry" |> go;
 
   let* () = Sdl.init Sdl.init_video, "Couldn't initialize SDL", None in
-  let* (_window, renderer) = Sdl.create_window_and_renderer "examples/renderer/geometry"
+  let* (_window, renderer) = Sdl.Renderer.create_window_and "examples/renderer/geometry"
       window_width window_height Sdl.window_resizable, "Couldn't create window/renderer", None  in
 
   Sdl.Renderer.set_logical_presentation renderer window_width window_height
@@ -54,7 +54,7 @@ let init () =
   (* Load a .png into a surface, move it to a texture from there. *)
   let state = { renderer; texture = None } in
   let png_path = Filename.concat (Sdl.get_base_path ()) "sample.png" in
-  let* surface = Sdl.Surface.load_png png_path,
+  let* surface = Sdl.load_png png_path,
                  "Couldn't load bitmap", Some state in
   let* texture = Sdl.Texture.create_from_surface renderer surface,
                  "Couldn't create static texture", Some state in
@@ -78,14 +78,14 @@ let iterate state =
   let size = 200. +. (200. *. scale) in
 
   Sdl.Renderer.set_draw_color state.renderer 0 0 0 Sdl.alpha_opaque |> go;
-  Sdl.Renderer.render_clear state.renderer |> go;
+  Sdl.Renderer.clear state.renderer |> go;
 
   let v0 = T.Vertex.create () in
   let position = T.Vertex.(get v0 position) in
-  assert (Sdl.FPoint.(get position x) = 0.);
+  assert (T.FPoint.(get position x) = 0.);
 
-  Sdl.FPoint.(set position x (float window_width /. 2.));
-  Sdl.FPoint.(set position y ((float window_height -. size) /. 2.));
+  T.FPoint.(set position x (float window_width /. 2.));
+  T.FPoint.(set position y ((float window_height -. size) /. 2.));
 
   let color = T.Vertex.(get v0 color) in
   T.FColor.(set color r 1.);
@@ -142,8 +142,8 @@ let iterate state =
 
   List.iter (fun v ->
       let position  = T.Vertex.(get v position) in
-      let x0 = Sdl.FPoint.(get position x) in
-      Sdl.FPoint.(set position x (x0 +. 450.))) [v0;v1;v2];
+      let x0 = T.FPoint.(get position x) in
+      T.FPoint.(set position x (x0 +. 450.))) [v0;v1;v2];
 
   let v3 = T.Vertex.create () in
   let position = T.Vertex.(get v3 position) in
@@ -155,7 +155,7 @@ let iterate state =
 
   Sdl.Renderer.render_geometry state.renderer (Some texture) [v0;v1;v2;v3] [0;1;2;1;2;3] |> go;
 
-  Sdl.Renderer.render_present state.renderer |> go;
+  Sdl.Renderer.present state.renderer |> go;
 
   T.APP_CONTINUE (* carry on with the program! *)
 

@@ -21,7 +21,7 @@ let () =
   print "Pixel density: %f, scale: %f" d s;
 
   print "loading ball";
-  let ball = go (Sdl.Surface.load_png "ball.png") in
+  let ball = go (Sdl.load_png "ball.png") in
   (* let rect = let open Rect.FRect in *)
   (*   let r = create () in *)
   (*   set r x 10.; *)
@@ -30,13 +30,13 @@ let () =
   (*   set r h 70.; *)
   (*   r in *)
   print "create rect";
-  let rect = Sdl.FRect.create ~x:10. ~y:20. ~w:70. ~h:70. () in
-  let center = Sdl.FPoint.create ~x:35. ~y:35. () in
+  let rect = T.FRect.create ~x:10. ~y:20. ~w:70. ~h:70. () in
+  let center = T.FPoint.create ~x:35. ~y:35. () in
   let renderer = Sdl.Renderer.create window "" |> go in
   print "Renderer created";
   go (Sdl.Renderer.set_v_sync renderer 1);
   go (Sdl.Renderer.set_draw_color renderer 56 123 12 255);
-  go (Sdl.Renderer.render_clear renderer);
+  go (Sdl.Renderer.clear renderer);
   let ball = go (Sdl.Texture.create_from_surface renderer ball) in
   (* Simple loop *)
   let e = Sdl.Event.create () in
@@ -55,11 +55,11 @@ let () =
     if i < 10 * !ww then begin
 
       go (Sdl.Renderer.set_draw_color renderer 56 123 12 Sdl.alpha_opaque);
-      go (Sdl.Renderer.render_clear renderer);
+      go (Sdl.Renderer.clear renderer);
 
       let angle = float i (* +. (1. +. cos (1. +. float i /. 5.)) *) in
-      Sdl.FRect.(set rect x (float i /. 10.));
-      Sdl.FRect.(set rect y (float (!wh - 70) *.
+      T.FRect.(set rect x (float i /. 10.));
+      T.FRect.(set rect y (float (!wh - 70) *.
                          (1. -. abs_float (sin (10. *. float i /. float !wh)))));
       go (Sdl.Renderer.render_texture_rotated renderer ball None (Some rect)
             angle (Some center) Sdl.flip_none);
@@ -84,19 +84,19 @@ let () =
       y := !y -. 1.;
 
       go (Sdl.Renderer.set_draw_color renderer 255 25 255 255);
-      let p = Sdl.FPoint.create ~x:(float i /. 10.) ~y:(float i /. 20.) () in
+      let p = T.FPoint.create ~x:(float i /. 10.) ~y:(float i /. 20.) () in
       point_list := p :: !point_list;
       (* for j = 1 to i do *)
       (*   go (Renderer.render_point renderer (float j /. 10.) (float j /. 20.)) *)
       (* done; *)
       go (Sdl.Renderer.render_points renderer !point_list);
-      go (Sdl.Renderer.render_present renderer);
+      go (Sdl.Renderer.present renderer);
       (* Timer.delay 16 *)
       loop (i+1)
     end in
   let () = try loop 0
     with Quit -> () in
-  print "Time=%i" (Sdl.get_current_time () |> go);
+  print "Time=%i" (Sdl.Time.get_current () |> go);
   Sdl.Renderer.destroy renderer
   ;
 

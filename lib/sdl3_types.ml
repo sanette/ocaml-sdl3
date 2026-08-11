@@ -183,6 +183,7 @@ module AtomicInt = struct
   type t = t_raw ptr
   let t : t typ = ptr t_raw
   let t_opt : t option typ = ptr_opt t_raw
+  let get_ (e : t) field = getf {structured = e} field
   let set_ (e : t) field v = setf {structured = e} field v
   let value_ = value
   let create ?value () : t =
@@ -206,6 +207,7 @@ module AtomicU32 = struct
   type t = t_raw ptr
   let t : t typ = ptr t_raw
   let t_opt : t option typ = ptr_opt t_raw
+  let get_ (e : t) field = getf {structured = e} field
   let set_ (e : t) field v = setf {structured = e} field v
   let value_ = value
   let create ?value () : t =

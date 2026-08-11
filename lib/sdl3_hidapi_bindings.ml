@@ -16,13 +16,6 @@ let hid_exit = ff "SDL_hid_exit"
 let hid_device_change_count = ff "SDL_hid_device_change_count"
   (void @-> returning int_as_uint)
 
-let hid_ble_scan = ff "SDL_hid_ble_scan"
-  (bool @-> returning void)
-
-end
-include Global
-
-module Hid_device_info = struct
 let hid_enumerate = ff "SDL_hid_enumerate"
   (ushort @-> ushort @-> returning (ptr hid_device_info))
 let hid_enumerate vendor_id product_id =
@@ -31,12 +24,6 @@ let hid_enumerate vendor_id product_id =
 let hid_free_enumeration = ff "SDL_hid_free_enumeration"
   (ptr hid_device_info @-> returning void)
 
-let hid_get_device_info = ff "SDL_hid_get_device_info"
-  (hid_device @-> returning (ptr hid_device_info))
-
-end
-
-module Hid_device = struct
 let hid_open = ff "SDL_hid_open"
   (ushort @-> ushort @-> ptr_opt int32_t @-> returning (some_to_ok hid_device_opt))
 let hid_open vendor_id product_id serial_number =
@@ -104,10 +91,17 @@ let hid_get_indexed_string = ff "SDL_hid_get_indexed_string"
 let hid_get_indexed_string dev string_index string maxlen =
   hid_get_indexed_string dev string_index string (Unsigned.Size_t.of_int maxlen)
 
+let hid_get_device_info = ff "SDL_hid_get_device_info"
+  (hid_device @-> returning (ptr hid_device_info))
+
 let hid_get_report_descriptor = ff "SDL_hid_get_report_descriptor"
   (hid_device @-> ptr uchar @-> size_t @-> returning int)
 let hid_get_report_descriptor dev buf buf_size =
   hid_get_report_descriptor dev buf (Unsigned.Size_t.of_int buf_size)
 
+let hid_ble_scan = ff "SDL_hid_ble_scan"
+  (bool @-> returning void)
+
 end
+include Global
 

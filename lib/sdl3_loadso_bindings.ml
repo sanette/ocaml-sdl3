@@ -1,12 +1,12 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
-module SharedObject = struct
+module Global = struct
 let load_object = ff "SDL_LoadObject"
   (string @-> returning (some_to_ok shared_object_opt))
 
@@ -17,4 +17,5 @@ let unload_object = ff "SDL_UnloadObject"
   (shared_object @-> returning void)
 
 end
+include Global
 

@@ -4,10 +4,9 @@ open Ctypes
 
 let ff = Load.foreign
 
-module Global = struct
-let get_platform = ff "SDL_GetPlatform"
+module Platform = struct
+let get = ff "SDL_GetPlatform"
   (void @-> returning string)
 
 end
-include Global
 

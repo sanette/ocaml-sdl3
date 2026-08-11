@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -95,7 +95,7 @@ let wait_timeout = ff "SDL_WaitConditionTimeout"
 
 end
 
-module InitState = struct
+module Global = struct
 let should_init = ff "SDL_ShouldInit"
   (ptr init_state @-> returning true_to_ok)
 
@@ -105,7 +105,6 @@ let should_quit = ff "SDL_ShouldQuit"
 let set_initialized = ff "SDL_SetInitialized"
   (ptr init_state @-> bool @-> returning void)
 
-include InitState
-
 end
+include Global
 

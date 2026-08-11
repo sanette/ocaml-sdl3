@@ -4,10 +4,13 @@ open Ctypes
 
 let ff = Load.foreign
 
-module Global = struct
-let get_version = ff "SDL_GetVersion"
+module Version = struct
+let get = ff "SDL_GetVersion"
   (void @-> returning int)
 
+end
+
+module Global = struct
 let get_revision = ff "SDL_GetRevision"
   (void @-> returning string)
 

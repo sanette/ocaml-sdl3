@@ -19,7 +19,7 @@ let init () =
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e;
     T.APP_FAILURE, None
   | Ok () ->
-    match Sdl.create_window_and_renderer "examples/audio/simple-playback" 640 480
+    match Sdl.Renderer.create_window_and "examples/audio/simple-playback" 640 480
             Sdl.window_resizable with
     | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e;
       T.APP_FAILURE, None
@@ -28,8 +28,8 @@ let init () =
       Sdl.Renderer.set_logical_presentation renderer 640 480
         Sdl.logical_presentation_letterbox |> go;
 
-      let spec = Sdl.AudioSpec.create ~channels:1 ~format:Sdl.audio_f32 ~freq:8000 () in
-      match Sdl.AudioStream.open_audio_device_stream Sdl.audio_device_default_playback
+      let spec = T.AudioSpec.create ~channels:1 ~format:Sdl.audio_f32 ~freq:8000 () in
+      match Sdl.AudioDevice.open_stream Sdl.audio_device_default_playback
               (Some spec) None Ctypes.null with
       | Error (`Msg e) -> Sdl.App.log "Couldn't create audio stream: %s" e;
         T.APP_FAILURE, Some state
@@ -60,8 +60,8 @@ let iterate state =
     state.current_sine_sample <- state.current_sine_sample mod 8000;
     Sdl.AudioStream.put_data stream samples |> go;
 
-    Sdl.Renderer.render_clear state.renderer |> go ;
-    Sdl.Renderer.render_present state.renderer |> go
+    Sdl.Renderer.clear state.renderer |> go ;
+    Sdl.Renderer.present state.renderer |> go
   else ();
 
   T.APP_CONTINUE (* carry on with the program! *)

@@ -7,9 +7,9 @@ open Ctypes
 
 (* let error () = Error (`Msg (get_error ())) *)
 
-module Error = Sdl3_error_bindings.Global
+module Error = Sdl3_error_bindings.Error
 
-let error () = Error (`Msg (Error.get_error ()))
+let error () = Error (`Msg (Error.get ()))
 
 let write_never _ = assert false
 

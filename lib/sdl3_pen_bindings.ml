@@ -5,11 +5,11 @@ open Sdl3_types
 
 let ff = Load.foreign
 
-module PenDeviceType = struct
-let get = ff "SDL_GetPenDeviceType"
+module Pen = struct
+let get_device_type = ff "SDL_GetPenDeviceType"
   (pen_id @-> returning pen_device_type)
-let get instance_id =
-  get (Unsigned.UInt.of_int instance_id)
+let get_device_type instance_id =
+  get_device_type (Unsigned.UInt.of_int instance_id)
 
 end
 

@@ -27,16 +27,16 @@ let event_loop =
 let () =
   Sdl.(init (init_video lor init_camera)) |> go;
 
-  let win, renderer = Sdl.create_window_and_renderer "camera" 640 480 Sdl.window_resizable
+  let win, renderer = Sdl.Renderer.create_window_and "camera" 640 480 Sdl.window_resizable
     |> go in
 
-  let n = Sdl.get_num_camera_drivers () in
+  let n = Sdl.Camera.get_num_drivers () in
   print "Number of camera drivers: %i" n;
 
-  let name = Sdl.get_current_camera_driver () in
+  let name = Sdl.Camera.get_current_driver () in
   print "Current camera driver: '%s'" name;
 
-  let cam_ids = Sdl.get_cameras () in
+  let cam_ids = Sdl.Camera.gets () in
 
   print "Found cameras : [%s]"
     (List.map string_of_int cam_ids
@@ -55,7 +55,7 @@ let () =
     let rec loop tex n =
       if n >= 0 then begin
         event_loop ();
-        match Sdl.Surface.acquire_camera_frame cam with
+        match Sdl.Camera.acquire_frame cam with
         | Error (`Msg e) ->
           print "Not available (%s)" e;
           Sdl.delay 100;
@@ -78,9 +78,9 @@ let () =
           Sdl.Texture.update tex None pixels pitch |> go;
           Sdl.Camera.release_frame cam surf;
           Sdl.Renderer.set_draw_color renderer 0x99 0x99 0x99 Sdl.alpha_opaque |> go;
-          Sdl.Renderer.render_clear renderer |> go;
+          Sdl.Renderer.clear renderer |> go;
           Sdl.Renderer.render_texture renderer tex None None |> go;
-          Sdl.Renderer.render_present renderer |> go;
+          Sdl.Renderer.present renderer |> go;
           Sdl.delay 32;
           loop (Some tex) (n-1)
       end in

@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -22,15 +22,6 @@ let memory_barrier_release_function = ff "SDL_MemoryBarrierReleaseFunction"
 let memory_barrier_acquire_function = ff "SDL_MemoryBarrierAcquireFunction"
   (void @-> returning void)
 
-let compare_and_swap_atomic_pointer = ff "SDL_CompareAndSwapAtomicPointer"
-  (ptr (ptr void) @-> ptr void @-> ptr void @-> returning true_to_ok)
-
-let set_atomic_pointer = ff "SDL_SetAtomicPointer"
-  (ptr (ptr void) @-> ptr void @-> returning (ptr void))
-
-let get_atomic_pointer = ff "SDL_GetAtomicPointer"
-  (ptr (ptr void) @-> returning (ptr void))
-
 end
 include Global
 
@@ -46,6 +37,8 @@ let get = ff "SDL_GetAtomicInt"
 
 let add = ff "SDL_AddAtomicInt"
   (atomic_int @-> int @-> returning int)
+
+include AtomicInt
 
 end
 
@@ -67,6 +60,18 @@ let add = ff "SDL_AddAtomicU32"
   (atomic_u32 @-> int @-> returning int_as_uint)
 
 include AtomicU32
+
+end
+
+module Atomic = struct
+let compare_and_swap_pointer = ff "SDL_CompareAndSwapAtomicPointer"
+  (ptr (ptr void) @-> ptr void @-> ptr void @-> returning true_to_ok)
+
+let set_pointer = ff "SDL_SetAtomicPointer"
+  (ptr (ptr void) @-> ptr void @-> returning (ptr void))
+
+let get_pointer = ff "SDL_GetAtomicPointer"
+  (ptr (ptr void) @-> returning (ptr void))
 
 end
 

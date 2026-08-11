@@ -58,41 +58,41 @@ end
 
 (* Access by SDL types: *)
 module Sdl = struct
-  include Sdl3_constants  module AssertData = Categories.Assert.AssertData
+  include Sdl3_constants  module Assertion = Categories.Assert.Assertion
 
-  module AssertState = Categories.Assert.AssertState
+  module AssertionHandler = Categories.Assert.AssertionHandler
 
   module AsyncIO = Categories.Asyncio.AsyncIO
 
   module AsyncIOQueue = Categories.Asyncio.AsyncIOQueue
 
-  module AtomicInt = struct
-    include Categories.Atomic.AtomicInt
-    include Categories.Thread.AtomicInt
-    include T.AtomicInt
-end
+  module Atomic = Categories.Atomic.Atomic
+
+  module AtomicInt = Categories.Atomic.AtomicInt
 
   module AtomicU32 = Categories.Atomic.AtomicU32
 
-  module AudioFormat = Categories.Audio.AudioFormat
+  module Audio = Categories.Audio.Audio
 
-  module AudioSpec = Categories.Audio.AudioSpec
+  module AudioDevice = Categories.Audio.AudioDevice
+
+  module AudioFormat = Categories.Audio.AudioFormat
 
   module AudioStream = Categories.Audio.AudioStream
 
-  module BlendFactor = Categories.Blendmode.BlendFactor
-
   module Camera = Categories.Camera.Camera
 
-  module CameraPosition = Categories.Camera.CameraPosition
+  module Clipboard = Categories.Clipboard.Clipboard
 
   module Condition = Categories.Mutex.Condition
 
   module Cursor = Categories.Mouse.Cursor
 
-  module DateFormat = Categories.Time.DateFormat
-
   module DateTime = Categories.Time.DateTime
+
+  module Dialog = Categories.Dialog.Dialog
+
+  module Display = Categories.Video.Display
 
   module DisplayMode = Categories.Video.DisplayMode
 
@@ -100,19 +100,15 @@ end
 
   module Environment = Categories.Stdinc.Environment
 
+  module Error = Categories.Error.Error
+
   module Event = Categories.Events.Event
 
-  module FPoint = Categories.Rect.FPoint
+  module EventFilter = Categories.Events.EventFilter
 
-  module FRect = Categories.Rect.FRect
-
-  module FileDialogType = Categories.Dialog.FileDialogType
+  module Events = Categories.Events.Events
 
   module Folder = Categories.Filesystem.Folder
-
-  module GLAttr = Categories.Video.GLAttr
-
-  module GLContextState = Categories.Video.GLContextState
 
   module GPUBuffer = Categories.Gpu.GPUBuffer
 
@@ -124,12 +120,7 @@ end
 
   module GPUCopyPass = Categories.Gpu.GPUCopyPass
 
-  module GPUDevice = struct
-    include Categories.Gpu.GPUDevice
-    include Categories.Render.GPUDevice
-end
-
-  module GPUFence = Categories.Gpu.GPUFence
+  module GPUDevice = Categories.Gpu.GPUDevice
 
   module GPUGraphicsPipeline = Categories.Gpu.GPUGraphicsPipeline
 
@@ -166,45 +157,41 @@ end
 
   module Haptic = Categories.Haptic.Haptic
 
-  module Hid_device = Categories.Hidapi.Hid_device
-
-  module Hid_device_info = Categories.Hidapi.Hid_device_info
+  module Hints = Categories.Hints.Hints
 
   module IOStatus = Categories.Iostream.IOStatus
-
-  module IOStream = struct
-    include Categories.Audio.IOStream
-    include Categories.Gamepad.IOStream
-    include Categories.Iostream.IOStream
-end
-
-  module Iconv_data_t = Categories.Stdinc.Iconv_data_t
-
-  module InitState = Categories.Mutex.InitState
 
   module Joystick = struct
     include Categories.Haptic.Joystick
     include Categories.Joystick.Joystick
 end
 
-  module JoystickType = Categories.Joystick.JoystickType
+  module Keyboard = Categories.Keyboard.Keyboard
+
+  module Locale = Categories.Locale.Locale
+
+  module Log = Categories.Log.Log
+
+  module LogOutputFunction = Categories.Log.LogOutputFunction
 
   module LogPriority = Categories.Log.LogPriority
 
-  module MessageBoxData = Categories.Messagebox.MessageBoxData
+  module Metal = Categories.Metal.Metal
+
+  module Mouse = Categories.Mouse.Mouse
 
   module Mutex = Categories.Mutex.Mutex
 
   module Palette = Categories.Pixels.Palette
 
-  module PenDeviceType = Categories.Pen.PenDeviceType
+  module Pen = Categories.Pen.Pen
 
   module PixelFormat = struct
     include Categories.Gpu.PixelFormat
     include Categories.Pixels.PixelFormat
 end
 
-  module PixelFormatDetails = Categories.Pixels.PixelFormatDetails
+  module Platform = Categories.Platform.Platform
 
   module Point = struct
     include Categories.Rect.Point
@@ -212,9 +199,14 @@ end
     include T.Point
 end
 
-  module PowerState = Categories.Power.PowerState
+  module Power = Categories.Power.Power
 
   module Process = Categories.Process.Process
+
+  module Properties = struct
+    include Categories.Gpu.Properties
+    include Categories.Properties.Properties
+end
 
   module PropertyType = Categories.Properties.PropertyType
 
@@ -236,17 +228,9 @@ end
 
   module Sensor = Categories.Sensor.Sensor
 
-  module SensorType = Categories.Sensor.SensorType
-
-  module SharedObject = Categories.Loadso.SharedObject
-
   module Storage = Categories.Storage.Storage
 
-  module Surface = struct
-    include Categories.Camera.Surface
-    include Categories.Surface.Surface
-    include T.Surface
-end
+  module Surface = Categories.Surface.Surface
 
   module SystemCursor = Categories.Mouse.SystemCursor
 
@@ -258,7 +242,11 @@ end
 
   module ThreadPriority = Categories.Thread.ThreadPriority
 
-  module TouchDeviceType = Categories.Touch.TouchDeviceType
+  module Time = Categories.Time.Time
+
+  module Timer = Categories.Timer.Timer
+
+  module Touch = Categories.Touch.Touch
 
   module Tray = Categories.Tray.Tray
 
@@ -266,56 +254,46 @@ end
 
   module TrayMenu = Categories.Tray.TrayMenu
 
-  module VirtualJoystickDesc = Categories.Joystick.VirtualJoystickDesc
+  module Version = Categories.Version.Version
+
+  module Video = Categories.Video.Video
 
   module Window = struct
     include Categories.Events.Window
-    include Categories.Keyboard.Window
-    include Categories.Metal.Window
     include Categories.Mouse.Window
     include Categories.Video.Window
 end
 
 (* Access global functions: *)
-  include Categories.Assert.Global
   include Categories.Asyncio.Global
   include Categories.Atomic.Global
   include Categories.Audio.Global
-  include Categories.Camera.Global
+  include Categories.Blendmode.Global
   include Categories.Clipboard.Global
   include Categories.Cpuinfo.Global
-  include Categories.Dialog.Global
   include Categories.Error.Global
   include Categories.Events.Global
   include Categories.Filesystem.Global
-  include Categories.Gamepad.Global
   include Categories.Gpu.Global
-  include Categories.Haptic.Global
   include Categories.Hidapi.Global
   include Categories.Hints.Global
   include Categories.Init.Global
   include Categories.Iostream.Global
-  include Categories.Joystick.Global
   include Categories.Keyboard.Global
-  include Categories.Locale.Global
-  include Categories.Log.Global
+  include Categories.Loadso.Global
   include Categories.Messagebox.Global
-  include Categories.Metal.Global
   include Categories.Misc.Global
   include Categories.Mouse.Global
+  include Categories.Mutex.Global
   include Categories.Pixels.Global
-  include Categories.Platform.Global
   include Categories.Properties.Global
   include Categories.Render.Global
-  include Categories.Sensor.Global
   include Categories.Stdinc.Global
   include Categories.Surface.Global
   include Categories.System.Global
   include Categories.Thread.Global
   include Categories.Time.Global
   include Categories.Timer.Global
-  include Categories.Touch.Global
-  include Categories.Tray.Global
   include Categories.Version.Global
   include Categories.Video.Global
   module App = App

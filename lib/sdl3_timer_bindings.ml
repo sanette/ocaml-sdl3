@@ -34,21 +34,24 @@ let delay_precise = ff ~release_runtime_lock:true "SDL_DelayPrecise"
 let delay_precise ns =
   delay_precise (Unsigned.ULong.of_int64 ns)
 
-let add_timer = ff "SDL_AddTimer"
-  (uint32 @-> timer_callback @-> ptr void @-> returning int_as_uint)
-let add_timer interval callback userdata =
-  add_timer (Unsigned.UInt.of_int interval) callback userdata
-
-let add_timer_ns = ff "SDL_AddTimerNS"
-  (uint64 @-> ns_timer_callback @-> ptr void @-> returning int_as_uint)
-let add_timer_ns interval callback userdata =
-  add_timer_ns (Unsigned.ULong.of_int64 interval) callback userdata
-
-let remove_timer = ff "SDL_RemoveTimer"
-  (timer_id @-> returning true_to_ok)
-let remove_timer id =
-  remove_timer (Unsigned.UInt.of_int id)
-
 end
 include Global
+
+module Timer = struct
+let add = ff "SDL_AddTimer"
+  (uint32 @-> timer_callback @-> ptr void @-> returning int_as_uint)
+let add interval callback userdata =
+  add (Unsigned.UInt.of_int interval) callback userdata
+
+let add_ns = ff "SDL_AddTimerNS"
+  (uint64 @-> ns_timer_callback @-> ptr void @-> returning int_as_uint)
+let add_ns interval callback userdata =
+  add_ns (Unsigned.ULong.of_int64 interval) callback userdata
+
+let remove = ff "SDL_RemoveTimer"
+  (timer_id @-> returning true_to_ok)
+let remove id =
+  remove (Unsigned.UInt.of_int id)
+
+end
 
