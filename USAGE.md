@@ -177,7 +177,7 @@ of doubt, refer to the file
 + If the name of the _header file_ is part of the function name, it
   becomes the the module, and we remove it from the function name.
   ```
-	  SDL_SetAudioPostmixCallback ==> Audio.set_postmix_callback
+	  SDL_SetAudioPostmixCallback ==> Sdl.Audio.set_postmix_callback
   ```
 
 All of this looks nice and good, but you will see that it may lead to
