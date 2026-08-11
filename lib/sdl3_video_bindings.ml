@@ -145,6 +145,16 @@ let get_usable_bounds = ff "SDL_GetDisplayUsableBounds"
 let get_usable_bounds display_id rect =
   get_usable_bounds (Unsigned.UInt.of_int display_id) rect
 
+let get_natural_orientation = ff "SDL_GetNaturalDisplayOrientation"
+  (display_id @-> returning display_orientation)
+let get_natural_orientation display_id =
+  get_natural_orientation (Unsigned.UInt.of_int display_id)
+
+let get_current_orientation = ff "SDL_GetCurrentDisplayOrientation"
+  (display_id @-> returning display_orientation)
+let get_current_orientation display_id =
+  get_current_orientation (Unsigned.UInt.of_int display_id)
+
 let get_content_scale = ff "SDL_GetDisplayContentScale"
   (display_id @-> returning float)
 let get_content_scale display_id =
@@ -170,33 +180,15 @@ let get_closest_fullscreen_mode = ff "SDL_GetClosestFullscreenDisplayMode"
 let get_closest_fullscreen_mode display_id w h refresh_rate include_high_density_modes closest =
   get_closest_fullscreen_mode (Unsigned.UInt.of_int display_id) w h refresh_rate include_high_density_modes closest
 
-end
-
-module DisplayOrientation = struct
-let get_natural = ff "SDL_GetNaturalDisplayOrientation"
-  (display_id @-> returning display_orientation)
-let get_natural display_id =
-  get_natural (Unsigned.UInt.of_int display_id)
-
-let get_current = ff "SDL_GetCurrentDisplayOrientation"
-  (display_id @-> returning display_orientation)
-let get_current display_id =
-  get_current (Unsigned.UInt.of_int display_id)
-
-end
-
-module DisplayMode = struct
-let get_desktop = ff "SDL_GetDesktopDisplayMode"
+let get_desktop_mode = ff "SDL_GetDesktopDisplayMode"
   (display_id @-> returning (some_to_ok display_mode_opt))
-let get_desktop display_id =
-  get_desktop (Unsigned.UInt.of_int display_id)
+let get_desktop_mode display_id =
+  get_desktop_mode (Unsigned.UInt.of_int display_id)
 
-let get_current = ff "SDL_GetCurrentDisplayMode"
+let get_current_mode = ff "SDL_GetCurrentDisplayMode"
   (display_id @-> returning (some_to_ok display_mode_opt))
-let get_current display_id =
-  get_current (Unsigned.UInt.of_int display_id)
-
-include DisplayMode
+let get_current_mode display_id =
+  get_current_mode (Unsigned.UInt.of_int display_id)
 
 end
 

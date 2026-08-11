@@ -60,11 +60,7 @@ end
 module Sdl = struct
   include Sdl3_constants  module Assertion = Categories.Assert.Assertion
 
-  module AssertionHandler = Categories.Assert.AssertionHandler
-
   module AsyncIO = Categories.Asyncio.AsyncIO
-
-  module AsyncIOQueue = Categories.Asyncio.AsyncIOQueue
 
   module Atomic = Categories.Atomic.Atomic
 
@@ -94,19 +90,11 @@ module Sdl = struct
 
   module Display = Categories.Video.Display
 
-  module DisplayMode = Categories.Video.DisplayMode
-
-  module DisplayOrientation = Categories.Video.DisplayOrientation
-
   module Environment = Categories.Stdinc.Environment
 
   module Error = Categories.Error.Error
 
   module Event = Categories.Events.Event
-
-  module EventFilter = Categories.Events.EventFilter
-
-  module Events = Categories.Events.Events
 
   module Folder = Categories.Filesystem.Folder
 
@@ -147,14 +135,6 @@ end
 
   module Gamepad = Categories.Gamepad.Gamepad
 
-  module GamepadAxis = Categories.Gamepad.GamepadAxis
-
-  module GamepadButton = Categories.Gamepad.GamepadButton
-
-  module GamepadButtonLabel = Categories.Gamepad.GamepadButtonLabel
-
-  module GamepadType = Categories.Gamepad.GamepadType
-
   module Haptic = Categories.Haptic.Haptic
 
   module Hints = Categories.Hints.Hints
@@ -171,10 +151,6 @@ end
   module Locale = Categories.Locale.Locale
 
   module Log = Categories.Log.Log
-
-  module LogOutputFunction = Categories.Log.LogOutputFunction
-
-  module LogPriority = Categories.Log.LogPriority
 
   module Metal = Categories.Metal.Metal
 
@@ -208,8 +184,6 @@ end
     include Categories.Properties.Properties
 end
 
-  module PropertyType = Categories.Properties.PropertyType
-
   module RWLock = Categories.Mutex.RWLock
 
   module Rect = struct
@@ -240,8 +214,6 @@ end
 
   module Thread = Categories.Thread.Thread
 
-  module ThreadPriority = Categories.Thread.ThreadPriority
-
   module Time = Categories.Time.Time
 
   module Timer = Categories.Timer.Timer
@@ -249,10 +221,6 @@ end
   module Touch = Categories.Touch.Touch
 
   module Tray = Categories.Tray.Tray
-
-  module TrayEntry = Categories.Tray.TrayEntry
-
-  module TrayMenu = Categories.Tray.TrayMenu
 
   module Version = Categories.Version.Version
 

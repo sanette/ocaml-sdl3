@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -26,16 +26,13 @@ let write asyncio ptr offset size queue userdata =
 let close = ff "SDL_CloseAsyncIO"
   (async_io @-> bool @-> async_io_queue @-> ptr void @-> returning true_to_ok)
 
-end
-
-module AsyncIOQueue = struct
-let create = ff "SDL_CreateAsyncIOQueue"
+let create_queue = ff "SDL_CreateAsyncIOQueue"
   (void @-> returning (some_to_ok async_io_queue_opt))
 
-let destroy = ff "SDL_DestroyAsyncIOQueue"
+let destroy_queue = ff "SDL_DestroyAsyncIOQueue"
   (async_io_queue @-> returning void)
 
-let signal = ff "SDL_SignalAsyncIOQueue"
+let signal_queue = ff "SDL_SignalAsyncIOQueue"
   (async_io_queue @-> returning void)
 
 end

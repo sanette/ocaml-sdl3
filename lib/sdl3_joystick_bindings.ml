@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 

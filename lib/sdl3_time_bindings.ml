@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -16,10 +16,10 @@ let get_current () =
   let ticks = allocate long (Signed.Long.of_int 0) in
   if get_current ticks then Ok (Signed.Long.to_int (!@ ticks)) else error ()
 
-let to_date = ff "SDL_TimeToDateTime"
+let to_date_time = ff "SDL_TimeToDateTime"
   (time @-> ptr date_time @-> bool @-> returning true_to_ok)
-let to_date ticks dt local_time =
-  to_date (Signed.Long.of_int ticks) dt local_time
+let to_date_time ticks dt local_time =
+  to_date_time (Signed.Long.of_int ticks) dt local_time
 
 let to_windows = ff "SDL_TimeToWindows"
   (time @-> ptr uint32 @-> ptr uint32 @-> returning void)

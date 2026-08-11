@@ -28,6 +28,11 @@ let unlock = ff "SDL_UnlockProperties"
 let unlock props =
   unlock (Unsigned.UInt.of_int props)
 
+let get_property_type = ff "SDL_GetPropertyType"
+  (properties_id @-> string @-> returning property_type)
+let get_property_type props name =
+  get_property_type (Unsigned.UInt.of_int props) name
+
 let enumerate = ff "SDL_EnumerateProperties"
   (properties_id @-> enumerate_properties_callback @-> ptr void @-> returning true_to_ok)
 let enumerate props callback userdata =
@@ -108,12 +113,4 @@ let clear_property props name =
 
 end
 include Global
-
-module PropertyType = struct
-let get = ff "SDL_GetPropertyType"
-  (properties_id @-> string @-> returning property_type)
-let get props name =
-  get (Unsigned.UInt.of_int props) name
-
-end
 

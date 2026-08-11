@@ -6,33 +6,24 @@ open Sdl3_types
 
 let ff = Load.foreign
 
-module Events = struct
-let pump = ff "SDL_PumpEvents"
+module Event = struct
+let pumps = ff "SDL_PumpEvents"
   (void @-> returning void)
 
-let has = ff "SDL_HasEvents"
-  (uint32 @-> uint32 @-> returning true_to_ok)
-let has min_type max_type =
-  has (Unsigned.UInt.of_int min_type) (Unsigned.UInt.of_int max_type)
-
-let flush = ff "SDL_FlushEvents"
-  (uint32 @-> uint32 @-> returning void)
-let flush min_type max_type =
-  flush (Unsigned.UInt.of_int min_type) (Unsigned.UInt.of_int max_type)
-
-let filter = ff "SDL_FilterEvents"
-  (event_filter @-> ptr void @-> returning void)
-
-let register = ff "SDL_RegisterEvents"
-  (int @-> returning int_as_uint)
-
-end
-
-module Event = struct
 let peeps = ff "SDL_PeepEvents"
   (event_opt @-> int @-> event_action @-> uint32 @-> uint32 @-> returning int)
 let peeps events numevents action min_type max_type =
   peeps events numevents action (Unsigned.UInt.of_int min_type) (Unsigned.UInt.of_int max_type)
+
+let hass = ff "SDL_HasEvents"
+  (uint32 @-> uint32 @-> returning true_to_ok)
+let hass min_type max_type =
+  hass (Unsigned.UInt.of_int min_type) (Unsigned.UInt.of_int max_type)
+
+let flushs = ff "SDL_FlushEvents"
+  (uint32 @-> uint32 @-> returning void)
+let flushs min_type max_type =
+  flushs (Unsigned.UInt.of_int min_type) (Unsigned.UInt.of_int max_type)
 
 let poll = ff ~release_runtime_lock:true "SDL_PollEvent"
   (event_opt @-> returning bool)
@@ -45,6 +36,15 @@ let wait_timeout = ff ~release_runtime_lock:true "SDL_WaitEventTimeout"
 
 let push = ff "SDL_PushEvent"
   (event @-> returning true_to_ok)
+
+let set_filter = ff "SDL_SetEventFilter"
+  (event_filter @-> ptr void @-> returning void)
+
+let filters = ff "SDL_FilterEvents"
+  (event_filter @-> ptr void @-> returning void)
+
+let registers = ff "SDL_RegisterEvents"
+  (int @-> returning int_as_uint)
 
 let get_description = ff "SDL_GetEventDescription"
   (event_opt @-> string @-> int @-> returning int)
@@ -85,12 +85,6 @@ let event_enabled typ =
 
 end
 include Global
-
-module EventFilter = struct
-let set = ff "SDL_SetEventFilter"
-  (event_filter @-> ptr void @-> returning void)
-
-end
 
 module Window = struct
 let get_from_event = ff "SDL_GetWindowFromEvent"

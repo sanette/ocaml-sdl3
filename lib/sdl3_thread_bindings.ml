@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Sdl3_types
 open Helpers
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -24,6 +24,9 @@ let get_current_id = ff "SDL_GetCurrentThreadID"
 let get_id = ff "SDL_GetThreadID"
   (thread @-> returning int64_as_ulong)
 
+let set_current_priority = ff "SDL_SetCurrentThreadPriority"
+  (thread_priority @-> returning true_to_ok)
+
 let wait = ff ~release_runtime_lock:true "SDL_WaitThread"
   (thread @-> ptr int @-> returning void)
 let wait thread =
@@ -40,12 +43,6 @@ let detach = ff "SDL_DetachThread"
 (* Additional manual code: *)
 
 let create_linux fn name = create_runtime fn name null None None
-
-end
-
-module ThreadPriority = struct
-let set_current = ff "SDL_SetCurrentThreadPriority"
-  (thread_priority @-> returning true_to_ok)
 
 end
 

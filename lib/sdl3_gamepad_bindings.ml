@@ -92,6 +92,16 @@ let get_product_version_for_id = ff "SDL_GetGamepadProductVersionForID"
 let get_product_version_for_id instance_id =
   get_product_version_for_id (Unsigned.UInt.of_int instance_id)
 
+let get_type_for_id = ff "SDL_GetGamepadTypeForID"
+  (joystick_id @-> returning gamepad_type)
+let get_type_for_id instance_id =
+  get_type_for_id (Unsigned.UInt.of_int instance_id)
+
+let get_real_type_for_id = ff "SDL_GetRealGamepadTypeForID"
+  (joystick_id @-> returning gamepad_type)
+let get_real_type_for_id instance_id =
+  get_real_type_for_id (Unsigned.UInt.of_int instance_id)
+
 let get_mapping_for_id = ff "SDL_GetGamepadMappingForID"
   (joystick_id @-> returning string)
 let get_mapping_for_id instance_id =
@@ -123,6 +133,9 @@ let get_path = ff "SDL_GetGamepadPath"
   (gamepad @-> returning string)
 
 let get_type = ff "SDL_GetGamepadType"
+  (gamepad @-> returning gamepad_type)
+
+let get_real_type = ff "SDL_GetRealGamepadType"
   (gamepad @-> returning gamepad_type)
 
 let get_player_index = ff "SDL_GetGamepadPlayerIndex"
@@ -187,8 +200,14 @@ let get_bindings gamepad =
 let updates = ff "SDL_UpdateGamepads"
   (void @-> returning void)
 
+let get_type_from_string = ff "SDL_GetGamepadTypeFromString"
+  (string @-> returning gamepad_type)
+
 let get_string_for_type = ff "SDL_GetGamepadStringForType"
   (gamepad_type @-> returning string)
+
+let get_axis_from_string = ff "SDL_GetGamepadAxisFromString"
+  (string @-> returning gamepad_axis)
 
 let get_string_for_axis = ff "SDL_GetGamepadStringForAxis"
   (gamepad_axis @-> returning string)
@@ -199,6 +218,9 @@ let has_axis = ff "SDL_GamepadHasAxis"
 let get_axis = ff "SDL_GetGamepadAxis"
   (gamepad @-> gamepad_axis @-> returning sint16)
 
+let get_button_from_string = ff "SDL_GetGamepadButtonFromString"
+  (string @-> returning gamepad_button)
+
 let get_string_for_button = ff "SDL_GetGamepadStringForButton"
   (gamepad_button @-> returning string)
 
@@ -207,6 +229,9 @@ let has_button = ff "SDL_GamepadHasButton"
 
 let get_button = ff "SDL_GetGamepadButton"
   (gamepad @-> gamepad_button @-> returning true_to_ok)
+
+let get_button_label_for_type = ff "SDL_GetGamepadButtonLabelForType"
+  (gamepad_type @-> gamepad_button @-> returning gamepad_button_label)
 
 let get_button_label = ff "SDL_GetGamepadButtonLabel"
   (gamepad @-> gamepad_button @-> returning gamepad_button_label)
@@ -277,43 +302,6 @@ let get_gamepad_for_id = ff "SDL_GetGamepadGUIDForID"
   (joystick_id @-> returning guid)
 let get_gamepad_for_id instance_id =
   get_gamepad_for_id (Unsigned.UInt.of_int instance_id)
-
-end
-
-module GamepadType = struct
-let get_for_id = ff "SDL_GetGamepadTypeForID"
-  (joystick_id @-> returning gamepad_type)
-let get_for_id instance_id =
-  get_for_id (Unsigned.UInt.of_int instance_id)
-
-let get_real_for_id = ff "SDL_GetRealGamepadTypeForID"
-  (joystick_id @-> returning gamepad_type)
-let get_real_for_id instance_id =
-  get_real_for_id (Unsigned.UInt.of_int instance_id)
-
-let get_real = ff "SDL_GetRealGamepadType"
-  (gamepad @-> returning gamepad_type)
-
-let get_from_string = ff "SDL_GetGamepadTypeFromString"
-  (string @-> returning gamepad_type)
-
-end
-
-module GamepadAxis = struct
-let get_from_string = ff "SDL_GetGamepadAxisFromString"
-  (string @-> returning gamepad_axis)
-
-end
-
-module GamepadButton = struct
-let get_from_string = ff "SDL_GetGamepadButtonFromString"
-  (string @-> returning gamepad_button)
-
-end
-
-module GamepadButtonLabel = struct
-let get_for_type = ff "SDL_GetGamepadButtonLabelForType"
-  (gamepad_type @-> gamepad_button @-> returning gamepad_button_label)
 
 end
 

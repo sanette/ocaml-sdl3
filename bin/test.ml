@@ -4,9 +4,7 @@ open Sdl3
 let () = 
   Sdl.init (Sdl.init_events) |> Result.get_ok;
   include Sdl.Assertion
-  include Sdl.AssertionHandler
   include Sdl.AsyncIO
-  include Sdl.AsyncIOQueue
   include Sdl.Atomic
   include Sdl.AtomicInt
   include Sdl.AtomicU32
@@ -21,13 +19,9 @@ let () =
   include Sdl.DateTime
   include Sdl.Dialog
   include Sdl.Display
-  include Sdl.DisplayMode
-  include Sdl.DisplayOrientation
   include Sdl.Environment
   include Sdl.Error
   include Sdl.Event
-  include Sdl.EventFilter
-  include Sdl.Events
   include Sdl.Folder
   include Sdl.GPUBuffer
   include Sdl.GPUCommandBuffer
@@ -45,10 +39,6 @@ let () =
   include Sdl.GPUTransferBuffer
   include Sdl.GUID
   include Sdl.Gamepad
-  include Sdl.GamepadAxis
-  include Sdl.GamepadButton
-  include Sdl.GamepadButtonLabel
-  include Sdl.GamepadType
   include Sdl.Haptic
   include Sdl.Hints
   include Sdl.IOStatus
@@ -56,8 +46,6 @@ let () =
   include Sdl.Keyboard
   include Sdl.Locale
   include Sdl.Log
-  include Sdl.LogOutputFunction
-  include Sdl.LogPriority
   include Sdl.Metal
   include Sdl.Mouse
   include Sdl.Mutex
@@ -69,7 +57,6 @@ let () =
   include Sdl.Power
   include Sdl.Process
   include Sdl.Properties
-  include Sdl.PropertyType
   include Sdl.RWLock
   include Sdl.Rect
   include Sdl.Renderer
@@ -83,13 +70,10 @@ let () =
   include Sdl.SystemTheme
   include Sdl.Texture
   include Sdl.Thread
-  include Sdl.ThreadPriority
   include Sdl.Time
   include Sdl.Timer
   include Sdl.Touch
   include Sdl.Tray
-  include Sdl.TrayEntry
-  include Sdl.TrayMenu
   include Sdl.Version
   include Sdl.Video
   include Sdl.Window
