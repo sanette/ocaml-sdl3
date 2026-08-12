@@ -129,7 +129,7 @@ configured with `down`), just type
 #require "sdl3";;
 ```
 
-Copy-paste the above code, add `;;`` and RETURN, and the nice orange
+Copy-paste the above code, add `;;` and RETURN, and the nice orange
 window should popup!
 
 Depending on your OCaml version, you might have to do
@@ -140,6 +140,7 @@ first. And depending on your OCaml install, you might have to do
 ```
 #use "topfind";;
 ```
+first, as well.
 
 # Naming conventions
 
@@ -152,7 +153,7 @@ function into modules... and to modify names accordingly.
 To find out the OCaml name of an SDL function, refer to this
 [list](lib/bound_functions.csv): look at the columns "Module" and
 "OCaml name": the full OCaml name is obtained by appending first
-`Sdl.` then "Module" if it exists, and then the "OCaml name":
+`Sdl.` then "Module" if it exists, to the "OCaml name":
 
 ```
 	SDL_AcquireCameraFrame ==> Sdl.Camera.acquire_frame
