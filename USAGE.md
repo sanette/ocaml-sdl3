@@ -10,11 +10,11 @@ Yes we can ;)
 
 # SDL3 and OCaml
 
-In 2025, SDL underwent a major makeover, transiting from SDL2 to
-SDL3. There are several OCaml bindings for SDL2
-([tsdl](https://erratique.ch/software/tsdl) -- or the
-["compat"](https://github.com/sanette/tsdl) version for better Windows
-compatibility, and
+In 2025 (after several years of preparation), SDL underwent a major
+makeover, transiting from SDL2 to SDL3. There are several OCaml
+bindings for SDL2 ([tsdl](https://erratique.ch/software/tsdl) -- or
+the ["compat"](https://github.com/sanette/tsdl) version for better
+Windows compatibility, and
 [ocamlsdl2](https://github.com/fccm2/OCamlSDL2)). But to my knowledge
 `ocaml-sdl3` is currently the only one, and is still a work in
 progress.  If you keep reading after this point, you must be very
@@ -24,20 +24,18 @@ adventurous and want to give it a try. Welcome!
 
 _(If you are familiar with `tsdl`, you can skip this!)_
 
-Most SDL functions don't throw an exception when they fail, the simply
-return NULL or false, so that the programmer can easily deal with
-it. Indeed, since SDL is a device library, an error does not mean your
-program is necessarily bogus, it may just be that the device is not
-reachable. You don't want your beautiful music player to crash when
-the user switches to another audio device!
+Most SDL functions don't throw an exception when they fail, they
+simply return NULL or false, so that the programmer can easily deal
+with it. Indeed, since SDL is a device library, an error does not mean
+your program is necessarily bogus, it may just be that the device is
+not reachable. You don't want your beautiful music player to crash
+when the user switches to another audio device!
 
-Like `tsdl`, `sdl3` uses exensively the OCaml `Result` module to
+Like `tsdl`, `sdl3` uses extensively the OCaml `Result` module to
 nicely collect the result value of all all these functions in a safe
 way. For instance, when creating a window and a renderer, you can do
-
 ```ocaml
-	match Sdl.create_window_and_renderer "my_app" 640 480
-            Sdl.window_resizable with
+	match Sdl.create_window_and_renderer "my_app" 640 480 Sdl.window_resizable with
     | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e
     | Ok (window, renderer) -> (* do something which returns [unit] *)
 ```
@@ -79,7 +77,7 @@ and then you can use
 ```ocaml
 	let* (window, renderer) = Sdl.create_window_and_renderer "my_app"
       640 480 Sdl.window_resizable, "Couldn't create window/renderer" in
-	  (* do something which returns [unit] --- which may include more "let*" statements!*)
+	  (* do something which returns [unit] --- which may include more "let*" statements! *)
 ```
 
 # My first app
@@ -94,7 +92,7 @@ let go = Result.get_ok
 let () =
   match Sdl.init Sdl.init_video with
   | Error (`Msg e) -> Sdl.App.log "Couldn't initialize SDL: %s" e
-  | Ok () -> match Sdl.Renderer.create_window_and "my_app" 640 480
+  | Ok () -> match Sdl.create_window_and_renderer "my_app" 640 480
                      Sdl.window_resizable with
   | Error (`Msg e) -> Sdl.App.log "Couldn't create window/renderer: %s" e
   | Ok (window, renderer) ->
@@ -120,6 +118,20 @@ and then execute:
 ```
 
 ![my_app](bin/my_app.png)
+
+# Using `sdl3` in the toplevel
+
+Nothing special, it should just work! Once you have installed `sdl3` as an opam package, just type
+```
+#require "sdl3";;
+```
+and the nice orange window should popup!
+
+Depending on your OCaml version, you might have to do
+```
+#thread;;
+```
+first.
 
 # Naming conventions
 
