@@ -121,17 +121,25 @@ and then execute:
 
 # Using `sdl3` in the toplevel
 
-Nothing special, it should just work! Once you have installed `sdl3` as an opam package, just type
+Nothing special, it should just work! Once you have installed `sdl3`
+as an opam package, launch your favorite toplevel (`utop` or `ocaml`
+configured with `down`), just type
+
 ```
 #require "sdl3";;
 ```
-and the nice orange window should popup!
+
+Copy-paste the above code, add `;;`` and RETURN, and the nice orange
+window should popup!
 
 Depending on your OCaml version, you might have to do
 ```
 #thread;;
 ```
-first.
+first. And depending on your OCaml install, you might have to do
+```
+#use "topfind";;
+```
 
 # Naming conventions
 
