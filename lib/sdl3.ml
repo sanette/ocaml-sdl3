@@ -98,6 +98,8 @@ module Sdl = struct
 
   module Folder = Categories.Filesystem.Folder
 
+  module GPU = Categories.Gpu.GPU
+
   module GPUBuffer = Categories.Gpu.GPUBuffer
 
   module GPUCommandBuffer = Categories.Gpu.GPUCommandBuffer
@@ -137,7 +139,7 @@ end
 
   module Haptic = Categories.Haptic.Haptic
 
-  module Hints = Categories.Hints.Hints
+  module Hint = Categories.Hints.Hint
 
   module IOStatus = Categories.Iostream.IOStatus
 
@@ -241,11 +243,8 @@ end
   include Categories.Clipboard.Global
   include Categories.Cpuinfo.Global
   include Categories.Error.Global
-  include Categories.Events.Global
   include Categories.Filesystem.Global
-  include Categories.Gpu.Global
   include Categories.Hidapi.Global
-  include Categories.Hints.Global
   include Categories.Init.Global
   include Categories.Iostream.Global
   include Categories.Keyboard.Global

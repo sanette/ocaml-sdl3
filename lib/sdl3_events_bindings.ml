@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -15,10 +15,20 @@ let peeps = ff "SDL_PeepEvents"
 let peeps events numevents action min_type max_type =
   peeps events numevents action (Unsigned.UInt.of_int min_type) (Unsigned.UInt.of_int max_type)
 
+let has = ff "SDL_HasEvent"
+  (uint32 @-> returning true_to_ok)
+let has typ =
+  has (Unsigned.UInt.of_int typ)
+
 let hass = ff "SDL_HasEvents"
   (uint32 @-> uint32 @-> returning true_to_ok)
 let hass min_type max_type =
   hass (Unsigned.UInt.of_int min_type) (Unsigned.UInt.of_int max_type)
+
+let flush = ff "SDL_FlushEvent"
+  (uint32 @-> returning void)
+let flush typ =
+  flush (Unsigned.UInt.of_int typ)
 
 let flushs = ff "SDL_FlushEvents"
   (uint32 @-> uint32 @-> returning void)
@@ -40,8 +50,27 @@ let push = ff "SDL_PushEvent"
 let set_filter = ff "SDL_SetEventFilter"
   (event_filter @-> ptr void @-> returning void)
 
+let get_filter = ff "SDL_GetEventFilter"
+  (ptr event_filter @-> ptr (ptr void) @-> returning true_to_ok)
+
+let add_watch = ff "SDL_AddEventWatch"
+  (event_filter @-> ptr void @-> returning true_to_ok)
+
+let remove_watch = ff "SDL_RemoveEventWatch"
+  (event_filter @-> ptr void @-> returning void)
+
 let filters = ff "SDL_FilterEvents"
   (event_filter @-> ptr void @-> returning void)
+
+let set_enabled = ff "SDL_SetEventEnabled"
+  (uint32 @-> bool @-> returning void)
+let set_enabled typ enabled =
+  set_enabled (Unsigned.UInt.of_int typ) enabled
+
+let enabled = ff "SDL_EventEnabled"
+  (uint32 @-> returning bool)
+let enabled typ =
+  enabled (Unsigned.UInt.of_int typ)
 
 let registers = ff "SDL_RegisterEvents"
   (int @-> returning int_as_uint)
@@ -52,39 +81,6 @@ let get_description = ff "SDL_GetEventDescription"
 include Event
 
 end
-
-module Global = struct
-let has_event = ff "SDL_HasEvent"
-  (uint32 @-> returning bool)
-let has_event typ =
-  has_event (Unsigned.UInt.of_int typ)
-
-let flush_event = ff "SDL_FlushEvent"
-  (uint32 @-> returning void)
-let flush_event typ =
-  flush_event (Unsigned.UInt.of_int typ)
-
-let get_event_filter = ff "SDL_GetEventFilter"
-  (ptr event_filter @-> ptr (ptr void) @-> returning true_to_ok)
-
-let add_event_watch = ff "SDL_AddEventWatch"
-  (event_filter @-> ptr void @-> returning true_to_ok)
-
-let remove_event_watch = ff "SDL_RemoveEventWatch"
-  (event_filter @-> ptr void @-> returning void)
-
-let set_event_enabled = ff "SDL_SetEventEnabled"
-  (uint32 @-> bool @-> returning void)
-let set_event_enabled typ enabled =
-  set_event_enabled (Unsigned.UInt.of_int typ) enabled
-
-let event_enabled = ff "SDL_EventEnabled"
-  (uint32 @-> returning bool)
-let event_enabled typ =
-  event_enabled (Unsigned.UInt.of_int typ)
-
-end
-include Global
 
 module Window = struct
 let get_from_event = ff "SDL_GetWindowFromEvent"

@@ -23,6 +23,7 @@ let () =
   include Sdl.Error
   include Sdl.Event
   include Sdl.Folder
+  include Sdl.GPU
   include Sdl.GPUBuffer
   include Sdl.GPUCommandBuffer
   include Sdl.GPUComputePass
@@ -40,7 +41,7 @@ let () =
   include Sdl.GUID
   include Sdl.Gamepad
   include Sdl.Haptic
-  include Sdl.Hints
+  include Sdl.Hint
   include Sdl.IOStatus
   include Sdl.Joystick
   include Sdl.Keyboard

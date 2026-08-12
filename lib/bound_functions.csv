@@ -1,13 +1,13 @@
 SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, API sig
 3.2.0, SDL_AcquireCameraFrame, Camera, Camera, acquire_frame, camera @-> ptr uint64 @-> returning (some_to_ok surface_opt), camera -> int64
 3.2.0, SDL_AcquireGPUCommandBuffer, Gpu, GPUCommandBuffer, acquire, gpu_device @-> returning (some_to_ok gpu_command_buffer_opt), gpu_device -> (gpu_command_buffer option) result
-3.2.0, SDL_AcquireGPUSwapchainTexture, Gpu, , acquire_gpu_swapchain_texture, gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning bool, gpu_command_buffer -> window -> ptr gpu_texture -> (int * int) result
+3.2.0, SDL_AcquireGPUSwapchainTexture, Gpu, GPU, acquire_swapchain_texture, gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning bool, gpu_command_buffer -> window -> ptr gpu_texture -> (int * int) result
 3.2.0, SDL_AddAtomicInt, Atomic, AtomicInt, add, atomic_int @-> int @-> returning int, atomic_int -> int -> int
-3.2.0, SDL_AddEventWatch, Events, , add_event_watch, event_filter @-> ptr void @-> returning true_to_ok, event_filter -> ptr void -> unit result
+3.2.0, SDL_AddEventWatch, Events, Event, add_watch, event_filter @-> ptr void @-> returning true_to_ok, event_filter -> ptr void -> unit result
 3.2.0, SDL_AddGamepadMapping, Gamepad, Gamepad, add_mapping, string @-> returning int, string -> int
 3.2.0, SDL_AddGamepadMappingsFromFile, Gamepad, Gamepad, add_mappings_from_file, string @-> returning int, string -> int
 3.2.0, SDL_AddGamepadMappingsFromIO, Gamepad, Gamepad, add_mappings_from_io, io_stream @-> bool @-> returning int, io_stream -> bool -> int
-3.2.0, SDL_AddHintCallback, Hints, , add_hint_callback, string @-> hint_callback @-> ptr void @-> returning true_to_ok, string -> hint_callback -> ptr void -> unit result
+3.2.0, SDL_AddHintCallback, Hints, Hint, add_callback, string @-> hint_callback @-> ptr void @-> returning true_to_ok, string -> hint_callback -> ptr void -> unit result
 3.2.0, SDL_AddSurfaceAlternateImage, Surface, Surface, add_alternate_image, surface @-> surface @-> returning true_to_ok, surface -> surface -> unit result
 3.2.0, SDL_AddTimer, Timer, Timer, add, uint32 @-> timer_callback @-> ptr void @-> returning int_as_uint, int -> timer_callback -> ptr void -> int
 3.2.0, SDL_AddTimerNS, Timer, Timer, add_ns, uint64 @-> ns_timer_callback @-> ptr void @-> returning int_as_uint, int64 -> ns_timer_callback -> ptr void -> int
@@ -21,20 +21,20 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_BeginGPURenderPass, Gpu, GPURenderPass, begin_, gpu_command_buffer @-> ptr gpu_color_target_info @-> uint32 @-> gpu_depth_stencil_target_info_opt @-> returning (some_to_ok gpu_render_pass_opt), gpu_command_buffer -> ptr gpu_color_target_info -> int -> gpu_depth_stencil_target_info option -> (gpu_render_pass option) result
 3.2.0, SDL_BindAudioStream, Audio, Audio, bind_stream, audio_device_id @-> audio_stream @-> returning true_to_ok, int -> audio_stream -> unit result
 3.2.0, SDL_BindAudioStreams, Audio, Audio, bind_streams, audio_device_id @-> ptr audio_stream @-> int @-> returning true_to_ok, int -> audio_stream array -> unit result
-3.2.0, SDL_BindGPUComputePipeline, Gpu, , bind_gpu_compute_pipeline, gpu_compute_pass @-> gpu_compute_pipeline @-> returning void, gpu_compute_pass -> gpu_compute_pipeline -> unit
-3.2.0, SDL_BindGPUComputeSamplers, Gpu, , bind_gpu_compute_samplers, gpu_compute_pass @-> uint32 @-> ptr gpu_texture_sampler_binding @-> uint32 @-> returning void, gpu_compute_pass -> int -> ptr gpu_texture_sampler_binding -> int -> unit
-3.2.0, SDL_BindGPUComputeStorageBuffers, Gpu, , bind_gpu_compute_storage_buffers, gpu_compute_pass @-> uint32 @-> ptr gpu_buffer @-> uint32 @-> returning void, gpu_compute_pass -> int -> ptr gpu_buffer -> int -> unit
-3.2.0, SDL_BindGPUComputeStorageTextures, Gpu, , bind_gpu_compute_storage_textures, gpu_compute_pass @-> uint32 @-> ptr gpu_texture @-> uint32 @-> returning void, gpu_compute_pass -> int -> ptr gpu_texture -> int -> unit
-3.2.0, SDL_BindGPUFragmentSamplers, Gpu, , bind_gpu_fragment_samplers, gpu_render_pass @-> uint32 @-> ptr gpu_texture_sampler_binding @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_texture_sampler_binding -> int -> unit
-3.2.0, SDL_BindGPUFragmentStorageBuffers, Gpu, , bind_gpu_fragment_storage_buffers, gpu_render_pass @-> uint32 @-> ptr gpu_buffer @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_buffer -> int -> unit
-3.2.0, SDL_BindGPUFragmentStorageTextures, Gpu, , bind_gpu_fragment_storage_textures, gpu_render_pass @-> uint32 @-> ptr gpu_texture @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_texture -> int -> unit
-3.2.0, SDL_BindGPUGraphicsPipeline, Gpu, , bind_gpu_graphics_pipeline, gpu_render_pass @-> gpu_graphics_pipeline @-> returning void, gpu_render_pass -> gpu_graphics_pipeline -> unit
-3.2.0, SDL_BindGPUIndexBuffer, Gpu, , bind_gpu_index_buffer, gpu_render_pass @-> ptr gpu_buffer_binding @-> gpu_index_element_size @-> returning void, gpu_render_pass -> ptr gpu_buffer_binding -> gpu_index_element_size -> unit
-3.2.0, SDL_BindGPUVertexBuffers, Gpu, , bind_gpu_vertex_buffers, gpu_render_pass @-> uint32 @-> ptr gpu_buffer_binding @-> uint32 @-> returning void, gpu_render_pass -> int -> gpu_buffer_binding array -> unit
-3.2.0, SDL_BindGPUVertexSamplers, Gpu, , bind_gpu_vertex_samplers, gpu_render_pass @-> uint32 @-> ptr gpu_texture_sampler_binding @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_texture_sampler_binding -> int -> unit
-3.2.0, SDL_BindGPUVertexStorageBuffers, Gpu, , bind_gpu_vertex_storage_buffers, gpu_render_pass @-> uint32 @-> ptr gpu_buffer @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_buffer -> int -> unit
-3.2.0, SDL_BindGPUVertexStorageTextures, Gpu, , bind_gpu_vertex_storage_textures, gpu_render_pass @-> uint32 @-> ptr gpu_texture @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_texture -> int -> unit
-3.2.0, SDL_BlitGPUTexture, Gpu, , blit_gpu_texture, gpu_command_buffer @-> ptr gpu_blit_info @-> returning void, gpu_command_buffer -> ptr gpu_blit_info -> unit
+3.2.0, SDL_BindGPUComputePipeline, Gpu, GPU, bind_compute_pipeline, gpu_compute_pass @-> gpu_compute_pipeline @-> returning void, gpu_compute_pass -> gpu_compute_pipeline -> unit
+3.2.0, SDL_BindGPUComputeSamplers, Gpu, GPU, bind_compute_samplers, gpu_compute_pass @-> uint32 @-> ptr gpu_texture_sampler_binding @-> uint32 @-> returning void, gpu_compute_pass -> int -> ptr gpu_texture_sampler_binding -> int -> unit
+3.2.0, SDL_BindGPUComputeStorageBuffers, Gpu, GPU, bind_compute_storage_buffers, gpu_compute_pass @-> uint32 @-> ptr gpu_buffer @-> uint32 @-> returning void, gpu_compute_pass -> int -> ptr gpu_buffer -> int -> unit
+3.2.0, SDL_BindGPUComputeStorageTextures, Gpu, GPU, bind_compute_storage_textures, gpu_compute_pass @-> uint32 @-> ptr gpu_texture @-> uint32 @-> returning void, gpu_compute_pass -> int -> ptr gpu_texture -> int -> unit
+3.2.0, SDL_BindGPUFragmentSamplers, Gpu, GPU, bind_fragment_samplers, gpu_render_pass @-> uint32 @-> ptr gpu_texture_sampler_binding @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_texture_sampler_binding -> int -> unit
+3.2.0, SDL_BindGPUFragmentStorageBuffers, Gpu, GPU, bind_fragment_storage_buffers, gpu_render_pass @-> uint32 @-> ptr gpu_buffer @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_buffer -> int -> unit
+3.2.0, SDL_BindGPUFragmentStorageTextures, Gpu, GPU, bind_fragment_storage_textures, gpu_render_pass @-> uint32 @-> ptr gpu_texture @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_texture -> int -> unit
+3.2.0, SDL_BindGPUGraphicsPipeline, Gpu, GPU, bind_graphics_pipeline, gpu_render_pass @-> gpu_graphics_pipeline @-> returning void, gpu_render_pass -> gpu_graphics_pipeline -> unit
+3.2.0, SDL_BindGPUIndexBuffer, Gpu, GPU, bind_index_buffer, gpu_render_pass @-> ptr gpu_buffer_binding @-> gpu_index_element_size @-> returning void, gpu_render_pass -> ptr gpu_buffer_binding -> gpu_index_element_size -> unit
+3.2.0, SDL_BindGPUVertexBuffers, Gpu, GPU, bind_vertex_buffers, gpu_render_pass @-> uint32 @-> ptr gpu_buffer_binding @-> uint32 @-> returning void, gpu_render_pass -> int -> gpu_buffer_binding array -> unit
+3.2.0, SDL_BindGPUVertexSamplers, Gpu, GPU, bind_vertex_samplers, gpu_render_pass @-> uint32 @-> ptr gpu_texture_sampler_binding @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_texture_sampler_binding -> int -> unit
+3.2.0, SDL_BindGPUVertexStorageBuffers, Gpu, GPU, bind_vertex_storage_buffers, gpu_render_pass @-> uint32 @-> ptr gpu_buffer @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_buffer -> int -> unit
+3.2.0, SDL_BindGPUVertexStorageTextures, Gpu, GPU, bind_vertex_storage_textures, gpu_render_pass @-> uint32 @-> ptr gpu_texture @-> uint32 @-> returning void, gpu_render_pass -> int -> ptr gpu_texture -> int -> unit
+3.2.0, SDL_BlitGPUTexture, Gpu, GPU, blit_texture, gpu_command_buffer @-> ptr gpu_blit_info @-> returning void, gpu_command_buffer -> ptr gpu_blit_info -> unit
 3.2.0, SDL_BlitSurface, Surface, Surface, blit, surface @-> rect_opt @-> surface @-> rect_opt @-> returning true_to_ok, surface -> rect option -> surface -> rect option -> unit result
 3.2.0, SDL_BlitSurface9Grid, Surface, Surface, blit9_grid, surface @-> rect_opt @-> int @-> int @-> int @-> int @-> float @-> scale_mode @-> surface @-> rect_opt @-> returning true_to_ok, surface -> rect option -> int -> int -> int -> int -> float -> scale_mode -> surface -> rect option -> unit result
 3.2.0, SDL_BlitSurfaceScaled, Surface, Surface, blit_scaled, surface @-> rect_opt @-> surface @-> rect_opt @-> scale_mode @-> returning true_to_ok, surface -> rect option -> surface -> rect option -> scale_mode -> unit result
@@ -75,8 +75,8 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_ConvertSurface, Surface, Surface, convert, surface @-> pixel_format @-> returning (some_to_ok surface_opt), surface -> pixel_format -> (surface option) result
 3.2.0, SDL_ConvertSurfaceAndColorspace, Surface, Surface, convert_and_colorspace, surface @-> pixel_format @-> palette_opt @-> colorspace @-> properties_id @-> returning (some_to_ok surface_opt), surface -> pixel_format -> palette option -> colorspace -> int -> (surface option) result
 3.2.0, SDL_CopyFile, Filesystem, , copy_file, string @-> string @-> returning true_to_ok, string -> string -> unit result
-3.2.0, SDL_CopyGPUBufferToBuffer, Gpu, , copy_gpu_buffer_to_buffer, gpu_copy_pass @-> ptr gpu_buffer_location @-> ptr gpu_buffer_location @-> uint32 @-> bool @-> returning void, gpu_copy_pass -> ptr gpu_buffer_location -> ptr gpu_buffer_location -> int -> bool -> unit
-3.2.0, SDL_CopyGPUTextureToTexture, Gpu, , copy_gpu_texture_to_texture, gpu_copy_pass @-> ptr gpu_texture_location @-> ptr gpu_texture_location @-> uint32 @-> uint32 @-> uint32 @-> bool @-> returning void, gpu_copy_pass -> ptr gpu_texture_location -> ptr gpu_texture_location -> int -> int -> int -> bool -> unit
+3.2.0, SDL_CopyGPUBufferToBuffer, Gpu, GPU, copy_buffer_to_buffer, gpu_copy_pass @-> ptr gpu_buffer_location @-> ptr gpu_buffer_location @-> uint32 @-> bool @-> returning void, gpu_copy_pass -> ptr gpu_buffer_location -> ptr gpu_buffer_location -> int -> bool -> unit
+3.2.0, SDL_CopyGPUTextureToTexture, Gpu, GPU, copy_texture_to_texture, gpu_copy_pass @-> ptr gpu_texture_location @-> ptr gpu_texture_location @-> uint32 @-> uint32 @-> uint32 @-> bool @-> returning void, gpu_copy_pass -> ptr gpu_texture_location -> ptr gpu_texture_location -> int -> int -> int -> bool -> unit
 3.2.0, SDL_CopyProperties, Properties, Properties, copy, properties_id @-> properties_id @-> returning true_to_ok, int -> int -> unit result
 3.2.0, SDL_CopyStorageFile, Storage, Storage, copy_file, storage @-> string @-> string @-> returning true_to_ok, storage -> string -> string -> unit result
 3.2.0, SDL_CreateAsyncIOQueue, Asyncio, AsyncIO, create_queue, void @-> returning (some_to_ok async_io_queue_opt), unit -> (async_io_queue option) result
@@ -150,14 +150,14 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_DetachThread, Thread, Thread, detach, thread @-> returning void, thread -> unit
 3.2.0, SDL_DetachVirtualJoystick, Joystick, Joystick, detach_virtual, joystick_id @-> returning true_to_ok, int -> unit result
 3.2.0, SDL_DisableScreenSaver, Video, , disable_screen_saver, void @-> returning true_to_ok, unit -> unit result
-3.2.0, SDL_DispatchGPUCompute, Gpu, , dispatch_gpu_compute, gpu_compute_pass @-> uint32 @-> uint32 @-> uint32 @-> returning void, gpu_compute_pass -> int -> int -> int -> unit
-3.2.0, SDL_DispatchGPUComputeIndirect, Gpu, , dispatch_gpu_compute_indirect, gpu_compute_pass @-> gpu_buffer @-> uint32 @-> returning void, gpu_compute_pass -> gpu_buffer -> int -> unit
-3.2.0, SDL_DownloadFromGPUBuffer, Gpu, , download_from_gpu_buffer, gpu_copy_pass @-> ptr gpu_buffer_region @-> ptr gpu_transfer_buffer_location @-> returning void, gpu_copy_pass -> ptr gpu_buffer_region -> ptr gpu_transfer_buffer_location -> unit
-3.2.0, SDL_DownloadFromGPUTexture, Gpu, , download_from_gpu_texture, gpu_copy_pass @-> ptr gpu_texture_region @-> ptr gpu_texture_transfer_info @-> returning void, gpu_copy_pass -> ptr gpu_texture_region -> ptr gpu_texture_transfer_info -> unit
-3.2.0, SDL_DrawGPUIndexedPrimitives, Gpu, , draw_gpu_indexed_primitives, gpu_render_pass @-> uint32 @-> uint32 @-> uint32 @-> sint32 @-> uint32 @-> returning void, gpu_render_pass -> int -> int -> int -> sint32 (* int *) -> int -> unit
-3.2.0, SDL_DrawGPUIndexedPrimitivesIndirect, Gpu, , draw_gpu_indexed_primitives_indirect, gpu_render_pass @-> gpu_buffer @-> uint32 @-> uint32 @-> returning void, gpu_render_pass -> gpu_buffer -> int -> int -> unit
-3.2.0, SDL_DrawGPUPrimitives, Gpu, , draw_gpu_primitives, gpu_render_pass @-> uint32 @-> uint32 @-> uint32 @-> uint32 @-> returning void, gpu_render_pass -> int -> int -> int -> int -> unit
-3.2.0, SDL_DrawGPUPrimitivesIndirect, Gpu, , draw_gpu_primitives_indirect, gpu_render_pass @-> gpu_buffer @-> uint32 @-> uint32 @-> returning void, gpu_render_pass -> gpu_buffer -> int -> int -> unit
+3.2.0, SDL_DispatchGPUCompute, Gpu, GPU, dispatch_compute, gpu_compute_pass @-> uint32 @-> uint32 @-> uint32 @-> returning void, gpu_compute_pass -> int -> int -> int -> unit
+3.2.0, SDL_DispatchGPUComputeIndirect, Gpu, GPU, dispatch_compute_indirect, gpu_compute_pass @-> gpu_buffer @-> uint32 @-> returning void, gpu_compute_pass -> gpu_buffer -> int -> unit
+3.2.0, SDL_DownloadFromGPUBuffer, Gpu, GPU, download_from_buffer, gpu_copy_pass @-> ptr gpu_buffer_region @-> ptr gpu_transfer_buffer_location @-> returning void, gpu_copy_pass -> ptr gpu_buffer_region -> ptr gpu_transfer_buffer_location -> unit
+3.2.0, SDL_DownloadFromGPUTexture, Gpu, GPU, download_from_texture, gpu_copy_pass @-> ptr gpu_texture_region @-> ptr gpu_texture_transfer_info @-> returning void, gpu_copy_pass -> ptr gpu_texture_region -> ptr gpu_texture_transfer_info -> unit
+3.2.0, SDL_DrawGPUIndexedPrimitives, Gpu, GPU, draw_indexed_primitives, gpu_render_pass @-> uint32 @-> uint32 @-> uint32 @-> sint32 @-> uint32 @-> returning void, gpu_render_pass -> int -> int -> int -> sint32 (* int *) -> int -> unit
+3.2.0, SDL_DrawGPUIndexedPrimitivesIndirect, Gpu, GPU, draw_indexed_primitives_indirect, gpu_render_pass @-> gpu_buffer @-> uint32 @-> uint32 @-> returning void, gpu_render_pass -> gpu_buffer -> int -> int -> unit
+3.2.0, SDL_DrawGPUPrimitives, Gpu, GPU, draw_primitives, gpu_render_pass @-> uint32 @-> uint32 @-> uint32 @-> uint32 @-> returning void, gpu_render_pass -> int -> int -> int -> int -> unit
+3.2.0, SDL_DrawGPUPrimitivesIndirect, Gpu, GPU, draw_primitives_indirect, gpu_render_pass @-> gpu_buffer @-> uint32 @-> uint32 @-> returning void, gpu_render_pass -> gpu_buffer -> int -> int -> unit
 3.2.0, SDL_DuplicateSurface, Surface, Surface, duplicate, surface @-> returning (some_to_ok surface_opt), surface -> (surface option) result
 3.2.0, SDL_EGL_GetCurrentConfig, Video, , egl_get_current_config, void @-> returning egl_config, unit -> egl_config
 3.2.0, SDL_EGL_GetCurrentDisplay, Video, , egl_get_current_display, void @-> returning egl_display, unit -> egl_display
@@ -171,14 +171,14 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_EnumerateDirectory, Filesystem, , enumerate_directory, string @-> enumerate_directory_callback @-> ptr void @-> returning true_to_ok, string -> enumerate_directory_callback -> ptr void -> unit result
 3.2.0, SDL_EnumerateProperties, Properties, Properties, enumerate, properties_id @-> enumerate_properties_callback @-> ptr void @-> returning true_to_ok, int -> enumerate_properties_callback -> ptr void -> unit result
 3.2.0, SDL_EnumerateStorageDirectory, Storage, Storage, enumerate_directory, storage @-> string @-> enumerate_directory_callback @-> ptr void @-> returning true_to_ok, storage -> string -> enumerate_directory_callback -> ptr void -> unit result
-3.2.0, SDL_EventEnabled, Events, , event_enabled, uint32 @-> returning bool, int -> bool
+3.2.0, SDL_EventEnabled, Events, Event, enabled, uint32 @-> returning bool, int -> bool
 3.2.0, SDL_FillSurfaceRect, Surface, Surface, fill_rect, surface @-> rect_opt @-> uint32 @-> returning true_to_ok, surface -> rect option -> int -> unit result
 3.2.0, SDL_FillSurfaceRects, Surface, Surface, fill_rects, surface @-> ptr rect @-> int @-> uint32 @-> returning true_to_ok, surface -> rect array -> int -> unit result
 3.2.0, SDL_FilterEvents, Events, Event, filters, event_filter @-> ptr void @-> returning void, event_filter -> ptr void -> unit
 3.2.0, SDL_FlashWindow, Video, Window, flash, window @-> flash_operation @-> returning true_to_ok, window -> flash_operation -> unit result
 3.2.0, SDL_FlipSurface, Surface, Surface, flip, surface @-> flip_mode @-> returning true_to_ok, surface -> flip_mode -> unit result
 3.2.0, SDL_FlushAudioStream, Audio, AudioStream, flush, audio_stream @-> returning true_to_ok, audio_stream -> unit result
-3.2.0, SDL_FlushEvent, Events, , flush_event, uint32 @-> returning void, int -> unit
+3.2.0, SDL_FlushEvent, Events, Event, flush, uint32 @-> returning void, int -> unit
 3.2.0, SDL_FlushEvents, Events, Event, flushs, uint32 @-> uint32 @-> returning void, int -> int -> unit
 3.2.0, SDL_FlushIO, Iostream, , flush_io, io_stream @-> returning true_to_ok, io_stream -> unit result
 3.2.0, SDL_FlushRenderer, Render, Renderer, flush, renderer @-> returning true_to_ok, renderer -> unit result
@@ -198,10 +198,10 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_GL_SwapWindow, Video, Window, gl_swap, window @-> returning true_to_ok, window -> unit result
 3.2.0, SDL_GL_UnloadLibrary, Video, , gl_unload_library, void @-> returning void, unit -> unit
 3.2.0, SDL_GPUSupportsProperties, Gpu, Properties, gpu_supports, properties_id @-> returning bool, int -> bool
-3.2.0, SDL_GPUSupportsShaderFormats, Gpu, , gpu_supports_shader_formats, gpu_shader_format @-> string @-> returning bool, int -> string -> bool
+3.2.0, SDL_GPUSupportsShaderFormats, Gpu, GPU, supports_shader_formats, gpu_shader_format @-> string @-> returning bool, int -> string -> bool
 3.2.0, SDL_GPUTextureFormatTexelBlockSize, Gpu, GPUTextureFormat, texel_block_size, gpu_texture_format @-> returning int_as_uint, gpu_texture_format -> int
-3.2.0, SDL_GPUTextureSupportsFormat, Gpu, , gpu_texture_supports_format, gpu_device @-> gpu_texture_format @-> gpu_texture_type @-> gpu_texture_usage_flags @-> returning bool, gpu_device -> gpu_texture_format -> gpu_texture_type -> int -> bool
-3.2.0, SDL_GPUTextureSupportsSampleCount, Gpu, , gpu_texture_supports_sample_count, gpu_device @-> gpu_texture_format @-> gpu_sample_count @-> returning bool, gpu_device -> gpu_texture_format -> gpu_sample_count -> bool
+3.2.0, SDL_GPUTextureSupportsFormat, Gpu, GPU, texture_supports_format, gpu_device @-> gpu_texture_format @-> gpu_texture_type @-> gpu_texture_usage_flags @-> returning bool, gpu_device -> gpu_texture_format -> gpu_texture_type -> int -> bool
+3.2.0, SDL_GPUTextureSupportsSampleCount, Gpu, GPU, texture_supports_sample_count, gpu_device @-> gpu_texture_format @-> gpu_sample_count @-> returning bool, gpu_device -> gpu_texture_format -> gpu_sample_count -> bool
 3.2.0, SDL_GUIDToString, Guid, GUID, to_string, guid @-> string @-> int @-> returning void, guid -> string -> int -> unit
 3.2.0, SDL_GamepadConnected, Gamepad, Gamepad, connected, gamepad @-> returning true_to_ok, gamepad -> unit result
 3.2.0, SDL_GamepadEventsEnabled, Gamepad, Gamepad, events_enabled, void @-> returning bool, unit -> bool
@@ -209,11 +209,11 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_GamepadHasButton, Gamepad, Gamepad, has_button, gamepad @-> gamepad_button @-> returning bool, gamepad -> gamepad_button -> bool
 3.2.0, SDL_GamepadHasSensor, Gamepad, Gamepad, has_sensor, gamepad @-> sensor_type @-> returning bool, gamepad -> sensor_type -> bool
 3.2.0, SDL_GamepadSensorEnabled, Gamepad, Gamepad, sensor_enabled, gamepad @-> sensor_type @-> returning bool, gamepad -> sensor_type -> bool
-3.2.0, SDL_GenerateMipmapsForGPUTexture, Gpu, , generate_mipmaps_for_gpu_texture, gpu_command_buffer @-> gpu_texture @-> returning void, gpu_command_buffer -> gpu_texture -> unit
+3.2.0, SDL_GenerateMipmapsForGPUTexture, Gpu, GPU, generate_mipmaps_for_texture, gpu_command_buffer @-> gpu_texture @-> returning void, gpu_command_buffer -> gpu_texture -> unit
 3.2.0, SDL_GetAppMetadataProperty, Init, , get_app_metadata_property, string @-> returning string, string -> string
 3.2.0, SDL_GetAssertionHandler, Assert, Assertion, get_handler, ptr (ptr void) @-> returning assertion_handler, ptr (ptr void) -> assertion_handler
 3.2.0, SDL_GetAssertionReport, Assert, Assertion, get_report, void @-> returning (ptr assert_data), unit -> ptr assert_data
-3.2.0, SDL_GetAsyncIOResult, Asyncio, , get_async_io_result, async_io_queue @-> async_io_outcome_opt @-> returning true_to_ok, async_io_queue -> async_io_outcome option -> unit result
+3.2.0, SDL_GetAsyncIOResult, Asyncio, AsyncIO, get_result, async_io_queue @-> async_io_outcome_opt @-> returning true_to_ok, async_io_queue -> async_io_outcome option -> unit result
 3.2.0, SDL_GetAsyncIOSize, Asyncio, AsyncIO, get_size, async_io @-> returning sint64, async_io -> int
 3.2.0, SDL_GetAtomicInt, Atomic, AtomicInt, get, atomic_int @-> returning int, atomic_int -> int
 3.2.0, SDL_GetAtomicPointer, Atomic, Atomic, get_pointer, ptr (ptr void) @-> returning (ptr void), ptr (ptr void) -> ptr void
@@ -283,13 +283,13 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_GetEnvironmentVariable, Stdinc, Environment, get_variable, environment @-> string @-> returning string, environment -> string -> string
 3.2.0, SDL_GetEnvironmentVariables, Stdinc, Environment, get_variables, environment @-> returning (ptr string), environment -> ptr string
 3.2.0, SDL_GetError, Error, Error, get, void @-> returning string, unit -> string
-3.2.0, SDL_GetEventFilter, Events, , get_event_filter, ptr event_filter @-> ptr (ptr void) @-> returning true_to_ok, ptr event_filter -> ptr (ptr void) -> unit result
+3.2.0, SDL_GetEventFilter, Events, Event, get_filter, ptr event_filter @-> ptr (ptr void) @-> returning true_to_ok, ptr event_filter -> ptr (ptr void) -> unit result
 3.2.0, SDL_GetFloatProperty, Properties, , get_float_property, properties_id @-> string @-> float @-> returning float, int -> string -> float -> float
 3.2.0, SDL_GetFullscreenDisplayModes, Video, Display, get_fullscreen_modes, display_id @-> ptr int @-> returning (ptr display_mode), int -> display_mode list
 3.2.0, SDL_GetGPUDeviceDriver, Gpu, GPUDevice, get_driver, gpu_device @-> returning string, gpu_device -> string
-3.2.0, SDL_GetGPUDriver, Gpu, , get_gpu_driver, int @-> returning string, int -> string
-3.2.0, SDL_GetGPUShaderFormats, Gpu, , get_gpu_shader_formats, gpu_device @-> returning int_as_uint, gpu_device -> int
-3.2.0, SDL_GetGPUSwapchainTextureFormat, Gpu, , get_gpu_swapchain_texture_format, gpu_device @-> window @-> returning gpu_texture_format, gpu_device -> window -> gpu_texture_format
+3.2.0, SDL_GetGPUDriver, Gpu, GPU, get_driver, int @-> returning string, int -> string
+3.2.0, SDL_GetGPUShaderFormats, Gpu, GPU, get_shader_formats, gpu_device @-> returning int_as_uint, gpu_device -> int
+3.2.0, SDL_GetGPUSwapchainTextureFormat, Gpu, GPU, get_swapchain_texture_format, gpu_device @-> window @-> returning gpu_texture_format, gpu_device -> window -> gpu_texture_format
 3.2.0, SDL_GetGamepadAppleSFSymbolsNameForAxis, Gamepad, Gamepad, get_apple_sf_symbols_name_for_axis, gamepad @-> gamepad_axis @-> returning string, gamepad -> gamepad_axis -> string
 3.2.0, SDL_GetGamepadAppleSFSymbolsNameForButton, Gamepad, Gamepad, get_apple_sf_symbols_name_for_button, gamepad @-> gamepad_button @-> returning string, gamepad -> gamepad_button -> string
 3.2.0, SDL_GetGamepadAxis, Gamepad, Gamepad, get_axis, gamepad @-> gamepad_axis @-> returning sint16, gamepad -> gamepad_axis -> int
@@ -346,8 +346,8 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_GetHapticName, Haptic, Haptic, get_name, haptic @-> returning string, haptic -> string
 3.2.0, SDL_GetHapticNameForID, Haptic, Haptic, get_name_for_id, haptic_id @-> returning string, int -> string
 3.2.0, SDL_GetHaptics, Haptic, Haptic, gets, ptr int @-> returning (ptr haptic_id), unit -> int list
-3.2.0, SDL_GetHint, Hints, , get_hint, string @-> returning string, string -> string
-3.2.0, SDL_GetHintBoolean, Hints, , get_hint_boolean, string @-> bool @-> returning true_to_ok, string -> bool -> unit result
+3.2.0, SDL_GetHint, Hints, Hint, get, string @-> returning string, string -> string
+3.2.0, SDL_GetHintBoolean, Hints, Hint, get_boolean, string @-> bool @-> returning true_to_ok, string -> bool -> unit result
 3.2.0, SDL_GetIOProperties, Iostream, , get_io_properties, io_stream @-> returning int_as_uint, io_stream -> int
 3.2.0, SDL_GetIOSize, Iostream, , get_io_size, io_stream @-> returning sint64, io_stream -> int
 3.2.0, SDL_GetIOStatus, Iostream, IOStatus, get, io_stream @-> returning io_status, io_stream -> io_status
@@ -404,7 +404,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_GetNumAllocations, Stdinc, , get_num_allocations, void @-> returning int, unit -> int
 3.2.0, SDL_GetNumAudioDrivers, Audio, Audio, get_num_drivers, void @-> returning int, unit -> int
 3.2.0, SDL_GetNumCameraDrivers, Camera, Camera, get_num_drivers, void @-> returning int, unit -> int
-3.2.0, SDL_GetNumGPUDrivers, Gpu, , get_num_gpu_drivers, void @-> returning int, unit -> int
+3.2.0, SDL_GetNumGPUDrivers, Gpu, GPU, get_num_drivers, void @-> returning int, unit -> int
 3.2.0, SDL_GetNumGamepadTouchpadFingers, Gamepad, Gamepad, get_num_touchpad_fingers, gamepad @-> int @-> returning int, gamepad -> int -> int
 3.2.0, SDL_GetNumGamepadTouchpads, Gamepad, Gamepad, get_num_touchpads, gamepad @-> returning int, gamepad -> int
 3.2.0, SDL_GetNumHapticAxes, Haptic, Haptic, get_num_axes, haptic @-> returning int, haptic -> int
@@ -447,14 +447,14 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_GetRectUnion, Rect, Rect, get_union, ptr rect @-> ptr rect @-> ptr rect @-> returning true_to_ok, ptr rect -> ptr rect -> ptr rect -> unit result
 3.2.0, SDL_GetRectUnionFloat, Rect, Rect, get_union_float, ptr f_rect @-> ptr f_rect @-> ptr f_rect @-> returning true_to_ok, ptr f_rect -> ptr f_rect -> ptr f_rect -> unit result
 3.2.0, SDL_GetRelativeMouseState, Mouse, Mouse, get_relative_state, ptr float @-> ptr float @-> returning int_as_uint, unit -> float * float
-3.2.0, SDL_GetRenderClipRect, Render, Renderer, get_render_clip_rect, renderer @-> ptr rect @-> returning true_to_ok, renderer -> ptr rect -> unit result
+3.2.0, SDL_GetRenderClipRect, Render, Renderer, get_clip_rect, renderer @-> ptr rect @-> returning true_to_ok, renderer -> ptr rect -> unit result
 3.2.0, SDL_GetRenderColorScale, Render, Renderer, get_color_scale, renderer @-> ptr float @-> returning bool, renderer -> float
 3.2.0, SDL_GetRenderDrawBlendMode, Render, Renderer, get_draw_blend_mode, renderer @-> ptr blend_mode @-> returning true_to_ok, renderer -> ptr blend_mode -> unit result
 3.2.0, SDL_GetRenderDrawColor, Render, Renderer, get_draw_color, renderer @-> ptr uint8 @-> ptr uint8 @-> ptr uint8 @-> ptr uint8 @-> returning bool, renderer -> (int * int * int * int) result
 3.2.0, SDL_GetRenderDrawColorFloat, Render, Renderer, get_draw_color_float, renderer @-> ptr float @-> ptr float @-> ptr float @-> ptr float @-> returning bool, renderer -> (float * float * float * float) result
 3.2.0, SDL_GetRenderDriver, Render, Renderer, get_driver, int @-> returning string, int -> string
 3.2.0, SDL_GetRenderLogicalPresentation, Render, Renderer, get_logical_presentation, renderer @-> ptr int @-> ptr int @-> ptr renderer_logical_presentation @-> returning bool, renderer -> (int * int * renderer_logical_presentation) result
-3.2.0, SDL_GetRenderLogicalPresentationRect, Render, Renderer, get_render_logical_presentation_rect, renderer @-> f_rect_opt @-> returning true_to_ok, renderer -> f_rect option -> unit result
+3.2.0, SDL_GetRenderLogicalPresentationRect, Render, Renderer, get_logical_presentation_rect, renderer @-> f_rect_opt @-> returning true_to_ok, renderer -> f_rect option -> unit result
 3.2.0, SDL_GetRenderMetalCommandEncoder, Render, Renderer, get_metal_command_encoder, renderer @-> returning (ptr void), renderer -> ptr void
 3.2.0, SDL_GetRenderMetalLayer, Render, Renderer, get_metal_layer, renderer @-> returning (ptr void), renderer -> ptr void
 3.2.0, SDL_GetRenderOutputSize, Render, Renderer, get_output_size, renderer @-> ptr int @-> ptr int @-> returning bool, renderer -> (int * int) result
@@ -572,7 +572,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_HasAltiVec, Cpuinfo, , has_alti_vec, void @-> returning bool, unit -> bool
 3.2.0, SDL_HasClipboardData, Clipboard, Clipboard, has_data, string @-> returning bool, string -> bool
 3.2.0, SDL_HasClipboardText, Clipboard, Clipboard, has_text, void @-> returning bool, unit -> bool
-3.2.0, SDL_HasEvent, Events, , has_event, uint32 @-> returning bool, int -> bool
+3.2.0, SDL_HasEvent, Events, Event, has, uint32 @-> returning true_to_ok, int -> unit result
 3.2.0, SDL_HasEvents, Events, Event, hass, uint32 @-> uint32 @-> returning true_to_ok, int -> int -> unit result
 3.2.0, SDL_HasGamepad, Gamepad, Gamepad, has, void @-> returning true_to_ok, unit -> unit result
 3.2.0, SDL_HasJoystick, Joystick, Joystick, has, void @-> returning true_to_ok, unit -> unit result
@@ -601,7 +601,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_Init, Init, , init, init_flags @-> returning true_to_ok, int -> unit result
 3.2.0, SDL_InitHapticRumble, Haptic, Haptic, init_rumble, haptic @-> returning true_to_ok, haptic -> unit result
 3.2.0, SDL_InitSubSystem, Init, , init_sub_system, init_flags @-> returning true_to_ok, int -> unit result
-3.2.0, SDL_InsertGPUDebugLabel, Gpu, , insert_gpu_debug_label, gpu_command_buffer @-> string @-> returning void, gpu_command_buffer -> string -> unit
+3.2.0, SDL_InsertGPUDebugLabel, Gpu, GPU, insert_debug_label, gpu_command_buffer @-> string @-> returning void, gpu_command_buffer -> string -> unit
 3.2.0, SDL_InsertTrayEntryAt, Tray, Tray, insert_entry_at, tray_menu @-> int @-> string @-> tray_entry_flags @-> returning (some_to_ok tray_entry_opt), tray_menu -> int -> string -> int -> (tray_entry option) result
 3.2.0, SDL_IsAudioDevicePhysical, Audio, AudioDevice, is_physical, audio_device_id @-> returning bool, int -> bool
 3.2.0, SDL_IsAudioDevicePlayback, Audio, AudioDevice, is_playback, audio_device_id @-> returning bool, int -> bool
@@ -634,7 +634,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_LockSurface, Surface, Surface, lock, surface @-> returning true_to_ok, surface -> unit result
 3.2.0, SDL_LockTexture, Render, Texture, lock, texture @-> rect_opt @-> ptr (ptr void) @-> ptr int @-> returning bool, texture -> rect option -> ptr (ptr void) -> int
 3.2.0, SDL_LockTextureToSurface, Render, Texture, lock_to_surface, texture @-> rect_opt @-> ptr surface @-> returning true_to_ok, texture -> rect option -> ptr surface -> unit result
-3.2.0, SDL_MapGPUTransferBuffer, Gpu, , map_gpu_transfer_buffer, gpu_device @-> gpu_transfer_buffer @-> bool @-> returning (ptr void), gpu_device -> gpu_transfer_buffer -> bool -> ptr void
+3.2.0, SDL_MapGPUTransferBuffer, Gpu, GPU, map_transfer_buffer, gpu_device @-> gpu_transfer_buffer @-> bool @-> returning (ptr void), gpu_device -> gpu_transfer_buffer -> bool -> ptr void
 3.2.0, SDL_MapRGB, Pixels, , map_rgb, ptr pixel_format_details @-> palette_opt @-> uint8 @-> uint8 @-> uint8 @-> returning int_as_uint, ptr pixel_format_details -> palette option -> int -> int -> int -> int
 3.2.0, SDL_MapRGBA, Pixels, , map_rgba, ptr pixel_format_details @-> palette_opt @-> uint8 @-> uint8 @-> uint8 @-> uint8 @-> returning int_as_uint, ptr pixel_format_details -> palette option -> int -> int -> int -> int -> int
 3.2.0, SDL_MapSurfaceRGB, Surface, Surface, map_rgb, surface @-> uint8 @-> uint8 @-> uint8 @-> returning int_as_uint, surface -> int -> int -> int -> int
@@ -675,17 +675,17 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_PeepEvents, Events, Event, peeps, event_opt @-> int @-> event_action @-> uint32 @-> uint32 @-> returning int, event option -> int -> event_action -> int -> int -> int
 3.2.0, SDL_PlayHapticRumble, Haptic, Haptic, play_rumble, haptic @-> float @-> uint32 @-> returning true_to_ok, haptic -> float -> int -> unit result
 3.2.0, SDL_PollEvent, Events, Event, poll, event_opt @-> returning bool, event option -> bool
-3.2.0, SDL_PopGPUDebugGroup, Gpu, , pop_gpu_debug_group, gpu_command_buffer @-> returning void, gpu_command_buffer -> unit
+3.2.0, SDL_PopGPUDebugGroup, Gpu, GPU, pop_debug_group, gpu_command_buffer @-> returning void, gpu_command_buffer -> unit
 3.2.0, SDL_PremultiplyAlpha, Surface, , premultiply_alpha, int @-> int @-> pixel_format @-> ptr void @-> int @-> pixel_format @-> ptr void @-> int @-> bool @-> returning true_to_ok, int -> int -> pixel_format -> ptr void -> int -> pixel_format -> ptr void -> int -> bool -> unit result
 3.2.0, SDL_PremultiplySurfaceAlpha, Surface, Surface, premultiply_alpha, surface @-> bool @-> returning true_to_ok, surface -> bool -> unit result
 3.2.0, SDL_PumpEvents, Events, Event, pumps, void @-> returning void, unit -> unit
 3.2.0, SDL_PushEvent, Events, Event, push, event @-> returning true_to_ok, event -> unit result
-3.2.0, SDL_PushGPUComputeUniformData, Gpu, , push_gpu_compute_uniform_data, gpu_command_buffer @-> uint32 @-> ptr void @-> uint32 @-> returning void, gpu_command_buffer -> int -> ptr void -> int -> unit
-3.2.0, SDL_PushGPUDebugGroup, Gpu, , push_gpu_debug_group, gpu_command_buffer @-> string @-> returning void, gpu_command_buffer -> string -> unit
-3.2.0, SDL_PushGPUFragmentUniformData, Gpu, , push_gpu_fragment_uniform_data, gpu_command_buffer @-> uint32 @-> ptr void @-> uint32 @-> returning void, gpu_command_buffer -> int -> ptr void -> int -> unit
-3.2.0, SDL_PushGPUVertexUniformData, Gpu, , push_gpu_vertex_uniform_data, gpu_command_buffer @-> uint32 @-> ptr void @-> uint32 @-> returning void, gpu_command_buffer -> int -> ptr void -> int -> unit
+3.2.0, SDL_PushGPUComputeUniformData, Gpu, GPU, push_compute_uniform_data, gpu_command_buffer @-> uint32 @-> ptr void @-> uint32 @-> returning void, gpu_command_buffer -> int -> ptr void -> int -> unit
+3.2.0, SDL_PushGPUDebugGroup, Gpu, GPU, push_debug_group, gpu_command_buffer @-> string @-> returning void, gpu_command_buffer -> string -> unit
+3.2.0, SDL_PushGPUFragmentUniformData, Gpu, GPU, push_fragment_uniform_data, gpu_command_buffer @-> uint32 @-> ptr void @-> uint32 @-> returning void, gpu_command_buffer -> int -> ptr void -> int -> unit
+3.2.0, SDL_PushGPUVertexUniformData, Gpu, GPU, push_vertex_uniform_data, gpu_command_buffer @-> uint32 @-> ptr void @-> uint32 @-> returning void, gpu_command_buffer -> int -> ptr void -> int -> unit
 3.2.0, SDL_PutAudioStreamData, Audio, AudioStream, put_data, audio_stream @-> ptr void @-> int @-> returning true_to_ok, audio_stream -> ptr void -> int -> unit result
-3.2.0, SDL_QueryGPUFence, Gpu, , query_gpu_fence, gpu_device @-> gpu_fence @-> returning true_to_ok, gpu_device -> gpu_fence -> unit result
+3.2.0, SDL_QueryGPUFence, Gpu, GPU, query_fence, gpu_device @-> gpu_fence @-> returning true_to_ok, gpu_device -> gpu_fence -> unit result
 3.2.0, SDL_Quit, Init, , quit, void @-> returning void, unit -> unit
 3.2.0, SDL_QuitSubSystem, Init, , quit_sub_system, init_flags @-> returning void, int -> unit
 3.2.0, SDL_RaiseWindow, Video, Window, raise_, window @-> returning true_to_ok, window -> unit result
@@ -711,18 +711,18 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_ReadU8, Iostream, , read_u8, io_stream @-> ptr uint8 @-> returning bool, io_stream -> int
 3.2.0, SDL_RegisterEvents, Events, Event, registers, int @-> returning int_as_uint, int -> int
 3.2.0, SDL_ReleaseCameraFrame, Camera, Camera, release_frame, camera @-> surface @-> returning void, camera -> surface -> unit
-3.2.0, SDL_ReleaseGPUBuffer, Gpu, , release_gpu_buffer, gpu_device @-> gpu_buffer @-> returning void, gpu_device -> gpu_buffer -> unit
-3.2.0, SDL_ReleaseGPUComputePipeline, Gpu, , release_gpu_compute_pipeline, gpu_device @-> gpu_compute_pipeline @-> returning void, gpu_device -> gpu_compute_pipeline -> unit
-3.2.0, SDL_ReleaseGPUFence, Gpu, , release_gpu_fence, gpu_device @-> gpu_fence @-> returning void, gpu_device -> gpu_fence -> unit
-3.2.0, SDL_ReleaseGPUGraphicsPipeline, Gpu, , release_gpu_graphics_pipeline, gpu_device @-> gpu_graphics_pipeline @-> returning void, gpu_device -> gpu_graphics_pipeline -> unit
-3.2.0, SDL_ReleaseGPUSampler, Gpu, , release_gpu_sampler, gpu_device @-> gpu_sampler @-> returning void, gpu_device -> gpu_sampler -> unit
-3.2.0, SDL_ReleaseGPUShader, Gpu, , release_gpu_shader, gpu_device @-> gpu_shader @-> returning void, gpu_device -> gpu_shader -> unit
-3.2.0, SDL_ReleaseGPUTexture, Gpu, , release_gpu_texture, gpu_device @-> gpu_texture @-> returning void, gpu_device -> gpu_texture -> unit
-3.2.0, SDL_ReleaseGPUTransferBuffer, Gpu, , release_gpu_transfer_buffer, gpu_device @-> gpu_transfer_buffer @-> returning void, gpu_device -> gpu_transfer_buffer -> unit
+3.2.0, SDL_ReleaseGPUBuffer, Gpu, GPU, release_buffer, gpu_device @-> gpu_buffer @-> returning void, gpu_device -> gpu_buffer -> unit
+3.2.0, SDL_ReleaseGPUComputePipeline, Gpu, GPU, release_compute_pipeline, gpu_device @-> gpu_compute_pipeline @-> returning void, gpu_device -> gpu_compute_pipeline -> unit
+3.2.0, SDL_ReleaseGPUFence, Gpu, GPU, release_fence, gpu_device @-> gpu_fence @-> returning void, gpu_device -> gpu_fence -> unit
+3.2.0, SDL_ReleaseGPUGraphicsPipeline, Gpu, GPU, release_graphics_pipeline, gpu_device @-> gpu_graphics_pipeline @-> returning void, gpu_device -> gpu_graphics_pipeline -> unit
+3.2.0, SDL_ReleaseGPUSampler, Gpu, GPU, release_sampler, gpu_device @-> gpu_sampler @-> returning void, gpu_device -> gpu_sampler -> unit
+3.2.0, SDL_ReleaseGPUShader, Gpu, GPU, release_shader, gpu_device @-> gpu_shader @-> returning void, gpu_device -> gpu_shader -> unit
+3.2.0, SDL_ReleaseGPUTexture, Gpu, GPU, release_texture, gpu_device @-> gpu_texture @-> returning void, gpu_device -> gpu_texture -> unit
+3.2.0, SDL_ReleaseGPUTransferBuffer, Gpu, GPU, release_transfer_buffer, gpu_device @-> gpu_transfer_buffer @-> returning void, gpu_device -> gpu_transfer_buffer -> unit
 3.2.0, SDL_ReleaseWindowFromGPUDevice, Gpu, GPUDevice, release_window_from, gpu_device @-> window @-> returning void, gpu_device -> window -> unit
 3.2.0, SDL_ReloadGamepadMappings, Gamepad, Gamepad, reload_mappings, void @-> returning true_to_ok, unit -> unit result
-3.2.0, SDL_RemoveEventWatch, Events, , remove_event_watch, event_filter @-> ptr void @-> returning void, event_filter -> ptr void -> unit
-3.2.0, SDL_RemoveHintCallback, Hints, , remove_hint_callback, string @-> hint_callback @-> ptr void @-> returning void, string -> hint_callback -> ptr void -> unit
+3.2.0, SDL_RemoveEventWatch, Events, Event, remove_watch, event_filter @-> ptr void @-> returning void, event_filter -> ptr void -> unit
+3.2.0, SDL_RemoveHintCallback, Hints, Hint, remove_callback, string @-> hint_callback @-> ptr void @-> returning void, string -> hint_callback -> ptr void -> unit
 3.2.0, SDL_RemovePath, Filesystem, , remove_path, string @-> returning true_to_ok, string -> unit result
 3.2.0, SDL_RemoveStoragePath, Storage, Storage, remove_path, storage @-> string @-> returning true_to_ok, storage -> string -> unit result
 3.2.0, SDL_RemoveSurfaceAlternateImages, Surface, Surface, remove_alternate_images, surface @-> returning void, surface -> unit
@@ -755,8 +755,8 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_RenderViewportSet, Render, Renderer, viewport_set, renderer @-> returning true_to_ok, renderer -> unit result
 3.2.0, SDL_ReportAssertion, Assert, Assertion, report, ptr assert_data @-> string @-> string @-> int @-> returning assert_state, ptr assert_data -> string -> string -> int -> assert_state
 3.2.0, SDL_ResetAssertionReport, Assert, Assertion, reset_report, void @-> returning void, unit -> unit
-3.2.0, SDL_ResetHint, Hints, , reset_hint, string @-> returning true_to_ok, string -> unit result
-3.2.0, SDL_ResetHints, Hints, Hints, reset, void @-> returning void, unit -> unit
+3.2.0, SDL_ResetHint, Hints, Hint, reset, string @-> returning true_to_ok, string -> unit result
+3.2.0, SDL_ResetHints, Hints, Hint, resets, void @-> returning void, unit -> unit
 3.2.0, SDL_ResetKeyboard, Keyboard, Keyboard, reset, void @-> returning void, unit -> unit
 3.2.0, SDL_ResetLogPriorities, Log, Log, reset_priorities, void @-> returning void, unit -> unit
 3.2.0, SDL_RestoreWindow, Video, Window, restore, window @-> returning true_to_ok, window -> unit result
@@ -801,17 +801,17 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_SetCurrentThreadPriority, Thread, Thread, set_current_priority, thread_priority @-> returning true_to_ok, thread_priority -> unit result
 3.2.0, SDL_SetCursor, Mouse, Cursor, set, cursor @-> returning true_to_ok, cursor -> unit result
 3.2.0, SDL_SetEnvironmentVariable, Stdinc, Environment, set_variable, environment @-> string @-> string @-> bool @-> returning true_to_ok, environment -> string -> string -> bool -> unit result
-3.2.0, SDL_SetEventEnabled, Events, , set_event_enabled, uint32 @-> bool @-> returning void, int -> bool -> unit
+3.2.0, SDL_SetEventEnabled, Events, Event, set_enabled, uint32 @-> bool @-> returning void, int -> bool -> unit
 3.2.0, SDL_SetEventFilter, Events, Event, set_filter, event_filter @-> ptr void @-> returning void, event_filter -> ptr void -> unit
 3.2.0, SDL_SetFloatProperty, Properties, , set_float_property, properties_id @-> string @-> float @-> returning true_to_ok, int -> string -> float -> unit result
-3.2.0, SDL_SetGPUAllowedFramesInFlight, Gpu, , set_gpu_allowed_frames_in_flight, gpu_device @-> uint32 @-> returning true_to_ok, gpu_device -> int -> unit result
-3.2.0, SDL_SetGPUBlendConstants, Gpu, , set_gpu_blend_constants, gpu_render_pass @-> f_color @-> returning void, gpu_render_pass -> f_color -> unit
-3.2.0, SDL_SetGPUBufferName, Gpu, , set_gpu_buffer_name, gpu_device @-> gpu_buffer @-> string @-> returning void, gpu_device -> gpu_buffer -> string -> unit
-3.2.0, SDL_SetGPUScissor, Gpu, , set_gpu_scissor, gpu_render_pass @-> ptr rect @-> returning void, gpu_render_pass -> ptr rect -> unit
-3.2.0, SDL_SetGPUStencilReference, Gpu, , set_gpu_stencil_reference, gpu_render_pass @-> uint8 @-> returning void, gpu_render_pass -> int -> unit
-3.2.0, SDL_SetGPUSwapchainParameters, Gpu, , set_gpu_swapchain_parameters, gpu_device @-> window @-> gpu_swapchain_composition @-> gpu_present_mode @-> returning true_to_ok, gpu_device -> window -> gpu_swapchain_composition -> gpu_present_mode -> unit result
-3.2.0, SDL_SetGPUTextureName, Gpu, , set_gpu_texture_name, gpu_device @-> gpu_texture @-> string @-> returning void, gpu_device -> gpu_texture -> string -> unit
-3.2.0, SDL_SetGPUViewport, Gpu, , set_gpu_viewport, gpu_render_pass @-> ptr gpu_viewport @-> returning void, gpu_render_pass -> ptr gpu_viewport -> unit
+3.2.0, SDL_SetGPUAllowedFramesInFlight, Gpu, GPU, set_allowed_frames_in_flight, gpu_device @-> uint32 @-> returning true_to_ok, gpu_device -> int -> unit result
+3.2.0, SDL_SetGPUBlendConstants, Gpu, GPU, set_blend_constants, gpu_render_pass @-> f_color @-> returning void, gpu_render_pass -> f_color -> unit
+3.2.0, SDL_SetGPUBufferName, Gpu, GPU, set_buffer_name, gpu_device @-> gpu_buffer @-> string @-> returning void, gpu_device -> gpu_buffer -> string -> unit
+3.2.0, SDL_SetGPUScissor, Gpu, GPU, set_scissor, gpu_render_pass @-> ptr rect @-> returning void, gpu_render_pass -> ptr rect -> unit
+3.2.0, SDL_SetGPUStencilReference, Gpu, GPU, set_stencil_reference, gpu_render_pass @-> uint8 @-> returning void, gpu_render_pass -> int -> unit
+3.2.0, SDL_SetGPUSwapchainParameters, Gpu, GPU, set_swapchain_parameters, gpu_device @-> window @-> gpu_swapchain_composition @-> gpu_present_mode @-> returning true_to_ok, gpu_device -> window -> gpu_swapchain_composition -> gpu_present_mode -> unit result
+3.2.0, SDL_SetGPUTextureName, Gpu, GPU, set_texture_name, gpu_device @-> gpu_texture @-> string @-> returning void, gpu_device -> gpu_texture -> string -> unit
+3.2.0, SDL_SetGPUViewport, Gpu, GPU, set_viewport, gpu_render_pass @-> ptr gpu_viewport @-> returning void, gpu_render_pass -> ptr gpu_viewport -> unit
 3.2.0, SDL_SetGamepadEventsEnabled, Gamepad, Gamepad, set_events_enabled, bool @-> returning void, bool -> unit
 3.2.0, SDL_SetGamepadLED, Gamepad, Gamepad, set_led, gamepad @-> uint8 @-> uint8 @-> uint8 @-> returning true_to_ok, gamepad -> int -> int -> int -> unit result
 3.2.0, SDL_SetGamepadMapping, Gamepad, Gamepad, set_mapping, joystick_id @-> string @-> returning true_to_ok, int -> string -> unit result
@@ -819,8 +819,8 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_SetGamepadSensorEnabled, Gamepad, Gamepad, set_sensor_enabled, gamepad @-> sensor_type @-> bool @-> returning bool, gamepad -> sensor_type -> bool -> bool
 3.2.0, SDL_SetHapticAutocenter, Haptic, Haptic, set_autocenter, haptic @-> int @-> returning true_to_ok, haptic -> int -> unit result
 3.2.0, SDL_SetHapticGain, Haptic, Haptic, set_gain, haptic @-> int @-> returning true_to_ok, haptic -> int -> unit result
-3.2.0, SDL_SetHint, Hints, , set_hint, string @-> string @-> returning true_to_ok, string -> string -> unit result
-3.2.0, SDL_SetHintWithPriority, Hints, , set_hint_with_priority, string @-> string @-> hint_priority @-> returning true_to_ok, string -> string -> hint_priority -> unit result
+3.2.0, SDL_SetHint, Hints, Hint, set, string @-> string @-> returning true_to_ok, string -> string -> unit result
+3.2.0, SDL_SetHintWithPriority, Hints, Hint, set_with_priority, string @-> string @-> hint_priority @-> returning true_to_ok, string -> string -> hint_priority -> unit result
 3.2.0, SDL_SetInitialized, Mutex, , set_initialized, ptr init_state @-> bool @-> returning void, ptr init_state -> bool -> unit
 3.2.0, SDL_SetJoystickEventsEnabled, Joystick, Joystick, set_events_enabled, bool @-> returning void, bool -> unit
 3.2.0, SDL_SetJoystickLED, Joystick, Joystick, set_led, joystick @-> uint8 @-> uint8 @-> uint8 @-> returning true_to_ok, joystick -> int -> int -> int -> unit result
@@ -843,7 +843,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_SetPointerProperty, Properties, , set_pointer_property, properties_id @-> string @-> ptr void @-> returning true_to_ok, int -> string -> ptr void -> unit result
 3.2.0, SDL_SetPointerPropertyWithCleanup, Properties, , set_pointer_property_with_cleanup, properties_id @-> string @-> ptr void @-> cleanup_property_callback_opt @-> ptr void @-> returning true_to_ok, int -> string -> ptr void -> cleanup_property_callback option -> ptr void -> unit result
 3.2.0, SDL_SetPrimarySelectionText, Clipboard, , set_primary_selection_text, string @-> returning true_to_ok, string -> unit result
-3.2.0, SDL_SetRenderClipRect, Render, Renderer, set_render_clip_rect, renderer @-> rect_opt @-> returning true_to_ok, renderer -> rect option -> unit result
+3.2.0, SDL_SetRenderClipRect, Render, Renderer, set_clip_rect, renderer @-> rect_opt @-> returning true_to_ok, renderer -> rect option -> unit result
 3.2.0, SDL_SetRenderColorScale, Render, Renderer, set_color_scale, renderer @-> float @-> returning true_to_ok, renderer -> float -> unit result
 3.2.0, SDL_SetRenderDrawBlendMode, Render, Renderer, set_draw_blend_mode, renderer @-> blend_mode @-> returning true_to_ok, renderer -> int -> unit result
 3.2.0, SDL_SetRenderDrawColor, Render, Renderer, set_draw_color, renderer @-> uint8 @-> uint8 @-> uint8 @-> uint8 @-> returning true_to_ok, renderer -> int -> int -> int -> int -> unit result
@@ -952,7 +952,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_UnlockSpinlock, Atomic, , unlock_spinlock, ptr spin_lock @-> returning void, ptr spin_lock -> unit
 3.2.0, SDL_UnlockSurface, Surface, Surface, unlock, surface @-> returning void, surface -> unit
 3.2.0, SDL_UnlockTexture, Render, Texture, unlock, texture @-> returning void, texture -> unit
-3.2.0, SDL_UnmapGPUTransferBuffer, Gpu, , unmap_gpu_transfer_buffer, gpu_device @-> gpu_transfer_buffer @-> returning void, gpu_device -> gpu_transfer_buffer -> unit
+3.2.0, SDL_UnmapGPUTransferBuffer, Gpu, GPU, unmap_transfer_buffer, gpu_device @-> gpu_transfer_buffer @-> returning void, gpu_device -> gpu_transfer_buffer -> unit
 3.2.0, SDL_UnsetEnvironmentVariable, Stdinc, Environment, unset_variable, environment @-> string @-> returning true_to_ok, environment -> string -> unit result
 3.2.0, SDL_UpdateGamepads, Gamepad, Gamepad, updates, void @-> returning void, unit -> unit
 3.2.0, SDL_UpdateHapticEffect, Haptic, Haptic, update_effect, haptic @-> haptic_effect_id @-> ptr haptic_effect @-> returning true_to_ok, haptic -> haptic_effect_id (* int *) -> ptr haptic_effect -> unit result
@@ -964,17 +964,17 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_UpdateWindowSurface, Video, Window, update_surface, window @-> returning true_to_ok, window -> unit result
 3.2.0, SDL_UpdateWindowSurfaceRects, Video, Window, update_surface_rects, window @-> ptr rect @-> int @-> returning true_to_ok, window -> ptr rect -> int -> unit result
 3.2.0, SDL_UpdateYUVTexture, Render, Texture, update_yuv, texture @-> rect_opt @-> ptr uint8 @-> int @-> ptr uint8 @-> int @-> ptr uint8 @-> int @-> returning true_to_ok, texture -> rect option -> ptr uint8 -> int -> ptr uint8 -> int -> ptr uint8 -> int -> unit result
-3.2.0, SDL_UploadToGPUBuffer, Gpu, , upload_to_gpu_buffer, gpu_copy_pass @-> ptr gpu_transfer_buffer_location @-> ptr gpu_buffer_region @-> bool @-> returning void, gpu_copy_pass -> ptr gpu_transfer_buffer_location -> ptr gpu_buffer_region -> bool -> unit
-3.2.0, SDL_UploadToGPUTexture, Gpu, , upload_to_gpu_texture, gpu_copy_pass @-> ptr gpu_texture_transfer_info @-> ptr gpu_texture_region @-> bool @-> returning void, gpu_copy_pass -> ptr gpu_texture_transfer_info -> ptr gpu_texture_region -> bool -> unit
-3.2.0, SDL_WaitAndAcquireGPUSwapchainTexture, Gpu, , wait_and_acquire_gpu_swapchain_texture, gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning bool, gpu_command_buffer -> window -> ptr gpu_texture -> (int * int) result
-3.2.0, SDL_WaitAsyncIOResult, Asyncio, , wait_async_io_result, async_io_queue @-> async_io_outcome_opt @-> sint32 @-> returning true_to_ok, async_io_queue -> async_io_outcome option -> sint32 (* int *) -> unit result
+3.2.0, SDL_UploadToGPUBuffer, Gpu, GPU, upload_to_buffer, gpu_copy_pass @-> ptr gpu_transfer_buffer_location @-> ptr gpu_buffer_region @-> bool @-> returning void, gpu_copy_pass -> ptr gpu_transfer_buffer_location -> ptr gpu_buffer_region -> bool -> unit
+3.2.0, SDL_UploadToGPUTexture, Gpu, GPU, upload_to_texture, gpu_copy_pass @-> ptr gpu_texture_transfer_info @-> ptr gpu_texture_region @-> bool @-> returning void, gpu_copy_pass -> ptr gpu_texture_transfer_info -> ptr gpu_texture_region -> bool -> unit
+3.2.0, SDL_WaitAndAcquireGPUSwapchainTexture, Gpu, GPU, wait_and_acquire_swapchain_texture, gpu_command_buffer @-> window @-> ptr gpu_texture @-> ptr uint32 @-> ptr uint32 @-> returning bool, gpu_command_buffer -> window -> ptr gpu_texture -> (int * int) result
+3.2.0, SDL_WaitAsyncIOResult, Asyncio, AsyncIO, wait_result, async_io_queue @-> async_io_outcome_opt @-> sint32 @-> returning true_to_ok, async_io_queue -> async_io_outcome option -> sint32 (* int *) -> unit result
 3.2.0, SDL_WaitCondition, Mutex, Condition, wait, condition @-> mutex @-> returning void, condition -> mutex -> unit
 3.2.0, SDL_WaitConditionTimeout, Mutex, Condition, wait_timeout, condition @-> mutex @-> sint32 @-> returning true_to_ok, condition -> mutex -> sint32 (* int *) -> unit result
 3.2.0, SDL_WaitEvent, Events, Event, wait, event_opt @-> returning true_to_ok, event option -> unit result
 3.2.0, SDL_WaitEventTimeout, Events, Event, wait_timeout, event_opt @-> sint32 @-> returning true_to_ok, event option -> sint32 (* int *) -> unit result
-3.2.0, SDL_WaitForGPUFences, Gpu, , wait_for_gpu_fences, gpu_device @-> bool @-> ptr gpu_fence @-> uint32 @-> returning true_to_ok, gpu_device -> bool -> gpu_fence array -> unit result
-3.2.0, SDL_WaitForGPUIdle, Gpu, , wait_for_gpu_idle, gpu_device @-> returning true_to_ok, gpu_device -> unit result
-3.2.0, SDL_WaitForGPUSwapchain, Gpu, , wait_for_gpu_swapchain, gpu_device @-> window @-> returning true_to_ok, gpu_device -> window -> unit result
+3.2.0, SDL_WaitForGPUFences, Gpu, GPU, wait_for_fences, gpu_device @-> bool @-> ptr gpu_fence @-> uint32 @-> returning true_to_ok, gpu_device -> bool -> gpu_fence array -> unit result
+3.2.0, SDL_WaitForGPUIdle, Gpu, GPU, wait_for_idle, gpu_device @-> returning true_to_ok, gpu_device -> unit result
+3.2.0, SDL_WaitForGPUSwapchain, Gpu, GPU, wait_for_swapchain, gpu_device @-> window @-> returning true_to_ok, gpu_device -> window -> unit result
 3.2.0, SDL_WaitProcess, Process, Process, wait, process @-> bool @-> ptr int @-> returning bool, process -> bool -> int
 3.2.0, SDL_WaitSemaphore, Mutex, Semaphore, wait, semaphore @-> returning void, semaphore -> unit
 3.2.0, SDL_WaitSemaphoreTimeout, Mutex, Semaphore, wait_timeout, semaphore @-> sint32 @-> returning true_to_ok, semaphore -> sint32 (* int *) -> unit result
@@ -983,8 +983,8 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_WarpMouseInWindow, Mouse, Window, warp_mouse_in, window_opt @-> float @-> float @-> returning void, window option -> float -> float -> unit
 3.2.0, SDL_WasInit, Init, , was_init, init_flags @-> returning int_as_uint, int -> int
 3.2.0, SDL_WindowHasSurface, Video, Window, has_surface, window @-> returning bool, window -> bool
-3.2.0, SDL_WindowSupportsGPUPresentMode, Gpu, , window_supports_gpu_present_mode, gpu_device @-> window @-> gpu_present_mode @-> returning bool, gpu_device -> window -> gpu_present_mode -> bool
-3.2.0, SDL_WindowSupportsGPUSwapchainComposition, Gpu, , window_supports_gpu_swapchain_composition, gpu_device @-> window @-> gpu_swapchain_composition @-> returning bool, gpu_device -> window -> gpu_swapchain_composition -> bool
+3.2.0, SDL_WindowSupportsGPUPresentMode, Gpu, GPU, window_supports_present_mode, gpu_device @-> window @-> gpu_present_mode @-> returning bool, gpu_device -> window -> gpu_present_mode -> bool
+3.2.0, SDL_WindowSupportsGPUSwapchainComposition, Gpu, GPU, window_supports_swapchain_composition, gpu_device @-> window @-> gpu_swapchain_composition @-> returning bool, gpu_device -> window -> gpu_swapchain_composition -> bool
 3.2.0, SDL_WriteAsyncIO, Asyncio, AsyncIO, write, async_io @-> ptr void @-> uint64 @-> uint64 @-> async_io_queue @-> ptr void @-> returning true_to_ok, async_io -> ptr void -> int64 -> int64 -> async_io_queue -> ptr void -> unit result
 3.2.0, SDL_WriteIO, Iostream, , write_io, io_stream @-> ptr void @-> size_t @-> returning size_t, io_stream -> ptr void -> int -> int
 3.2.0, SDL_WriteS16BE, Iostream, , write_s16_be, io_stream @-> sint16 @-> returning true_to_ok, io_stream -> int -> unit result
@@ -1182,7 +1182,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.4.0, SDL_GetGPUTextureFormatFromPixelFormat, Gpu, GPUTextureFormat, get_from_pixel_format, pixel_format @-> returning gpu_texture_format, pixel_format -> gpu_texture_format
 3.4.0, SDL_GetPenDeviceType, Pen, Pen, get_device_type, pen_id @-> returning pen_device_type, int -> pen_device_type
 3.4.0, SDL_GetPixelFormatFromGPUTextureFormat, Gpu, PixelFormat, get_from_gpu_texture_format, gpu_texture_format @-> returning pixel_format, gpu_texture_format -> pixel_format
-3.4.0, SDL_GetRenderTextureAddressMode, Render, Renderer, get_render_texture_address_mode, renderer @-> ptr_opt texture_address_mode @-> ptr_opt texture_address_mode @-> returning true_to_ok, renderer -> ptr_opt texture_address_mode -> ptr_opt texture_address_mode -> unit result
+3.4.0, SDL_GetRenderTextureAddressMode, Render, Renderer, get_texture_address_mode, renderer @-> ptr_opt texture_address_mode @-> ptr_opt texture_address_mode @-> returning true_to_ok, renderer -> ptr_opt texture_address_mode -> ptr_opt texture_address_mode -> unit result
 3.4.0, SDL_GetSystemPageSize, Cpuinfo, , get_system_page_size, void @-> returning int, unit -> int
 3.4.0, SDL_GetTexturePalette, Render, Texture, get_palette, texture @-> returning (some_to_ok palette_opt), texture -> (palette option) result
 3.4.0, SDL_GetWindowProgressState, Video, Window, get_progress_state, window @-> returning progress_state, window -> progress_state
@@ -1201,7 +1201,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.4.0, SDL_SetGPURenderState, Render, Renderer, set_gpu_state, renderer @-> gpu_render_state_opt @-> returning true_to_ok, renderer -> gpu_render_state option -> unit result
 3.4.0, SDL_SetGPURenderStateFragmentUniforms, Render, GPURenderState, set_fragment_uniforms, gpu_render_state @-> uint32 @-> ptr void @-> uint32 @-> returning true_to_ok, gpu_render_state -> int -> ptr void -> int -> unit result
 3.4.0, SDL_SetRelativeMouseTransform, Mouse, Mouse, set_relative_transform, mouse_motion_transform_callback_opt @-> ptr void @-> returning true_to_ok, mouse_motion_transform_callback option -> ptr void -> unit result
-3.4.0, SDL_SetRenderTextureAddressMode, Render, Renderer, set_render_texture_address_mode, renderer @-> texture_address_mode @-> texture_address_mode @-> returning true_to_ok, renderer -> texture_address_mode -> texture_address_mode -> unit result
+3.4.0, SDL_SetRenderTextureAddressMode, Render, Renderer, set_texture_address_mode, renderer @-> texture_address_mode @-> texture_address_mode @-> returning true_to_ok, renderer -> texture_address_mode -> texture_address_mode -> unit result
 3.4.0, SDL_SetTexturePalette, Render, Texture, set_palette, texture @-> palette @-> returning true_to_ok, texture -> palette -> unit result
 3.4.0, SDL_SetWindowFillDocument, Video, Window, set_fill_document, window @-> bool @-> returning true_to_ok, window -> bool -> unit result
 3.4.0, SDL_SetWindowProgressState, Video, Window, set_progress_state, window @-> progress_state @-> returning true_to_ok, window -> progress_state -> unit result

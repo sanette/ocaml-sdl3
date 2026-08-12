@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -32,18 +32,18 @@ let create_queue = ff "SDL_CreateAsyncIOQueue"
 let destroy_queue = ff "SDL_DestroyAsyncIOQueue"
   (async_io_queue @-> returning void)
 
+let get_result = ff "SDL_GetAsyncIOResult"
+  (async_io_queue @-> async_io_outcome_opt @-> returning true_to_ok)
+
+let wait_result = ff "SDL_WaitAsyncIOResult"
+  (async_io_queue @-> async_io_outcome_opt @-> sint32 @-> returning true_to_ok)
+
 let signal_queue = ff "SDL_SignalAsyncIOQueue"
   (async_io_queue @-> returning void)
 
 end
 
 module Global = struct
-let get_async_io_result = ff "SDL_GetAsyncIOResult"
-  (async_io_queue @-> async_io_outcome_opt @-> returning true_to_ok)
-
-let wait_async_io_result = ff "SDL_WaitAsyncIOResult"
-  (async_io_queue @-> async_io_outcome_opt @-> sint32 @-> returning true_to_ok)
-
 let load_file_async = ff "SDL_LoadFileAsync"
   (string @-> async_io_queue @-> ptr void @-> returning true_to_ok)
 

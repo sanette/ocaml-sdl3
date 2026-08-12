@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -38,19 +38,13 @@ let get_file_size storage path =
 let read_file = ff "SDL_ReadStorageFile"
   (storage @-> string @-> ptr void @-> uint64 @-> returning true_to_ok)
 let read_file storage path ba =
-  let len =  Bigarray.Array1.size_in_bytes ba in
-  let p = Ctypes.bigarray_start Ctypes.array1 ba in
-  let typ = typ_of_bigarray_kind (Bigarray.Array1.kind ba) in
-  let destination = coerce (ptr typ) (ptr void) p in
+  let destination, len = Helpers.ptr_of_ba ba in
   read_file storage path destination (Unsigned.ULong.of_int len)
 
 let write_file = ff "SDL_WriteStorageFile"
   (storage @-> string @-> ptr void @-> uint64 @-> returning true_to_ok)
 let write_file storage path ba =
-  let len =  Bigarray.Array1.size_in_bytes ba in
-  let p = Ctypes.bigarray_start Ctypes.array1 ba in
-  let typ = typ_of_bigarray_kind (Bigarray.Array1.kind ba) in
-  let source = coerce (ptr typ) (ptr void) p in
+  let source, len = Helpers.ptr_of_ba ba in
   write_file storage path source (Unsigned.ULong.of_int len)
 
 let create_directory = ff "SDL_CreateStorageDirectory"

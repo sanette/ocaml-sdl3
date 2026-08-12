@@ -22,6 +22,8 @@ adventurous and want to give it a try. Welcome!
 
 # Results
 
+_(If you are familiar with `tsdl`, you can skip this!)_
+
 Most SDL functions don't throw an exception when they fail, the simply
 return NULL or false, so that the programmer can easily deal with
 it. Indeed, since SDL is a device library, an error does not mean your
@@ -120,6 +122,24 @@ and then execute:
 ![my_app](bin/my_app.png)
 
 # Naming conventions
+
+##  Summary (TL; DR)
+
+SDL Names are converted to 'snake case', BUT...  lead by some
+mysterious (and malicious) motivation, the author decided to group SDL
+function into modules... and to modify names accordingly.
+
+To find out the OCaml name of an SDL function, refer to this
+[list](lib/bound_functions.csv): look at the columns "Module" and
+"OCaml name": the full OCaml name is obtained by appending first
+`Sdl.` then "Module" if it exists, and then the "OCaml name":
+
+```
+	SDL_AcquireCameraFrame ==> Sdl.Camera.acquire_frame
+	SDL_DelayPrecise ==> Sdl.delay_precise
+```
+
+## Lengthy explanation
 
 In the original C language, All SDL functions have the "camel case"
 form SDL_AaaaBbbbCccc... (except functions from `SDL_stdinc`), for

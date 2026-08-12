@@ -51,3 +51,9 @@ let value_opt_as_ptr t =
   view ~read ~write (ptr t)
 
 let hadd tbl ((k : int), v) = Hashtbl.add tbl k v
+
+let ptr_of_ba ba : (unit ptr * int) =
+  let len =  Bigarray.Array1.size_in_bytes ba in
+  let p = Ctypes.bigarray_start Ctypes.array1 ba in
+  let typ = typ_of_bigarray_kind (Bigarray.Array1.kind ba) in
+  coerce (ptr typ) (ptr void) p, len

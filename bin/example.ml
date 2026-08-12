@@ -73,7 +73,7 @@ let () =
           alpha := Sdl.alpha_opaque;
           y := ymax ();
           print_endline !msg;
-          Sdl.flush_event Sdl.event_mouse_motion;
+          Sdl.Event.flush Sdl.event_mouse_motion;
           event_loop ()
         end in
       event_loop ();

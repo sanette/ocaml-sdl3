@@ -1,8 +1,8 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
-open Helpers
 open Sdl3_types
+open Helpers
 
 let ff = Load.foreign
 
@@ -73,7 +73,7 @@ let get_logical_presentation renderer =
   let mode = allocate renderer_logical_presentation 0 in
   if get_logical_presentation renderer w h mode then Ok (!@ w, !@ h, !@ mode) else error ()
 
-let get_render_logical_presentation_rect = ff "SDL_GetRenderLogicalPresentationRect"
+let get_logical_presentation_rect = ff "SDL_GetRenderLogicalPresentationRect"
   (renderer @-> f_rect_opt @-> returning true_to_ok)
 
 let coordinates_from_window = ff "SDL_RenderCoordinatesFromWindow"
@@ -105,10 +105,10 @@ let viewport_set = ff "SDL_RenderViewportSet"
 let get_safe_area = ff "SDL_GetRenderSafeArea"
   (renderer @-> ptr rect @-> returning true_to_ok)
 
-let set_render_clip_rect = ff "SDL_SetRenderClipRect"
+let set_clip_rect = ff "SDL_SetRenderClipRect"
   (renderer @-> rect_opt @-> returning true_to_ok)
 
-let get_render_clip_rect = ff "SDL_GetRenderClipRect"
+let get_clip_rect = ff "SDL_GetRenderClipRect"
   (renderer @-> ptr rect @-> returning true_to_ok)
 
 let clip_enabled = ff "SDL_RenderClipEnabled"
@@ -237,10 +237,10 @@ let render_geometry_raw renderer texture xy xy_stride color color_stride uv uv_s
   let indices, num_indices = carray_of_list void indices in
   render_geometry_raw renderer texture xy xy_stride color color_stride uv uv_stride num_vertices indices num_indices size_indices
 
-let set_render_texture_address_mode = ff "SDL_SetRenderTextureAddressMode"
+let set_texture_address_mode = ff "SDL_SetRenderTextureAddressMode"
   (renderer @-> texture_address_mode @-> texture_address_mode @-> returning true_to_ok)
 
-let get_render_texture_address_mode = ff "SDL_GetRenderTextureAddressMode"
+let get_texture_address_mode = ff "SDL_GetRenderTextureAddressMode"
   (renderer @-> ptr_opt texture_address_mode @-> ptr_opt texture_address_mode @-> returning true_to_ok)
 
 let read_pixels = ff "SDL_RenderReadPixels"
