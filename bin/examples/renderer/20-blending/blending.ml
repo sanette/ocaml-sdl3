@@ -5,7 +5,6 @@ open Sdl3
 
 let go = Result.get_ok
 let ( |?> ) o f = Option.iter f o
-let matrix_to_list m =  m |> Array.to_list |> List.concat_map Array.to_list
 
 type state = {
   renderer : T.renderer;
@@ -49,11 +48,14 @@ let init () =
         Sdl.logical_presentation_letterbox |> go;
       Sdl.Renderer.set_v_sync renderer 1 |> go; (* not in the original SDL3 code but nice to your CPU! *)
 
-      let panels = Array.init_matrix rows cols (fun row col ->
+      let panels = Array.init (rows*cols) (fun i ->
+          let col = i mod cols in
+          let row = (i-col) / cols in
           T.FRect.create ~x:(float col *. panel_size +. float col *. col_offset)
             ~y:(float row *. panel_size +. float (row+1) *. row_offset)
             ~w:panel_size ~h:panel_size ())
-        |> matrix_to_list in
+        |> Array.to_list in
+
       let custom = Sdl.compose_custom_blend_mode
           Sdl.blendfactor_one_minus_dst_color
           Sdl.blendfactor_one

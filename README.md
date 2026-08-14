@@ -124,7 +124,7 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
 
   ```bash
   cd examples/renderer/20-blending
-dune exec ./blending.exe
+  dune exec ./blending.exe
   ```
 
 + [`examples/camera/01-read-and-draw`](https://examples.libsdl.org/SDL3/camera/01-read-and-draw/)
