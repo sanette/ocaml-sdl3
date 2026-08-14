@@ -120,6 +120,12 @@ Some examples from https://examples.libsdl.org/SDL3/ have been adapted to `OCaml
 
   ![screenshot](https://raw.githubusercontent.com/sanette/ocaml-sdl3/refs/heads/main/bin/examples/renderer/19-affine-textures/affine-textures.png)
 
++ [`examples/renderer/20-blending`](https://examples.libsdl.org/SDL3/renderer/20-blending/)
+
+  ```bash
+  cd examples/renderer/20-blending
+dune exec ./blending.exe
+  ```
 
 + [`examples/camera/01-read-and-draw`](https://examples.libsdl.org/SDL3/camera/01-read-and-draw/)
 
