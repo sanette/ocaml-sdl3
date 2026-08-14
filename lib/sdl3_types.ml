@@ -32,6 +32,8 @@ module Alignment_test = struct
   let a = field t "a" int_as_uchar
   let b = field t "b" (ptr void)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type alignment_test = Alignment_test.t
 let alignment_test = Alignment_test.t
@@ -95,6 +97,8 @@ module AssertData = struct
   let func = field t "function" string
   let next = field t "next" (ptr t)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type assert_data = AssertData.t
 let assert_data = AssertData.t
@@ -160,6 +164,8 @@ module AsyncIOOutcome = struct
   let bytes_transferred = field t "bytes_transferred" int64_as_ulong
   let userdata = field t "userdata" (ptr void)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type async_io_outcome = AsyncIOOutcome.t
 let async_io_outcome = AsyncIOOutcome.t
@@ -363,6 +369,8 @@ module InitState = struct
   let thread = field t "thread" int64_as_ulong
   let reserved = field t "reserved" (ptr void)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type init_state = InitState.t
 let init_state = InitState.t
@@ -428,6 +436,8 @@ module IOStreamInterface = struct
   let flush = field t "flush" (funptr (ptr void @-> ptr io_status @-> returning bool))
   let close = field t "close" (funptr (ptr void @-> returning bool))
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type io_stream_interface = IOStreamInterface.t
 let io_stream_interface = IOStreamInterface.t
@@ -1329,12 +1339,12 @@ module Color = struct
   let b = field t "b" int_as_uchar
   let a = field t "a" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
   let r_ = r
   let g_ = g
   let b_ = b
   let a_ = a
-  let get = getf
-  let set = setf
   let create ?r ?g ?b ?a () : t =
     let ret = make t in
     Option.iter (set ret r_) r;
@@ -1357,12 +1367,12 @@ module FColor = struct
   let b = field t "b" float
   let a = field t "a" float
   let () = seal t
+  let get = getf
+  let set = setf
   let r_ = r
   let g_ = g
   let b_ = b
   let a_ = a
-  let get = getf
-  let set = setf
   let create ?r ?g ?b ?a () : t =
     let ret = make t in
     Option.iter (set ret r_) r;
@@ -1419,6 +1429,8 @@ module PixelFormatDetails = struct
   let bshift = field t "Bshift" int_as_uchar
   let ashift = field t "Ashift" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type pixel_format_details = PixelFormatDetails.t
 let pixel_format_details = PixelFormatDetails.t
@@ -1432,10 +1444,10 @@ module Point = struct
   let x = field t "x" int
   let y = field t "y" int
   let () = seal t
-  let x_ = x
-  let y_ = y
   let get = getf
   let set = setf
+  let x_ = x
+  let y_ = y
   let create ?x ?y () : t =
     let ret = make t in
     Option.iter (set ret x_) x;
@@ -1454,10 +1466,10 @@ module FPoint = struct
   let x = field t "x" float
   let y = field t "y" float
   let () = seal t
-  let x_ = x
-  let y_ = y
   let get = getf
   let set = setf
+  let x_ = x
+  let y_ = y
   let create ?x ?y () : t =
     let ret = make t in
     Option.iter (set ret x_) x;
@@ -1478,12 +1490,12 @@ module Rect = struct
   let w = field t "w" int
   let h = field t "h" int
   let () = seal t
+  let get = getf
+  let set = setf
   let x_ = x
   let y_ = y
   let w_ = w
   let h_ = h
-  let get = getf
-  let set = setf
   let create ?x ?y ?w ?h () : t =
     let ret = make t in
     Option.iter (set ret x_) x;
@@ -1506,12 +1518,12 @@ module FRect = struct
   let w = field t "w" float
   let h = field t "h" float
   let () = seal t
+  let get = getf
+  let set = setf
   let x_ = x
   let y_ = y
   let w_ = w
   let h_ = h
-  let get = getf
-  let set = setf
   let create ?x ?y ?w ?h () : t =
     let ret = make t in
     Option.iter (set ret x_) x;
@@ -1991,6 +2003,8 @@ module DialogFileFilter = struct
   let name = field t "name" string
   let pattern = field t "pattern" string
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type dialog_file_filter = DialogFileFilter.t
 let dialog_file_filter = DialogFileFilter.t
@@ -2195,6 +2209,8 @@ module VirtualJoystickTouchpadDesc = struct
   let nfingers = field t "nfingers" int_as_ushort
   let padding = field t "padding" (array 3 uint16)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type virtual_joystick_touchpad_desc = VirtualJoystickTouchpadDesc.t
 let virtual_joystick_touchpad_desc = VirtualJoystickTouchpadDesc.t
@@ -2208,6 +2224,8 @@ module VirtualJoystickSensorDesc = struct
   let typ = field t "type" sensor_type
   let rate = field t "rate" float
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type virtual_joystick_sensor_desc = VirtualJoystickSensorDesc.t
 let virtual_joystick_sensor_desc = VirtualJoystickSensorDesc.t
@@ -2245,6 +2263,8 @@ module VirtualJoystickDesc = struct
   let set_sensors_enabled = field t "SetSensorsEnabled" (funptr (ptr void @-> bool @-> returning bool))
   let cleanup = field t "Cleanup" (funptr (ptr void @-> returning void))
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type virtual_joystick_desc = VirtualJoystickDesc.t
 let virtual_joystick_desc = VirtualJoystickDesc.t
@@ -2523,6 +2543,8 @@ module Gamepad_binding_input_axis = struct
   let axis_min = field t "axis_min" int
   let axis_max = field t "axis_max" int
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_binding_input_axis = Gamepad_binding_input_axis.t
 let gamepad_binding_input_axis = Gamepad_binding_input_axis.t
@@ -2537,6 +2559,8 @@ module Gamepad_binding_input_hat = struct
   let hat = field t "hat" int
   let hat_mask = field t "hat_mask" int
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_binding_input_hat = Gamepad_binding_input_hat.t
 let gamepad_binding_input_hat = Gamepad_binding_input_hat.t
@@ -2545,6 +2569,8 @@ let gamepad_binding_input_hat_opt = Helpers.value_opt_as_ptr gamepad_binding_inp
 
   let hat = field t "hat" gamepad_binding_input_hat
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_binding_input = Gamepad_binding_input.t
 let gamepad_binding_input = Gamepad_binding_input.t
@@ -2566,6 +2592,8 @@ module Gamepad_binding_output_axis = struct
   let axis_min = field t "axis_min" int
   let axis_max = field t "axis_max" int
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_binding_output_axis = Gamepad_binding_output_axis.t
 let gamepad_binding_output_axis = Gamepad_binding_output_axis.t
@@ -2574,6 +2602,8 @@ let gamepad_binding_output_axis_opt = Helpers.value_opt_as_ptr gamepad_binding_o
 
   let axis = field t "axis" gamepad_binding_output_axis
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_binding_output = Gamepad_binding_output.t
 let gamepad_binding_output = Gamepad_binding_output.t
@@ -2582,6 +2612,8 @@ let gamepad_binding_output_opt = Helpers.value_opt_as_ptr gamepad_binding_output
 
   let output = field t "output" gamepad_binding_output
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_binding = GamepadBinding.t
 let gamepad_binding = GamepadBinding.t
@@ -3522,6 +3554,8 @@ module CursorFrameInfo = struct
   let surface = field t "surface" surface
   let duration = field t "duration" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type cursor_frame_info = CursorFrameInfo.t
 let cursor_frame_info = CursorFrameInfo.t
@@ -3564,6 +3598,8 @@ module Finger = struct
   let y = field t "y" float
   let pressure = field t "pressure" float
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type finger = Finger.t
 let finger = Finger.t
@@ -4022,6 +4058,8 @@ module CommonEvent = struct
   let reserved = field t "reserved" uint32
   let timestamp = field t "timestamp" int64_as_ulong
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type common_event = CommonEvent.t
 let common_event = CommonEvent.t
@@ -4039,6 +4077,8 @@ module DisplayEvent = struct
   let data1 = field t "data1" sint32
   let data2 = field t "data2" sint32
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type display_event = DisplayEvent.t
 let display_event = DisplayEvent.t
@@ -4056,6 +4096,8 @@ module WindowEvent = struct
   let data1 = field t "data1" sint32
   let data2 = field t "data2" sint32
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type window_event = WindowEvent.t
 let window_event = WindowEvent.t
@@ -4071,6 +4113,8 @@ module KeyboardDeviceEvent = struct
   let timestamp = field t "timestamp" int64_as_ulong
   let which = field t "which" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type keyboard_device_event = KeyboardDeviceEvent.t
 let keyboard_device_event = KeyboardDeviceEvent.t
@@ -4093,6 +4137,8 @@ module KeyboardEvent = struct
   let down = field t "down" bool
   let repeat = field t "repeat" bool
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type keyboard_event = KeyboardEvent.t
 let keyboard_event = KeyboardEvent.t
@@ -4111,6 +4157,8 @@ module TextEditingEvent = struct
   let start = field t "start" sint32
   let length = field t "length" sint32
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type text_editing_event = TextEditingEvent.t
 let text_editing_event = TextEditingEvent.t
@@ -4133,6 +4181,8 @@ module TextEditingCandidatesEvent = struct
   let padding2 = field t "padding2" int_as_uchar
   let padding3 = field t "padding3" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type text_editing_candidates_event = TextEditingCandidatesEvent.t
 let text_editing_candidates_event = TextEditingCandidatesEvent.t
@@ -4149,6 +4199,8 @@ module TextInputEvent = struct
   let window_id = field t "windowID" int_as_uint
   let text = field t "text" string
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type text_input_event = TextInputEvent.t
 let text_input_event = TextInputEvent.t
@@ -4164,6 +4216,8 @@ module MouseDeviceEvent = struct
   let timestamp = field t "timestamp" int64_as_ulong
   let which = field t "which" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type mouse_device_event = MouseDeviceEvent.t
 let mouse_device_event = MouseDeviceEvent.t
@@ -4185,6 +4239,8 @@ module MouseMotionEvent = struct
   let xrel = field t "xrel" float
   let yrel = field t "yrel" float
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type mouse_motion_event = MouseMotionEvent.t
 let mouse_motion_event = MouseMotionEvent.t
@@ -4207,6 +4263,8 @@ module MouseButtonEvent = struct
   let x = field t "x" float
   let y = field t "y" float
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type mouse_button_event = MouseButtonEvent.t
 let mouse_button_event = MouseButtonEvent.t
@@ -4230,6 +4288,8 @@ module MouseWheelEvent = struct
   let integer_x = field t "integer_x" sint32
   let integer_y = field t "integer_y" sint32
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type mouse_wheel_event = MouseWheelEvent.t
 let mouse_wheel_event = MouseWheelEvent.t
@@ -4251,6 +4311,8 @@ module JoyAxisEvent = struct
   let value = field t "value" sint16
   let padding4 = field t "padding4" int_as_ushort
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type joy_axis_event = JoyAxisEvent.t
 let joy_axis_event = JoyAxisEvent.t
@@ -4272,6 +4334,8 @@ module JoyBallEvent = struct
   let xrel = field t "xrel" sint16
   let yrel = field t "yrel" sint16
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type joy_ball_event = JoyBallEvent.t
 let joy_ball_event = JoyBallEvent.t
@@ -4291,6 +4355,8 @@ module JoyHatEvent = struct
   let padding1 = field t "padding1" int_as_uchar
   let padding2 = field t "padding2" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type joy_hat_event = JoyHatEvent.t
 let joy_hat_event = JoyHatEvent.t
@@ -4310,6 +4376,8 @@ module JoyButtonEvent = struct
   let padding1 = field t "padding1" int_as_uchar
   let padding2 = field t "padding2" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type joy_button_event = JoyButtonEvent.t
 let joy_button_event = JoyButtonEvent.t
@@ -4325,6 +4393,8 @@ module JoyDeviceEvent = struct
   let timestamp = field t "timestamp" int64_as_ulong
   let which = field t "which" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type joy_device_event = JoyDeviceEvent.t
 let joy_device_event = JoyDeviceEvent.t
@@ -4342,6 +4412,8 @@ module JoyBatteryEvent = struct
   let state = field t "state" power_state
   let percent = field t "percent" int
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type joy_battery_event = JoyBatteryEvent.t
 let joy_battery_event = JoyBatteryEvent.t
@@ -4363,6 +4435,8 @@ module GamepadAxisEvent = struct
   let value = field t "value" sint16
   let padding4 = field t "padding4" int_as_ushort
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_axis_event = GamepadAxisEvent.t
 let gamepad_axis_event = GamepadAxisEvent.t
@@ -4382,6 +4456,8 @@ module GamepadButtonEvent = struct
   let padding1 = field t "padding1" int_as_uchar
   let padding2 = field t "padding2" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_button_event = GamepadButtonEvent.t
 let gamepad_button_event = GamepadButtonEvent.t
@@ -4397,6 +4473,8 @@ module GamepadDeviceEvent = struct
   let timestamp = field t "timestamp" int64_as_ulong
   let which = field t "which" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_device_event = GamepadDeviceEvent.t
 let gamepad_device_event = GamepadDeviceEvent.t
@@ -4417,6 +4495,8 @@ module GamepadTouchpadEvent = struct
   let y = field t "y" float
   let pressure = field t "pressure" float
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_touchpad_event = GamepadTouchpadEvent.t
 let gamepad_touchpad_event = GamepadTouchpadEvent.t
@@ -4435,6 +4515,8 @@ module GamepadSensorEvent = struct
   let data = field t "data" (array 3 float)
   let sensor_timestamp = field t "sensor_timestamp" int64_as_ulong
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gamepad_sensor_event = GamepadSensorEvent.t
 let gamepad_sensor_event = GamepadSensorEvent.t
@@ -4454,6 +4536,8 @@ module AudioDeviceEvent = struct
   let padding2 = field t "padding2" int_as_uchar
   let padding3 = field t "padding3" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type audio_device_event = AudioDeviceEvent.t
 let audio_device_event = AudioDeviceEvent.t
@@ -4469,6 +4553,8 @@ module CameraDeviceEvent = struct
   let timestamp = field t "timestamp" int64_as_ulong
   let which = field t "which" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type camera_device_event = CameraDeviceEvent.t
 let camera_device_event = CameraDeviceEvent.t
@@ -4484,6 +4570,8 @@ module RenderEvent = struct
   let timestamp = field t "timestamp" int64_as_ulong
   let window_id = field t "windowID" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type render_event = RenderEvent.t
 let render_event = RenderEvent.t
@@ -4506,6 +4594,8 @@ module TouchFingerEvent = struct
   let pressure = field t "pressure" float
   let window_id = field t "windowID" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type touch_finger_event = TouchFingerEvent.t
 let touch_finger_event = TouchFingerEvent.t
@@ -4522,6 +4612,8 @@ module PinchFingerEvent = struct
   let scale = field t "scale" float
   let window_id = field t "windowID" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type pinch_finger_event = PinchFingerEvent.t
 let pinch_finger_event = PinchFingerEvent.t
@@ -4538,6 +4630,8 @@ module PenProximityEvent = struct
   let window_id = field t "windowID" int_as_uint
   let which = field t "which" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type pen_proximity_event = PenProximityEvent.t
 let pen_proximity_event = PenProximityEvent.t
@@ -4557,6 +4651,8 @@ module PenMotionEvent = struct
   let x = field t "x" float
   let y = field t "y" float
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type pen_motion_event = PenMotionEvent.t
 let pen_motion_event = PenMotionEvent.t
@@ -4578,6 +4674,8 @@ module PenTouchEvent = struct
   let eraser = field t "eraser" bool
   let down = field t "down" bool
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type pen_touch_event = PenTouchEvent.t
 let pen_touch_event = PenTouchEvent.t
@@ -4599,6 +4697,8 @@ module PenButtonEvent = struct
   let button = field t "button" int_as_uchar
   let down = field t "down" bool
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type pen_button_event = PenButtonEvent.t
 let pen_button_event = PenButtonEvent.t
@@ -4620,6 +4720,8 @@ module PenAxisEvent = struct
   let axis = field t "axis" pen_axis
   let value = field t "value" float
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type pen_axis_event = PenAxisEvent.t
 let pen_axis_event = PenAxisEvent.t
@@ -4639,6 +4741,8 @@ module DropEvent = struct
   let source = field t "source" string
   let data = field t "data" string
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type drop_event = DropEvent.t
 let drop_event = DropEvent.t
@@ -4656,6 +4760,8 @@ module ClipboardEvent = struct
   let num_mime_types = field t "num_mime_types" sint32
   let mime_types = field t "mime_types" (ptr string)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type clipboard_event = ClipboardEvent.t
 let clipboard_event = ClipboardEvent.t
@@ -4673,6 +4779,8 @@ module SensorEvent = struct
   let data = field t "data" (array 6 float)
   let sensor_timestamp = field t "sensor_timestamp" int64_as_ulong
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type sensor_event = SensorEvent.t
 let sensor_event = SensorEvent.t
@@ -4687,6 +4795,8 @@ module QuitEvent = struct
   let reserved = field t "reserved" uint32
   let timestamp = field t "timestamp" int64_as_ulong
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type quit_event = QuitEvent.t
 let quit_event = QuitEvent.t
@@ -4705,6 +4815,8 @@ module UserEvent = struct
   let data1 = field t "data1" (ptr void)
   let data2 = field t "data2" (ptr void)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type user_event = UserEvent.t
 let user_event = UserEvent.t
@@ -4954,6 +5066,8 @@ module PathInfo = struct
   let modify_time = field t "modify_time" time
   let access_time = field t "access_time" time
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type path_info = PathInfo.t
 let path_info = PathInfo.t
@@ -6024,6 +6138,8 @@ module GPUViewport = struct
   let min_depth = field t "min_depth" float
   let max_depth = field t "max_depth" float
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_viewport = GPUViewport.t
 let gpu_viewport = GPUViewport.t
@@ -6039,6 +6155,8 @@ module GPUTextureTransferInfo = struct
   let pixels_per_row = field t "pixels_per_row" int_as_uint
   let rows_per_layer = field t "rows_per_layer" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_texture_transfer_info = GPUTextureTransferInfo.t
 let gpu_texture_transfer_info = GPUTextureTransferInfo.t
@@ -6052,6 +6170,8 @@ module GPUTransferBufferLocation = struct
   let transfer_buffer = field t "transfer_buffer" gpu_transfer_buffer
   let offset = field t "offset" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_transfer_buffer_location = GPUTransferBufferLocation.t
 let gpu_transfer_buffer_location = GPUTransferBufferLocation.t
@@ -6069,6 +6189,8 @@ module GPUTextureLocation = struct
   let y = field t "y" int_as_uint
   let z = field t "z" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_texture_location = GPUTextureLocation.t
 let gpu_texture_location = GPUTextureLocation.t
@@ -6089,6 +6211,8 @@ module GPUTextureRegion = struct
   let h = field t "h" int_as_uint
   let d = field t "d" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_texture_region = GPUTextureRegion.t
 let gpu_texture_region = GPUTextureRegion.t
@@ -6107,6 +6231,8 @@ module GPUBlitRegion = struct
   let w = field t "w" int_as_uint
   let h = field t "h" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_blit_region = GPUBlitRegion.t
 let gpu_blit_region = GPUBlitRegion.t
@@ -6120,6 +6246,8 @@ module GPUBufferLocation = struct
   let buffer = field t "buffer" gpu_buffer
   let offset = field t "offset" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_buffer_location = GPUBufferLocation.t
 let gpu_buffer_location = GPUBufferLocation.t
@@ -6134,6 +6262,8 @@ module GPUBufferRegion = struct
   let offset = field t "offset" int_as_uint
   let size = field t "size" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_buffer_region = GPUBufferRegion.t
 let gpu_buffer_region = GPUBufferRegion.t
@@ -6149,6 +6279,8 @@ module GPUIndirectDrawCommand = struct
   let first_vertex = field t "first_vertex" int_as_uint
   let first_instance = field t "first_instance" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_indirect_draw_command = GPUIndirectDrawCommand.t
 let gpu_indirect_draw_command = GPUIndirectDrawCommand.t
@@ -6165,6 +6297,8 @@ module GPUIndexedIndirectDrawCommand = struct
   let vertex_offset = field t "vertex_offset" sint32
   let first_instance = field t "first_instance" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_indexed_indirect_draw_command = GPUIndexedIndirectDrawCommand.t
 let gpu_indexed_indirect_draw_command = GPUIndexedIndirectDrawCommand.t
@@ -6179,6 +6313,8 @@ module GPUIndirectDispatchCommand = struct
   let groupcount_y = field t "groupcount_y" int_as_uint
   let groupcount_z = field t "groupcount_z" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_indirect_dispatch_command = GPUIndirectDispatchCommand.t
 let gpu_indirect_dispatch_command = GPUIndirectDispatchCommand.t
@@ -6206,6 +6342,8 @@ module GPUSamplerCreateInfo = struct
   let padding2 = field t "padding2" int_as_uchar
   let props = field t "props" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_sampler_create_info = GPUSamplerCreateInfo.t
 let gpu_sampler_create_info = GPUSamplerCreateInfo.t
@@ -6221,6 +6359,8 @@ module GPUVertexBufferDescription = struct
   let input_rate = field t "input_rate" gpu_vertex_input_rate
   let instance_step_rate = field t "instance_step_rate" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_vertex_buffer_description = GPUVertexBufferDescription.t
 let gpu_vertex_buffer_description = GPUVertexBufferDescription.t
@@ -6236,6 +6376,8 @@ module GPUVertexAttribute = struct
   let format = field t "format" gpu_vertex_element_format
   let offset = field t "offset" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_vertex_attribute = GPUVertexAttribute.t
 let gpu_vertex_attribute = GPUVertexAttribute.t
@@ -6251,6 +6393,8 @@ module GPUVertexInputState = struct
   let vertex_attributes = field t "vertex_attributes" (ptr gpu_vertex_attribute)
   let num_vertex_attributes = field t "num_vertex_attributes" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_vertex_input_state = GPUVertexInputState.t
 let gpu_vertex_input_state = GPUVertexInputState.t
@@ -6266,6 +6410,8 @@ module GPUStencilOpState = struct
   let depth_fail_op = field t "depth_fail_op" gpu_stencil_op
   let compare_op = field t "compare_op" gpu_compare_op
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_stencil_op_state = GPUStencilOpState.t
 let gpu_stencil_op_state = GPUStencilOpState.t
@@ -6288,6 +6434,8 @@ module GPUColorTargetBlendState = struct
   let padding1 = field t "padding1" int_as_uchar
   let padding2 = field t "padding2" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_color_target_blend_state = GPUColorTargetBlendState.t
 let gpu_color_target_blend_state = GPUColorTargetBlendState.t
@@ -6309,6 +6457,8 @@ module GPUShaderCreateInfo = struct
   let num_uniform_buffers = field t "num_uniform_buffers" int_as_uint
   let props = field t "props" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_shader_create_info = GPUShaderCreateInfo.t
 let gpu_shader_create_info = GPUShaderCreateInfo.t
@@ -6329,6 +6479,8 @@ module GPUTextureCreateInfo = struct
   let sample_count = field t "sample_count" gpu_sample_count
   let props = field t "props" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_texture_create_info = GPUTextureCreateInfo.t
 let gpu_texture_create_info = GPUTextureCreateInfo.t
@@ -6343,6 +6495,8 @@ module GPUBufferCreateInfo = struct
   let size = field t "size" int_as_uint
   let props = field t "props" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_buffer_create_info = GPUBufferCreateInfo.t
 let gpu_buffer_create_info = GPUBufferCreateInfo.t
@@ -6357,6 +6511,8 @@ module GPUTransferBufferCreateInfo = struct
   let size = field t "size" int_as_uint
   let props = field t "props" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_transfer_buffer_create_info = GPUTransferBufferCreateInfo.t
 let gpu_transfer_buffer_create_info = GPUTransferBufferCreateInfo.t
@@ -6378,6 +6534,8 @@ module GPURasterizerState = struct
   let padding1 = field t "padding1" int_as_uchar
   let padding2 = field t "padding2" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_rasterizer_state = GPURasterizerState.t
 let gpu_rasterizer_state = GPURasterizerState.t
@@ -6395,6 +6553,8 @@ module GPUMultisampleState = struct
   let padding2 = field t "padding2" int_as_uchar
   let padding3 = field t "padding3" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_multisample_state = GPUMultisampleState.t
 let gpu_multisample_state = GPUMultisampleState.t
@@ -6417,6 +6577,8 @@ module GPUDepthStencilState = struct
   let padding2 = field t "padding2" int_as_uchar
   let padding3 = field t "padding3" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_depth_stencil_state = GPUDepthStencilState.t
 let gpu_depth_stencil_state = GPUDepthStencilState.t
@@ -6430,6 +6592,8 @@ module GPUColorTargetDescription = struct
   let format = field t "format" gpu_texture_format
   let blend_state = field t "blend_state" gpu_color_target_blend_state
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_color_target_description = GPUColorTargetDescription.t
 let gpu_color_target_description = GPUColorTargetDescription.t
@@ -6448,6 +6612,8 @@ module GPUGraphicsPipelineTargetInfo = struct
   let padding2 = field t "padding2" int_as_uchar
   let padding3 = field t "padding3" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_graphics_pipeline_target_info = GPUGraphicsPipelineTargetInfo.t
 let gpu_graphics_pipeline_target_info = GPUGraphicsPipelineTargetInfo.t
@@ -6468,6 +6634,8 @@ module GPUGraphicsPipelineCreateInfo = struct
   let target_info = field t "target_info" gpu_graphics_pipeline_target_info
   let props = field t "props" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_graphics_pipeline_create_info = GPUGraphicsPipelineCreateInfo.t
 let gpu_graphics_pipeline_create_info = GPUGraphicsPipelineCreateInfo.t
@@ -6493,6 +6661,8 @@ module GPUComputePipelineCreateInfo = struct
   let threadcount_z = field t "threadcount_z" int_as_uint
   let props = field t "props" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_compute_pipeline_create_info = GPUComputePipelineCreateInfo.t
 let gpu_compute_pipeline_create_info = GPUComputePipelineCreateInfo.t
@@ -6517,6 +6687,8 @@ module GPUColorTargetInfo = struct
   let padding1 = field t "padding1" int_as_uchar
   let padding2 = field t "padding2" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_color_target_info = GPUColorTargetInfo.t
 let gpu_color_target_info = GPUColorTargetInfo.t
@@ -6538,6 +6710,8 @@ module GPUDepthStencilTargetInfo = struct
   let mip_level = field t "mip_level" int_as_uchar
   let layer = field t "layer" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_depth_stencil_target_info = GPUDepthStencilTargetInfo.t
 let gpu_depth_stencil_target_info = GPUDepthStencilTargetInfo.t
@@ -6559,6 +6733,8 @@ module GPUBlitInfo = struct
   let padding2 = field t "padding2" int_as_uchar
   let padding3 = field t "padding3" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_blit_info = GPUBlitInfo.t
 let gpu_blit_info = GPUBlitInfo.t
@@ -6572,6 +6748,8 @@ module GPUBufferBinding = struct
   let buffer = field t "buffer" gpu_buffer
   let offset = field t "offset" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_buffer_binding = GPUBufferBinding.t
 let gpu_buffer_binding = GPUBufferBinding.t
@@ -6585,6 +6763,8 @@ module GPUTextureSamplerBinding = struct
   let texture = field t "texture" gpu_texture
   let sampler = field t "sampler" gpu_sampler
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_texture_sampler_binding = GPUTextureSamplerBinding.t
 let gpu_texture_sampler_binding = GPUTextureSamplerBinding.t
@@ -6601,6 +6781,8 @@ module GPUStorageBufferReadWriteBinding = struct
   let padding2 = field t "padding2" int_as_uchar
   let padding3 = field t "padding3" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_storage_buffer_read_write_binding = GPUStorageBufferReadWriteBinding.t
 let gpu_storage_buffer_read_write_binding = GPUStorageBufferReadWriteBinding.t
@@ -6619,6 +6801,8 @@ module GPUStorageTextureReadWriteBinding = struct
   let padding2 = field t "padding2" int_as_uchar
   let padding3 = field t "padding3" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_storage_texture_read_write_binding = GPUStorageTextureReadWriteBinding.t
 let gpu_storage_texture_read_write_binding = GPUStorageTextureReadWriteBinding.t
@@ -6637,6 +6821,8 @@ module GPUVulkanOptions = struct
   let instance_extension_count = field t "instance_extension_count" int_as_uint
   let instance_extension_names = field t "instance_extension_names" (ptr string)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_vulkan_options = GPUVulkanOptions.t
 let gpu_vulkan_options = GPUVulkanOptions.t
@@ -6659,6 +6845,8 @@ module HapticDirection = struct
   let typ = field t "type" int_as_uchar
   let dir = field t "dir" (array 3 sint32)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type haptic_direction = HapticDirection.t
 let haptic_direction = HapticDirection.t
@@ -6681,6 +6869,8 @@ module HapticConstant = struct
   let fade_length = field t "fade_length" int_as_ushort
   let fade_level = field t "fade_level" int_as_ushort
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type haptic_constant = HapticConstant.t
 let haptic_constant = HapticConstant.t
@@ -6706,6 +6896,8 @@ module HapticPeriodic = struct
   let fade_length = field t "fade_length" int_as_ushort
   let fade_level = field t "fade_level" int_as_ushort
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type haptic_periodic = HapticPeriodic.t
 let haptic_periodic = HapticPeriodic.t
@@ -6729,6 +6921,8 @@ module HapticCondition = struct
   let deadband = field t "deadband" (array 3 uint16)
   let center = field t "center" (array 3 sint16)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type haptic_condition = HapticCondition.t
 let haptic_condition = HapticCondition.t
@@ -6752,6 +6946,8 @@ module HapticRamp = struct
   let fade_length = field t "fade_length" int_as_ushort
   let fade_level = field t "fade_level" int_as_ushort
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type haptic_ramp = HapticRamp.t
 let haptic_ramp = HapticRamp.t
@@ -6767,6 +6963,8 @@ module HapticLeftRight = struct
   let large_magnitude = field t "large_magnitude" int_as_ushort
   let small_magnitude = field t "small_magnitude" int_as_ushort
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type haptic_left_right = HapticLeftRight.t
 let haptic_left_right = HapticLeftRight.t
@@ -6792,6 +6990,8 @@ module HapticCustom = struct
   let fade_length = field t "fade_length" int_as_ushort
   let fade_level = field t "fade_level" int_as_ushort
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type haptic_custom = HapticCustom.t
 let haptic_custom = HapticCustom.t
@@ -6810,6 +7010,8 @@ module HapticEffect = struct (* union 'SDL_HapticEffect' *)
   let leftright = field t "leftright" haptic_left_right
   let custom = field t "custom" haptic_custom
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type haptic_effect = HapticEffect.t
 let haptic_effect = HapticEffect.t
@@ -6868,6 +7070,8 @@ module Hid_device_info = struct
   let bus_type = field t "bus_type" hid_bus_type
   let next = field t "next" (ptr t)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type hid_device_info = Hid_device_info.t
 let hid_device_info = Hid_device_info.t
@@ -6932,6 +7136,8 @@ module Locale = struct
   let language = field t "language" string
   let country = field t "country" string
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type locale = Locale.t
 let locale = Locale.t
@@ -7064,6 +7270,8 @@ module MessageBoxButtonData = struct
   let button_id = field t "buttonID" int
   let text = field t "text" string
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type message_box_button_data = MessageBoxButtonData.t
 let message_box_button_data = MessageBoxButtonData.t
@@ -7078,6 +7286,8 @@ module MessageBoxColor = struct
   let g = field t "g" int_as_uchar
   let b = field t "b" int_as_uchar
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type message_box_color = MessageBoxColor.t
 let message_box_color = MessageBoxColor.t
@@ -7118,6 +7328,8 @@ module MessageBoxColorScheme = struct
   let t : t typ = structure "SDL_MessageBoxColorScheme"
   let colors = field t "colors" (array 5 message_box_color)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type message_box_color_scheme = MessageBoxColorScheme.t
 let message_box_color_scheme = MessageBoxColorScheme.t
@@ -7136,6 +7348,8 @@ module MessageBoxData = struct
   let buttons = field t "buttons" (ptr message_box_button_data)
   let color_scheme = field t "colorScheme" (ptr message_box_color_scheme)
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type message_box_data = MessageBoxData.t
 let message_box_data = MessageBoxData.t
@@ -7179,11 +7393,11 @@ module Vertex = struct
   let color = field t "color" f_color
   let tex_coord = field t "tex_coord" f_point
   let () = seal t
+  let get = getf
+  let set = setf
   let position_ = position
   let color_ = color
   let tex_coord_ = tex_coord
-  let get = getf
-  let set = setf
   let create ?position ?color ?tex_coord () : t =
     let ret = make t in
     Option.iter (set ret position_) position;
@@ -7303,6 +7517,8 @@ module GPURenderStateCreateInfo = struct
   let storage_buffers = field t "storage_buffers" (ptr gpu_buffer)
   let props = field t "props" int_as_uint
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type gpu_render_state_create_info = GPURenderStateCreateInfo.t
 let gpu_render_state_create_info = GPURenderStateCreateInfo.t
@@ -7332,6 +7548,8 @@ module StorageInterface = struct
   let copy = field t "copy" (funptr (ptr void @-> string @-> string @-> returning bool))
   let space_remaining = field t "space_remaining" (funptr (ptr void @-> returning uint64))
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type storage_interface = StorageInterface.t
 let storage_interface = StorageInterface.t
@@ -7383,6 +7601,8 @@ module DateTime = struct
   let day_of_week = field t "day_of_week" int
   let utc_offset = field t "utc_offset" int
   let () = seal t
+  let get = getf
+  let set = setf
 end
 type date_time = DateTime.t
 let date_time = DateTime.t

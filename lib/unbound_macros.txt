@@ -4,6 +4,7 @@
 # but not automatically implemented in OCaml code.
 # Note that macros from SDL_oldnames.h are not bound either.
 
+SDLCALL
 SDL_ACQUIRE
 SDL_ACQUIRED_AFTER
 SDL_ACQUIRED_BEFORE

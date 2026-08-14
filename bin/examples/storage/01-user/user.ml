@@ -115,7 +115,7 @@ let event state e =
         | None ->
           set_save state save_state_unstarted;
           let the_button = Sdl.Event.(get e button) in
-          if T.MouseButtonEvent.(Ctypes.getf the_button button) = 1
+          if T.MouseButtonEvent.(get the_button button) = 1
           then let f = write_save_data state in
             state.thread_function <- Some f;
             (* we save it so that OCaml does not GC it*)

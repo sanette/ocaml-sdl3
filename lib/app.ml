@@ -51,6 +51,13 @@ let () = Sdl3_log_bindings.Log.set_priority
    record/module with 'window' and 'renderer' *)
 type 'a app =
   { init : unit -> T.app_result * ('a option);
+    (* The second component returned by the [init] function is the state of the
+       app, which has any type you like. In case of successful init (the app can
+       continue, so the first arg should be T.APP_CONTINUE), the state should
+       contain what is needed for running the app. In case of failure (returning
+       T.APP_FAILURE), the state should at least contain objects that need to be
+       freed, except windows and renderers, which are automatically destroyed
+       anyways. *)
     event : 'a -> T.event -> T.app_result;
     iterate : 'a -> T.app_result;
     quit : 'a option -> T.app_result -> T.app_result;
