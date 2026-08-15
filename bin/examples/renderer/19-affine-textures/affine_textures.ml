@@ -101,7 +101,7 @@ let iterate state =
         let down = T.FPoint.create
             ~x:(x0 +. px *. corners.(0 + 2*down_index))
             ~y:(y0 +. px *. corners.(1 + 2*down_index)) () in
-        Sdl.Renderer.render_texture_affine state.renderer texture None (Some origin) (Some right) (Some down) |> go
+        Sdl.render_texture_affine state.renderer texture None (Some origin) (Some right) (Some down) |> go
       end
       done;
 

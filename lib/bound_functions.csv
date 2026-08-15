@@ -734,24 +734,24 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.2.0, SDL_RenderClipEnabled, Render, Renderer, clip_enabled, renderer @-> returning bool, renderer -> bool
 3.2.0, SDL_RenderCoordinatesFromWindow, Render, Renderer, coordinates_from_window, renderer @-> float @-> float @-> ptr float @-> ptr float @-> returning bool, renderer -> float -> float -> (float * float) result
 3.2.0, SDL_RenderCoordinatesToWindow, Render, Renderer, coordinates_to_window, renderer @-> float @-> float @-> ptr float @-> ptr float @-> returning bool, renderer -> float -> float -> (float * float) result
-3.2.0, SDL_RenderDebugText, Render, Renderer, render_debug_text, renderer @-> float @-> float @-> string @-> returning true_to_ok, renderer -> float -> float -> string -> unit result
-3.2.0, SDL_RenderFillRect, Render, Renderer, render_fill_rect, renderer @-> f_rect_opt @-> returning true_to_ok, renderer -> f_rect option -> unit result
-3.2.0, SDL_RenderFillRects, Render, Renderer, render_fill_rects, renderer @-> ptr f_rect @-> int @-> returning true_to_ok, renderer -> f_rect array -> unit result
-3.2.0, SDL_RenderGeometry, Render, Renderer, render_geometry, renderer @-> texture_opt @-> ptr vertex @-> int @-> ptr_opt (const int) @-> int @-> returning true_to_ok, renderer -> texture option -> vertex array -> (const int) array -> unit result
-3.2.0, SDL_RenderGeometryRaw, Render, Renderer, render_geometry_raw, renderer @-> texture_opt @-> ptr (const float) @-> int @-> ptr f_color @-> int @-> ptr (const float) @-> int @-> int @-> ptr void @-> int @-> int @-> returning true_to_ok, renderer -> texture option -> ptr (const float) -> int -> ptr f_color -> int -> ptr (const float) -> int -> int -> void array -> int -> unit result
-3.2.0, SDL_RenderLine, Render, Renderer, render_line, renderer @-> float @-> float @-> float @-> float @-> returning true_to_ok, renderer -> float -> float -> float -> float -> unit result
-3.2.0, SDL_RenderLines, Render, Renderer, render_lines, renderer @-> ptr f_point @-> int @-> returning true_to_ok, renderer -> f_point array -> unit result
-3.2.0, SDL_RenderPoint, Render, Renderer, render_point, renderer @-> float @-> float @-> returning true_to_ok, renderer -> float -> float -> unit result
-3.2.0, SDL_RenderPoints, Render, Renderer, render_points, renderer @-> ptr f_point @-> int @-> returning true_to_ok, renderer -> f_point array -> unit result
+3.2.0, SDL_RenderDebugText, Render, , render_debug_text, renderer @-> float @-> float @-> string @-> returning true_to_ok, renderer -> float -> float -> string -> unit result
+3.2.0, SDL_RenderFillRect, Render, , render_fill_rect, renderer @-> f_rect_opt @-> returning true_to_ok, renderer -> f_rect option -> unit result
+3.2.0, SDL_RenderFillRects, Render, , render_fill_rects, renderer @-> ptr f_rect @-> int @-> returning true_to_ok, renderer -> f_rect array -> unit result
+3.2.0, SDL_RenderGeometry, Render, , render_geometry, renderer @-> texture_opt @-> ptr vertex @-> int @-> ptr_opt (const int) @-> int @-> returning true_to_ok, renderer -> texture option -> vertex array -> (const int) array -> unit result
+3.2.0, SDL_RenderGeometryRaw, Render, , render_geometry_raw, renderer @-> texture_opt @-> ptr (const float) @-> int @-> ptr f_color @-> int @-> ptr (const float) @-> int @-> int @-> ptr void @-> int @-> int @-> returning true_to_ok, renderer -> texture option -> ptr (const float) -> int -> ptr f_color -> int -> ptr (const float) -> int -> int -> void array -> int -> unit result
+3.2.0, SDL_RenderLine, Render, , render_line, renderer @-> float @-> float @-> float @-> float @-> returning true_to_ok, renderer -> float -> float -> float -> float -> unit result
+3.2.0, SDL_RenderLines, Render, , render_lines, renderer @-> ptr f_point @-> int @-> returning true_to_ok, renderer -> f_point array -> unit result
+3.2.0, SDL_RenderPoint, Render, , render_point, renderer @-> float @-> float @-> returning true_to_ok, renderer -> float -> float -> unit result
+3.2.0, SDL_RenderPoints, Render, , render_points, renderer @-> ptr f_point @-> int @-> returning true_to_ok, renderer -> f_point array -> unit result
 3.2.0, SDL_RenderPresent, Render, Renderer, present, renderer @-> returning true_to_ok, renderer -> unit result
 3.2.0, SDL_RenderReadPixels, Render, Renderer, read_pixels, renderer @-> rect_opt @-> returning (some_to_ok surface_opt), renderer -> rect option -> (surface option) result
-3.2.0, SDL_RenderRect, Render, Renderer, render_rect, renderer @-> f_rect_opt @-> returning true_to_ok, renderer -> f_rect option -> unit result
-3.2.0, SDL_RenderRects, Render, Renderer, render_rects, renderer @-> ptr f_rect @-> int @-> returning true_to_ok, renderer -> f_rect array -> unit result
-3.2.0, SDL_RenderTexture, Render, Renderer, render_texture, renderer @-> texture @-> f_rect_opt @-> f_rect_opt @-> returning true_to_ok, renderer -> texture -> f_rect option -> f_rect option -> unit result
-3.2.0, SDL_RenderTexture9Grid, Render, Renderer, render_texture9_grid, renderer @-> texture @-> f_rect_opt @-> float @-> float @-> float @-> float @-> float @-> f_rect_opt @-> returning true_to_ok, renderer -> texture -> f_rect option -> float -> float -> float -> float -> float -> f_rect option -> unit result
-3.2.0, SDL_RenderTextureAffine, Render, Renderer, render_texture_affine, renderer @-> texture @-> f_rect_opt @-> f_point_opt @-> f_point_opt @-> f_point_opt @-> returning true_to_ok, renderer -> texture -> f_rect option -> f_point option -> f_point option -> f_point option -> unit result
-3.2.0, SDL_RenderTextureRotated, Render, Renderer, render_texture_rotated, renderer @-> texture @-> f_rect_opt @-> f_rect_opt @-> double @-> f_point_opt @-> flip_mode @-> returning true_to_ok, renderer -> texture -> f_rect option -> f_rect option -> float -> f_point option -> flip_mode -> unit result
-3.2.0, SDL_RenderTextureTiled, Render, Renderer, render_texture_tiled, renderer @-> texture @-> f_rect_opt @-> float @-> f_rect_opt @-> returning true_to_ok, renderer -> texture -> f_rect option -> float -> f_rect option -> unit result
+3.2.0, SDL_RenderRect, Render, , render_rect, renderer @-> f_rect_opt @-> returning true_to_ok, renderer -> f_rect option -> unit result
+3.2.0, SDL_RenderRects, Render, , render_rects, renderer @-> ptr f_rect @-> int @-> returning true_to_ok, renderer -> f_rect array -> unit result
+3.2.0, SDL_RenderTexture, Render, , render_texture, renderer @-> texture @-> f_rect_opt @-> f_rect_opt @-> returning true_to_ok, renderer -> texture -> f_rect option -> f_rect option -> unit result
+3.2.0, SDL_RenderTexture9Grid, Render, , render_texture9_grid, renderer @-> texture @-> f_rect_opt @-> float @-> float @-> float @-> float @-> float @-> f_rect_opt @-> returning true_to_ok, renderer -> texture -> f_rect option -> float -> float -> float -> float -> float -> f_rect option -> unit result
+3.2.0, SDL_RenderTextureAffine, Render, , render_texture_affine, renderer @-> texture @-> f_rect_opt @-> f_point_opt @-> f_point_opt @-> f_point_opt @-> returning true_to_ok, renderer -> texture -> f_rect option -> f_point option -> f_point option -> f_point option -> unit result
+3.2.0, SDL_RenderTextureRotated, Render, , render_texture_rotated, renderer @-> texture @-> f_rect_opt @-> f_rect_opt @-> double @-> f_point_opt @-> flip_mode @-> returning true_to_ok, renderer -> texture -> f_rect option -> f_rect option -> float -> f_point option -> flip_mode -> unit result
+3.2.0, SDL_RenderTextureTiled, Render, , render_texture_tiled, renderer @-> texture @-> f_rect_opt @-> float @-> f_rect_opt @-> returning true_to_ok, renderer -> texture -> f_rect option -> float -> f_rect option -> unit result
 3.2.0, SDL_RenderViewportSet, Render, Renderer, viewport_set, renderer @-> returning true_to_ok, renderer -> unit result
 3.2.0, SDL_ReportAssertion, Assert, Assertion, report, ptr assert_data @-> string @-> string @-> int @-> returning assert_state, ptr assert_data -> string -> string -> int -> assert_state
 3.2.0, SDL_ResetAssertionReport, Assert, Assertion, reset_report, void @-> returning void, unit -> unit
@@ -1193,7 +1193,7 @@ SDL version, SDL name, Category (SDL file), Module, OCaml name, raw signature, A
 3.4.0, SDL_LoadSurface_IO, Surface, Surface, load_io, io_stream @-> bool @-> returning (some_to_ok surface_opt), io_stream -> bool -> (surface option) result
 3.4.0, SDL_PutAudioStreamDataNoCopy, Audio, AudioStream, put_data_no_copy, audio_stream @-> ptr void @-> int @-> audio_stream_data_complete_callback_opt @-> ptr void @-> returning true_to_ok, audio_stream -> ptr void -> int -> audio_stream_data_complete_callback option -> ptr void -> unit result
 3.4.0, SDL_PutAudioStreamPlanarData, Audio, AudioStream, put_planar_data, audio_stream @-> ptr (ptr void) @-> int @-> int @-> returning true_to_ok, audio_stream -> ptr (ptr void) -> int -> int -> unit result
-3.4.0, SDL_RenderTexture9GridTiled, Render, Renderer, render_texture9_grid_tiled, renderer @-> texture @-> f_rect_opt @-> float @-> float @-> float @-> float @-> float @-> f_rect_opt @-> float @-> returning true_to_ok, renderer -> texture -> f_rect option -> float -> float -> float -> float -> float -> f_rect option -> float -> unit result
+3.4.0, SDL_RenderTexture9GridTiled, Render, , render_texture9_grid_tiled, renderer @-> texture @-> f_rect_opt @-> float @-> float @-> float @-> float @-> float @-> f_rect_opt @-> float @-> returning true_to_ok, renderer -> texture -> f_rect option -> float -> float -> float -> float -> float -> f_rect option -> float -> unit result
 3.4.0, SDL_RotateSurface, Surface, Surface, rotate, surface @-> float @-> returning (some_to_ok surface_opt), surface -> float -> (surface option) result
 3.4.0, SDL_SavePNG, Surface, , save_png, surface @-> string @-> returning true_to_ok, surface -> string -> unit result
 3.4.0, SDL_SavePNG_IO, Surface, , save_png_io, surface @-> io_stream @-> bool @-> returning true_to_ok, surface -> io_stream -> bool -> unit result

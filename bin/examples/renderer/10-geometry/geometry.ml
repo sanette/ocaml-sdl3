@@ -111,7 +111,7 @@ let iterate state =
   T.FColor.(set color b 1.);
   T.FColor.(set color a 1.);
 
-  let () = match Sdl.Renderer.render_geometry state.renderer None
+  let () = match Sdl.render_geometry state.renderer None
           [v0;v1;v2] [] with
   | Error (`Msg e) -> Sdl.App.log "Cannot render geometry: %s" e; raise Exit
   | Ok () -> () in
@@ -138,7 +138,7 @@ let iterate state =
   let color = T.Vertex.(get v2 color) in
   T.FColor.(List.iter (fun f -> set color f 1.) [r;g;b;a]);
 
-  Sdl.Renderer.render_geometry state.renderer (Some texture) [v0;v1;v2] [] |> go;
+  Sdl.render_geometry state.renderer (Some texture) [v0;v1;v2] [] |> go;
 
   List.iter (fun v ->
       let position  = T.Vertex.(get v position) in
@@ -153,7 +153,7 @@ let iterate state =
   let tex_coord = T.Vertex.(get v3 tex_coord) in
   set_point tex_coord (1., 1.);
 
-  Sdl.Renderer.render_geometry state.renderer (Some texture) [v0;v1;v2;v3] [0;1;2;1;2;3] |> go;
+  Sdl.render_geometry state.renderer (Some texture) [v0;v1;v2;v3] [0;1;2;1;2;3] |> go;
 
   Sdl.Renderer.present state.renderer |> go;
 

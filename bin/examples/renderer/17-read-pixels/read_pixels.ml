@@ -98,7 +98,7 @@ let iterate state =
       (* other values (w and h) are zero by default *)
       ~x:(float state.texture_width /. 2.)
       ~y:(float state.texture_height /. 2.) () in
-  Sdl.Renderer.render_texture_rotated state.renderer texture
+  Sdl.render_texture_rotated state.renderer texture
     None (Some dst) rotation (Some center) Sdl.flip_none |> go;
 
   (* this next whole thing is _super_ expensive. Seriously, don't do this in real life. *)
@@ -161,7 +161,7 @@ let iterate state =
   let dst = T.FRect.create (* values x and y are 0 by default *)
       ~w:(float window_width /. 4.)
       ~h:(float window_height /. 4.) () in
-  Sdl.Renderer.render_texture state.renderer converted_texture None
+  Sdl.render_texture state.renderer converted_texture None
     (Some dst) |> go;
 
   Sdl.Renderer.present state.renderer |> go;

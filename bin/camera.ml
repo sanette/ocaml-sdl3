@@ -79,7 +79,7 @@ let () =
           Sdl.Camera.release_frame cam surf;
           Sdl.Renderer.set_draw_color renderer 0x99 0x99 0x99 Sdl.alpha_opaque |> go;
           Sdl.Renderer.clear renderer |> go;
-          Sdl.Renderer.render_texture renderer tex None None |> go;
+          Sdl.render_texture renderer tex None None |> go;
           Sdl.Renderer.present renderer |> go;
           Sdl.delay 32;
           loop (Some tex) (n-1)

@@ -139,7 +139,7 @@ let iterate state =
                          mod 2 <> 0 in
               if dark then Sdl.Renderer.set_draw_color renderer 70 70 70 255 |> go
               else Sdl.Renderer.set_draw_color renderer 110 110 110 255 |> go;
-              Sdl.Renderer.render_fill_rect renderer (Some grid) |> go;
+              Sdl.render_fill_rect renderer (Some grid) |> go;
               loop_x (x +. grid_size)
             end in
           loop_x x0;
@@ -148,13 +148,13 @@ let iterate state =
       loop_y y0;
 
       Sdl.Renderer.set_draw_color renderer 255 255 255 Sdl.alpha_opaque |> go;
-      Sdl.Renderer.render_debug_text renderer x0 (y0 -. 15.) blend_mode_names.(i) |> go
+      Sdl.render_debug_text renderer x0 (y0 -. 15.) blend_mode_names.(i) |> go
     );
 
-  Sdl.Renderer.render_rects renderer state.panels |> go;
-  Sdl.Renderer.render_debug_text renderer (float ((window_width - 176) / 2))
+  Sdl.render_rects renderer state.panels |> go;
+  Sdl.render_debug_text renderer (float ((window_width - 176) / 2))
     (float (window_height - 30)) "UP/DOWN: CHANGE ALPHA" |> go;
-  Sdl.Renderer.render_debug_text renderer (float ((window_width - 80) / 2))
+  Sdl.render_debug_text renderer (float ((window_width - 80) / 2))
     (float (window_height - 20)) (Printf.sprintf "ALPHA: %d" state.alpha) |> go;
 
   let red_rect_texture = Option.get state.red_rect_texture in
@@ -182,9 +182,9 @@ let iterate state =
       Sdl.Texture.set_blend_mode green_rect_texture b |> go;
       Sdl.Texture.set_blend_mode blue_rect_texture b |> go;
 
-      Sdl.Renderer.render_texture renderer red_rect_texture None (Some red_dst) |> go;
-      Sdl.Renderer.render_texture renderer green_rect_texture None (Some green_dst) |> go;
-      Sdl.Renderer.render_texture renderer blue_rect_texture None (Some blue_dst) |> go;
+      Sdl.render_texture renderer red_rect_texture None (Some red_dst) |> go;
+      Sdl.render_texture renderer green_rect_texture None (Some green_dst) |> go;
+      Sdl.render_texture renderer blue_rect_texture None (Some blue_dst) |> go;
 
       if not supported then begin
         let textwidth = 104. in
@@ -192,7 +192,7 @@ let iterate state =
             ~x:(x0 +. (T.FRect.(get rect w) -. textwidth) /. 2.)
             ~y:(y0 +. (T.FRect.(get rect h) -. 8.)) ~w:textwidth ~h:9. () in
         Sdl.Renderer.set_draw_color renderer 0 0 0 Sdl.alpha_opaque |> go;
-        Sdl.Renderer.render_debug_text renderer T.FRect.(get dst x) T.FRect.(get dst y)
+        Sdl.render_debug_text renderer T.FRect.(get dst x) T.FRect.(get dst y)
           "[UNSUPPORTED]" |> go
       end
     );

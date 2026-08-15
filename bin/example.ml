@@ -61,7 +61,7 @@ let () =
       T.FRect.(set rect x (float i /. 10.));
       T.FRect.(set rect y (float (!wh - 70) *.
                          (1. -. abs_float (sin (10. *. float i /. float !wh)))));
-      go (Sdl.Renderer.render_texture_rotated renderer ball None (Some rect)
+      go (Sdl.render_texture_rotated renderer ball None (Some rect)
             angle (Some center) Sdl.flip_none);
       let rec event_loop () =
         let has_event = Sdl.Event.poll (Some e) in
@@ -79,7 +79,7 @@ let () =
       event_loop ();
 
       go (Sdl.Renderer.set_draw_color renderer 0 0 0 !alpha);
-      if !y > -. 20. then go (Sdl.Renderer.render_debug_text renderer 100. !y !msg);
+      if !y > -. 20. then go (Sdl.render_debug_text renderer 100. !y !msg);
       alpha := max (!alpha - 2) Sdl.alpha_transparent;
       y := !y -. 1.;
 
@@ -89,7 +89,7 @@ let () =
       (* for j = 1 to i do *)
       (*   go (Renderer.render_point renderer (float j /. 10.) (float j /. 20.)) *)
       (* done; *)
-      go (Sdl.Renderer.render_points renderer !point_list);
+      go (Sdl.render_points renderer !point_list);
       go (Sdl.Renderer.present renderer);
       (* Timer.delay 16 *)
       loop (i+1)

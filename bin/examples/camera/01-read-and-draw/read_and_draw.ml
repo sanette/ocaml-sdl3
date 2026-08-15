@@ -96,7 +96,7 @@ let iterate state =
     Sdl.Camera.release_frame camera frame;
     Sdl.Renderer.set_draw_color renderer 0x99 0x99 0x99 Sdl.alpha_opaque |> go;
     Sdl.Renderer.clear renderer |> go;
-    Sdl.Renderer.render_texture renderer tex None None |> go;
+    Sdl.render_texture renderer tex None None |> go;
     Sdl.Renderer.present renderer |> go;
     Sdl.delay 32;
     T.APP_CONTINUE

@@ -170,6 +170,57 @@ let get_draw_blend_mode = ff "SDL_GetRenderDrawBlendMode"
 let clear = ff "SDL_RenderClear"
   (renderer @-> returning true_to_ok)
 
+let set_texture_address_mode = ff "SDL_SetRenderTextureAddressMode"
+  (renderer @-> texture_address_mode @-> texture_address_mode @-> returning true_to_ok)
+
+let get_texture_address_mode = ff "SDL_GetRenderTextureAddressMode"
+  (renderer @-> ptr_opt texture_address_mode @-> ptr_opt texture_address_mode @-> returning true_to_ok)
+
+let read_pixels = ff "SDL_RenderReadPixels"
+  (renderer @-> rect_opt @-> returning (some_to_ok surface_opt))
+
+let present = ff ~release_runtime_lock:true "SDL_RenderPresent"
+  (renderer @-> returning true_to_ok)
+
+let destroy = ff "SDL_DestroyRenderer"
+  (renderer @-> returning void)
+
+let flush = ff "SDL_FlushRenderer"
+  (renderer @-> returning true_to_ok)
+
+let get_metal_layer = ff "SDL_GetRenderMetalLayer"
+  (renderer @-> returning (ptr void))
+
+let get_metal_command_encoder = ff "SDL_GetRenderMetalCommandEncoder"
+  (renderer @-> returning (ptr void))
+
+let add_vulkan_semaphores = ff "SDL_AddVulkanRenderSemaphores"
+  (renderer @-> uint32 @-> sint64 @-> sint64 @-> returning true_to_ok)
+let add_vulkan_semaphores renderer wait_stage_mask wait_semaphore signal_semaphore =
+  add_vulkan_semaphores renderer (Unsigned.UInt.of_int wait_stage_mask) (Signed.Long.of_int wait_semaphore) (Signed.Long.of_int signal_semaphore)
+
+let set_v_sync = ff "SDL_SetRenderVSync"
+  (renderer @-> int @-> returning true_to_ok)
+
+let get_v_sync = ff "SDL_GetRenderVSync"
+  (renderer @-> ptr int @-> returning bool)
+let get_v_sync renderer =
+  let vsync = allocate int 0 in
+  if get_v_sync renderer vsync then Ok (!@ vsync) else error ()
+
+let set_gpu_state = ff "SDL_SetGPURenderState"
+  (renderer @-> gpu_render_state_opt @-> returning true_to_ok)
+
+end
+
+module Global = struct
+let create_window_and_renderer = ff "SDL_CreateWindowAndRenderer"
+  (string @-> int @-> int @-> window_flags @-> ptr window @-> ptr renderer @-> returning bool)
+let create_window_and_renderer title width height window_flags =
+  let window = allocate window null in
+  let renderer = allocate renderer null in
+  if create_window_and_renderer title width height (Unsigned.ULong.of_int64 window_flags) window renderer then Ok (!@ window, !@ renderer) else error ()
+
 let render_point = ff "SDL_RenderPoint"
   (renderer @-> float @-> float @-> returning true_to_ok)
 
@@ -237,59 +288,8 @@ let render_geometry_raw renderer texture xy xy_stride color color_stride uv uv_s
   let indices, num_indices = carray_of_list void indices in
   render_geometry_raw renderer texture xy xy_stride color color_stride uv uv_stride num_vertices indices num_indices size_indices
 
-let set_texture_address_mode = ff "SDL_SetRenderTextureAddressMode"
-  (renderer @-> texture_address_mode @-> texture_address_mode @-> returning true_to_ok)
-
-let get_texture_address_mode = ff "SDL_GetRenderTextureAddressMode"
-  (renderer @-> ptr_opt texture_address_mode @-> ptr_opt texture_address_mode @-> returning true_to_ok)
-
-let read_pixels = ff "SDL_RenderReadPixels"
-  (renderer @-> rect_opt @-> returning (some_to_ok surface_opt))
-
-let present = ff ~release_runtime_lock:true "SDL_RenderPresent"
-  (renderer @-> returning true_to_ok)
-
-let destroy = ff "SDL_DestroyRenderer"
-  (renderer @-> returning void)
-
-let flush = ff "SDL_FlushRenderer"
-  (renderer @-> returning true_to_ok)
-
-let get_metal_layer = ff "SDL_GetRenderMetalLayer"
-  (renderer @-> returning (ptr void))
-
-let get_metal_command_encoder = ff "SDL_GetRenderMetalCommandEncoder"
-  (renderer @-> returning (ptr void))
-
-let add_vulkan_semaphores = ff "SDL_AddVulkanRenderSemaphores"
-  (renderer @-> uint32 @-> sint64 @-> sint64 @-> returning true_to_ok)
-let add_vulkan_semaphores renderer wait_stage_mask wait_semaphore signal_semaphore =
-  add_vulkan_semaphores renderer (Unsigned.UInt.of_int wait_stage_mask) (Signed.Long.of_int wait_semaphore) (Signed.Long.of_int signal_semaphore)
-
-let set_v_sync = ff "SDL_SetRenderVSync"
-  (renderer @-> int @-> returning true_to_ok)
-
-let get_v_sync = ff "SDL_GetRenderVSync"
-  (renderer @-> ptr int @-> returning bool)
-let get_v_sync renderer =
-  let vsync = allocate int 0 in
-  if get_v_sync renderer vsync then Ok (!@ vsync) else error ()
-
 let render_debug_text = ff "SDL_RenderDebugText"
   (renderer @-> float @-> float @-> string @-> returning true_to_ok)
-
-let set_gpu_state = ff "SDL_SetGPURenderState"
-  (renderer @-> gpu_render_state_opt @-> returning true_to_ok)
-
-end
-
-module Global = struct
-let create_window_and_renderer = ff "SDL_CreateWindowAndRenderer"
-  (string @-> int @-> int @-> window_flags @-> ptr window @-> ptr renderer @-> returning bool)
-let create_window_and_renderer title width height window_flags =
-  let window = allocate window null in
-  let renderer = allocate renderer null in
-  if create_window_and_renderer title width height (Unsigned.ULong.of_int64 window_flags) window renderer then Ok (!@ window, !@ renderer) else error ()
 
 let set_default_texture_scale_mode = ff "SDL_SetDefaultTextureScaleMode"
   (renderer @-> scale_mode @-> returning true_to_ok)
