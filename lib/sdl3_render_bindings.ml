@@ -165,7 +165,10 @@ let set_draw_blend_mode renderer blend_mode =
   set_draw_blend_mode renderer (Unsigned.UInt.of_int blend_mode)
 
 let get_draw_blend_mode = ff "SDL_GetRenderDrawBlendMode"
-  (renderer @-> ptr blend_mode @-> returning true_to_ok)
+  (renderer @-> ptr blend_mode @-> returning bool)
+let get_draw_blend_mode renderer =
+  let blend_mode = allocate uint (Unsigned.UInt.of_int 0) in
+  if get_draw_blend_mode renderer blend_mode then Ok (Unsigned.UInt.to_int (!@ blend_mode)) else error ()
 
 let clear = ff "SDL_RenderClear"
   (renderer @-> returning true_to_ok)
@@ -384,7 +387,10 @@ let set_blend_mode texture blend_mode =
   set_blend_mode texture (Unsigned.UInt.of_int blend_mode)
 
 let get_blend_mode = ff "SDL_GetTextureBlendMode"
-  (texture @-> ptr blend_mode @-> returning true_to_ok)
+  (texture @-> ptr blend_mode @-> returning bool)
+let get_blend_mode texture =
+  let blend_mode = allocate uint (Unsigned.UInt.of_int 0) in
+  if get_blend_mode texture blend_mode then Ok (Unsigned.UInt.to_int (!@ blend_mode)) else error ()
 
 let set_scale_mode = ff "SDL_SetTextureScaleMode"
   (texture @-> scale_mode @-> returning true_to_ok)

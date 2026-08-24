@@ -137,3 +137,5 @@ let run app =
             quit app s ret
       in
       loop ()
+
+let ( |!> ) x f = match x with Ok v -> f v | Error (`Msg e) -> log "Error: %s" e

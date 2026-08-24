@@ -221,6 +221,8 @@ of doubt, refer to the file
 	  SDL_SetAudioPostmixCallback ==> Sdl.Audio.set_postmix_callback
   ```
 
++ Avoid redundancies: `Sdl.Renderer.render_points ==> Sdl.render_points`
+
 All of this looks nice and good, but you will see that it may lead to
 wrong classification and weird names, so I have started to build a
 list of custom cases (I leave it to you to discover the remaining

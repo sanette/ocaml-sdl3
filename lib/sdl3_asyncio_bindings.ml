@@ -12,6 +12,9 @@ let from_file = ff "SDL_AsyncIOFromFile"
 
 let get_size = ff "SDL_GetAsyncIOSize"
   (async_io @-> returning sint64)
+let get_size asyncio =
+  get_size asyncio
+  |> Signed.Long.to_int
 
 let read = ff "SDL_ReadAsyncIO"
   (async_io @-> ptr void @-> uint64 @-> uint64 @-> async_io_queue @-> ptr void @-> returning true_to_ok)

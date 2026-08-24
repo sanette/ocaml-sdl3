@@ -34,10 +34,16 @@ let get_focus = ff "SDL_GetKeyboardFocus"
 
 let get_state = ff "SDL_GetKeyboardState"
   (ptr int @-> returning (ptr bool))
+(* Wrapper for returning bool list *)
 let get_state () =
   let numkeys = allocate int 0 in
-  let ret = get_state numkeys in
-(ret, !@ numkeys)
+  let p = get_state numkeys in
+  if is_null p then []
+  else let n =  (!@ (numkeys)) in
+    Fun.protect ~finally:(fun () -> Sdl3_stdinc_bindings.free (to_voidp p))
+      (fun () ->
+        CArray.from_ptr p n
+        |> CArray.to_list)
 
 let reset = ff "SDL_ResetKeyboard"
   (void @-> returning void)
@@ -46,7 +52,7 @@ let has_screen_support = ff "SDL_HasScreenKeyboardSupport"
   (void @-> returning bool)
 
 let screen_shown = ff "SDL_ScreenKeyboardShown"
-  (window @-> returning true_to_ok)
+  (window @-> returning bool)
 
 end
 

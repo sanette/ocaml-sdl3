@@ -34,22 +34,29 @@ let get_io_properties = ff "SDL_GetIOProperties"
 
 let get_io_size = ff "SDL_GetIOSize"
   (io_stream @-> returning sint64)
+let get_io_size context =
+  get_io_size context
+  |> Signed.Long.to_int
 
 let seek_io = ff "SDL_SeekIO"
   (io_stream @-> sint64 @-> io_whence @-> returning sint64)
 let seek_io context offset whence =
   seek_io context (Signed.Long.of_int offset) whence
+  |> Signed.Long.to_int
 
 let tell_io = ff "SDL_TellIO"
   (io_stream @-> returning sint64)
+let tell_io context =
+  tell_io context
+  |> Signed.Long.to_int
 
 let read_io = ff "SDL_ReadIO"
-  (io_stream @-> ptr void @-> size_t @-> returning size_t)
+  (io_stream @-> ptr void @-> size_t @-> returning int_as_size)
 let read_io context ptr size =
   read_io context ptr (Unsigned.Size_t.of_int size)
 
 let write_io = ff "SDL_WriteIO"
-  (io_stream @-> ptr void @-> size_t @-> returning size_t)
+  (io_stream @-> ptr void @-> size_t @-> returning int_as_size)
 let write_io context ptr size =
   write_io context ptr (Unsigned.Size_t.of_int size)
 

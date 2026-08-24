@@ -95,6 +95,7 @@ let get_number_property = ff "SDL_GetNumberProperty"
   (properties_id @-> string @-> sint64 @-> returning sint64)
 let get_number_property props name default_value =
   get_number_property (Unsigned.UInt.of_int props) name (Signed.Long.of_int default_value)
+  |> Signed.Long.to_int
 
 let get_float_property = ff "SDL_GetFloatProperty"
   (properties_id @-> string @-> float @-> returning float)

@@ -33,6 +33,7 @@ let from_windows = ff "SDL_TimeFromWindows"
   (uint32 @-> uint32 @-> returning time)
 let from_windows dw_low_date_time dw_high_date_time =
   from_windows (Unsigned.UInt.of_int dw_low_date_time) (Unsigned.UInt.of_int dw_high_date_time)
+  |> Signed.Long.to_int
 
 end
 

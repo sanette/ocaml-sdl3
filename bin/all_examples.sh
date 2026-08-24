@@ -21,6 +21,8 @@ dune exec ./multiple_streams.exe
 
 cd ../../renderer/01-clear
 dune exec ./clear.exe
+cd ../04-points
+dune exec ./points.exe
 cd ../10-geometry/
 dune exec ./geometry.exe
 cd ../17-read-pixels

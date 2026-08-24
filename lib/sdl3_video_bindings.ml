@@ -92,13 +92,13 @@ let gl_get_attribute attr =
   if gl_get_attribute attr value then Ok (!@ value) else error ()
 
 let gl_create_context = ff "SDL_GL_CreateContext"
-  (window @-> returning gl_context)
+  (window @-> returning (some_to_ok gl_context_state_opt))
 
 let gl_make_current = ff "SDL_GL_MakeCurrent"
   (window @-> gl_context @-> returning true_to_ok)
 
 let gl_get_current_context = ff "SDL_GL_GetCurrentContext"
-  (void @-> returning gl_context)
+  (void @-> returning (some_to_ok gl_context_state_opt))
 
 let egl_get_current_display = ff "SDL_EGL_GetCurrentDisplay"
   (void @-> returning egl_display)

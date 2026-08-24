@@ -4,6 +4,8 @@ open Ctypes
 open Foreign
 open Sdl3_constants
 
+type data = unit ptr
+type nonrec 'a result = ('a, [ `Msg of string ]) result
 let int_as_uint =
   view ~read:Unsigned.UInt.to_int ~write:Unsigned.UInt.of_int uint
 let int64_as_ulong =
@@ -16,6 +18,8 @@ let int_as_ushort =
   view ~read:Unsigned.UShort.to_int ~write:Unsigned.UShort.of_int ushort
 let int_as_uchar =
   view ~read:Unsigned.UChar.to_int ~write:Unsigned.UChar.of_int uchar
+let int_as_size =
+  view ~read:Unsigned.Size_t.to_int ~write:Unsigned.Size_t.of_int size_t
 let sint8 = schar (* prim *)
 let uint8 = uchar (* prim *)
 let sint16 = short (* prim *)
@@ -40,9 +44,13 @@ let alignment_test = Alignment_test.t
 let alignment_test_opt = Helpers.value_opt_as_ptr alignment_test
 
 
+type malloc_func = Unsigned.ulong -> data
 let malloc_func = funptr (ulong @-> returning (ptr void))
+type calloc_func = Unsigned.ulong -> Unsigned.ulong -> data
 let calloc_func = funptr (ulong @-> ulong @-> returning (ptr void))
+type realloc_func = data -> Unsigned.ulong -> data
 let realloc_func = funptr (ptr void @-> ulong @-> returning (ptr void))
+type free_func = data -> unit
 let free_func = funptr (ptr void @-> returning void)
 
 (* No definition (opaque struct) *)
@@ -50,7 +58,9 @@ type environment = unit ptr
 let environment : environment typ = ptr void
 let environment_opt : environment option typ = ptr_opt void
 
+type compare_callback = data -> data -> int
 let compare_callback = funptr (ptr void @-> ptr void @-> returning int)
+type compare_callback_r = data -> data -> data -> int
 let compare_callback_r = funptr (ptr void @-> ptr void @-> ptr void @-> returning int)
 
 (* No definition (opaque struct) *)
@@ -59,6 +69,8 @@ let iconv_data_t : iconv_data_t typ = ptr void
 let iconv_data_t_opt : iconv_data_t option typ = ptr_opt void
 
 let iconv_t = iconv_data_t
+type iconv_t = iconv_data_t
+type function_pointer = unit -> unit
 let function_pointer = funptr ~thread_registration:true ~runtime_lock:true (void @-> returning void)
 type assert_state =
   | ASSERTION_RETRY
@@ -105,6 +117,7 @@ let assert_data = AssertData.t
 let assert_data_opt = Helpers.value_opt_as_ptr assert_data
 
 
+type assertion_handler = assert_data Ctypes.ptr -> data -> assert_state_enum
 let assertion_handler = funptr (ptr assert_data @-> ptr void @-> returning assert_state)
 let assertion_handler_opt = funptr_opt (ptr assert_data @-> ptr void @-> returning assert_state)
 
@@ -256,8 +269,10 @@ let property_type_of_enum : property_type_enum -> property_type = function
   | e when e = property_type_boolean -> PROPERTY_TYPE_BOOLEAN
   | _ -> invalid_arg "Wrong value for property_type."
 
+type cleanup_property_callback = data -> data -> unit
 let cleanup_property_callback = funptr (ptr void @-> ptr void @-> returning void)
 let cleanup_property_callback_opt = funptr_opt (ptr void @-> ptr void @-> returning void)
+type enumerate_properties_callback = data -> Unsigned.uint -> string -> unit
 let enumerate_properties_callback = funptr (ptr void @-> uint @-> string @-> returning void)
 
 (* No definition (opaque struct) *)
@@ -267,6 +282,7 @@ let thread_opt : thread option typ = ptr_opt void
 
 let thread_id = ulong (* prim *)
 let tlsid = atomic_int
+type tlsid = atomic_int
 type thread_priority =
   | THREAD_PRIORITY_LOW
   | THREAD_PRIORITY_NORMAL
@@ -311,8 +327,10 @@ let thread_state_of_enum : thread_state_enum -> thread_state = function
   | e when e = thread_complete -> THREAD_COMPLETE
   | _ -> invalid_arg "Wrong value for thread_state."
 
+type thread_function = data -> int
 let thread_function = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> returning int)
 let function_pointer_opt = funptr_opt ~thread_registration:true ~runtime_lock:true (void @-> returning void)
+type tls_destructor_callback = data -> unit
 let tls_destructor_callback = funptr (ptr void @-> returning void)
 let tls_destructor_callback_opt = funptr_opt (ptr void @-> returning void)
 
@@ -537,10 +555,13 @@ type audio_stream = unit ptr
 let audio_stream : audio_stream typ = ptr void
 let audio_stream_opt : audio_stream option typ = ptr_opt void
 
+type audio_stream_data_complete_callback = data -> data -> int -> unit
 let audio_stream_data_complete_callback = funptr (ptr void @-> ptr void @-> int @-> returning void)
 let audio_stream_data_complete_callback_opt = funptr_opt (ptr void @-> ptr void @-> int @-> returning void)
+type audio_stream_callback = data -> audio_stream -> int -> int -> unit
 let audio_stream_callback = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_stream @-> int @-> int @-> returning void)
 let audio_stream_callback_opt = funptr_opt ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_stream @-> int @-> int @-> returning void)
+type audio_postmix_callback = data -> audio_spec -> float Ctypes.ptr -> int -> unit
 let audio_postmix_callback = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_spec @-> ptr float @-> int @-> returning void)
 let audio_postmix_callback_opt = funptr_opt ~thread_registration:true ~runtime_lock:true (ptr void @-> audio_spec @-> ptr float @-> int @-> returning void)
 let blend_mode = uint (* prim *)
@@ -1677,7 +1698,9 @@ let camera_permission_state_of_enum : camera_permission_state_enum -> camera_per
   | e when e = camera_permission_state_approved -> CAMERA_PERMISSION_STATE_APPROVED
   | _ -> invalid_arg "Wrong value for camera_permission_state."
 
+type clipboard_data_callback = data -> string -> Unsigned.ulong Ctypes.ptr -> data
 let clipboard_data_callback = funptr (ptr void @-> string @-> ptr ulong @-> returning (ptr void))
+type clipboard_cleanup_callback = data -> unit
 let clipboard_cleanup_callback = funptr (ptr void @-> returning void)
 let display_id = uint (* prim *)
 let window_id = uint (* prim *)
@@ -1840,12 +1863,18 @@ let gl_context_state : gl_context_state typ = ptr void
 let gl_context_state_opt : gl_context_state option typ = ptr_opt void
 
 let gl_context = gl_context_state
+type gl_context = gl_context_state
 let egl_display = ptr void
+type egl_display = data
 let egl_config = ptr void
+type egl_config = data
 let egl_surface = ptr void
+type egl_surface = data
 let egl_attrib = long (* prim *)
 let eg_lint = int (* prim *)
+type egl_attrib_array_callback = data -> Signed.long Ctypes.ptr
 let egl_attrib_array_callback = funptr (ptr void @-> returning (ptr long))
+type egl_int_array_callback = data -> data -> data -> int Ctypes.ptr
 let egl_int_array_callback = funptr (ptr void @-> ptr void @-> ptr void @-> returning (ptr int))
 type gl_attr =
   | GL_RED_SIZE
@@ -1993,6 +2022,7 @@ let hit_test_result_of_enum : hit_test_result_enum -> hit_test_result =
     | Some v -> v
     | None -> invalid_arg "Wrong value for hit_test_result."
 
+type hit_test = window -> point Ctypes.ptr -> data -> hit_test_result_enum
 let hit_test = funptr (window @-> ptr point @-> ptr void @-> returning hit_test_result)
 let egl_attrib_array_callback_opt = funptr_opt (ptr void @-> returning (ptr long))
 let egl_int_array_callback_opt = funptr_opt (ptr void @-> ptr void @-> ptr void @-> returning (ptr int))
@@ -2011,6 +2041,7 @@ let dialog_file_filter = DialogFileFilter.t
 let dialog_file_filter_opt = Helpers.value_opt_as_ptr dialog_file_filter
 
 
+type dialog_file_callback = data -> string Ctypes.ptr -> int -> unit
 let dialog_file_callback = funptr (ptr void @-> ptr string @-> int @-> returning void)
 type file_dialog_type =
   | FILEDIALOG_OPENFILE
@@ -3563,6 +3594,7 @@ let cursor_frame_info_opt = Helpers.value_opt_as_ptr cursor_frame_info
 
 
 let mouse_button_flags = uint (* prim *)
+type mouse_motion_transform_callback = data -> Unsigned.ulong -> window -> Unsigned.uint -> float Ctypes.ptr -> float Ctypes.ptr -> unit
 let mouse_motion_transform_callback = funptr (ptr void @-> ulong @-> window @-> uint @-> ptr float @-> ptr float @-> returning void)
 let mouse_motion_transform_callback_opt = funptr_opt (ptr void @-> ulong @-> window @-> uint @-> ptr float @-> ptr float @-> returning void)
 let touch_id = ulong (* prim *)
@@ -4983,6 +5015,7 @@ let event_action_of_enum : event_action_enum -> event_action = function
   | e when e = getevent -> GETEVENT
   | _ -> invalid_arg "Wrong value for event_action."
 
+type event_filter = data -> event -> bool
 let event_filter = funptr (ptr void @-> event @-> returning bool)
 type folder =
   | FOLDER_HOME
@@ -5094,6 +5127,7 @@ let enumeration_result_of_enum : enumeration_result_enum -> enumeration_result =
   | e when e = enum_failure -> ENUM_FAILURE
   | _ -> invalid_arg "Wrong value for enumeration_result."
 
+type enumerate_directory_callback = data -> string -> string -> enumeration_result_enum
 let enumerate_directory_callback = funptr (ptr void @-> string @-> string @-> returning enumeration_result)
 
 (* No definition (opaque struct) *)
@@ -6446,7 +6480,7 @@ module GPUShaderCreateInfo = struct
   type _t
   type t = _t structure
   let t : t typ = structure "SDL_GPUShaderCreateInfo"
-  let code_size = field t "code_size" size_t
+  let code_size = field t "code_size" int_as_size
   let code = field t "code" (ptr uint8)
   let entrypoint = field t "entrypoint" string
   let format = field t "format" int_as_uint
@@ -6646,7 +6680,7 @@ module GPUComputePipelineCreateInfo = struct
   type _t
   type t = _t structure
   let t : t typ = structure "SDL_GPUComputePipelineCreateInfo"
-  let code_size = field t "code_size" size_t
+  let code_size = field t "code_size" int_as_size
   let code = field t "code" (ptr uint8)
   let entrypoint = field t "entrypoint" string
   let format = field t "format" int_as_uint
@@ -7097,6 +7131,7 @@ let hint_priority_of_enum : hint_priority_enum -> hint_priority = function
   | e when e = hint_override -> HINT_OVERRIDE
   | _ -> invalid_arg "Wrong value for hint_priority."
 
+type hint_callback = data -> string -> string -> string -> unit
 let hint_callback = funptr (ptr void @-> string @-> string @-> string @-> returning void)
 let init_flags = uint (* prim *)
 type app_result =
@@ -7118,10 +7153,15 @@ let app_result_of_enum : app_result_enum -> app_result = function
   | e when e = app_failure -> APP_FAILURE
   | _ -> invalid_arg "Wrong value for app_result."
 
+type app_init_func = data Ctypes.ptr -> int -> string Ctypes.ptr -> app_result_enum
 let app_init_func = funptr (ptr (ptr void) @-> int @-> ptr string @-> returning app_result)
+type app_iterate_func = data -> app_result_enum
 let app_iterate_func = funptr (ptr void @-> returning app_result)
+type app_event_func = data -> event -> app_result_enum
 let app_event_func = funptr (ptr void @-> event @-> returning app_result)
+type app_quit_func = data -> app_result_enum -> unit
 let app_quit_func = funptr (ptr void @-> app_result @-> returning void)
+type main_thread_callback = data -> unit
 let main_thread_callback = funptr (ptr void @-> returning void)
 
 (* No definition (opaque struct) *)
@@ -7130,18 +7170,23 @@ let shared_object : shared_object typ = ptr void
 let shared_object_opt : shared_object option typ = ptr_opt void
 
 module Locale = struct
-  type _t
-  type t = _t structure
-  let t : t typ = structure "SDL_Locale"
+  type _t_raw
+  type t_raw = _t_raw structure
+  let t : t_raw typ = structure "SDL_Locale"
   let language = field t "language" string
   let country = field t "country" string
   let () = seal t
-  let get = getf
-  let set = setf
+  let t_raw = t
+  type t = t_raw ptr
+  let t : t typ = ptr t_raw
+  let t_opt : t option typ = ptr_opt t_raw
+  let get (e : t) field = getf {structured = e} field
+  let set (e : t) field v = setf {structured = e} field v
 end
 type locale = Locale.t
 let locale = Locale.t
-let locale_opt = Helpers.value_opt_as_ptr locale
+let locale_opt = Locale.t_opt
+let locale_raw = Locale.t_raw
 
 
 type log_category =
@@ -7259,6 +7304,7 @@ let log_priority_of_enum : log_priority_enum -> log_priority =
     | Some v -> v
     | None -> invalid_arg "Wrong value for log_priority."
 
+type log_output_function = data -> int -> log_priority_enum -> string -> unit
 let log_output_function = funptr (ptr void @-> int @-> log_priority @-> string @-> returning void)
 let message_box_flags = uint (* prim *)
 let message_box_button_flags = uint (* prim *)
@@ -7357,6 +7403,7 @@ let message_box_data_opt = Helpers.value_opt_as_ptr message_box_data
 
 
 let metal_view = ptr void
+type metal_view = data
 
 (* No definition (opaque struct) *)
 type process = unit ptr
@@ -7645,7 +7692,9 @@ let time_format_of_enum : time_format_enum -> time_format = function
   | _ -> invalid_arg "Wrong value for time_format."
 
 let timer_id = uint (* prim *)
+type timer_callback = data -> Unsigned.uint -> Unsigned.uint -> Unsigned.uint
 let timer_callback = funptr ~thread_registration:true ~runtime_lock:true (ptr void @-> uint @-> uint @-> returning uint)
+type ns_timer_callback = data -> Unsigned.uint -> Unsigned.ulong -> Unsigned.ulong
 let ns_timer_callback = funptr (ptr void @-> uint @-> ulong @-> returning ulong)
 
 (* No definition (opaque struct) *)
@@ -7666,4 +7715,5 @@ let tray_entry : tray_entry typ = ptr void
 let tray_entry_opt : tray_entry option typ = ptr_opt void
 
 let tray_entry_flags = uint (* prim *)
+type tray_callback = data -> tray_entry -> unit
 let tray_callback = funptr (ptr void @-> tray_entry @-> returning void)

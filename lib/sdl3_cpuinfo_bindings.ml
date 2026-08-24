@@ -1,6 +1,7 @@
 (* This file is part of the SDL3 OCaml bindings. Auto-generated file. *)
 
 open Ctypes
+open Sdl3_types
 
 let ff = Load.foreign
 
@@ -57,7 +58,7 @@ let get_system_ram = ff "SDL_GetSystemRAM"
   (void @-> returning int)
 
 let get_simd_alignment = ff "SDL_GetSIMDAlignment"
-  (void @-> returning size_t)
+  (void @-> returning int_as_size)
 
 let get_system_page_size = ff "SDL_GetSystemPageSize"
   (void @-> returning int)

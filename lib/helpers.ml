@@ -7,6 +7,9 @@ open Ctypes
 
 (* let error () = Error (`Msg (get_error ())) *)
 
+
+type data = unit ptr
+
 module Error = Sdl3_error_bindings.Error
 
 let error () = Error (`Msg (Error.get ()))

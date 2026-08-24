@@ -163,20 +163,20 @@ let memcmp s1 s2 len =
   memcmp s1 s2 (Unsigned.Size_t.of_int len)
 
 let wcslen = ff "SDL_wcslen"
-  (ptr_opt int32_t @-> returning size_t)
+  (ptr_opt int32_t @-> returning int_as_size)
 
 let wcsnlen = ff "SDL_wcsnlen"
-  (ptr_opt int32_t @-> size_t @-> returning size_t)
+  (ptr_opt int32_t @-> size_t @-> returning int_as_size)
 let wcsnlen wstr maxlen =
   wcsnlen wstr (Unsigned.Size_t.of_int maxlen)
 
 let wcslcpy = ff "SDL_wcslcpy"
-  (ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning size_t)
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning int_as_size)
 let wcslcpy dst src maxlen =
   wcslcpy dst src (Unsigned.Size_t.of_int maxlen)
 
 let wcslcat = ff "SDL_wcslcat"
-  (ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning size_t)
+  (ptr_opt int32_t @-> ptr_opt int32_t @-> size_t @-> returning int_as_size)
 let wcslcat dst src maxlen =
   wcslcat dst src (Unsigned.Size_t.of_int maxlen)
 
@@ -209,27 +209,30 @@ let wcsncasecmp str1 str2 maxlen =
 
 let wcstol = ff "SDL_wcstol"
   (ptr_opt int32_t @-> ptr_opt (ptr int32_t) @-> int @-> returning long)
+let wcstol str endp base =
+  wcstol str endp base
+  |> Signed.Long.to_int
 
 let strlen = ff "SDL_strlen"
-  (string @-> returning size_t)
+  (string @-> returning int_as_size)
 
 let strnlen = ff "SDL_strnlen"
-  (string @-> size_t @-> returning size_t)
+  (string @-> size_t @-> returning int_as_size)
 let strnlen str maxlen =
   strnlen str (Unsigned.Size_t.of_int maxlen)
 
 let strlcpy = ff "SDL_strlcpy"
-  (string @-> string @-> size_t @-> returning size_t)
+  (string @-> string @-> size_t @-> returning int_as_size)
 let strlcpy dst src maxlen =
   strlcpy dst src (Unsigned.Size_t.of_int maxlen)
 
 let utf8strlcpy = ff "SDL_utf8strlcpy"
-  (string @-> string @-> size_t @-> returning size_t)
+  (string @-> string @-> size_t @-> returning int_as_size)
 let utf8strlcpy dst src dst_bytes =
   utf8strlcpy dst src (Unsigned.Size_t.of_int dst_bytes)
 
 let strlcat = ff "SDL_strlcat"
-  (string @-> string @-> size_t @-> returning size_t)
+  (string @-> string @-> size_t @-> returning int_as_size)
 let strlcat dst src maxlen =
   strlcat dst src (Unsigned.Size_t.of_int maxlen)
 
@@ -271,10 +274,10 @@ let strtok_r = ff "SDL_strtok_r"
   (string @-> string @-> ptr string @-> returning string)
 
 let utf8strlen = ff "SDL_utf8strlen"
-  (string @-> returning size_t)
+  (string @-> returning int_as_size)
 
 let utf8strnlen = ff "SDL_utf8strnlen"
-  (string @-> size_t @-> returning size_t)
+  (string @-> size_t @-> returning int_as_size)
 let utf8strnlen str bytes =
   utf8strnlen str (Unsigned.Size_t.of_int bytes)
 
@@ -310,6 +313,9 @@ let atof = ff "SDL_atof"
 
 let strtol = ff "SDL_strtol"
   (string @-> ptr_opt string @-> int @-> returning long)
+let strtol str endp base =
+  strtol str endp base
+  |> Signed.Long.to_int
 
 let strtoul = ff "SDL_strtoul"
   (string @-> ptr_opt string @-> int @-> returning int64_as_ulong)
@@ -504,9 +510,15 @@ let roundf = ff "SDL_roundf"
 
 let lround = ff "SDL_lround"
   (double @-> returning long)
+let lround x =
+  lround x
+  |> Signed.Long.to_int
 
 let lroundf = ff "SDL_lroundf"
   (float @-> returning long)
+let lroundf x =
+  lroundf x
+  |> Signed.Long.to_int
 
 let scalbn = ff "SDL_scalbn"
   (double @-> int @-> returning double)
@@ -533,13 +545,13 @@ let tanf = ff "SDL_tanf"
   (float @-> returning float)
 
 let iconv_open = ff "SDL_iconv_open"
-  (string @-> string @-> returning iconv_t)
+  (string @-> string @-> returning (some_to_ok iconv_data_t_opt))
 
 let iconv_close = ff "SDL_iconv_close"
   (iconv_t @-> returning int)
 
 let iconv = ff "SDL_iconv"
-  (iconv_t @-> ptr string @-> ptr size_t @-> ptr string @-> ptr size_t @-> returning size_t)
+  (iconv_t @-> ptr string @-> ptr size_t @-> ptr string @-> ptr size_t @-> returning int_as_size)
 
 let iconv_string = ff "SDL_iconv_string"
   (string @-> string @-> string @-> size_t @-> returning string)

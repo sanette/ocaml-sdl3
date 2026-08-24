@@ -7,8 +7,8 @@ let ff = Load.foreign
 
 module Locale = struct
 let get_preferreds = ff "SDL_GetPreferredLocales"
-  (ptr int @-> returning (ptr (ptr locale)))
-(* Wrapper for returning (ptr locale) list *)
+  (ptr int @-> returning (ptr locale))
+(* Wrapper for returning locale list *)
 let get_preferreds () =
   let count = allocate int 0 in
   let p = get_preferreds count in

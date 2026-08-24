@@ -118,7 +118,10 @@ let set_blend_mode surface blend_mode =
   set_blend_mode surface (Unsigned.UInt.of_int blend_mode)
 
 let get_blend_mode = ff "SDL_GetSurfaceBlendMode"
-  (surface @-> ptr blend_mode @-> returning true_to_ok)
+  (surface @-> ptr blend_mode @-> returning bool)
+let get_blend_mode surface =
+  let blend_mode = allocate uint (Unsigned.UInt.of_int 0) in
+  if get_blend_mode surface blend_mode then Ok (Unsigned.UInt.to_int (!@ blend_mode)) else error ()
 
 let set_clip_rect = ff "SDL_SetSurfaceClipRect"
   (surface @-> rect_opt @-> returning true_to_ok)

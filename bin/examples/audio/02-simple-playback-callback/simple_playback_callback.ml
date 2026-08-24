@@ -6,16 +6,12 @@ open Sdl3
 let go = Result.get_ok
 let do_option o f = Option.iter f o
 
-type 'a state = {
+type state = {
   window : T.window;
   renderer : T.renderer;
-  callback : 'a option; (* We need to save the callback somewhere to make sure
-                           OCaml does not GC it. *)
-  (* TODO write explicit callback types in the binding. Here:
-
- type audio_stream_callback = unit ptr -> audio_stream -> int -> int -> unit *)
-
-
+  callback : T.audio_stream_callback option;
+  (* We need to save the callback somewhere to make sure OCaml does not GC
+     it. *)
 }
 
 (* This function will be called (usually in a background thread) when the audio stream is consuming data. *)

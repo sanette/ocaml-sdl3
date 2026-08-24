@@ -46,7 +46,7 @@ let write_file = ff "SDL_WriteStorageFile"
 let write_file storage path ba =
   let source, len = Helpers.ptr_of_ba ba in
   write_file storage path source (Unsigned.ULong.of_int len)
-
+      
 let create_directory = ff "SDL_CreateStorageDirectory"
   (storage @-> string @-> returning true_to_ok)
 
