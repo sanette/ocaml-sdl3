@@ -190,14 +190,29 @@ line. It also demonstrates using debug text and event loop.
 
 # Documentation
 
-TODO... **there are no MLI files at this moment!** To obtain function
-signatures, rely on your editor smart mode (merlin), or look at the
-examples.
-
-Because the bindings are very thin, the original
-[SDL3 doc](https://wiki.libsdl.org/SDL3/APIByCategory) is the main
-source of documentation and should be sufficient in most cases. If
-not, don't hesitate to open a github issue.
-
 In order to **find the ocaml name corresponding to an SDL function**, see
 [the list of bound functions](https://github.com/sanette/ocaml-sdl3/blob/main/lib/bound_functions.csv).
+
+MLI interfaces are generated for all SDL functions, and include
+documentation extracted from the SDL sources, and **minimally
+adapted** to the OCaml version. For each SDL* function, you can open
+the corresponding `*_bindings.mli` file, and you will find
+
++ a link to the original SDL documentation for that function, within
+  the [SDL3 wiki](https://wiki.libsdl.org/SDL3/APIByCategory).
++ the explanation of what the original C function does
++ **the list of parameters for the OCaml version**
++ **list of result values for the OCaml version**
+
+Because the bindings are very thin, this should be sufficient in most
+ cases to understand how to use a function. If not, don't hesitate to
+ open a github issue.
+
+
+WARNING/TODO... the (huge) `Sdl3_types.ml` file has no MLI interface
+at this moment. To obtain function signatures, rely on your editor
+smart mode (merlin), or look at the examples. (And because of this,
+running `odoc` on the sources is not very interesting, as it will
+replace meaningful types like `surface` into their abstruse local
+expansions like `Sdl3__.Sdl3_types.Surface._t_raw Ctypes.structure
+Ctypes.ptr` )
