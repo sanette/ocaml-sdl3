@@ -1,0 +1,9 @@
+(executable
+ (name points)
+ (modules points)
+ (libraries sdl3))
+
+; (executable
+;  (name points_array)
+;  (modules points_array)
+;  (libraries sdl3))
