@@ -15,10 +15,13 @@ makeover, transiting from SDL2 to SDL3. There are several OCaml
 bindings for SDL2 ([tsdl](https://erratique.ch/software/tsdl) -- or
 the ["compat"](https://github.com/sanette/tsdl) version for better
 Windows compatibility, and
-[ocamlsdl2](https://github.com/fccm2/OCamlSDL2)). But to my knowledge
-`ocaml-sdl3` is currently the only one, and is still a work in
-progress.  If you keep reading after this point, you must be very
-adventurous and want to give it a try. Welcome!
+[ocamlsdl2](https://github.com/fccm2/OCamlSDL2)). Concerning SDL3,
+there is a tiny (but usable) set of bindings
+[here](http://decapode314.free.fr/ocaml2/sdl3/), which I forgot when I
+started my own project with unfortunately the same name... This new
+`ocaml-sdl3` contains hundreds of bindings, but is still experimental:
+so, if you keep reading after this point, you must be very adventurous
+and want to give it a try. Welcome!
 
 # Results
 
